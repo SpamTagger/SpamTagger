@@ -1,6 +1,6 @@
 #!/usr/bin/env perl
 #
-#   SpamTagger Plus - Open Source Spam Filtering
+#   SpamTagger - Open Source Spam Filtering
 #   Copyright (C) 2004 Olivier Diserens <olivier@diserens.ch>
 #   Copyright (C) 2025 John Mertz <git@john.me.tz>
 #

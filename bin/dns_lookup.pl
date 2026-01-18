@@ -1,6 +1,6 @@
 #!/usr/bin/env perl
 #
-#   SpamTagger Plus - Open Source Spam Filtering
+#   SpamTagger - Open Source Spam Filtering
 #   Copyright (C) 2021 John Mertz <git@john.me.tz>
 #
 #   This program is free software; you can redistribute it and/or modify

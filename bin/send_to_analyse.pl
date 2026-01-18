@@ -1,6 +1,6 @@
 #!/usr/bin/env perl
 #
-#   SpamTagger Plus - Open Source Spam Filtering
+#   SpamTagger - Open Source Spam Filtering
 #   Copyright (C) 2004 Olivier Diserens <olivier@diserens.ch>
 #   Copyright (C) 2021 John Mertz <git@john.me.tz>
 #
@@ -68,7 +68,7 @@ exit 0;
 ##########################################
 sub get_system_config {
 
-  my %default = (days_to_keep_spams => 30, sysadmin => 'support@localhost', summary_subject => 'SpamTagger Plus analysis request', summary_from => 'support@localhost', servername => 'localhost', analyse_to => 'analyse@localhost');
+  my %default = (days_to_keep_spams => 30, sysadmin => 'support@localhost', summary_subject => 'SpamTagger analysis request', summary_from => 'support@localhost', servername => 'localhost', analyse_to => 'analyse@localhost');
 
   my $dbh = DB->db_connect('replica', 'st_config');
 

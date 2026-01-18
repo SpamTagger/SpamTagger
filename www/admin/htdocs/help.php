@@ -1,7 +1,7 @@
 <?
 /**
  * @license https://www.gnu.org/licenses/gpl-3.0.en.html
- * @package SpamTagger Plus
+ * @package SpamTagger
  * @author Olivier Diserens
  * @copyright 2025, SpamTagger
  * @abstract This is the documentation window controller

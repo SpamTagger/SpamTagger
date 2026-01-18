@@ -10,10 +10,16 @@ GITUSER="SpamTagger"
 # Repo Name
 GITREPO="SpamTagger-Plus"
 
-# Current checksum of this script if it was called from existing repo to compare after `git pull`
-if [[ "$0" == "/usr/spamtagger/debian-bootstrap/install.sh" ]]; then
-  CURRENT=$(md5sum $0)
-fi
+# Repo name, to be changed upon Stable release
+GHREPO="SpamTagger"
+#GHREPO="SpamTagger"
+
+# Git/HTTP protocol, to be changed upon repo going public
+#GHHOST="git@github.com:"
+GHHOST="https://github.com"
+
+# Current checksum of this script, to compare after `git pull`
+CURRENT=$(md5sum $0)
 
 # Errors which must be resolved before success, but don't justify killing the script in action
 ERRORS=''

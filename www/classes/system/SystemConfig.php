@@ -1,7 +1,7 @@
 <?
 /**
  * @license https://www.gnu.org/licenses/gpl-3.0.en.html
- * @package SpamTagger Plus
+ * @package SpamTagger
  * @author Olivier Diserens
  * @copyright 2025, SpamTagger
  */
@@ -20,7 +20,7 @@ require_once ("helpers/PrefHandler.php");
  * This class contains the global preferences and setting of the system
  * such as base paths, database access, etc...
  *
- * @package SpamTagger Plus
+ * @package SpamTagger
  * @todo set members as private !
  */
 

@@ -1,6 +1,6 @@
 #!/usr/bin/env perl
 #
-#   SpamTagger Plus - Open Source Spam Filtering
+#   SpamTagger - Open Source Spam Filtering
 #   Copyright (C) 2004 Olivier Diserens <olivier@diserens.ch>
 #   Copyright (C) 2025 John Mertz <git@john.me.tz>
 #
@@ -116,7 +116,7 @@ sub run($this) {
 
 sub do_menu($this, $basemenu, $currentstep, $error) {
   my $dlg = $this->{'dfact'}->list();
-  $dlg->build($$error.'SpamTagger Plus installation', $basemenu, $$currentstep, 1);
+  $dlg->build($$error.'SpamTagger installation', $basemenu, $$currentstep, 1);
   $$error = '';
 
   my $res = $dlg->display();
@@ -178,7 +178,7 @@ sub host_id($this) {
   my $dlg = $this->{'dfact'}->simple();
   my $suggest = $this->{'config_variables'}->{'HOSTID'} //= $this->{'default_configs'}->{'HOSTID'};
   $suggest = 1 if ($suggest eq '');
-  $dlg->build('Enter the unique ID of this SpamTagger Plus in your infrastucture', $suggest);
+  $dlg->build('Enter the unique ID of this SpamTagger in your infrastucture', $suggest);
   return $dlg->display();
 }
 
@@ -301,7 +301,7 @@ sub apply_configuration($this) {
   return $check if ($check);
 
   my $yndlg = $this->{'dfact'}->yes_no();
-  $yndlg->build('WARNING: this operation will overwrite any existing SpamTagger Plus database, if one exists. Do you want to proceed?', 'no');
+  $yndlg->build('WARNING: this operation will overwrite any existing SpamTagger database, if one exists. Do you want to proceed?', 'no');
 
   return 254 unless ($yndlg->display());
   return 255 unless ($this->write_config());

@@ -1,6 +1,6 @@
 #!/usr/bin/env perl
 #
-#   SpamTagger Plus - Open Source Spam Filtering
+#   SpamTagger - Open Source Spam Filtering
 #   Copyright (C) 2004 Olivier Diserens <olivier@diserens.ch>
 #   Copyright (C) 2025 John Mertz <git@john.me.tz>
 #
@@ -42,7 +42,7 @@ my @basemenu = (
   'Set hostname', 
   'Network configuration', 
   'Timezone configuration', 
-  'SpamTagger Plus configuration', 
+  'SpamTagger configuration', 
   'Join existing cluster (optional)', 
   'Exit'
 );
@@ -55,7 +55,7 @@ $dlg->clear();
 exit 0;
 
 sub do_menu {
-  $dlg->build('SpamTagger Plus: base system configuration', \@basemenu, $currentstep, 1);
+  $dlg->build('SpamTagger: base system configuration', \@basemenu, $currentstep, 1);
 
   my $res = $dlg->display();
   return 0 if $res eq 'Exit';
@@ -95,7 +95,7 @@ sub do_menu {
     return 1;
   }
 
-  if ($res eq 'SpamTagger Plus configuration') {
+  if ($res eq 'SpamTagger configuration') {
     my $stinstall = Module::STInstaller->new();
     my $ret = $stinstall->run();
     if ($ret == 0) {

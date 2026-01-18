@@ -1105,7 +1105,7 @@ John Mertz <git@john.me.tz>
 
 =head1 COPYRIGHT AND LICENSE
 
-SpamTagger Plus - Open Source Spam Filtering
+SpamTagger - Open Source Spam Filtering
 Copyright (C) 2025 by John Mertz <git@john.me.tz>
 
 This program is free software; you can redistribute it and/or modify

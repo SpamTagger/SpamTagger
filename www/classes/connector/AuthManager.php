@@ -1,7 +1,7 @@
 <?
 /**
  * @license https://www.gnu.org/licenses/gpl-3.0.en.html
- * @package SpamTagger Plus
+ * @package SpamTagger
  * @author Olivier Diserens
  * @copyright 2025, SpamTagger
  */
@@ -16,7 +16,7 @@ require_once 'Log/observer.php';
 /**
  * This class is the main authenticator factory
  * These are used to let the users authenticate against different kind of server
- * @package SpamTagger Plus
+ * @package SpamTagger
  */
 abstract class AuthManager {
 

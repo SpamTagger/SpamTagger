@@ -1,7 +1,7 @@
 <?
 /**
  * @license https://www.gnu.org/licenses/gpl-3.0.en.html
- * @package SpamTagger Plus
+ * @package SpamTagger
  * @author Olivier Diserens
  * @copyright 2025, SpamTagger
  */
@@ -15,7 +15,7 @@ require_once("connector/settings/SQLSettings.php");
 /**
  * This is the AdminAuthenticator class
  * This will take care of authenticate administrative users
- * @package SpamTagger Plus
+ * @package SpamTagger
  */
 class AdminAuthenticator extends AuthManager {
 

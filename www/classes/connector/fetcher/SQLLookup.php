@@ -1,7 +1,7 @@
 <?
 /**
  * @license https://www.gnu.org/licenses/gpl-3.0.en.html
- * @package SpamTagger Plus
+ * @package SpamTagger
  * @author Olivier Diserens
  * @copyright 2025, SpamTagger
  */
@@ -10,7 +10,7 @@
 /**
  * This class takes care of fetching addresses in a SQL database
  * They may be multiple addresses, separated by ','
- * @package SpamTagger Plus
+ * @package SpamTagger
  */
  class SQLlookup extends AddressFetcher {
 

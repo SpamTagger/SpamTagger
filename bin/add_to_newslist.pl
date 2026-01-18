@@ -1,6 +1,6 @@
 #!/usr/bin/env perl
 #
-#   SpamTagger Plus - Open Source Spam Filtering
+#   SpamTagger - Open Source Spam Filtering
 #   Copyright (C) 2018 MailCleaner <support@mailcleaner.net>
 #   Copyright (C) 2020 John Mertz <git@john.me.tz>
 #

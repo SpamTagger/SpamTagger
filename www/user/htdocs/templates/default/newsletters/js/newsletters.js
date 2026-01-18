@@ -1,5 +1,5 @@
 /**
- * SpamTagger Plus, Open Source Spam Filtering
+ * SpamTagger, Open Source Spam Filtering
  * @copyright 2025, SpamTagger
  * @license https://www.gnu.org/licenses/gpl-3.0.en.html
  */

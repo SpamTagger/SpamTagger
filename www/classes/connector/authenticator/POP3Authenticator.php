@@ -1,7 +1,7 @@
 <?
 /**
  * @license https://www.gnu.org/licenses/gpl-3.0.en.html
- * @package SpamTagger Plus
+ * @package SpamTagger
  * @author Olivier Diserens
  * @copyright 2025, SpamTagger
  */
@@ -14,7 +14,7 @@ require_once("Auth.php");
 /**
  * This is the POP3Authenticator class
  * This will take care of authenticate user against an POP3 server
- * @package SpamTagger Plus
+ * @package SpamTagger
  */
 class POP3Authenticator extends AuthManager {
 

@@ -1,6 +1,6 @@
 #! /usr/bin/env perl
 #
-#   SpamTagger Plus - Open Source Spam Filtering
+#   SpamTagger - Open Source Spam Filtering
 #   Copyright (C) 2015-2018 Pascal Rolle <rolle@spamtagger.org>
 #   Copyright (C) 2015-2018 Mentor Reka <reka@spamtagger.org>
 #

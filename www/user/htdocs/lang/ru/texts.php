@@ -152,7 +152,7 @@ $txt['SESSIONTERMINATED'] = "Ваш сеанс завершен.";
 $txt['BEENLOGGEDOUT'] = "Если вы хотите начать новую сессию, перейдите по ссылке:<a href=\"__PARAM__\" >__PARAM__</a>";
 /**
  * @license https://www.gnu.org/licenses/gpl-3.0.en.html
- * @package SpamTagger Plus
+ * @package SpamTagger
  * @author Olivier Diserens
  * @copyright 2025, SpamTagger
  */

@@ -1,7 +1,7 @@
 <?php
 /**
  * @license https://www.gnu.org/licenses/gpl-3.0.en.html
- * @package SpamTagger Plus
+ * @package SpamTagger
  * @author Mentor Reka
  * @copyright 2025, SpamTagger
  *

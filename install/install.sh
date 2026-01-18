@@ -219,8 +219,7 @@ else
 # TODO: Generate unique self signed certs upon setting a hostname in installer.pl. Insert after
 # database is created
 #QUERY="USE st_config; UPDATE httpd_config SET tls_certificate_data='${CERT}', tls_certificate_key='${KEY}';"
-#echo "$QUERY" | /usr/spamtagger/bin/st_mariadb -m 2>&1 >>$LOGFILE
-#echo "update mta_config set smtp_banner='\$smtp_active_hostname ESMTP SpamTagger Plus ($STVERSION) \$tod_full';" | /usr/spamtagger/bin/st_mariadb -m st_config 2>&1 >>$LOGFILE
+#echo "update mta_config set smtp_banner='\$smtp_active_hostname ESMTP SpamTagger ($STVERSION) \$tod_full';" | $SRCDIR/bin/st_mariadb -m st_config 2>&1 >>$LOGFILE
 
 ###############################################
 ### installing spamtagger cron job

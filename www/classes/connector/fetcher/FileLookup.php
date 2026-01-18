@@ -1,7 +1,7 @@
 <?
 /**
  * @license https://www.gnu.org/licenses/gpl-3.0.en.html
- * @package SpamTagger Plus
+ * @package SpamTagger
  * @author Olivier Diserens
  * @copyright 2025, SpamTagger
  */
@@ -9,7 +9,7 @@
 
 /**
  * This class takes care of fetching addresses in a text file
- * @package SpamTagger Plus
+ * @package SpamTagger
  */
  class Filelookup extends AddressFetcher {
 

@@ -1,7 +1,7 @@
 <?
 /**
  * @license https://www.gnu.org/licenses/gpl-3.0.en.html
- * @package SpamTagger Plus
+ * @package SpamTagger
  * @author Olivier Diserens
  * @copyright 2025, SpamTagger
  */
@@ -10,7 +10,7 @@
 /**
  * This class is the mother of the Login Formatters.
  * These are used to modify and reformat the login entered by the user in order to be correctly passed to the autentication server
- * @package SpamTagger Plus
+ * @package SpamTagger
  */
 abstract class LoginFormatter {
 

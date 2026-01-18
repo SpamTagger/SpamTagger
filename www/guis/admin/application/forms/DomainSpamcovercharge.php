@@ -1,7 +1,7 @@
 <?php
 /**
  * @license https://www.gnu.org/licenses/gpl-3.0.en.html
- * @package SpamTagger Plus
+ * @package SpamTagger
  */
 
 class Default_Form_DomainSpamcovercharge extends Zend_Form {

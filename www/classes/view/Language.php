@@ -1,7 +1,7 @@
 <?
 /**
 * @license https://www.gnu.org/licenses/gpl-3.0.en.html
-* @package SpamTagger Plus
+* @package SpamTagger
 * @author Olivier Diserens
 * @copyright 2025, SpamTagger
 */
@@ -16,7 +16,7 @@ require_once("system/SystemConfig.php");
 * It basically takes the language file corresponding to the desired language
 * and replace tags with translated equivalence when needed
 *
-* @package SpamTagger Plus
+* @package SpamTagger
 */
 
 class Language

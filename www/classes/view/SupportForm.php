@@ -1,7 +1,7 @@
 <?
 /**
  * @license https://www.gnu.org/licenses/gpl-3.0.en.html
- * @package SpamTagger Plus
+ * @package SpamTagger
  * @author Olivier Diserens
  * @copyright 2025, SpamTagger
  */
@@ -91,7 +91,7 @@ public function send() {
   $recipients              = $sysconf_->getPref('analyse_to');
   $headers['From']         = $sysconf_->getPref('summary_from');
   $headers['To']           = $recipients;
-  $headers['Subject']      = "SpamTagger Plus support request";
+  $headers['Subject']      = "SpamTagger support request";
   $headers['MIME-Version'] = '1.0';
   $headers['Content-Type'] = 'text/plain; charset=ISO-8859-1; format=flowed';
   $headers['Content-Transfer-Encoding'] = 'quoted-printable';

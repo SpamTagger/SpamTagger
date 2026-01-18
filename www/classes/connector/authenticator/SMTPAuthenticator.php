@@ -1,7 +1,7 @@
 <?
 /**
  * @license https://www.gnu.org/licenses/gpl-3.0.en.html
- * @package SpamTagger Plus
+ * @package SpamTagger
  * @author Olivier Diserens
  * @copyright 2025, SpamTagger
  */
@@ -14,7 +14,7 @@ require_once("Net/SMTP.php");
 /**
  * This is the IMAPAuthenticator class
  * This will take care of authenticate user against an IMAPserver
- * @package SpamTagger Plus
+ * @package SpamTagger
  */
 class SMTPAuthenticator extends AuthManager {
 

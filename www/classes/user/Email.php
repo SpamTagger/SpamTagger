@@ -1,7 +1,7 @@
 <?php
 /**
  * @license https://www.gnu.org/licenses/gpl-3.0.en.html
- * @package SpamTagger Plus
+ * @package SpamTagger
  * @author Olivier Diserens
  * @copyright 2025, SpamTagger
  */
@@ -18,7 +18,7 @@ require_once("user/User.php");
  * Email preferences and management
  * This class is mainly a wrapper to the email object preferences
  *
- * @package SpamTagger Plus
+ * @package SpamTagger
  */
 class Email extends PrefHandler {
 

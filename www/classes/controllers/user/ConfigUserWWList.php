@@ -1,7 +1,7 @@
 <?php
 /**
  * @license https://www.gnu.org/licenses/gpl-3.0.en.html
- * @package SpamTagger Plus
+ * @package SpamTagger
  * @author Olivier Diserens, John Mertz
  * @copyright 2025, SpamTagger
  *
@@ -11,7 +11,7 @@
 /**
  * user address list configuration page controller
  *
- * @package SpamTagger Plus
+ * @package SpamTagger
  */
 class ConfigUserWWList {
 

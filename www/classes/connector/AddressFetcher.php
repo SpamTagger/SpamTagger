@@ -1,7 +1,7 @@
 <?
 /**
  * @license https://www.gnu.org/licenses/gpl-3.0.en.html
- * @package SpamTagger Plus
+ * @package SpamTagger
  * @author Olivier Diserens
  * @copyright 2025, SpamTagger
  */
@@ -10,7 +10,7 @@
 /**
  * This class is the mother of the different address fetcher.
  * These are used to the email addresses bounded to a specific user
- * @package SpamTagger Plus
+ * @package SpamTagger
  */
 abstract class AddressFetcher {
 

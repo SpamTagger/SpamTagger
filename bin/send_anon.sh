@@ -1,6 +1,6 @@
 #!/bin/bash
 #
-#   SpamTagger Plus - Open Source Spam Filtering
+#   SpamTagger - Open Source Spam Filtering
 #   Copyright (C) 2017 Reka Mentor <reka.mentor@gmail.com>
 #
 #   This program is free software; you can redistribute it and/or modify

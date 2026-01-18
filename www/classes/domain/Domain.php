@@ -1,7 +1,7 @@
 <?
 /**
  * @license https://www.gnu.org/licenses/gpl-3.0.en.html
- * @package SpamTagger Plus
+ * @package SpamTagger
  * @author Olivier Diserens
  * @copyright 2025, SpamTagger
  */
@@ -19,7 +19,7 @@ require_once("connector/LoginFormatter.php");
  * This class is mainly a wrapper to the domain object preferences
  * and the different object that it use, such as authentication connectors.
  *
- * @package SpamTagger Plus
+ * @package SpamTagger
  */
 class Domain extends PrefHandler {
 

@@ -1,6 +1,6 @@
 # Contributors
 
-## SpamTagger Plus Contributors
+## SpamTagger Contributors
 
 * [John Mertz](https://github.com/JohnMertz)
 
@@ -11,7 +11,7 @@ Additional contributors welcome!
 ### Historical Corporate Contributors
 
 * FastNet SA - FastNet was a Swiss provider of internet and telecommunication services and the original steward of MailCleaner. It is now a subsidiary of Alinto AG.
-* [Alinto](https://www.alinto.com) - Alinto is a French provider of business communications and email services. It acquired MailCleaner in 2022 and continued with support and development until early 2025 when MailCleaner was discontinued and SpamTagger Plus was forked. Alinto continues to sell hosted email filtering, relaying and hosting solutions.
+* [Alinto](https://www.alinto.com) - Alinto is a French provider of business communications and email services. It acquired MailCleaner in 2022 and continued with support and development until early 2025 when MailCleaner was discontinued and SpamTagger was forked. Alinto continues to sell hosted email filtering, relaying and hosting solutions.
 
 ### Historical Individual Contributors
 

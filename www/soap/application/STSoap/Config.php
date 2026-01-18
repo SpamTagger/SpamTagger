@@ -1,7 +1,7 @@
 <?php
 /**
  * @license https://www.gnu.org/licenses/gpl-3.0.en.html
- * @package SpamTagger Plus
+ * @package SpamTagger
  * @author Olivier Diserens
  * @copyright (C) 2004-2014 Olivier Diserens <olivier@diserens.ch>
  *                2015-2017 Mentor Reka <reka.mentor@gmail.com>

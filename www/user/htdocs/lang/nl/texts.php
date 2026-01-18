@@ -1,7 +1,7 @@
 <?php
 /**
  * @license https://www.gnu.org/licenses/gpl-3.0.en.html
- * @package SpamTagger Plus
+ * @package SpamTagger
  * @author Olivier Diserens
  * @copyright 2025, SpamTagger
  */
@@ -480,7 +480,7 @@ $txt['SESSIONTERMINATED'] = "Je sessie is beëindigd.";
 $txt['BEENLOGGEDOUT'] = "Als je een nieuwe sessie wilt starten, klik dan op deze link: <a href=\"__PARAM__\" >__PARAM__</a>";
 /**
  * @license https://www.gnu.org/licenses/gpl-3.0.en.html
- * @package SpamTagger Plus
+ * @package SpamTagger
  * @author Olivier Diserens
  * @copyright 2025, SpamTagger
  */
