@@ -1,4 +1,4 @@
-# SpamTagger
+# <img src="https://raw.githubusercontent.com/SpamTagger/SpamTagger/refs/heads/main/www/guis/users/public/images/logo.svg" alt="SpamTagger Logo" style="height:2em; vertical-align:middle;"> SpamTagger
 
 SpamTagger is a continuation of the MailCleaner® anti spam gateway.
 
