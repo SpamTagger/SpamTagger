@@ -35,7 +35,6 @@ $added_msg = "";
 $deleted_msg = "";
 $domainname = "";
 $onedomain=0;
-$batchadd = false;
 
 // instanciate the main form and get results if any
 $dform_ = new Form('domain', 'post', $_SERVER['PHP_SELF']);
@@ -57,11 +56,6 @@ if (isset($sposted['selected']) && $sposted['selected'] != "") {
 // domain saved, added ?
 if ( isset($posted['name']) ) {
 	$domainname = $posted['name'];
-}
-
-// want multiple domain add ?
-if (isset($_GET['ba']) || ( isset($posted['ba']) && $posted['ba']) == '1') {
-  $batchadd = true;
 }
 
 $domains = preg_split("/[\n\r\s\,]/", $domainname);
@@ -102,9 +96,6 @@ foreach ($domains as $domain) {
     $selected_domain->setPref('d', $domain);
     if ($domain != '0') {
       $selected_domain->setPref('name', $domain);
-    }
-    if (!$dform_->shouldSave() && $batchadd && $domainname != '0') {
-    	$selected_domain->setPref('name', $domainname);
     }
 
     // check if we have to save the domain
@@ -152,15 +143,6 @@ if ($selected_domain->getConnectorSettings() instanceof ConnectorSettings) {
 } else {
   $template_->setCondition('LOCALAUTH', true);
 }
-if ($batchadd) {
-  $template_->setCondition('BATCHADD', true);
-}
-if ($selected_domain->getPref('name') == "" && $batchadd) {
-   $template_->setCondition('BATCHADDDOMAIN', true);
-}
-if ($selected_domain->getPref('name') == "" && !$batchadd) {
-   $template_->setCondition('SINGLEADDDOMAIN', true);
-}
 
 $antispam_ = new AntiSpam();
 $antispam_->load();
@@ -206,7 +188,7 @@ $replace = array(
   "__DOC_WANTWARNLIST__" => $documentor->help_button('WANTWARNLIST'),
   "__DOMAINLIST_DRAW__" => $domains_->get_list($template, $selected_domain->getPref('name')),
   "__REMOVE_FULLLINK__" => $_SERVER['PHP_SELF']."?m=d&d=",
-  "__FORM_BEGIN_DOMAINEDIT__" => $dform_->open().$dform_->hidden('d', $selected_domain->id_).$dform_->hidden('ba', $batchadd),
+  "__FORM_BEGIN_DOMAINEDIT__" => $dform_->open().$dform_->hidden('d', $selected_domain->id_),
   "__FORM_CLOSE_DOMAINEDIT__" => $dform_->close(),
   "__FORM_INPUTDOMAINNAME__" => $dform_->input('name', 20, $selected_domain->getPref('name')),
   "__FORM_INPUTDOMAINNAMES__" => $dform_->textarea('name', 30, 5, $selected_domain->getPref('name')),
@@ -278,8 +260,6 @@ $replace = array(
   "__LINK_EDITWANTLIST__" => "wwlist.php?t=1&a=@".$selected_domain->getPref('name'),
   "__LINK_EDITWARNLIST__" => "wwlist.php?t=2&a=@".$selected_domain->getPref('name'),
   "__LINK_EDITBLOCKLIST__" => "wwlist.php?t=3&a=@".$selected_domain->getPref('name'),
-  "__LINK_GOBATCHADD__" => $_SERVER['PHP_SELF']."?d=0&ba",
-
 );
 
 $template_->output($replace);

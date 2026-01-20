@@ -70,6 +70,7 @@ $replace = array(
    '__TO__' => addslashes($spam->getCleanData('to')),
    '__TOTAL_SCORE__' => htmlentities(displayHit($spam->getData('M_score'))),
    '__NEWS__' => $spam->getData('is_newsletter'),
+   '__STOREREPLICA__' => $spam->getData('store_replica'),
 );
 
 $replace = $spam->setReplacements($template_, $replace);
@@ -85,92 +86,6 @@ function displayHit($value) {
       return $value;
   }
   return number_format($value, 1, '.', '');
-}
-
-function displayRules() {
-  global $spam;
-  global $template_;
-  global $viewrules;
-
-  if (! $viewrules) {
-  	return '';
-  }
-  $t = $template_->getTemplate('RULES');
-  $list = $spam->getReasons();
-  $full = "";
-  $i = 0;
-  foreach ($list as $tag => $value) {
-  	$line = $t;
-    $line = preg_replace('/__RULE__/', htmlentities($value['description']), $line);
-    $line = preg_replace('/__SCORE__/', htmlentities($value['score']), $line);
-
-    if ($i++ % 2) {
-      $line = preg_replace("/__COLOR1__(\S{7})__COLOR2__(\S{7})/", "$1", $line);
-    } else {
-      $line = preg_replace("/__COLOR1__(\S{7})__COLOR2__(\S{7})/", "$2", $line);
-    }
-
-    $full .= $line;
-  }
-  return $full;
-}
-
-function displayHeaders() {
-  global $viewheaders;
-  global $spam;
-
-  if (!$viewheaders) {
-  	return '';
-  }
-  $txt = htmlentities($spam->getRawHeaders());
-  $txt = preg_replace('/\n/', '<br>', $txt);
-  $txt = preg_replace('/\b([A-Z][-a-zA-Z0-9]+): /','<b>$1</b>:', $txt);
-  $txt = preg_replace('/\s/', '&nbsp;', $txt);
-  return $txt;
-}
-
-function displayBody() {
-  global $viewbody;
-  global $spam;
-
-  if (!$viewbody) {
-    return '';
-  }
-  $txt = htmlentities($spam->getRawBody());
-  $txt = preg_replace('/\n/', '<br>', $txt);
-  $txt = preg_replace("/&lt;/", "<font color=\"#CCCCCC\">&lt;", $txt);
-  $txt = preg_replace("/&gt;/", "&gt;</font>", $txt);
-  return $txt;
-}
-
-function getMIMEParts() {
-  global $spam;
-  global $lang_;
-
-  $parts = $spam->getPartsType();
-  if (count($parts) < 1) {
-  	return $lang_->print_txt('NONE');
-  }
-  if (count($parts) == 1) {
-    return "1 (text)";
-  }
-  $ret = count($parts) . " (";
-  foreach ($parts as $part) {
-    switch ($part) {
-    	case "text/plain":
-          $ret .= ",text";
-          break;
-        case "text/html":
-          $ret .= ",html";
-          break;
-        default:
-          $ts = split('/', $part);
-          $ret .= ",$ts[1]";
-    }
-  }
-  $ret .= ")";
-  $ret = preg_replace('/\(,/', '(', $ret);
-  return $ret;
 }
 
 ?>
