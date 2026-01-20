@@ -29,9 +29,6 @@ if ($sysconf_->issource_ < 1) {
 $template_ = new Template('index.tmpl');
 
 $firstpage = 'quarantine.php';
-#if (!$user_->hasPrefs()) {
-#  $firstpage = 'configuration.php?t=int';
-#}
 
 $replace = array(
         "__LANG__" => $lang_->getLanguage(),
