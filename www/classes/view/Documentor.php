@@ -44,7 +44,7 @@ class Documentor {
       return "";
     }
     $url = "help.php?s=".$subject;
-    return "<a href=\"#\" onClick=\"javascript:window.document.open('$url','','width=500,height=500,toolbar=no,resizable=yes,scrollbars=yes');\"><img src=\"templates/default/images/help.gif\" border=\"0\" align=\"absmiddle\"></a>" ;
+    return "<a href=\"#\" onClick=\"javascript:window.document.open('$url','','width=500,height=500,toolbar=no,resizable=yes,scrollbars=yes');\"><img src=\"templates/default/images/help_icon.png\" border=\"0\" align=\"absmiddle\"></a>";
   }
 
   /**

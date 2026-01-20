@@ -6,39 +6,7 @@
  * @copyright 2025, SpamTagger
  */
 
-/**************************
- ** TO DO
- **   Delete $grafix
- **   All h2 headings should be consistent: colons or not? separate line or not?
- **   Remove unused tags
- **   To tags that are subheadings: Add the name of the page to the title (e.g., "Antispam settings: Network checks")
- **/
 $help['NOSUBJECT'] = "help for this topic is not available";
-
-/**********************
-$grafix =
-"analyse.gif    	<img src=\"images/analyse.gif\" ><br/>
-apply.gif      	<img src=\"images/apply.gif\" ><br/>
-asc.gif        	<img src=\"images/asc.gif\" ><br/>
-desc.gif       	<img src=\"images/desc.gif\" ><br/>
-erase.gif      	<img src=\"images/erase.gif\" ><br/>
-fastnetlogo.gif	<img src=\"images/fastnetlogo.gif\" ><br/>
-force.gif      	<img src=\"images/force.gif\" ><br/>
-forced.gif     	<img src=\"images/forced.gif\" ><br/>
-help.gif       	<img src=\"images/help.gif\" ><br/>
-info.gif       	<img src=\"images/info.gif\" ><br/>
-logout.gif     	<img src=\"images/logout.gif\" ><br/>
-stlogo.gif     	<img src=\"images/stlogo.gif\" ><br/>
-mctitle.gif    	<img src=\"images/mctitle.gif\" ><br/>
-minus.gif      	<img src=\"images/minus.gif\" ><br/>
-pencil.gif     	<img src=\"images/pencil.gif\" ><br/>
-plus.gif       	<img src=\"images/plus.gif\" ><br/>
-reasons.gif    	<img src=\"images/reasons.gif\" ><br/>
-search.gif     	<img src=\"images/search.gif\" ><br/>
-top_back.gif   	<img src=\"images/top_back.gif   \" ><br/>
-";
-**********************/
-
 
 /****************************
  * View and Manage Domains

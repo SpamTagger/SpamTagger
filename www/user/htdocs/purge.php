@@ -60,6 +60,9 @@ if (isset($_GET['doit'])) {
   }
 } else {
   if (isset($_GET['a'])) {
+    if (!isset($_GET['days'])) {
+      $_GET['days'] = 7;
+    }
     if (gettype($_GET['a']) == 'string') {
       if ($user_->hasAddress($_GET['a'])) {
         $res = $lang_->print_txt_mparam('ASKPURGECONFIRM', array($_GET['days'], $_GET['a']));
