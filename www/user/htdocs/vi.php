@@ -68,24 +68,8 @@ $template_->setCondition('FIRSTOPEN', $firstopen);
 $replace = array(
    '__MSG_ID__' => $spam->getData('exim_id'),
    '__TO__' => addslashes($spam->getCleanData('to')),
-   '__FROM__' => urlencode($spam->getCleanData('sender')),
-   '__DATE__' => $spam->getCleanData('date_in')." ".$spam->getData('time_in'),
-   '__SUBJECT__' => htmlentities($spam->getCleanData('M_subject')),
-   '__PREFILTERS__' => htmlentities(displayHit($spam->getData('M_prefilter'))),
-   '__RBLS__' => htmlentities(displayHit($spam->getData('M_rbls'))),
-   '__FILTERSCORE__' => displayRules(),
    '__TOTAL_SCORE__' => htmlentities(displayHit($spam->getData('M_score'))),
-   '__SCOREARROWGIF__' => getArrowGif($viewrules),
-   '__SCOREARROWLINK__' => getLink('score'),
-   '__HEADERSARROWGIF__' => getArrowGif($viewheaders),
-   '__HEADERSARROWLINK__' => getLink('headers'),
-   '__BODYARROWGIF__' => getArrowGif($viewbody),
-   '__BODYARROWLINK__' => getLink('body'),
-   '__HEADERS__' => displayHeaders(),
-   '__BODY__' => displayBody(),
    '__NEWS__' => $spam->getData('is_newsletter'),
-   '__PARTS__' => getMIMEParts(),
-   '__STOREREPLICA__' => $spam->getData('store_replica')
 );
 
 $replace = $spam->setReplacements($template_, $replace);
@@ -157,50 +141,6 @@ function displayBody() {
   $txt = preg_replace("/&lt;/", "<font color=\"#CCCCCC\">&lt;", $txt);
   $txt = preg_replace("/&gt;/", "&gt;</font>", $txt);
   return $txt;
-}
-
-function getArrowGif($var) {
-  if ($var) {
-    return 'downarrow.gif';
-  }
-  return 'rightarrow.gif';
-}
-
-function getLink($var) {
-  global $viewrules;
-  global $viewheaders;
-  global $viewbody;
-  global $spam;
-  global $lang_;
-
-  $baseurl = "vi.php?id=".$spam->getData('exim_id')."&a=".$spam->getData('to')."&s=".$_GET['s'];
-  $baseurl .= "&lang=".$lang_->getLanguage();
-  $vr = $viewrules;
-  if ($var == 'score') {
-    if ($viewrules) {
-      $vr = 0;
-    } else {
-  	  $vr = 1;
-    }
-  }
-  $vh = $viewheaders;
-  if ($var == 'headers') {
-    if ($viewheaders) {
-      $vh = 0;
-    } else {
-      $vh = 1;
-    }
-  }
-  $vb = $viewbody;
-  if ($var == 'body') {
-    if ($viewbody) {
-      $vb = 0;
-    } else {
-      $vb = 1;
-    }
-  }
-  $baseurl .= "&vr=$vr&vh=$vh&vb=$vb";
-  return $baseurl;
 }
 
 function getMIMEParts() {
