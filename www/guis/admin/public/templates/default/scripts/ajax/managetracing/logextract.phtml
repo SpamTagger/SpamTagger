@@ -4,7 +4,7 @@
 <?php if (is_array($this->logs[$l])) {  ?>
 <tr>
 <td class="logextracttitle"><?php echo $this->t->_($l);?>: </td>
-<td class="logextractlog"><?php while (count($this->logs[$l])) { $line = array_shift($this->logs[$l]); echo htmlentities($line)."<br />"; }?></td>
+<td class="logextractlog"><?php while (count($this->logs[$l])) { $line = array_shift($this->logs[$l]); echo htmlspecialchars($line, ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8')."<br />"; }?></td>
 </tr>
 <?php } ?>
 <?php } ?>

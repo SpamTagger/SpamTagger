@@ -129,7 +129,7 @@ class SpamTagger_View_Helper_InputRow extends Zend_View_Helper_Abstract
             	$string .= '<img class="ferrorimg" src="'.$this->view->images_path.'/warning_mini.png"';
             	$msg = array_pop($element->getMessages());
             	$msg = preg_replace('/\'/', '"', $msg);
-            	$string .= ' onmouseover="javascript:showFieldError(event, \''.htmlentities($msg).'\'); return true;" onmouseout="javascript:hideFieldError(); return true;"';
+            	$string .= ' onmouseover="javascript:showFieldError(event, \''.htmlspecialchars($msg, ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8').'\'); return true;" onmouseout="javascript:hideFieldError(); return true;"';
             	$string .= '/>';
             }
             if (isset($params['post_field_text'])) {

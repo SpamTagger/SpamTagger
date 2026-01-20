@@ -39,7 +39,7 @@ class Validate_EmailAddressField extends Zend_Validate_Abstract
         }
 
         if (!$validator->isValid($address)) {
-            $this->address = htmlentities($address);
+            $this->address = htmlspecialchars($address, ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8');
             $this->_error(self::MSG_BADADDRESS);
             return false;
         }

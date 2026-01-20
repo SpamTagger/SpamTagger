@@ -79,7 +79,7 @@ public function close() {
  */
 public function hidden($name, $value) {
   $fname = $this->name_."_".$name;
-  return "<input type=\"hidden\" name=\"$fname\" value=\"".htmlentities($value)."\" />";
+  return "<input type=\"hidden\" name=\"$fname\" value=\"".htmlspecialchars($value, ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8')."\" />";
 }
 
 /**
@@ -91,13 +91,13 @@ public function hidden($name, $value) {
  */
 public function input($name, $length, $value) {
   $fname = $this->name_."_".$name;
-  return "<input type=\"text\" id=\"$fname\" name=\"$fname\" size=\"$length\" value=\"".htmlentities($value)."\" />";
+  return "<input type=\"text\" id=\"$fname\" name=\"$fname\" size=\"$length\" value=\"".htmlspecialchars($value, ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8')."\" />";
 }
 
 
 public function inputDisabled($name, $length, $value) {
   $fname = $this->name_."_".$name;
-  return "<input type=\"text\" id=\"$fname\" name=\"$fname\" size=\"$length\" value=\"".htmlentities($value)."\" disabled=\"disabled\" />";
+  return "<input type=\"text\" id=\"$fname\" name=\"$fname\" size=\"$length\" value=\"".htmlspecialchars($value, ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8')."\" disabled=\"disabled\" />";
 }
 
 
@@ -110,7 +110,7 @@ public function inputDisabled($name, $length, $value) {
  */
 public function inputjs($name, $length, $value, $js) {
   $fname = $this->name_."_".$name;
-  return "<input type=\"text\" name=\"$fname\" size=\"$length\" value=\"".htmlentities($value)."\" onkeydown=\"$js\" />";
+  return "<input type=\"text\" name=\"$fname\" size=\"$length\" value=\"".htmlspecialchars($value, ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8')."\" onkeydown=\"$js\" />";
 }
 
 /**
@@ -121,7 +121,7 @@ public function inputjs($name, $length, $value, $js) {
  */
 public function password($name, $length, $value) {
   $fname = $this->name_."_".$name;
-  return "<input type=\"password\" name=\"$fname\" size=\"$length\" value=\"".htmlentities($value)."\" />";
+  return "<input type=\"password\" name=\"$fname\" size=\"$length\" value=\"".htmlspecialchars($value, ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8')."\" />";
 }
 
 /**
@@ -172,7 +172,7 @@ public function checkbox($name, $value, $selected, $js, $active) {
     $ret .= "disabled";
   }
   $ret .= " />";
-  $ret .= "<input type=\"hidden\" name=\"$fname\" id=\"${fname}_checkbox\" value=\"".htmlentities($selected)."\" />";
+  $ret .= "<input type=\"hidden\" name=\"$fname\" id=\"${fname}_checkbox\" value=\"".htmlspecialchars($selected, ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8')."\" />";
   return $ret;
 }
 

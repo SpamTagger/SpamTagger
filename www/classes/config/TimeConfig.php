@@ -167,7 +167,7 @@ public function getServers() {
   $ret = rtrim($ret);
   $ret = rtrim($ret, '\,');
 
-  return htmlentities($ret);
+  return htmlspecialchars($ret, ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8');
 }
 
 /**

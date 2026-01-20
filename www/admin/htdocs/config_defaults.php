@@ -76,14 +76,14 @@ $replace = array(
         "__FORM_CLOSE_DEFAULTS__" => $dform->close(),
         "__FORM_INPUTLANGUAGE__" => $dform->select('default_language', $lang_->getLanguages('FULLNAMEASKEY'), $sysconf_->getPref('default_language'), ';'),
         "__FORM_INPUTDOMAIN__" => $dform->select('default_domain', $sysconf_->getFilteredDomains(), $sysconf_->getPref('default_domain'), ';'),
-        "__FORM_INPUTREPORTSPAMADDRESS__" => $dform->input('analyse_to', 25, htmlentities($sysconf_->getPref('analyse_to'))),
-        "__FORM_INPUTSYSTEMSENDER__" => $dform->input('summary_from', 25, htmlentities($sysconf_->getPref('summary_from'))),
-        "__FORM_INPUTDAYSTOKEEPSPAMS__" => $dform->input('days_to_keep_spams', 3, htmlentities($sysconf_->getPref('days_to_keep_spams'))),
-        "__FORM_INPUTDAYSTOKEEPVIRUSES__" => $dform->input('days_to_keep_virus', 3, htmlentities($sysconf_->getPref('days_to_keep_virus'))),
+        "__FORM_INPUTREPORTSPAMADDRESS__" => $dform->input('analyse_to', 25, htmlspecialchars($sysconf_->getPref('analyse_to'), ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8')),
+        "__FORM_INPUTSYSTEMSENDER__" => $dform->input('summary_from', 25, htmlspecialchars($sysconf_->getPref('summary_from'), ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8')),
+        "__FORM_INPUTDAYSTOKEEPSPAMS__" => $dform->input('days_to_keep_spams', 3, htmlspecialchars($sysconf_->getPref('days_to_keep_spams'), ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8')),
+        "__FORM_INPUTDAYSTOKEEPVIRUSES__" => $dform->input('days_to_keep_virus', 3, htmlspecialchars($sysconf_->getPref('days_to_keep_virus'), ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8')),
         "__FORM_INPUTHOURS__" => $dform->select('cron_time', $hours, $sysconf_->getPref('cron_time'), ';'),
         "__FORM_INPUTWEEKDAYS__" => $dform->select('cron_weekday', $weekdays, $sysconf_->getPref('cron_weekday'), ';'),
         "__FORM_INPUTMONTHDAYS__" => $dform->select('cron_monthday', $monthdays, $sysconf_->getPref('cron_monthday'), ';'),
-        "__FORM_INPUTSYSHOST__" => $dform->input('syslog_host', 25, htmlentities($sysconf_->getPref('syslog_host'))),
+        "__FORM_INPUTSYSHOST__" => $dform->input('syslog_host', 25, htmlspecialchars($sysconf_->getPref('syslog_host'), ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8')),
         "__FORM_INPUTWANTCHOOSER__" => $dform->checkbox('want_domainchooser', 1, $sysconf_->getPref('want_domainchooser'), '', 1)
 );
 

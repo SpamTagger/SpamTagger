@@ -183,9 +183,9 @@ class ListManager {
           $template = $value->getElementTemplate($template, $s, $i);
         }
       } else {
-        $template = str_replace('__USER__', htmlentities($value), $template);
-        $template = str_replace('__EMAIL__', htmlentities($value), $template);
-        $template = str_replace('__ADMIN__', htmlentities($value), $template);
+        $template = str_replace('__USER__', htmlspecialchars($value, ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8'), $template);
+        $template = str_replace('__EMAIL__', htmlspecialchars($value, ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8'), $template);
+        $template = str_replace('__ADMIN__', htmlspecialchars($value, ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8'), $template);
 
         $template = str_replace('__SETTINGSTARGET__', "javascript:window.document.forms['".$this->form_name_."'].search_selected.value='".urlencode($value)."';window.document.forms['".$this->form_name_."'].submit();", $template);
         $template = str_replace('__REMTARGET__', "javascript:delete_confirm('".urlencode($value)."')", $template);

@@ -98,8 +98,8 @@ public function getHtmlList($t) {
     } else {
       $template = preg_replace("/__COLOR1__(\S{7})__COLOR2__(\S{7})/", "$2", $t);
     }
-    $template = str_replace('__REASON__', htmlentities($values[1]), $template);
-    $template = str_replace('__REASON_SCORE__', htmlentities($values[0]), $template);
+    $template = str_replace('__REASON__', htmlspecialchars($values[1],ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8'), $template);
+    $template = str_replace('__REASON_SCORE__', htmlspecialchars($values[0],ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8'), $template);
     $ret .= $template;
   }
   return $ret;

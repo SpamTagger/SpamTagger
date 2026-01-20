@@ -65,8 +65,7 @@ class Default_Model_QuarantinedSpam
       );
       $data = $this->getParam($param);
       $data = iconv_mime_decode($data, ICONV_MIME_DECODE_CONTINUE_ON_ERROR, 'UTF-8');
-      $ret = htmlentities($data, ENT_COMPAT, "UTF-8");
-      $ret = htmlspecialchars($ret);
+      $ret = htmlspecialchars($data, ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8');
       if (isset($split_fields[$param]) && (strlen($ret) > $split_fields[$param])) {
          $ret = substr($ret, 0, $split_fields[$param]);
          $ret .= '...';

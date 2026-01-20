@@ -128,10 +128,10 @@ private function dumpMessage($t, $images, $sid, $f, $i) {
   }
 
   $ret = $t;
-  $ret = str_replace('__TIME__', htmlentities($f['time']), $ret);
-  $ret = str_replace('__ID__', htmlentities($f['id']), $ret);
-  $ret = str_replace('__SIZE__', htmlentities($f['size']), $ret);
-  $ret = str_replace('__FROM__', htmlentities($f['from']), $ret);
+  $ret = str_replace('__TIME__', htmlspecialchars($f['time'], ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8'), $ret);
+  $ret = str_replace('__ID__', htmlspecialchars($f['id'], ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8'), $ret);
+  $ret = str_replace('__SIZE__', htmlspecialchars($f['size'], ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8'), $ret);
+  $ret = str_replace('__FROM__', htmlspecialchars($f['from'], ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8'), $ret);
   if ($this->spool_ != 'MTA2') {
    $ret = str_replace('__ACTION__', "<a href=\"javascript:window.location.href='".$_SERVER['PHP_SELF']."?s=".$this->spool_."&sid=$sid&m=fo&mid=".$f['id']."'\"><img src=\"".$images['FORCEMSG']."\" border=\"0\"></a>", $ret);
   } else {
@@ -157,7 +157,7 @@ private function dumpMessage($t, $images, $sid, $f, $i) {
     }
   }
   $tos = preg_replace('/^\<br\/\>\&nbsp\;/', '', $tos);
-  $ret = str_replace('__TO__', htmlentities($tos), $ret);
+  $ret = str_replace('__TO__', htmlspecialchars($tos, ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8'), $ret);
   return $ret;
 }
 

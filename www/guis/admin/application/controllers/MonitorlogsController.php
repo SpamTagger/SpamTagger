@@ -231,7 +231,7 @@ class MonitorlogsController extends Zend_Controller_Action
 			$lines = array();
 			if (isset($res['lines'])) {
 				foreach ($res['lines'] as $line) {
-					$html_line = htmlentities($line);
+					$html_line = htmlspecialchars($line, ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8');
 					$html_line = str_replace('___SB___', '<strong>', $html_line);
 					$html_line = str_replace('___EB___', '</strong>', $html_line);
                                         $html_line = str_replace('___SFB___', '<strong class="firstmatch">', $html_line);

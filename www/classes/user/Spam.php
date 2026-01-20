@@ -122,7 +122,7 @@ public function getAllData() {
     );
     $data = $this->getData($field);
     $data = iconv_mime_decode($data, ICONV_MIME_DECODE_CONTINUE_ON_ERROR, 'UTF-8');
-    $ret = htmlentities($data, ENT_COMPAT, "UTF-8");
+    $ret = htmlspecialchars($data, ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8');
     if ($field == 'M_subject') {
       return substr($ret, 0, $split_fields[$field]);
     } elseif ($field == 'to' || $field == 'sender') {
@@ -543,7 +543,7 @@ public function getFormatedBody() {
     $fullbody .= $dline."\n";
   }
   #return $fullbody;
-  $txt = htmlentities($fullbody, ENT_COMPAT, 'UTF-8', 0);
+  $txt = htmlspecialchars($fullbody, ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8');
   #$txt = $fullbody;
   $txt = preg_replace('/\n/', '<br />', $txt);
   $txt = preg_replace("/&lt;/", "<span class=\"htmltag\">&lt;", $txt);
@@ -559,8 +559,8 @@ private function getHeadersInTemplate($template) {
     $fvalue = $head[1];
 
 
-    $key = htmlentities($key);
-    $fvalue = htmlentities($fvalue);
+    $key = htmlspecialchars($key, ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8');
+    $fvalue = htmlspecialchars($fvalue, ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8');
     $key = preg_replace('/\n/', '<br />', $key);
     $fvalue = preg_replace('/\n/', '<br />', $fvalue);
     $fvalue = str_replace('[tab]', '&nbsp;&nbsp;&nbsp;', $fvalue);
@@ -591,7 +591,7 @@ private function displayGlobalValue($value) {
   if (is_numeric($value)) {
     return number_format($value, 1, '.', '');
   }
-  return htmlentities($value);
+  return htmlspecialchars($value, ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8');
 }
 
 private function getMIMEPartsType() {

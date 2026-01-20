@@ -234,12 +234,12 @@ class ConfigUserWWList {
                 continue;
             }
             $t = $template->getTemplate('ENTRY');
-            $entrytext = htmlentities($entry->getPref('sender'));
+            $entrytext = htmlspecialchars($entry->getPref('sender'), ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8');
             $cleanentry = $this->wwlist_->encodeVarName($entrytext);
             $t = str_replace('__ENTRY__', $entrytext, $t);
             $t = str_replace('__INPUT_CHECKBOXENTRY__', $f->checkbox('ent_'.$cleanentry, 1, 0, '', 1).$f->hidden('id', $entry->getPref('id')), $t);
 
-            $t = str_replace('__COMMENT__', htmlentities($entry->getPref('comments')), $t);
+            $t = str_replace('__COMMENT__', htmlspecialchars($entry->getPref('comments'), ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8'), $t);
             if ($entry->getPref('comments') != "") {
                 $t = preg_replace('/__IF_COMMENT__(.*)__FI_COMMENT__/', '${1}', $t);
             } else {

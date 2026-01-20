@@ -68,7 +68,7 @@ $template_->setCondition('FIRSTOPEN', $firstopen);
 $replace = array(
    '__MSG_ID__' => $spam->getData('exim_id'),
    '__TO__' => addslashes($spam->getCleanData('to')),
-   '__TOTAL_SCORE__' => htmlentities(displayHit($spam->getData('M_score'))),
+   '__TOTAL_SCORE__' => htmlspecialchars(displayHit($spam->getData('M_score')), ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8'),
    '__NEWS__' => $spam->getData('is_newsletter'),
    '__STOREREPLICA__' => $spam->getData('store_replica'),
 );

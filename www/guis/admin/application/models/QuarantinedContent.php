@@ -58,28 +58,27 @@ class Default_Model_QuarantinedContent
 				$data = preg_replace('/\=\?[^?]{3,15}\?.\?[^?]+\?\=/', $ddata, $data);
 		}
 
-		$ret = htmlentities($data, ENT_COMPAT, "UTF-8");
 		if ($param == 'report') {
-			$ret = preg_replace('/,/', '<br />', $ret);
+			$data = preg_replace('/,/', '<br />', $data);
 		}
 
-		if ($param == 'size' && is_numeric($ret)) {
-			if ($ret > 1000000000) {
-				$ret = ($ret / 1000000000)." ".$t->_('Gb');
-			} else if ($ret > 1000000) {
-				$ret = ($ret / 1000000)." ".$t->_('Mb');
-			} else if ($ret > 1000) {
-				$ret = ($ret / 1000)." ".$t->_('Kb');
+		if ($param == 'size' && is_numeric($data)) {
+			if ($data > 1000000000) {
+				$data = ($data / 1000000000)." ".$t->_('Gb');
+			} else if ($data > 1000000) {
+				$data = ($data / 1000000)." ".$t->_('Mb');
+			} else if ($data > 1000) {
+				$data = ($data / 1000)." ".$t->_('Kb');
 			} else {
-				$ret .= " ".$t->_('bytes');
+				$data .= " ".$t->_('bytes');
 			}
 		}
-		if (isset($split_fields[$param]) && (strlen($ret) > $split_fields[$param])) {
-			$ret = substr($ret, 0, $split_fields[$param]);
-			$ret .= '...';
+		if (isset($split_fields[$param]) && (strlen($data) > $split_fields[$param])) {
+			$data = substr($data, 0, $split_fields[$param]);
+			$data .= '...';
 		}
 
-		return $ret;
+		return htmlspecialchars($data, ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8');
 	}
 
 	public function getParamArray() {

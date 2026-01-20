@@ -94,7 +94,7 @@ public function getPathToFile() {
  * @return         mixed   cleaned data value
  */
  public function getCleanData($field) {
-    return htmlentities($this->getPref($field));
+    return htmlspecialchars($this->getPref($field), ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8');
  }
 
 /**
