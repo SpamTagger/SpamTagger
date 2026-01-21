@@ -80,7 +80,7 @@ class Language
     $this->sysconf_ = SystemConfig::getInstance();
 
     // Initialize "dynamicly" $this->available_languages_ and inversed_languages_
-    $langDir = $this->sysconf_->SRCDIR_."/www/".$this->type_."/htdocs/lang/";
+    $langDir = $this->sysconf_->SRCDIR_."/www/".$this->type_."/lang/";
     $dirs = array_filter(glob($langDir.'*'), 'is_dir'); // get all lang in directories
 
     // read langages csv

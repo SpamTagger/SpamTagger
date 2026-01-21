@@ -126,8 +126,8 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
     	// set users language
     	$default_language = Zend_Registry::get('default_language');
 
-        $translate = new Zend_Translate('array', APPLICATION_PATH . '/../languages/' . $default_language . '/legends.php', $default_language );
-        $translate->addTranslation(APPLICATION_PATH . '/../languages/' . $default_language . '/docs.php', 'en');
+        $translate = new Zend_Translate('array', APPLICATION_PATH . '/../lang/' . $default_language . '/legends.php', $default_language );
+        $translate->addTranslation(APPLICATION_PATH . '/../lang/' . $default_language . '/docs.php', 'en');
         Zend_Registry::set('translate', $translate);
         Zend_Registry::set('Zend_Translate', $translate);
         Zend_Validate_Abstract::setDefaultTranslator($translate);

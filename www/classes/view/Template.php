@@ -127,7 +127,7 @@ public function __construct($tmpl) {
   }
 
   // fetch the template language file to override language texts
-  $template_lang = $sysconf_->SRCDIR_."/www/".$mode."/htdocs/templates/".$this->model_."/lang/".$lang_->getLanguage()."/texts.php";
+  $template_lang = $sysconf_->SRCDIR_."/www/".$mode."/lang/".$lang_->getLanguage()."/texts.php";
   if (file_exists($template_lang)) {
     $txt = array ();
     include ($template_lang);

@@ -30,7 +30,7 @@ class Documentor {
     $sysconf_ = SystemConfig::getInstance();
     $lang_ = Language::getInstance('admin');
     $help = array();
-    require($sysconf_->SRCDIR_."/www/admin/htdocs/lang/".$lang_->getLanguage()."/help.php");
+    require($sysconf_->SRCDIR_."/www/admin/lang/".$lang_->getLanguage()."/help.php");
     $this->help_ = $help;
   }
 
