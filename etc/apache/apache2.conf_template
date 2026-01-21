@@ -94,7 +94,7 @@ LimitGIDRange 0 2000
     Require all granted
 </Directory>
 
-<Directory "__SRCDIR__/www/guis">
+<Directory "__SRCDIR__/www/admin">
     AllowOverride All
 </Directory>
 <Directory "__SRCDIR__/www/api">

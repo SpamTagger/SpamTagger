@@ -921,7 +921,7 @@ class Default_Model_Domain
 		## use old stuff !
 		unset($_SESSION['_authsession']);
 		set_include_path(implode(PATH_SEPARATOR, array(
-		realpath(APPLICATION_PATH . '/../../../../classes'),
+		realpath(APPLICATION_PATH . '/../../../classes'),
 		get_include_path(),
 		)));
 		require_once('Log.php');
@@ -981,7 +981,7 @@ class Default_Model_Domain
 		## use old stuff !
 		unset($_SESSION['_authsession']);
 		set_include_path(implode(PATH_SEPARATOR, array(
-		realpath(APPLICATION_PATH . '/../../../../classes'),
+		realpath(APPLICATION_PATH . '/../../../classes'),
 		get_include_path(),
 		)));
 		require_once('Log.php');
@@ -1015,7 +1015,7 @@ class Default_Model_Domain
 		## use old stuff !
 		unset($_SESSION['_authsession']);
 		set_include_path(implode(PATH_SEPARATOR, array(
-		realpath(APPLICATION_PATH . '/../../../../classes'),
+		realpath(APPLICATION_PATH . '/../../../classes'),
 		get_include_path(),
 		)));
 		require_once('Log.php');
@@ -1068,7 +1068,7 @@ class Default_Model_Domain
 		## use old stuff !
 		unset($_SESSION['_authsession']);
 		set_include_path(implode(PATH_SEPARATOR, array(
-		realpath(APPLICATION_PATH . '/../../../../classes'),
+		realpath(APPLICATION_PATH . '/../../../classes'),
 		get_include_path(),
 		)));
 		require_once('Log.php');

@@ -353,7 +353,7 @@ class Default_Model_ReportingStats
         	$slice++;
         }
 
-        $picture->setFontProperties(array("FontName"=>$config->getOption('SRCDIR')."/www/guis/admin/application/library/pChart/fonts/pf_arma_five.ttf","FontSize"=>6,"R"=>80,"G"=>80,"B"=>80));
+        $picture->setFontProperties(array("FontName"=>$config->getOption('SRCDIR')."/www/admin/application/library/pChart/fonts/pf_arma_five.ttf","FontSize"=>6,"R"=>80,"G"=>80,"B"=>80));
 
         $nonnull = false;
         foreach ($vdata as $d) {
@@ -383,7 +383,7 @@ class Default_Model_ReportingStats
              $picture->drawFilledCircle($position[0],$position[1],$radius,array("R"=>230, "G"=>230, "B"=>230));
         }
         $picture->setShadow(FALSE);
-        $picture->setFontProperties(array("FontName"=>$config->getOption('SRCDIR')."/www/guis/admin/application/library/pChart/fonts/pf_arma_five.ttf","FontSize"=>6,"R"=>80,"G"=>80,"B"=>80));
+        $picture->setFontProperties(array("FontName"=>$config->getOption('SRCDIR')."/www/admin/application/library/pChart/fonts/pf_arma_five.ttf","FontSize"=>6,"R"=>80,"G"=>80,"B"=>80));
         if (!isset($params['no_label'])) {
             $chart->drawPieLegend(
                        $label_pos[0],$label_pos[1],
@@ -400,7 +400,7 @@ class Default_Model_ReportingStats
             if (!$id) {
                $id = "Zob4458";
             }
-            $file = $config->getOption('SRCDIR').'/www/guis/admin/public/tmp/'.$id.".png";
+            $file = $config->getOption('SRCDIR').'/www/admin/public/tmp/'.$id.".png";
             $picture->render($file);
             return $id;
         }
