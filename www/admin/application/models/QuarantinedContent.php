@@ -198,7 +198,8 @@ class Default_Model_QuarantinedContent
 			if (strlen($line) > 78) {
 				$line = substr($line, 0, 78)."...";
 			}
-            $line = htmlentities($line, ENT_COMPAT, 'UTF-8');
+            		#$line = htmlentities($line, ENT_COMPAT, 'UTF-8');
+		        $line = htmlspecialchars($line, ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8');
 			if (preg_match('/^([A-Z]\S+):(.*)/', $line, $matches)) {
 				if ($last_header != "" && $lh != "") {
 					array_push($res, array($last_header, $lh));
