@@ -1113,7 +1113,7 @@ class Default_Model_Domain
 	 */
 	public function getWebTemplates() {
 		$config = SpamTagger_Config::getInstance();
-		$path = $config->getOption('SRCDIR')."/www/user/htdocs/templates";
+		$path = $config->getOption('SRCDIR')."/www/user/templates";
 		return $this->getTemplates($path);
 	}
 

@@ -88,7 +88,7 @@ LimitGIDRange 0 2000
     AllowOverride None
 </Directory>
 
-<Directory "__SRCDIR__/www/user/htdocs">
+<Directory "__SRCDIR__/www/user">
     Options -Indexes +FollowSymLinks +MultiViews
     AllowOverride None
     Require all granted

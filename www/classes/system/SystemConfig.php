@@ -418,14 +418,14 @@ class SystemConfig extends PrefHandler {
         $this->report_templates_ = array ();
         $this->warnhit_templates_ = array ();
 
-        $web_template_files = scandir($this->SRCDIR_."/www/user/htdocs/templates");
+        $web_template_files = scandir($this->SRCDIR_."/www/user/templates");
         $summary_template_files = scandir($this->SRCDIR_."/templates/summary");
         $report_template_files = scandir($this->SRCDIR_."/templates/reports");
         $warnhit_template_files = scandir($this->SRCDIR_."/templates/warnhit");
 
         foreach ($web_template_files as $template) {
             $tmp = array ();
-            if (is_dir($this->SRCDIR_."/www/user/htdocs/templates/".$template) && $template != "CVS" && !preg_match('/^\./', $template, $tmp)) {
+            if (is_dir($this->SRCDIR_."/www/user/templates/".$template) && $template != "CVS" && !preg_match('/^\./', $template, $tmp)) {
                 $this->web_templates_[$template] = $template;
             }
         }

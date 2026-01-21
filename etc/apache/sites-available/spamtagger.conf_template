@@ -1,6 +1,6 @@
 Listen __HTTPPORT__
 
-DocumentRoot "__SRCDIR__/www/user/htdocs"
+DocumentRoot "__SRCDIR__/www/user"
 Alias /admin __SRCDIR__/www/admin/public
 Alias /mrtg  __VARDIR__/www/mrtg
 Alias /stats  __VARDIR__/www/stats
