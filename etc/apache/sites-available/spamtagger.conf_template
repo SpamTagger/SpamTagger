@@ -5,7 +5,6 @@ Alias /admin __SRCDIR__/www/guis/admin/public
 Alias /mrtg  __VARDIR__/www/mrtg
 Alias /stats  __VARDIR__/www/stats
 Alias /api __SRCDIR__/www/api/public
-Alias /users __SRCDIR__/www/guis/users/public
 
 __IFSSL__
 Listen __HTTPSPORT__
