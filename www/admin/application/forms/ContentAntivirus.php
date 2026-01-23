@@ -30,7 +30,7 @@ class Default_Form_ContentAntivirus extends ZendX_JQuery_Form {
     $this->setAttrib('id', 'antivirusglobalsettings_form');
 
     $silent = new Zend_Form_Element_Checkbox('silent', array(
-      'label'   => $t->_('Drop known viruses silently'),
+      'label' => $t->_('Drop known viruses silently'),
       'title' => $t->_("If SpamTagger meet a known virus, it is dropped without warning"),
       'uncheckedValue' => "0",
       'checkedValue' => "1"
@@ -41,19 +41,19 @@ class Default_Form_ContentAntivirus extends ZendX_JQuery_Form {
     $this->addElement($silent);
 
     $scanner_timeout = new  Zend_Form_Element_Text('scanner_timeout', array(
-      'label'   => $t->_('Anti-virus scanners timeout')." :",
+      'label' => $t->_('Anti-virus scanners timeout')." :",
       'title' => $t->_("Timeout for the AntiVirus part"),
       'required' => false,
       'size' => 4,
       'class' => 'fieldrighted',
-      'filters'    => array('StringToLower', 'StringTrim'))
+      'filters' => array('StringToLower', 'StringTrim'))
     );
     $scanner_timeout->setValue($this->_antivirus->getParam('scanner_timeout'));
     $scanner_timeout->addValidator(new Zend_Validate_Int());
     $this->addElement($scanner_timeout);
 
     $submit = new Zend_Form_Element_Submit('submit', array(
-      'label'    => $t->_('Submit'))
+      'label' => $t->_('Submit'))
     );
     $this->addElement($submit);
   }

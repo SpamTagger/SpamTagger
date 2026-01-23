@@ -37,8 +37,8 @@ class Default_Form_ChangeHostId extends ZendX_JQuery_Form {
     $this->setAttrib('id', 'changehostid_form');
 
     $submit = new Zend_Form_Element_Submit('changehostid', array(
-      'label'    => $t->_('Submit'),
-      'attribs'    => $attribs)
+      'label' => $t->_('Submit'),
+      'attribs' => $attribs)
     );
     $this->addElement($submit);
   }

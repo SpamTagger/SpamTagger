@@ -29,7 +29,7 @@ class Default_Form_SmtpChecks extends ZendX_JQuery_Form {
     $this->setAttrib('id', 'smtpchecks_form');
 
     $senderverify = new Zend_Form_Element_Checkbox('verify_sender', array(
-      'label'   => $t->_('Verify sender domain'). " :",
+      'label' => $t->_('Verify sender domain'). " :",
       'uncheckedValue' => "0",
       'checkedValue' => "1"
     ));
@@ -39,7 +39,7 @@ class Default_Form_SmtpChecks extends ZendX_JQuery_Form {
     $this->addElement($senderverify);
 
     $forcesync = new Zend_Form_Element_Checkbox('smtp_enforce_sync', array(
-      'label'   => $t->_('Force SMTP protocol synchronization'). " :",
+      'label' => $t->_('Force SMTP protocol synchronization'). " :",
       'title' => $t->_('Rejects any email sent by the remote MTA without waiting the 220 SMTP response first'),
       'uncheckedValue' => "0",
       'checkedValue' => "1"
@@ -50,7 +50,7 @@ class Default_Form_SmtpChecks extends ZendX_JQuery_Form {
     $this->addElement($forcesync);
 
     $allowmxtoip = new Zend_Form_Element_Checkbox('allow_mx_to_ip', array(
-      'label'   => $t->_('Allow hosts with MX that point to IP addresses'). " :",
+      'label' => $t->_('Allow hosts with MX that point to IP addresses'). " :",
       'uncheckedValue' => "0",
       'checkedValue' => "1"
     ));
@@ -60,7 +60,7 @@ class Default_Form_SmtpChecks extends ZendX_JQuery_Form {
     $this->addElement($allowmxtoip);
 
     $reject_bad_spf = new Zend_Form_Element_Checkbox('reject_bad_spf', array(
-      'label'   => $t->_('Reject wrong SPF (fail result)'). " :",
+      'label' => $t->_('Reject wrong SPF (fail result)'). " :",
       'title' => $t->_("Rejects mails not satisfying the domain's SPF"),
       'uncheckedValue' => "0",
       'checkedValue' => "1"
@@ -71,7 +71,7 @@ class Default_Form_SmtpChecks extends ZendX_JQuery_Form {
     $this->addElement($reject_bad_spf);
 
     $reject_bad_rdns = new Zend_Form_Element_Checkbox('reject_bad_rdns', array(
-      'label'   => $t->_('Reject invalid reverse DNS'). " :",
+      'label' => $t->_('Reject invalid reverse DNS'). " :",
       'uncheckedValue' => "0",
       'checkedValue' => "1"
     ));
@@ -81,7 +81,7 @@ class Default_Form_SmtpChecks extends ZendX_JQuery_Form {
     $this->addElement($reject_bad_rdns);
 
     $dmarc_follow_reject_policy = new Zend_Form_Element_Checkbox('dmarc_follow_reject_policy', array(
-      'label'   => $t->_('Honor DMARC reject policy'). " :",
+      'label' => $t->_('Honor DMARC reject policy'). " :",
       'uncheckedValue' => "0",
       'checkedValue' => "1"
     ));
@@ -91,7 +91,7 @@ class Default_Form_SmtpChecks extends ZendX_JQuery_Form {
     $this->addElement($dmarc_follow_reject_policy);
 
     $dmarc_enable_reports = new Zend_Form_Element_Checkbox('dmarc_enable_reports', array(
-      'label'   => $t->_('Enable reporting to DMARC domains'). " :",
+      'label' => $t->_('Enable reporting to DMARC domains'). " :",
       'uncheckedValue' => "0",
       'checkedValue' => "1"
     ));
@@ -101,23 +101,23 @@ class Default_Form_SmtpChecks extends ZendX_JQuery_Form {
     $this->addElement($dmarc_enable_reports);
 
     $callouttimeout = new  Zend_Form_Element_Text('callout_timeout', array(
-      'label'    => $t->_('Recipient verification timeout')." :",
+      'label' => $t->_('Recipient verification timeout')." :",
       'required' => false,
       'size' => 2,
       'class' => 'fieldrighted',
-      'filters'    => array('Alnum', 'StringTrim')
+      'filters' => array('Alnum', 'StringTrim')
     ));
     $callouttimeout->setValue($this->_mta->getParam('callout_timeout'));
     $callouttimeout->addValidator(new Zend_Validate_Int());
     $this->addElement($callouttimeout);
 
     $rbltimeout = new  Zend_Form_Element_Text('rbls_timeout', array(
-      'label'    => $t->_('RBL checks timeout')." :",
-      'title'  => $t->_('this timeout will apply to ALL RBL checks throughout SpamTagger'),
+      'label' => $t->_('RBL checks timeout')." :",
+      'title' => $t->_('this timeout will apply to ALL RBL checks throughout SpamTagger'),
       'required' => true,
       'size' => 2,
       'class' => 'fieldrighted',
-      'filters'    => array('Alnum', 'StringTrim')
+      'filters' => array('Alnum', 'StringTrim')
     ));
     $rbltimeout->setValue($this->_mta->getParam('rbls_timeout'));
     $rbltimeout->addValidator(new Zend_Validate_Int());
@@ -125,12 +125,12 @@ class Default_Form_SmtpChecks extends ZendX_JQuery_Form {
 
     require_once('Validate/SMTPHostList.php');
     $rblignore = new Zend_Form_Element_Textarea('rbls_ignore_hosts', array(
-      'label'    =>  $t->_('Don\'t check these hosts')." :",
-      'title'  => $t->_('Bypass RBLs results for these IPs'),
-      'required'   => false,
+      'label' => $t->_('Don\'t check these hosts')." :",
+      'title' => $t->_('Bypass RBLs results for these IPs'),
+      'required' => false,
       'rows' => 5,
       'cols' => 30,
-      'filters'    => array('StringToLower', 'StringTrim')
+      'filters' => array('StringToLower', 'StringTrim')
     ));
     $rblignore->addValidator(new Validate_SMTPHostList());
     $rblignore->setValue($this->_mta->getParam('rbls_ignore_hosts'));
@@ -138,12 +138,12 @@ class Default_Form_SmtpChecks extends ZendX_JQuery_Form {
 
     require_once('Validate/SMTPHostList.php');
     $spf_dmarc_ignore = new Zend_Form_Element_Textarea('spf_dmarc_ignore_hosts', array(
-      'label'    =>  $t->_('Don\'t check these hosts for SPF or DMARC')." :",
-      'title'  => $t->_('Bypass RBLs results for these IPs for SPF and DMARC'),
-      'required'   => false,
+      'label' => $t->_('Don\'t check these hosts for SPF or DMARC')." :",
+      'title' => $t->_('Bypass RBLs results for these IPs for SPF and DMARC'),
+      'required' => false,
       'rows' => 5,
       'cols' => 30,
-      'filters'    => array('StringToLower', 'StringTrim')
+      'filters' => array('StringToLower', 'StringTrim')
     ));
     $spf_dmarc_ignore->addValidator(new Validate_SMTPHostList());
     $spf_dmarc_ignore->setValue($this->_mta->getParam('spf_dmarc_ignore_hosts'));
@@ -165,7 +165,7 @@ class Default_Form_SmtpChecks extends ZendX_JQuery_Form {
     }
 
     $outgoingvirusscan = new Zend_Form_Element_Checkbox('outgoing_virus_scan', array(
-      'label'   => $t->_('Scan relayed (outgoing) messages for viruses'). " :",
+      'label' => $t->_('Scan relayed (outgoing) messages for viruses'). " :",
       'title' => $t->_("Enable / disable the virus check for outgoing messages"),
       'uncheckedValue' => "0",
       'checkedValue' => "1"
@@ -176,7 +176,7 @@ class Default_Form_SmtpChecks extends ZendX_JQuery_Form {
     $this->addElement($outgoingvirusscan);
 
     $maskrelayedip = new Zend_Form_Element_Checkbox('mask_relayed_ip', array(
-      'label'   => $t->_('Mask IP address of relayed host on port 587'). " :",
+      'label' => $t->_('Mask IP address of relayed host on port 587'). " :",
       'uncheckedValue' => "0",
       'checkedValue' => "1"
     ));
@@ -186,7 +186,7 @@ class Default_Form_SmtpChecks extends ZendX_JQuery_Form {
     $this->addElement($maskrelayedip);
 
     $block25auth = new Zend_Form_Element_Checkbox('block_25_auth', array(
-      'label'   => $t->_('Block authenticated relaying on port 25'). " :",
+      'label' => $t->_('Block authenticated relaying on port 25'). " :",
       'uncheckedValue' => "0",
       'checkedValue' => "1"
     ));
@@ -196,7 +196,7 @@ class Default_Form_SmtpChecks extends ZendX_JQuery_Form {
     $this->addElement($block25auth);
 
     $masquerade_outgoing_helo = new Zend_Form_Element_Checkbox('masquerade_outgoing_helo', array(
-      'label'   => $t->_('Masquerade relayed HELO with sender domain'). " :",
+      'label' => $t->_('Masquerade relayed HELO with sender domain'). " :",
       'uncheckedValue' => "0",
       'checkedValue' => "1"
     ));
@@ -206,7 +206,7 @@ class Default_Form_SmtpChecks extends ZendX_JQuery_Form {
     $this->addElement($masquerade_outgoing_helo);
 
     $log_subject = new Zend_Form_Element_Checkbox('log_subject', array(
-      'label'   => $t->_('Include mails subjects in the logs'). " :",
+      'label' => $t->_('Include mails subjects in the logs'). " :",
       'uncheckedValue' => "0",
       'checkedValue' => "1"
     ));
@@ -216,7 +216,7 @@ class Default_Form_SmtpChecks extends ZendX_JQuery_Form {
     $this->addElement($log_subject);
 
     $log_attachments = new Zend_Form_Element_Checkbox('log_attachments', array(
-      'label'   => $t->_('Include attachment names in the logs'). " :",
+      'label' => $t->_('Include attachment names in the logs'). " :",
       'uncheckedValue' => "0",
       'checkedValue' => "1"
     ));
@@ -226,9 +226,9 @@ class Default_Form_SmtpChecks extends ZendX_JQuery_Form {
     $this->addElement($log_attachments);
 
     $long_lines = new Zend_Form_Element_Select('long_lines', array(
-      'label'      => $t->_('What to do with invalid long lines')." :",
-      'required'   => true,
-      'filters'    => array('StringTrim')
+      'label' => $t->_('What to do with invalid long lines')." :",
+      'required' => true,
+      'filters' => array('StringTrim')
     ));
     $long_lines->addMultiOption('ignore', $t->_("Ignore errors; relay invalid SMTP"));
     $long_lines->addMultiOption('fix', $t->_("Fold long lines; makes SMTP valid, but could break DKIM signing"));
@@ -237,7 +237,7 @@ class Default_Form_SmtpChecks extends ZendX_JQuery_Form {
     $this->addElement($long_lines);
 
     $submit = new Zend_Form_Element_Submit('submit', array(
-      'label'    => $t->_('Submit')
+      'label' => $t->_('Submit')
     ));
     $this->addElement($submit);
 

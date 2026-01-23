@@ -122,16 +122,16 @@ abstract class ZendX_JQuery_Form_Decorator_UiWidgetContainer extends Zend_Form_D
     public function render($content)
     {
         $element = $this->getElement();
-        $view    = $element->getView();
+        $view = $element->getView();
         if (null === $view) {
             return $content;
         }
 
         $jQueryParams = $this->getJQueryParams();
-        $attribs     = $this->getOptions();
+        $attribs = $this->getOptions();
 
-        $helper      = $this->getHelper();
-        $id          = $element->getId() . '-container';
+        $helper = $this->getHelper();
+        $id = $element->getId() . '-container';
 
         return $view->$helper($id, $jQueryParams, $attribs);
     }

@@ -28,8 +28,8 @@ class Default_Form_Manage_UserQuarantinedisplay extends Zend_Form {
 
     $this->setAttrib('id', 'user_form');
     $panellist = new Zend_Form_Element_Select('userpanel', array(
-      'required'   => false,
-      'filters'    => array('StringTrim')
+      'required' => false,
+      'filters' => array('StringTrim')
     ));
     ## TODO: add specific validator
     $panellist->addValidator(new Zend_Validate_Alnum());
@@ -55,9 +55,9 @@ class Default_Form_Manage_UserQuarantinedisplay extends Zend_Form {
     $this->addElement($domain);
 
     $addresses = new Zend_Form_Element_Select('gui_default_address', array(
-      'label'    => $t->_('Address displayed by default')." :",
-      'required'   => false,
-      'filters'    => array('StringTrim')
+      'label' => $t->_('Address displayed by default')." :",
+      'required' => false,
+      'filters' => array('StringTrim')
     ));
 
     foreach ($this->_user->getAddresses() as $address => $ismain) {
@@ -68,9 +68,9 @@ class Default_Form_Manage_UserQuarantinedisplay extends Zend_Form {
     $this->addElement($addresses);
 
     $nblines = new Zend_Form_Element_Select('gui_displayed_spams', array(
-      'label'    => $t->_('Number of lines displayed')." :",
-      'required'   => false,
-      'filters'    => array('StringTrim')
+      'label' => $t->_('Number of lines displayed')." :",
+      'required' => false,
+      'filters' => array('StringTrim')
     ));
 
     foreach (array(5, 10, 20, 50, 100) as $nb) {
@@ -81,7 +81,7 @@ class Default_Form_Manage_UserQuarantinedisplay extends Zend_Form {
     $this->addElement($nblines);
 
     $nbdays = new  Zend_Form_Element_Text('gui_displayed_days', array(
-      'label'    => $t->_('Number of days displayed')." :",
+      'label' => $t->_('Number of days displayed')." :",
       'size' => 5,
       'required' => false
     ));
@@ -90,7 +90,7 @@ class Default_Form_Manage_UserQuarantinedisplay extends Zend_Form {
     $this->addElement($nbdays);
 
     $hideforced = new Zend_Form_Element_Checkbox('gui_mask_forced', array(
-      'label'   => $t->_('Hide user-released messages'),
+      'label' => $t->_('Hide user-released messages'),
       'title' => $t->_('Hide the mails released by users'),
       'uncheckedValue' => "0",
       'checkedValue' => "1"
@@ -100,7 +100,7 @@ class Default_Form_Manage_UserQuarantinedisplay extends Zend_Form {
 
 
     $submit = new Zend_Form_Element_Submit('submit', array(
-      'label'    => $t->_('Submit')
+      'label' => $t->_('Submit')
     ));
     $this->addElement($submit);
   }

@@ -67,7 +67,7 @@ abstract class ZendX_JQuery_View_Helper_UiWidgetPane extends ZendX_JQuery_View_H
 
         $this->_captureLock[$id] = true;
         $this->_captureInfo[$id] = array(
-            'name'  => $name,
+            'name' => $name,
             'options' => $options,
         );
 

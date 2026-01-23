@@ -82,7 +82,7 @@ class Default_Form_AdminEdit extends ZendX_JQuery_Form
 
     require_once('Validate/DomainList.php');
     $domains = new Zend_Form_Element_Textarea('domains', array(
-      'label' =>  $t->_('Manage Domains')." :",
+      'label' => $t->_('Manage Domains')." :",
       'required' => false,
       'rows' => 5,
       'cols' => 40,
@@ -92,7 +92,7 @@ class Default_Form_AdminEdit extends ZendX_JQuery_Form
     $this->addElement($domains);
 
     $allowsubdomains = new Zend_Form_Element_Checkbox('allow_subdomains', array(
-      'label'   => $t->_('Allow access to subdomains'). " :",
+      'label' => $t->_('Allow access to subdomains'). " :",
       'uncheckedValue' => "0",
       'checkedValue' => "1"
     ));
@@ -102,7 +102,7 @@ class Default_Form_AdminEdit extends ZendX_JQuery_Form
     $this->addElement($allowsubdomains);
 
     $submit = new Zend_Form_Element_Submit('submit', array(
-      'label'    => $t->_('Submit')
+      'label' => $t->_('Submit')
     ));
     $this->addElement($submit);
 

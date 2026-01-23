@@ -147,7 +147,7 @@ function loadsearch(searchstring, page) {
   if (searchstring == '' && $("#sname").val() != defaultsearchstring) {
     searchstring = $("#sname").val();
   }
-  url =  domainsearchurl+'/sname/'+searchstring+"/name/"+domainname+"/page/"+page;
+  url = domainsearchurl+'/sname/'+searchstring+"/name/"+domainname+"/page/"+page;
   loadsearchurl(url);
 }
 

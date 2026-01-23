@@ -64,7 +64,7 @@ class AntispamController extends Zend_Controller_Action
     $newslistelement = new Default_Model_WWElement();
     $newslist = $newslistelement->fetchAll('','wnews');
 
-    $form  = new Default_Form_AntispamGlobalSettings($antispam, $wantlist, $warnlist, $blocklist, $newslist);
+    $form = new Default_Form_AntispamGlobalSettings($antispam, $wantlist, $warnlist, $blocklist, $newslist);
     $form->setAction(Zend_Controller_Action_HelperBroker::getStaticHelper('url')->simple('globalsettings', 'antispam'));
     $message = '';
 

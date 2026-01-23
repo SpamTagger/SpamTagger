@@ -15,7 +15,7 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
   {
     $autoloader = new Zend_Application_Module_Autoloader(array(
       'namespace' => 'Default_',
-      'basePath'  => dirname(__FILE__),
+      'basePath' => dirname(__FILE__),
     ));
     return $autoloader;
   }
@@ -33,21 +33,21 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
     $stconfig = SpamTagger_Config::getInstance();
 
     $writeConfigDb = new Zend_Db_Adapter_Pdo_Mysql(array(
-      'host'    => 'localhost',
+      'host' => 'localhost',
       'unix_socket' => $stconfig->getOption('VARDIR')."/run/mariadb_source/mariadbd.sock",
-      'username'  => 'spamtagger',
-      'password'  => $stconfig->getOption('MYSPAMTAGGERPWD'),
-      'dbname'    => 'st_config'
+      'username' => 'spamtagger',
+      'password' => $stconfig->getOption('MYSPAMTAGGERPWD'),
+      'dbname' => 'st_config'
     ));
 
     Zend_Registry::set('writedb', $writeConfigDb);
 
     $spoolDb = new Zend_Db_Adapter_Pdo_Mysql(array(
-      'host'    => 'localhost',
+      'host' => 'localhost',
       'unix_socket' => $stconfig->getOption('VARDIR')."/run/mariadb_source/mariadbd.sock",
-      'username'  => 'spamtagger',
-      'password'  => $stconfig->getOption('MYSPAMTAGGERPWD'),
-      'dbname'    => 'st_spool'
+      'username' => 'spamtagger',
+      'password' => $stconfig->getOption('MYSPAMTAGGERPWD'),
+      'dbname' => 'st_spool'
     ));
 
     Zend_Registry::set('spooldb', $spoolDb);

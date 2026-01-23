@@ -11,7 +11,7 @@ loadingstatus = false;
 countstype = ['global', 'sessions', 'accepted', 'refused', 'delayed', 'relayed'];
 currentcountstype = countstype.slice();
 countsblock = ['1', '2'];
-currentcountblocks =  countsblock.slice();
+currentcountblocks = countsblock.slice();
 currentblock = 0;
 previousblock = 0;
 countspaused = false;
@@ -75,7 +75,7 @@ function loadcounts() {
           previousblock = currentblock;
         }
         if (currentcountblocks.length < 1) {
-          currentcountblocks =  countsblock.slice();
+          currentcountblocks = countsblock.slice();
         }
         currentblock = currentcountblocks.shift();
 

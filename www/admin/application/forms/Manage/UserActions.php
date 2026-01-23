@@ -28,8 +28,8 @@ class Default_Form_Manage_UserActions extends Zend_Form {
 
     $this->setAttrib('id', 'user_form');
     $panellist = new Zend_Form_Element_Select('userpanel', array(
-      'required'   => false,
-      'filters'    => array('StringTrim')
+      'required' => false,
+      'filters' => array('StringTrim')
     ));
     ## TODO: add specific validator
     $panellist->addValidator(new Zend_Validate_Alnum());
@@ -55,9 +55,9 @@ class Default_Form_Manage_UserActions extends Zend_Form {
     $this->addElement($domain);
 
     $addresses = new Zend_Form_Element_Select('addresses', array(
-      'label'    => $t->_('Address')." :",
-      'required'   => false,
-      'filters'    => array('StringTrim')
+      'label' => $t->_('Address')." :",
+      'required' => false,
+      'filters' => array('StringTrim')
     ));
 
     foreach ($this->_user->getAddresses() as $address => $ismain) {
@@ -67,7 +67,7 @@ class Default_Form_Manage_UserActions extends Zend_Form {
     $this->addElement($addresses);
 
     $submit = new Zend_Form_Element_Submit('submit', array(
-      'label'    => $t->_('> go to preferences')
+      'label' => $t->_('> go to preferences')
     ));
     $this->addElement($submit);
   }

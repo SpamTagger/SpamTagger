@@ -17,8 +17,8 @@ class Default_Form_ReloadNetwork extends Zend_Form {
     $this->setAttrib('id', 'reloadnetworkform');
 
     $submit = new Zend_Form_Element_Submit('submit', array(
-      'label'    => $t->_('Reload network now'),
-      'id'       => 'reloadnetbutton'
+      'label' => $t->_('Reload network now'),
+      'id' => 'reloadnetbutton'
     ));
     $this->addElement($submit);
     $restrictions = Zend_Registry::get('restrictions');

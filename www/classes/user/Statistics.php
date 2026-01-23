@@ -43,7 +43,7 @@ class Statistics {
    * @var  array
    */
   private $stats_ = array(
-    'msgs'  => 0,
+    'msgs' => 0,
     'spams' => 0,
     'pspams' => 0,
     'bytes' => 0,

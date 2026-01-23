@@ -33,7 +33,7 @@ class Default_Form_AntiSpam_Default extends ZendX_JQuery_Form
     $this->setAttrib('id', 'module_form');
 
     $active = new Zend_Form_Element_Checkbox('active', array(
-      'label'   => $t->_('Enable module'). " :",
+      'label' => $t->_('Enable module'). " :",
       'title' => $t->_("Enable module detection"),
       'uncheckedValue' => "0",
       'checkedValue' => "1"
@@ -42,7 +42,7 @@ class Default_Form_AntiSpam_Default extends ZendX_JQuery_Form
     $this->addElement($active);
 
     $decisive = new Zend_Form_Element_Checkbox('decisive', array(
-      'label'   => $t->_('Module is decisive'). " :",
+      'label' => $t->_('Module is decisive'). " :",
       'title' => $t->_("The module's advice is taken into account"),
       'uncheckedValue' => "0",
       'checkedValue' => "1"
@@ -51,10 +51,10 @@ class Default_Form_AntiSpam_Default extends ZendX_JQuery_Form
     $this->addElement($decisive);
 
     $position = new Zend_Form_Element_Select('position', array(
-      'label'      => $t->_('Position in filter chain')." :",
+      'label' => $t->_('Position in filter chain')." :",
       'title' => $t->_("Rank of the filter in the execution order"),
-      'required'   => false,
-      'filters'    => array('StringTrim'))
+      'required' => false,
+      'filters' => array('StringTrim'))
     );
 
     for ($i = 1; $i <= count($this->_module->fetchAll()); $i++) {
@@ -64,31 +64,31 @@ class Default_Form_AntiSpam_Default extends ZendX_JQuery_Form
     $this->addElement($position);
 
     $timeout = new  Zend_Form_Element_Text('timeOut', array(
-      'label'    => $t->_('Maximum check time')." :",
+      'label' => $t->_('Maximum check time')." :",
       'title' => $t->_("Timeout for the module"),
       'required' => false,
       'size' => 4,
       'class' => 'fieldrighted',
-      'filters'    => array('Alnum', 'StringTrim'))
+      'filters' => array('Alnum', 'StringTrim'))
     );
     $timeout->setValue($this->_module->getParam('timeOut'));
     $timeout->addValidator(new Zend_Validate_Int());
     $this->addElement($timeout);
 
     $maxsize = new  Zend_Form_Element_Text('maxSize', array(
-      'label'    => $t->_('Maximum message size')." :",
+      'label' => $t->_('Maximum message size')." :",
       'title' => $t->_("Messages above this size limit are not analyzed"),
       'required' => false,
       'size' => 8,
       'class' => 'fieldrighted',
-      'filters'    => array('Alnum', 'StringTrim'))
+      'filters' => array('Alnum', 'StringTrim'))
     );
     $maxsize->setValue($this->_module->getParam('maxSize'));
     $maxsize->addValidator(new Zend_Validate_Int());
     $this->addElement($maxsize);
 
     $submit = new Zend_Form_Element_Submit('submit', array(
-      'label'    => $t->_('Submit'))
+      'label' => $t->_('Submit'))
     );
     $this->addElement($submit);
   }

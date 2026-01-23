@@ -420,9 +420,9 @@ class Default_Model_ReportingStats {
   public function getTodayStatElements($type) {
     $els = array(
       'cleans' => 'globalCleanCount',
-      'spams'=>  'globalSpamCount',
+      'spams'=> 'globalSpamCount',
       'dangerous' => 'globalNameCount+globalOtherCount',
-      'viruses'=>  'globalVirusCount'
+      'viruses'=> 'globalVirusCount'
     );
     if (!isset($type)) {
       return $els;
@@ -431,7 +431,7 @@ class Default_Model_ReportingStats {
       case 'refused':
         $els = array(
           'rbl' => 'globalRefusedRBLCount+globalRefusedBackscatterCount',
-          'blocklists'=>  'globalRefusedHostCount+globalRefusedBlocklistedSenderCount',
+          'blocklists'=> 'globalRefusedHostCount+globalRefusedBlocklistedSenderCount',
           'relay' => 'globalRefusedRelayCount',
           'policies' => 'globalRefusedSpoofingCount+globalRefusedBATVCount+globalRefusedBadSPFCount+globalRefusedUnauthenticatedCount+globalRefusedUnencryptedCount+globalRefusedBadRDNSCount',
           'callout' => 'globalRefusedCalloutCount',
@@ -441,22 +441,22 @@ class Default_Model_ReportingStats {
       case 'global':
         $els = array(
           'cleans' => 'globalCleanCount',
-          'spams'=>  'globalRefusedCount+globalSpamCount',
+          'spams'=> 'globalRefusedCount+globalSpamCount',
           'dangerous' => 'globalNameCount+globalOtherCount',
-          'viruses'=>  'globalVirusCount',
+          'viruses'=> 'globalVirusCount',
           'outgoing' => 'globalRelayedCount'
         );
         break;
       case 'delayed':
         $els = array(
           'greylisted' => 'globalDelayedGreylistCount',
-          'rate limited'=>  'globalDelayedRatelimitCount'
+          'rate limited'=> 'globalDelayedRatelimitCount'
         );
         break;
       case 'relayed':
         $els = array(
           'by hosts' => 'globalRelayedHostCount',
-          'authentified'=>  'globalRelayedAuthenticatedCount',
+          'authentified'=> 'globalRelayedAuthenticatedCount',
           'refused' => 'globalRelayedRefusedCount',
           'viruses' => 'globalRelayedVirusCount'
         );
@@ -464,7 +464,7 @@ class Default_Model_ReportingStats {
       case 'sessions':
         $els = array(
           'accepted' => 'globalAcceptedCount',
-          'refused'=>  'globalRefusedCount',
+          'refused'=> 'globalRefusedCount',
           'delayed' => 'globalDelayedCount',
           'relayed' => 'globalRelayedCount'
         );

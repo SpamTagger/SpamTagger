@@ -77,7 +77,7 @@ public function draw($template, $images, $sid) {
   $fields = array('to' => array(), 'time' => '', 'size' => '', 'id' => '', 'from' => '', 'status' => '');
   // exim command to list queue
   $cmd = "/opt/exim4/bin/exim -C ".$this->conf_file_." -bp";
-  $list  = popen($cmd, "r");
+  $list = popen($cmd, "r");
 
   $ret = "";
   $i = 0;

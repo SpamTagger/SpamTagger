@@ -10,7 +10,7 @@
 
 class Default_Model_Antispam_DbTable_UriRBLs extends Zend_Db_Table_Abstract
 {
-    protected $_name    = 'UriRBLs';
+    protected $_name = 'UriRBLs';
     protected $_primary = 'set_id';
 
     public function __construct() {

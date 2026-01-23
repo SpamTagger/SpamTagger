@@ -24,9 +24,9 @@ class Default_Form_Domain_AddressVerification_Ldap {
 
     require_once('Validate/SMTPHostList.php');
     $server = new  Zend_Form_Element_Text('ldapserver', array(
-      'label'    => $t->_('LDAP server')." :",
+      'label' => $t->_('LDAP server')." :",
       'required' => false,
-      'filters'    => array('StringToLower', 'StringTrim'))
+      'filters' => array('StringToLower', 'StringTrim'))
     );
     $server->setValue($this->_domain->getPref('ldapcalloutserver'));
     $server->addValidator(new Validate_SMTPHostList());
@@ -35,41 +35,41 @@ class Default_Form_Domain_AddressVerification_Ldap {
     $ldapparams = $this->getParams();
 
     $basedn = new  Zend_Form_Element_Text('basedn', array(
-      'label'    => $t->_('Base DN')." :",
+      'label' => $t->_('Base DN')." :",
       'required' => false,
-      'filters'    => array('StringTrim'))
+      'filters' => array('StringTrim'))
     );
     $basedn->setValue($ldapparams['basedn']);
     $form->addElement($basedn);
 
     $binddn = new  Zend_Form_Element_Text('binddn', array(
-      'label'    => $t->_('Bind user')." :",
+      'label' => $t->_('Bind user')." :",
       'required' => false,
-      'filters'    => array('StringTrim'))
+      'filters' => array('StringTrim'))
     );
     $binddn->setValue($ldapparams['binddn']);
     $form->addElement($binddn);
 
     $bindpass = new  Zend_Form_Element_Password('bindpass', array(
-      'label'    => $t->_('Bind password')." :",
+      'label' => $t->_('Bind password')." :",
       'required' => false,
       'renderPassword' => true,
-      'filters'    => array('StringTrim'))
+      'filters' => array('StringTrim'))
     );
     $bindpass->setValue($ldapparams['bindpass']);
     $form->addElement($bindpass);
 
     $group = new  Zend_Form_Element_Text('group', array(
-      'label'    => $t->_('Only addresses in group')." :",
+      'label' => $t->_('Only addresses in group')." :",
       'required' => false,
       'renderPassword' => true,
-      'filters'    => array('StringTrim'))
+      'filters' => array('StringTrim'))
     );
     $group->setValue($ldapparams['group']);
     $form->addElement($group);
 
     $ldapusesslcheck = new Zend_Form_Element_Checkbox('usessl', array(
-      'label'   => $t->_('Use SSL'). " :",
+      'label' => $t->_('Use SSL'). " :",
       'uncheckedValue' => "0",
       'checkedValue' => "1"
     ));
@@ -87,7 +87,7 @@ class Default_Form_Domain_AddressVerification_Ldap {
       'bindpass' => $request->getParam('bindpass'),
       'group' => $request->getParam('group'),
       'usessl' => $request->getParam('usessl'),
-      'callout_server' =>  $request->getParam('ldapserver')
+      'callout_server' => $request->getParam('ldapserver')
     );
     $this->setParamsFromArray($params, $domain);
   }

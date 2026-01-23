@@ -115,7 +115,7 @@ class Default_Form_Tracing extends ZendX_JQuery_Form {
     $this->addElement($mpp);
 
     $hiderejected = new Zend_Form_Element_Checkbox('hiderejected', array(
-      'label'   => $t->_('Hide rejected messages '),
+      'label' => $t->_('Hide rejected messages '),
       'uncheckedValue' => "0",
       'checkedValue' => "1"
     ));
@@ -125,7 +125,7 @@ class Default_Form_Tracing extends ZendX_JQuery_Form {
     $this->addElement($hiderejected);
 
     $submit = new Zend_Form_Element_Submit('submit', array(
-      'label'    => $t->_('Refresh'),
+      'label' => $t->_('Refresh'),
       'onclick' => 'javascript:resubmit=1;canceled=0;noshowreload=0;launchSearch();return false;'
     ));
     $this->addElement($submit);

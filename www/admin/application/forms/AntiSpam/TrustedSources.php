@@ -32,7 +32,7 @@ class Default_Form_AntiSpam_TrustedSources extends Default_Form_AntiSpam_Default
     $view=$layout->getView();
 
     $use_alltrusted = new Zend_Form_Element_Checkbox('use_alltrusted', array(
-      'label'   => $t->_('Enable all trusted path detection'). " :",
+      'label' => $t->_('Enable all trusted path detection'). " :",
       'title' => $t->_("The all trusted path detection is the way SpamTagger detects that a message is all internal and was not issued by an external host"),
       'uncheckedValue' => "0",
       'checkedValue' => "1"
@@ -42,11 +42,11 @@ class Default_Form_AntiSpam_TrustedSources extends Default_Form_AntiSpam_Default
 
     require_once('Validate/DomainList.php');
     $domainstospf = new Zend_Form_Element_Textarea('domainsToSPF', array(
-      'label'    =>  $t->_('Trust SPF validation on these domains')." :",
-      'required'   => false,
+      'label' => $t->_('Trust SPF validation on these domains')." :",
+      'required' => false,
       'rows' => 5,
       'cols' => 40,
-      'filters'    => array('StringToLower', 'StringTrim'))
+      'filters' => array('StringToLower', 'StringTrim'))
     );
     $domainstospf->addValidator(new Validate_DomainList());
     $domainstospf->setValue($trustedsources->getParam('domainsToSPF'));
@@ -54,18 +54,18 @@ class Default_Form_AntiSpam_TrustedSources extends Default_Form_AntiSpam_Default
 
     require_once('Validate/SMTPHostList.php');
     $smtpservers = new Zend_Form_Element_Textarea('authservers', array(
-      'label'    =>  $t->_('Known good authenticated SMTP servers')." :",
-      'required'   => false,
+      'label' => $t->_('Known good authenticated SMTP servers')." :",
+      'required' => false,
       'rows' => 5,
       'cols' => 40,
-      'filters'    => array('StringToLower', 'StringTrim'))
+      'filters' => array('StringToLower', 'StringTrim'))
     );
     $smtpservers->addValidator(new Validate_SMTPHostList());
     $smtpservers->setValue(preg_replace('/\s+/', "\n", $trustedsources->getParam('authservers')));
     $this->addElement($smtpservers);
 
     $authstring = new  Zend_Form_Element_Text('authstring', array(
-      'label'    => $t->_('Authenticated SMTP servers search string')." :",
+      'label' => $t->_('Authenticated SMTP servers search string')." :",
       'title' => $t->_("The Authenticated SMTP servers search string is any string that is present in the header added by the authentication server and which is pretty unique to it. This will help to enforce the check, but is not strictly required."),
       'required' => false)
     );

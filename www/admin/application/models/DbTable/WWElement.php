@@ -10,7 +10,7 @@
 
 class Default_Model_DbTable_WWElement extends Zend_Db_Table_Abstract
 {
-    protected $_name    = 'wwlists';
+    protected $_name = 'wwlists';
 
     public function __construct() {
     	$this->_db = Zend_Registry::get('writedb');

@@ -61,7 +61,7 @@ class Default_Model_DomainMapper {
 
   public function fetchAll() {
     $resultSet = $this->getDbTable()->fetchAll($this->getDbTable()->select()->order('name ASC'));
-    $entries   = array();
+    $entries = array();
 
     $user = Zend_Registry::get('user');
 
@@ -109,7 +109,7 @@ class Default_Model_DomainMapper {
       $query->where('name LIKE ?', $str."%");
     }
     $resultSet = $this->getDbTable()->fetchAll($query);
-    $entries   = array();
+    $entries = array();
     foreach ($resultSet as $row) {
       if ($row['name'] == '__global__') {
         continue;
@@ -158,7 +158,7 @@ class Default_Model_DomainMapper {
     $query = $this->getDbTable()->select();
     $query->where('prefs = ?', $d->getParam('prefs'));
     $resultSet = $this->getDbTable()->fetchAll($query);
-    $entries   = array();
+    $entries = array();
     foreach ($resultSet as $row) {
       if ($row->id == $d->getId()) {
         continue;

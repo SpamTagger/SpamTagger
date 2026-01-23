@@ -30,7 +30,7 @@ class AdminAuthenticator extends AuthManager {
 
        $funct = array ("LoginDialog", "loginFunction");
        $params = array (
-                        "dsn"   => $dsn,
+                        "dsn" => $dsn,
                         "table" => $settings->getSetting('table'),
                         "usernamecol" => $settings->getSetting('login_field'),
                         "passwordcol" => $settings->getSetting('password_field'),

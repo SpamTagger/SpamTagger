@@ -32,9 +32,9 @@ class Default_Form_Defaults extends ZendX_JQuery_Form
     $this->setAttrib('id', 'defaults_form');
 
     $lang = new Zend_Form_Element_Select('language', array(
-      'label'      => $t->_('User GUI Language')." :",
-      'required'   => true,
-      'filters'    => array('StringTrim'))
+      'label' => $t->_('User GUI Language')." :",
+      'required' => true,
+      'filters' => array('StringTrim'))
     );
 
     $config = SpamTagger_Config::getInstance();
@@ -45,9 +45,9 @@ class Default_Form_Defaults extends ZendX_JQuery_Form
     $this->addElement($lang);
 
     $domain = new Zend_Form_Element_Select('domain', array(
-      'label'      => $t->_('Default domain')." :",
-      'required'   => false,
-      'filters'    => array('StringTrim'))
+      'label' => $t->_('Default domain')." :",
+      'required' => false,
+      'filters' => array('StringTrim'))
     );
 
     foreach ($this->_domains as $d) {
@@ -57,7 +57,7 @@ class Default_Form_Defaults extends ZendX_JQuery_Form
     $this->addElement($domain);
 
     $domainselect = new Zend_Form_Element_Checkbox('showdomainselector', array(
-      'label'   => $t->_('Display domain selector'). " :",
+      'label' => $t->_('Display domain selector'). " :",
       'uncheckedValue' => "0",
       'checkedValue' => "1"
     ));
@@ -65,51 +65,51 @@ class Default_Form_Defaults extends ZendX_JQuery_Form
     $this->addElement($domainselect);
 
     $sysadmin = new  Zend_Form_Element_Text('sysadmin', array(
-      'label'   => $t->_('Support address')." :",
-      'title'    => $t->_('Name of the person in charge of the support'),
+      'label' => $t->_('Support address')." :",
+      'title' => $t->_('Name of the person in charge of the support'),
       'required' => false,
       'size' => 40,
-      'filters'    => array('StringToLower', 'StringTrim'))
+      'filters' => array('StringToLower', 'StringTrim'))
     );
     $sysadmin->setValue($this->_systemconf->getParam('sysadmin'));
     $sysadmin->addValidator(new Zend_Validate_EmailAddress(Zend_Validate_Hostname::ALLOW_LOCAL));
     $this->addElement($sysadmin);
 
     $sender = new  Zend_Form_Element_Text('systemsender', array(
-      'label'   => $t->_('System sender')." :",
-      'title'    => $t->_('Mail address for summaries'),
+      'label' => $t->_('System sender')." :",
+      'title' => $t->_('Mail address for summaries'),
       'required' => false,
       'size' => 40,
-      'filters'    => array('StringToLower', 'StringTrim'))
+      'filters' => array('StringToLower', 'StringTrim'))
     );
     $sender->setValue($this->_systemconf->getParam('summary_from'));
     $sender->addValidator(new Zend_Validate_EmailAddress(Zend_Validate_Hostname::ALLOW_LOCAL));
     $this->addElement($sender);
 
     $falseneg = new  Zend_Form_Element_Text('falsenegaddress', array(
-      'label'    => $t->_('False negative address')." :",
-      'title'    => $t->_('Mail for false negatives (mails which were not detected as spam when they should have been)'),
+      'label' => $t->_('False negative address')." :",
+      'title' => $t->_('Mail for false negatives (mails which were not detected as spam when they should have been)'),
       'required' => false,
       'size' => 40,
-      'filters'    => array('StringToLower', 'StringTrim'))
+      'filters' => array('StringToLower', 'StringTrim'))
     );
     $falseneg->setValue($this->_systemconf->getParam('falseneg_to'));
     $falseneg->addValidator(new Zend_Validate_EmailAddress(Zend_Validate_Hostname::ALLOW_LOCAL));
     $this->addElement($falseneg);
 
     $falsepos = new  Zend_Form_Element_Text('falseposaddress', array(
-      'label'    => $t->_('False positive address')." :",
-      'title'    => $t->_('Mail for false positives (mails which were detected as spam when they shouldn\'t have been) (sent from analyze button in summaries)'),
+      'label' => $t->_('False positive address')." :",
+      'title' => $t->_('Mail for false positives (mails which were detected as spam when they shouldn\'t have been) (sent from analyze button in summaries)'),
       'required' => false,
       'size' => 40,
-      'filters'    => array('StringToLower', 'StringTrim'))
+      'filters' => array('StringToLower', 'StringTrim'))
     );
     $falsepos->setValue($this->_systemconf->getParam('falsepos_to'));
     $falsepos->addValidator(new Zend_Validate_EmailAddress(Zend_Validate_Hostname::ALLOW_LOCAL));
     $this->addElement($falsepos);
 
     $submit = new Zend_Form_Element_Submit('submit', array(
-      'label'    => $t->_('Submit'))
+      'label' => $t->_('Submit'))
     );
     $this->addElement($submit);
   }

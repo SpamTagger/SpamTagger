@@ -156,11 +156,11 @@ class ZendX_JQuery_Form_Decorator_UiWidgetElement
         }
         $jQueryParams = $this->getJQueryParams();
 
-        $helper    = $this->getHelper();
+        $helper = $this->getHelper();
         $separator = $this->getSeparator();
-        $value     = $this->getValue($element);
-        $attribs   = $this->getElementAttribs();
-        $name      = $element->getFullyQualifiedName();
+        $value = $this->getValue($element);
+        $attribs = $this->getElementAttribs();
+        $name = $element->getFullyQualifiedName();
 
         $id = $element->getId();
         $attribs['id'] = $id;

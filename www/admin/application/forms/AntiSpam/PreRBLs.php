@@ -35,10 +35,10 @@ class Default_Form_AntiSpam_PreRBLs extends Default_Form_AntiSpam_Default
     $rbllist->load();
 
     $spam_list_to_be_spam = new Zend_Form_Element_Select('spamhits', array(
-      'label'      => $t->_('List hits to be spam')." :",
-      'title'    => $t->_("Number of RBLs (below) to meet to be considered as spam by this module"),
-      'required'   => false,
-      'filters'    => array('StringTrim'))
+      'label' => $t->_('List hits to be spam')." :",
+      'title' => $t->_("Number of RBLs (below) to meet to be considered as spam by this module"),
+      'required' => false,
+      'filters' => array('StringTrim'))
     );
 
     for ($i = 1; $i <= count($rbllist->getRBLs('IPRBL BSRBL DNSRBL')); $i++) {
@@ -61,7 +61,7 @@ class Default_Form_AntiSpam_PreRBLs extends Default_Form_AntiSpam_Default
     }
 
     $avoidgoodspf = new Zend_Form_Element_Checkbox('avoidgoodspf', array(
-      'label'   => $t->_('Avoid checking for good SPF'). " :",
+      'label' => $t->_('Avoid checking for good SPF'). " :",
       'title' => $t->_('Bypass good SPF check'),
       'uncheckedValue' => "0",
       'checkedValue' => "1"
@@ -71,12 +71,12 @@ class Default_Form_AntiSpam_PreRBLs extends Default_Form_AntiSpam_Default
 
     require_once('Validate/SMTPHostList.php');
     $avoidhosts = new Zend_Form_Element_Textarea('avoidhosts', array(
-      'label'    =>  $t->_('Don\'t check these hosts')." :",
-      'title'   => $t->_("IPs/hosts added here will not be checked against the RBLs"),
-      'required'   => false,
+      'label' => $t->_('Don\'t check these hosts')." :",
+      'title' => $t->_("IPs/hosts added here will not be checked against the RBLs"),
+      'required' => false,
       'rows' => 5,
       'cols' => 30,
-      'filters'    => array('StringToLower', 'StringTrim'))
+      'filters' => array('StringToLower', 'StringTrim'))
     );
     $avoidhosts->addValidator(new Validate_SMTPHostList());
     $hoststoavoid = preg_replace('/,\s\;/', "\n", $as->getParam('avoidhosts'));

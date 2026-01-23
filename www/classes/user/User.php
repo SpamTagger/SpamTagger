@@ -39,7 +39,7 @@ class User extends PrefHandler {
     * @var array
     */
   private  $pref_ = array(
-    'language'   => 'en',
+    'language' => 'en',
     'gui_displayed_spams' => '20',
     'gui_displayed_days' => '7',
     'gui_mask_forced' => '0',

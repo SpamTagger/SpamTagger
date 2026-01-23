@@ -38,7 +38,7 @@ function setAuthenticated($username, $usertype, $hostname) {
  foreach ($allowed_hosts as $host) {
 
    $ip = gethostbyname($host);
-   $res .=  " | testing: $ip";
+   $res .= " | testing: $ip";
    if ($remote_ip == $ip || $remote_ip == gethostbyaddr($ip)) {
       $allowed = true;
    }

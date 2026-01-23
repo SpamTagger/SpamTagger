@@ -10,7 +10,7 @@
 
 class Default_Model_DbTable_RRDGraphicElement extends Zend_Db_Table_Abstract
 {
-    protected $_name    = 'rrd_stats_element';
+    protected $_name = 'rrd_stats_element';
 
     public function __construct() {
     	$this->_db = Zend_Registry::get('writedb');

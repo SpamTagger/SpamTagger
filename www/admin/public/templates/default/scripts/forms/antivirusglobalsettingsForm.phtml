@@ -13,7 +13,7 @@
           <?php echo $this->InputRow($this->form->getElement('max_attachments_per_message'));?>
 
           <?php echo $this->InputRow($this->form->getElement('max_attach_size'),array(
-               'post_field_text'=>  $this->t->_('bytes') .
+               'post_field_text'=> $this->t->_('bytes') .
                            $this->InputRow($this->form->getElement('max_attach_size_enable'), array('field_only'=>true,'nobox'=>true)) .
                            $this->InputRow($this->form->getElement('max_attach_size_enable'), array('label_only'=>true,'nobox'=>true))
 

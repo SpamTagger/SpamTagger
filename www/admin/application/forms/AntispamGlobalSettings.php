@@ -46,9 +46,9 @@ class Default_Form_AntispamGlobalSettings extends ZendX_JQuery_Form
     $this->setAttrib('id', 'antispamglobalsettings_form');
 
     $maxsize = new Zend_Form_Element_Text('global_max_size', array(
-      'label'    => $t->_('Global max scan size (KB)'). " :",
+      'label' => $t->_('Global max scan size (KB)'). " :",
       'required' => false,
-      'filters'    => array('StringTrim'))
+      'filters' => array('StringTrim'))
     );
     $maxsize->addValidator(new Zend_Validate_Int());
     $maxsize->setValue($this->_antispam->getParam('global_max_size'));
@@ -56,25 +56,25 @@ class Default_Form_AntispamGlobalSettings extends ZendX_JQuery_Form
 
     require_once('Validate/IpList.php');
     $trustednet = new Zend_Form_Element_Textarea('trusted_ips', array(
-      'label'    =>  $t->_('Trusted IPs/Networks')." :",
+      'label' => $t->_('Trusted IPs/Networks')." :",
       'title' => $t->_("These IP/ranges are wantlist for the antispam part"),
-      'required'   => false,
+      'required' => false,
       'rows' => 5,
       'cols' => 30,
-      'filters'    => array('StringToLower', 'StringTrim'))
+      'filters' => array('StringToLower', 'StringTrim'))
     );
     $trustednet->addValidator(new Validate_IpList());
     $trustednet->setValue($this->_antispam->getParam('trusted_ips'));
     $this->addElement($trustednet);
 
     $enablewantlists = new Zend_Form_Element_Checkbox('enable_wantlists', array(
-      'label'   => $t->_('Enable access to wantlists'). " :",
+      'label' => $t->_('Enable access to wantlists'). " :",
       'title' => $t->_("Activate globally that wantlist behavior is becoming available, after global wantlist also become availableActivate globally that wantlist behavior is becoming available, after global wantlist also become available"),
       'uncheckedValue' => "0",
       'checkedValue' => "1"
     ));
     $enableblocklists = new Zend_Form_Element_Checkbox('enable_blocklists', array(
-      'label'   => $t->_('Enable access to blocklists'). " :",
+      'label' => $t->_('Enable access to blocklists'). " :",
       'title' => $t->_("Activate globally that blocklist behavior is becoming available, after global blocklist also become availableActivate globally that blocklist behavior is becoming available, after global blocklist also become available"),
       'uncheckedValue' => "0",
       'checkedValue' => "1"
@@ -87,7 +87,7 @@ class Default_Form_AntispamGlobalSettings extends ZendX_JQuery_Form
     $this->addElement($enablewantlists);
 
     $enablewarnlists = new Zend_Form_Element_Checkbox('enable_warnlists', array(
-      'label'   => $t->_('Enable access to warnlists'). " :",
+      'label' => $t->_('Enable access to warnlists'). " :",
       'title' => $t->_("Activate globally that warnlist behavior is becoming available, after global warnlist also become availableActivate globally that warnlist behavior is becoming available, after global warnlist also become available"),
       'uncheckedValue' => "0",
       'checkedValue' => "1"
@@ -99,7 +99,7 @@ class Default_Form_AntispamGlobalSettings extends ZendX_JQuery_Form
     $this->addElement($enablewarnlists);
 
     $tagmodbypasswantlist = new Zend_Form_Element_Checkbox('tag_mode_bypass_wantlist', array(
-      'label'   => $t->_('Ignore wantlist in tag mode'). " :",
+      'label' => $t->_('Ignore wantlist in tag mode'). " :",
       'title' => $t->_("since tag mode get all messages delivered, one may want to ignore the wantlist in this case"),
       'uncheckedValue' => "0",
       'checkedValue' => "1"
@@ -116,7 +116,7 @@ class Default_Form_AntispamGlobalSettings extends ZendX_JQuery_Form
     $this->addElement($tagmodbypasswantlist);
 
     $wantlistbothfrom = new Zend_Form_Element_Checkbox('wantlist_both_from', array(
-      'label'   => $t->_('Apply wantlist on Body-From too'). " :",
+      'label' => $t->_('Apply wantlist on Body-From too'). " :",
       'title' => $t->_("By default wantlists are checked versus SMTP-From. Activating this feature will use wantlist versus Body-From as well. If unsure please leave this option unchecked."),
       'uncheckedValue' => "0",
       'checkedValue' => "1"
@@ -128,7 +128,7 @@ class Default_Form_AntispamGlobalSettings extends ZendX_JQuery_Form
     $this->addElement($wantlistbothfrom);
 
     $submit = new Zend_Form_Element_Submit('submit', array(
-      'label'    => $t->_('Submit'))
+      'label' => $t->_('Submit'))
     );
     $this->addElement($submit);
 

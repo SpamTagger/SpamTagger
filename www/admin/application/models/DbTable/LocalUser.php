@@ -10,7 +10,7 @@
 
 class Default_Model_DbTable_LocalUser extends Zend_Db_Table_Abstract
 {
-    protected $_name    = 'mysql_auth';
+    protected $_name = 'mysql_auth';
 
     public function __construct() {
     	$this->_db = Zend_Registry::get('writedb');

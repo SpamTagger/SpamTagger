@@ -65,13 +65,13 @@ class SoapProcesses {
   public $firewall;
 
   static public function isOK($status) {
-    if ( $status->mtaincoming  == 0 ||
-         $status->mtafiltering  == 0 ||
-         $status->mtaoutgoing  == 0 ||
-         $status->httpd  == 0 ||
-         $status->engine  == 0 ||
-         $status->sourcedb  == 0 ||
-         $status->replicadb  == 0 ||
+    if ( $status->mtaincoming == 0 ||
+         $status->mtafiltering == 0 ||
+         $status->mtaoutgoing == 0 ||
+         $status->httpd == 0 ||
+         $status->engine == 0 ||
+         $status->sourcedb == 0 ||
+         $status->replicadb == 0 ||
          $status->snmpd == 0 ||
          $status->greylistd == 0 ||
          $status->cron == 0 ||

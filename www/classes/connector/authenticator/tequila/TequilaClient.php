@@ -220,8 +220,8 @@ class TequilaClient {
     }
     $aEtcConfig = $this->LoadEtcConfig ();
 
-    if (empty ($sServer))            $sServer            = $aEtcConfig ['sServer'];
-    if (empty ($sServerUrl))         $sServerUrl         = $aEtcConfig ['sServerUrl'];
+    if (empty ($sServer))            $sServer = $aEtcConfig ['sServer'];
+    if (empty ($sServerUrl))         $sServerUrl = $aEtcConfig ['sServerUrl'];
     if (empty ($sSessionsDirectory)) $sSessionsDirectory = $aEtcConfig ['sSessionsDirectory'];
 
     if (empty ($sServerUrl) && !empty ($sServer))
@@ -229,10 +229,10 @@ class TequilaClient {
     if (empty ($iTimeout))
       $iTimeout = GetConfigOption ('iTimeout', 86400);
 
-    $this->sServer    = $sServer;
+    $this->sServer = $sServer;
     $this->sServerUrl = $sServerUrl;
     $this->SetSessionsDirectory ($sSessionsDirectory);
-    $this->iTimeout   = $iTimeout;
+    $this->iTimeout = $iTimeout;
 
     $this->iCookieLife= COOKIE_LIFE;
     $this->sCookieName= COOKIE_NAME;
@@ -671,7 +671,7 @@ class TequilaClient {
     if (!empty ($this->aWantedRights))
       $this->requestInfos ['wantright'] = implode($this->aWantedRights, '+');
     if (!empty ($this->aWantedRoles))
-      $this->requestInfos ['wantrole'] =  implode($this->aWantedRoles, '+');
+      $this->requestInfos ['wantrole'] = implode($this->aWantedRoles, '+');
     if (!empty ($this->aWantedAttributes))
       $this->requestInfos ['request'] = implode ($this->aWantedAttributes, '+');
     if (!empty ($this->aWishedAttributes))
@@ -713,8 +713,8 @@ class TequilaClient {
     foreach ($attributes as $attribute) {
       $attribute = trim ($attribute);
       if (!$attribute)  continue;
-      if ($key == 'key') { $this->key  = $attribute; }
-      if ($key == 'org') { $this->org  = $attribute; }
+      if ($key == 'key') { $this->key = $attribute; }
+      if ($key == 'org') { $this->org = $attribute; }
       if ($key == 'user') { $this->user = $attribute; }
       if ($key == 'host') { $this->host = $attribute; }
       list ($key, $val) = explode ('=', $attribute);

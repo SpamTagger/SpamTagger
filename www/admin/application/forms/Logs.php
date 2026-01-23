@@ -50,7 +50,7 @@ class Default_Form_Logs extends ZendX_JQuery_Form {
     $this->addElement($fm);
 
     $submit = new Zend_Form_Element_Submit('submit', array(
-      'label'    => $t->_('Refresh'),
+      'label' => $t->_('Refresh'),
       'onclick' => 'javascript:resubmit=1;launchSearch();return false;')
     );
     $this->addElement($submit);

@@ -37,8 +37,8 @@ class Default_Form_DomainArchiving extends Zend_Form {
 
     $this->setAttrib('id', 'domain_form');
     $panellist = new Zend_Form_Element_Select('domainpanel', array(
-      'required'   => false,
-      'filters'    => array('StringTrim'))
+      'required' => false,
+      'filters' => array('StringTrim'))
     );
     ## TODO: add specific validator
     $panellist->addValidator(new Zend_Validate_Alnum());
@@ -57,7 +57,7 @@ class Default_Form_DomainArchiving extends Zend_Form {
     $this->addElement($name);
 
     $archive_mail = new Zend_Form_Element_Checkbox('archive_mail', array(
-      'label'   => $t->_('Archive messages (whole domain)'). " :",
+      'label' => $t->_('Archive messages (whole domain)'). " :",
       'uncheckedValue' => "0",
       'checkedValue' => "1"
     ));
@@ -68,11 +68,11 @@ class Default_Form_DomainArchiving extends Zend_Form {
     $this->addElement($archive_mail);
 
     $copyto_mail = new  Zend_Form_Element_Text('copyto_mail', array(
-      'label'    => $t->_('Send a copy of all messages to')." :",
+      'label' => $t->_('Send a copy of all messages to')." :",
       'title' => $t->_("Concerns only regular and released mails"),
       'required' => false,
       'size' => 40,
-      'filters'    => array('StringTrim'))
+      'filters' => array('StringTrim'))
     );
     $copyto_mail->setValue($this->_domain->getPref('copyto_mail'));
     $copyto_mail->addValidator(new Zend_Validate_EmailAddress(Zend_Validate_Hostname::ALLOW_LOCAL));
@@ -83,7 +83,7 @@ class Default_Form_DomainArchiving extends Zend_Form {
 
 
     $submit = new Zend_Form_Element_Submit('submit', array(
-      'label'    => $t->_('Submit'))
+      'label' => $t->_('Submit'))
     );
     $this->addElement($submit);
 

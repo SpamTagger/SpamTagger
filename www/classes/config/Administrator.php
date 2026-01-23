@@ -22,7 +22,7 @@ class Administrator extends PrefHandler {
   private $pref_ = array(
     'username' => '',
     'password' => '',
-    'can_manage_users'  => 0,
+    'can_manage_users' => 0,
     'can_manage_domains' => 0,
     'can_configure' => 0,
     'can_view_stats' => 0,

@@ -10,7 +10,7 @@
 
 class Default_Model_DbTable_MtaConfig extends Zend_Db_Table_Abstract
 {
-    protected $_name    = 'mta_config';
+    protected $_name = 'mta_config';
     protected $_primary = 'stage';
 
     public function __construct() {

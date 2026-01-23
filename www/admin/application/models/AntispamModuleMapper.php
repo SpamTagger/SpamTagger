@@ -51,7 +51,7 @@ class Default_Model_AntispamModuleMapper {
 
   public function fetchAll($where) {
     $resultSet = $this->getDbTable()->fetchAll($where, 'position ASC');
-    $entries   = array();
+    $entries = array();
     foreach ($resultSet as $row) {
       $entry = new Default_Model_AntispamModule();
       $entry->setId($row->id);

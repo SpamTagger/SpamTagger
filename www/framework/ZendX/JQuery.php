@@ -88,12 +88,12 @@ class ZendX_JQuery
      * @see ZendX_JQuery_Helper_JQuery::setRenderMode
      * @const Integer
      */
-    const RENDER_LIBRARY         = 1;
-    const RENDER_SOURCES         = 2;
-    const RENDER_STYLESHEETS     = 4;
-    const RENDER_JAVASCRIPT      = 8;
-    const RENDER_JQUERY_ON_LOAD  = 16;
-    const RENDER_ALL             = 255;
+    const RENDER_LIBRARY = 1;
+    const RENDER_SOURCES = 2;
+    const RENDER_STYLESHEETS = 4;
+    const RENDER_JAVASCRIPT = 8;
+    const RENDER_JQUERY_ON_LOAD = 16;
+    const RENDER_ALL = 255;
 
     /**
      * jQuery-enable a view instance

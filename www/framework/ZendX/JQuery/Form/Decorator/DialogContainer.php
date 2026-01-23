@@ -51,16 +51,16 @@ class ZendX_JQuery_Form_Decorator_DialogContainer extends ZendX_JQuery_Form_Deco
     public function render($content)
     {
         $element = $this->getElement();
-        $view    = $element->getView();
+        $view = $element->getView();
         if (null === $view) {
             return $content;
         }
 
         $jQueryParams = $this->getJQueryParams();
-        $attribs     = $this->getOptions();
+        $attribs = $this->getOptions();
 
-        $helper      = $this->getHelper();
-        $id          = $element->getId() . '-container';
+        $helper = $this->getHelper();
+        $id = $element->getId() . '-container';
 
         return $view->$helper($id, $content, $jQueryParams, $attribs);
     }

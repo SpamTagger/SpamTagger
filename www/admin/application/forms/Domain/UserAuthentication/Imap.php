@@ -27,9 +27,9 @@ class Default_Form_Domain_UserAuthentication_Imap {
 
     require_once('Validate/SMTPHostList.php');
     $server = new  Zend_Form_Element_Text('authserver', array(
-      'label'    => $t->_('Authentication server')." :",
+      'label' => $t->_('Authentication server')." :",
       'required' => false,
-      'filters'    => array('StringToLower', 'StringTrim')));
+      'filters' => array('StringToLower', 'StringTrim')));
     $server->setValue($this->_domain->getPref('auth_server'));
     $server->addValidator(new Validate_SMTPHostList());
     $form->addElement($server);
@@ -37,7 +37,7 @@ class Default_Form_Domain_UserAuthentication_Imap {
     $this->_settings = $this->getParams();
 
     $imapusesslcheck = new Zend_Form_Element_Checkbox('imapusessl', array(
-      'label'   => $t->_('Use SSL'). " :",
+      'label' => $t->_('Use SSL'). " :",
       'uncheckedValue' => "0",
       'checkedValue' => "1"
     ));

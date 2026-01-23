@@ -40,38 +40,38 @@ class pPie {
     $this->pChartObject = $Object;
 
     /* Cache the pData object reference */
-    $this->pDataObject  = $pDataObject;
+    $this->pDataObject = $pDataObject;
   }
 
   /* Draw a pie chart */
   function draw2DPie($X,$Y,$Format="") {
-    $Radius    = isset($Format["Radius"]) ? $Format["Radius"] : 60;
-    $DataGapAngle  = isset($Format["DataGapAngle"]) ? $Format["DataGapAngle"] : 0;
-    $DataGapRadius  = isset($Format["DataGapRadius"]) ? $Format["DataGapRadius"] : 0;
-    $SecondPass  = isset($Format["SecondPass"]) ? $Format["SecondPass"] : TRUE;
-    $Border    = isset($Format["Border"]) ? $Format["Border"] : FALSE;
-    $BorderR    = isset($Format["BorderR"]) ? $Format["BorderR"] : 255;
-    $BorderG    = isset($Format["BorderG"]) ? $Format["BorderG"] : 255;
-    $BorderB    = isset($Format["BorderB"]) ? $Format["BorderB"] : 255;
-    $Shadow    = isset($Format["Shadow"]) ? $Format["Shadow"] : FALSE;
-    $DrawLabels  = isset($Format["DrawLabels"]) ? $Format["DrawLabels"] : FALSE;
-    $LabelStacked  = isset($Format["LabelStacked"]) ? $Format["LabelStacked"] : FALSE;
-    $LabelColor  = isset($Format["LabelColor"]) ? $Format["LabelColor"] : PIE_LABEL_COLOR_MANUAL;
-    $LabelR    = isset($Format["LabelR"]) ? $Format["LabelR"] : 0;
-    $LabelG    = isset($Format["LabelG"]) ? $Format["LabelG"] : 0;
-    $LabelB    = isset($Format["LabelB"]) ? $Format["LabelB"] : 0;
-    $LabelAlpha  = isset($Format["LabelAlpha"]) ? $Format["LabelAlpha"] : 100;
-    $WriteValues  = isset($Format["WriteValues"]) ? $Format["WriteValues"] : NULL;
-    $ValuePosition  = isset($Format["ValuePosition"]) ? $Format["ValuePosition"] : PIE_VALUE_OUTSIDE;
-    $ValuePadding  = isset($Format["ValuePadding"]) ? $Format["ValuePadding"] : 15;
-    $ValueSuffix  = isset($Format["ValueSuffix"]) ? $Format["ValueSuffix"] : "";
-    $ValueR    = isset($Format["ValueR"]) ? $Format["ValueR"] : 255;
-    $ValueG    = isset($Format["ValueG"]) ? $Format["ValueG"] : 255;
-    $ValueB    = isset($Format["ValueB"]) ? $Format["ValueB"] : 255;
-    $ValueAlpha  = isset($Format["ValueAlpha"]) ? $Format["ValueAlpha"] : 100;
+    $Radius = isset($Format["Radius"]) ? $Format["Radius"] : 60;
+    $DataGapAngle = isset($Format["DataGapAngle"]) ? $Format["DataGapAngle"] : 0;
+    $DataGapRadius = isset($Format["DataGapRadius"]) ? $Format["DataGapRadius"] : 0;
+    $SecondPass = isset($Format["SecondPass"]) ? $Format["SecondPass"] : TRUE;
+    $Border = isset($Format["Border"]) ? $Format["Border"] : FALSE;
+    $BorderR = isset($Format["BorderR"]) ? $Format["BorderR"] : 255;
+    $BorderG = isset($Format["BorderG"]) ? $Format["BorderG"] : 255;
+    $BorderB = isset($Format["BorderB"]) ? $Format["BorderB"] : 255;
+    $Shadow = isset($Format["Shadow"]) ? $Format["Shadow"] : FALSE;
+    $DrawLabels = isset($Format["DrawLabels"]) ? $Format["DrawLabels"] : FALSE;
+    $LabelStacked = isset($Format["LabelStacked"]) ? $Format["LabelStacked"] : FALSE;
+    $LabelColor = isset($Format["LabelColor"]) ? $Format["LabelColor"] : PIE_LABEL_COLOR_MANUAL;
+    $LabelR = isset($Format["LabelR"]) ? $Format["LabelR"] : 0;
+    $LabelG = isset($Format["LabelG"]) ? $Format["LabelG"] : 0;
+    $LabelB = isset($Format["LabelB"]) ? $Format["LabelB"] : 0;
+    $LabelAlpha = isset($Format["LabelAlpha"]) ? $Format["LabelAlpha"] : 100;
+    $WriteValues = isset($Format["WriteValues"]) ? $Format["WriteValues"] : NULL;
+    $ValuePosition = isset($Format["ValuePosition"]) ? $Format["ValuePosition"] : PIE_VALUE_OUTSIDE;
+    $ValuePadding = isset($Format["ValuePadding"]) ? $Format["ValuePadding"] : 15;
+    $ValueSuffix = isset($Format["ValueSuffix"]) ? $Format["ValueSuffix"] : "";
+    $ValueR = isset($Format["ValueR"]) ? $Format["ValueR"] : 255;
+    $ValueG = isset($Format["ValueG"]) ? $Format["ValueG"] : 255;
+    $ValueB = isset($Format["ValueB"]) ? $Format["ValueB"] : 255;
+    $ValueAlpha = isset($Format["ValueAlpha"]) ? $Format["ValueAlpha"] : 100;
 
     /* Data Processing */
-    $Data    = $this->pDataObject->getData();
+    $Data = $this->pDataObject->getData();
     $Palette = $this->pDataObject->getPalette();
 
     /* Do we have an abscissa series defined? */
@@ -265,7 +265,7 @@ class pPie {
         if ( $EndAngle > 360 ) {
           $EndAngle = 0;
         }
-        $Angle    = ($EndAngle - $Offset)/2 + $Offset;
+        $Angle = ($EndAngle - $Offset)/2 + $Offset;
 
         if ( $ValuePosition == PIE_VALUE_OUTSIDE ) {
           $Xc = cos(($Angle-90)*PI/180) * ($Radius+$ValuePadding) + $X;
@@ -299,35 +299,35 @@ class pPie {
   /* Draw a 3D pie chart */
   function draw3DPie($X,$Y,$Format="") {
     /* Rendering layout */
-    $Radius    = isset($Format["Radius"]) ? $Format["Radius"] : 80;
-    $SkewFactor  = isset($Format["SkewFactor"]) ? $Format["SkewFactor"] : .5;
-    $SliceHeight  = isset($Format["SliceHeight"]) ? $Format["SliceHeight"] : 20;
-    $DataGapAngle  = isset($Format["DataGapAngle"]) ? $Format["DataGapAngle"] : 0;
-    $DataGapRadius  = isset($Format["DataGapRadius"]) ? $Format["DataGapRadius"] : 0;
-    $SecondPass  = isset($Format["SecondPass"]) ? $Format["SecondPass"] : TRUE;
-    $Border    = isset($Format["Border"]) ? $Format["Border"] : FALSE;
-    $Shadow    = isset($Format["Shadow"]) ? $Format["Shadow"] : FALSE;
-    $DrawLabels  = isset($Format["DrawLabels"]) ? $Format["DrawLabels"] : FALSE;
-    $LabelStacked  = isset($Format["LabelStacked"]) ? $Format["LabelStacked"] : FALSE;
-    $LabelColor  = isset($Format["LabelColor"]) ? $Format["LabelColor"] : PIE_LABEL_COLOR_MANUAL;
-    $LabelR    = isset($Format["LabelR"]) ? $Format["LabelR"] : 0;
-    $LabelG    = isset($Format["LabelG"]) ? $Format["LabelG"] : 0;
-    $LabelB    = isset($Format["LabelB"]) ? $Format["LabelB"] : 0;
-    $LabelAlpha  = isset($Format["LabelAlpha"]) ? $Format["LabelAlpha"] : 100;
-    $WriteValues  = isset($Format["WriteValues"]) ? $Format["WriteValues"] : NULL; //PIE_VALUE_PERCENTAGE
-    $ValuePosition  = isset($Format["ValuePosition"]) ? $Format["ValuePosition"] : PIE_VALUE_INSIDE;
-    $ValuePadding  = isset($Format["ValuePadding"]) ? $Format["ValuePadding"] : 15;
-    $ValueSuffix  = isset($Format["ValueSuffix"]) ? $Format["ValueSuffix"] : "";
-    $ValueR    = isset($Format["ValueR"]) ? $Format["ValueR"] : 255;
-    $ValueG    = isset($Format["ValueG"]) ? $Format["ValueG"] : 255;
-    $ValueB    = isset($Format["ValueB"]) ? $Format["ValueB"] : 255;
-    $ValueAlpha  = isset($Format["ValueAlpha"]) ? $Format["ValueAlpha"] : 100;
+    $Radius = isset($Format["Radius"]) ? $Format["Radius"] : 80;
+    $SkewFactor = isset($Format["SkewFactor"]) ? $Format["SkewFactor"] : .5;
+    $SliceHeight = isset($Format["SliceHeight"]) ? $Format["SliceHeight"] : 20;
+    $DataGapAngle = isset($Format["DataGapAngle"]) ? $Format["DataGapAngle"] : 0;
+    $DataGapRadius = isset($Format["DataGapRadius"]) ? $Format["DataGapRadius"] : 0;
+    $SecondPass = isset($Format["SecondPass"]) ? $Format["SecondPass"] : TRUE;
+    $Border = isset($Format["Border"]) ? $Format["Border"] : FALSE;
+    $Shadow = isset($Format["Shadow"]) ? $Format["Shadow"] : FALSE;
+    $DrawLabels = isset($Format["DrawLabels"]) ? $Format["DrawLabels"] : FALSE;
+    $LabelStacked = isset($Format["LabelStacked"]) ? $Format["LabelStacked"] : FALSE;
+    $LabelColor = isset($Format["LabelColor"]) ? $Format["LabelColor"] : PIE_LABEL_COLOR_MANUAL;
+    $LabelR = isset($Format["LabelR"]) ? $Format["LabelR"] : 0;
+    $LabelG = isset($Format["LabelG"]) ? $Format["LabelG"] : 0;
+    $LabelB = isset($Format["LabelB"]) ? $Format["LabelB"] : 0;
+    $LabelAlpha = isset($Format["LabelAlpha"]) ? $Format["LabelAlpha"] : 100;
+    $WriteValues = isset($Format["WriteValues"]) ? $Format["WriteValues"] : NULL; //PIE_VALUE_PERCENTAGE
+    $ValuePosition = isset($Format["ValuePosition"]) ? $Format["ValuePosition"] : PIE_VALUE_INSIDE;
+    $ValuePadding = isset($Format["ValuePadding"]) ? $Format["ValuePadding"] : 15;
+    $ValueSuffix = isset($Format["ValueSuffix"]) ? $Format["ValueSuffix"] : "";
+    $ValueR = isset($Format["ValueR"]) ? $Format["ValueR"] : 255;
+    $ValueG = isset($Format["ValueG"]) ? $Format["ValueG"] : 255;
+    $ValueB = isset($Format["ValueB"]) ? $Format["ValueB"] : 255;
+    $ValueAlpha = isset($Format["ValueAlpha"]) ? $Format["ValueAlpha"] : 100;
 
     /* Error correction for overlaying rounded corners */
     if ( $SkewFactor < .5 ) { $SkewFactor = .5; }
 
     /* Data Processing */
-    $Data    = $this->pDataObject->getData();
+    $Data = $this->pDataObject->getData();
     $Palette = $this->pDataObject->getPalette();
 
     /* Do we have an abscissa series defined? */
@@ -374,10 +374,10 @@ class pPie {
     }
 
     /* Draw the polygon pie elements */
-    $Step   = 360 / (2 * PI * $Radius);
+    $Step = 360 / (2 * PI * $Radius);
     $Offset = 360; $ID = count($Values)-1;
     $Values = array_reverse($Values);
-    $Slice  = 0; $Slices = ""; $SliceColors = ""; $Visible = ""; $SliceAngle = "";
+    $Slice = 0; $Slices = ""; $SliceColors = ""; $Visible = ""; $SliceAngle = "";
     foreach($Values as $Key => $Value) {
       if ( !isset($Palette[$ID]["R"]) ) {
         $Color = $this->pChartObject->getRandomColor();
@@ -388,7 +388,7 @@ class pPie {
       $SliceColors[$Slice] = $Settings;
 
       $StartAngle = $Offset;
-      $EndAngle   = $Offset-($Value*$ScaleFactor);
+      $EndAngle = $Offset-($Value*$ScaleFactor);
       if ( $EndAngle < 0 ) {
         $EndAngle = 0;
       }
@@ -492,7 +492,7 @@ class pPie {
     }
 
     /* Draw the two vertical edges */
-    $Slices      = array_reverse($Slices);
+    $Slices = array_reverse($Slices);
     $SliceColors = array_reverse($SliceColors);
     foreach($Slices as $SliceID => $Plots) {
       $Settings = $SliceColors[$SliceID];
@@ -507,7 +507,7 @@ class pPie {
       }
     }
 
-    $Slices      = array_reverse($Slices);
+    $Slices = array_reverse($Slices);
     $SliceColors = array_reverse($SliceColors);
     foreach($Slices as $SliceID => $Plots) {
       $Settings = $SliceColors[$SliceID];
@@ -716,23 +716,23 @@ class pPie {
 
   /* Draw the legend of pie chart */
   function drawPieLegend($X,$Y,$Format="") {
-    $FontName    = isset($Format["FontName"]) ? $Format["FontName"] : $this->pChartObject->FontName;
-    $FontSize    = isset($Format["FontSize"]) ? $Format["FontSize"] : $this->pChartObject->FontSize;
-    $FontR    = isset($Format["FontR"]) ? $Format["FontR"] : $this->pChartObject->FontColorR;
-    $FontG    = isset($Format["FontG"]) ? $Format["FontG"] : $this->pChartObject->FontColorG;
-    $FontB    = isset($Format["FontB"]) ? $Format["FontB"] : $this->pChartObject->FontColorB;
-    $BoxSize    = isset($Format["BoxSize"]) ? $Format["BoxSize"] : 5;
-    $Margin    = isset($Format["Margin"]) ? $Format["Margin"] : 5;
-    $R      = isset($Format["R"]) ? $Format["R"] : 200;
-    $G      = isset($Format["G"]) ? $Format["G"] : 200;
-    $B      = isset($Format["B"]) ? $Format["B"] : 200;
-    $Alpha    = isset($Format["Alpha"]) ? $Format["Alpha"] : 100;
-    $BorderR    = isset($Format["BorderR"]) ? $Format["BorderR"] : 255;
-    $BorderG    = isset($Format["BorderG"]) ? $Format["BorderG"] : 255;
-    $BorderB    = isset($Format["BorderB"]) ? $Format["BorderB"] : 255;
-    $Surrounding  = isset($Format["Surrounding"]) ? $Format["Surrounding"] : NULL;
-    $Style    = isset($Format["Style"]) ? $Format["Style"] : LEGEND_ROUND;
-    $Mode    = isset($Format["Mode"]) ? $Format["Mode"] : LEGEND_VERTICAL;
+    $FontName = isset($Format["FontName"]) ? $Format["FontName"] : $this->pChartObject->FontName;
+    $FontSize = isset($Format["FontSize"]) ? $Format["FontSize"] : $this->pChartObject->FontSize;
+    $FontR = isset($Format["FontR"]) ? $Format["FontR"] : $this->pChartObject->FontColorR;
+    $FontG = isset($Format["FontG"]) ? $Format["FontG"] : $this->pChartObject->FontColorG;
+    $FontB = isset($Format["FontB"]) ? $Format["FontB"] : $this->pChartObject->FontColorB;
+    $BoxSize = isset($Format["BoxSize"]) ? $Format["BoxSize"] : 5;
+    $Margin = isset($Format["Margin"]) ? $Format["Margin"] : 5;
+    $R = isset($Format["R"]) ? $Format["R"] : 200;
+    $G = isset($Format["G"]) ? $Format["G"] : 200;
+    $B = isset($Format["B"]) ? $Format["B"] : 200;
+    $Alpha = isset($Format["Alpha"]) ? $Format["Alpha"] : 100;
+    $BorderR = isset($Format["BorderR"]) ? $Format["BorderR"] : 255;
+    $BorderG = isset($Format["BorderG"]) ? $Format["BorderG"] : 255;
+    $BorderB = isset($Format["BorderB"]) ? $Format["BorderB"] : 255;
+    $Surrounding = isset($Format["Surrounding"]) ? $Format["Surrounding"] : NULL;
+    $Style = isset($Format["Style"]) ? $Format["Style"] : LEGEND_ROUND;
+    $Mode = isset($Format["Mode"]) ? $Format["Mode"] : LEGEND_VERTICAL;
 
     if ( $Surrounding != NULL ) {
       $BorderR = $R + $Surrounding;
@@ -744,7 +744,7 @@ class pPie {
     $XStep = $BoxSize + 5;
 
     /* Data Processing */
-    $Data    = $this->pDataObject->getData();
+    $Data = $this->pDataObject->getData();
     $Palette = $this->pDataObject->getPalette();
 
     /* Do we have an abscissa series defined? */
@@ -788,7 +788,7 @@ class pPie {
     }
     $vY=$vY-$YStep; $vX=$vX-$XStep;
 
-    $TopOffset  = $Y - $Boundaries["T"];
+    $TopOffset = $Y - $Boundaries["T"];
     if ( $Boundaries["B"]-($vY+$BoxSize) < $TopOffset ) {
       $Boundaries["B"] = $vY+$BoxSize+$TopOffset;
     }
@@ -820,27 +820,27 @@ class pPie {
 
   /* Set the color of the specified slice */
   function setSliceColor($SliceID,$Format="") {
-    $R    = isset($Format["R"]) ? $Format["R"] : 0;
-    $G    = isset($Format["G"]) ? $Format["G"] : 0;
-    $B    = isset($Format["B"]) ? $Format["B"] : 0;
-    $Alpha  = isset($Format["Alpha"]) ? $Format["Alpha"] : 100;
+    $R = isset($Format["R"]) ? $Format["R"] : 0;
+    $G = isset($Format["G"]) ? $Format["G"] : 0;
+    $B = isset($Format["B"]) ? $Format["B"] : 0;
+    $Alpha = isset($Format["Alpha"]) ? $Format["Alpha"] : 100;
 
-    $this->pDataObject->Palette[$SliceID]["R"]     = $R;
-    $this->pDataObject->Palette[$SliceID]["G"]     = $G;
-    $this->pDataObject->Palette[$SliceID]["B"]     = $B;
+    $this->pDataObject->Palette[$SliceID]["R"] = $R;
+    $this->pDataObject->Palette[$SliceID]["G"] = $G;
+    $this->pDataObject->Palette[$SliceID]["B"] = $B;
     $this->pDataObject->Palette[$SliceID]["Alpha"] = $Alpha;
   }
 
   /* Internally used compute the label positions */
   function writePieLabel($X,$Y,$Label,$Angle,$Settings,$Stacked,$Xc=0,$Yc=0,$Radius=0,$Reversed=FALSE) {
-    $LabelOffset  = 30;
-    $FontName    = $this->pChartObject->FontName;
-    $FontSize    = $this->pChartObject->FontSize;
+    $LabelOffset = 30;
+    $FontName = $this->pChartObject->FontName;
+    $FontSize = $this->pChartObject->FontSize;
 
     if ( !$Stacked ) {
-      $Settings["Angle"]  = 360-$Angle;
+      $Settings["Angle"] = 360-$Angle;
       $Settings["Length"] = 25;
-      $Settings["Size"]   = 8;
+      $Settings["Size"] = 8;
 
       $this->pChartObject->drawArrowLabel($X,$Y," ".$Label." ",$Settings);
     } else {
@@ -849,7 +849,7 @@ class pPie {
 
       $TxtPos = $this->pChartObject->getTextBox($X,$Y,$FontName,$FontSize,0,$Label);
       $Height = $TxtPos[0]["Y"] - $TxtPos[2]["Y"];
-      $YTop    = $Y2 - $Height/2 - 2;
+      $YTop = $Y2 - $Height/2 - 2;
       $YBottom = $Y2 + $Height/2 + 2;
 
       if ( $this->LabelPos != "" ) {
@@ -917,32 +917,32 @@ class pPie {
 
   /* Draw a ring chart */
   function draw2DRing($X,$Y,$Format="") {
-    $OuterRadius  = isset($Format["Radius"]) ? $Format["Radius"] : 60;
-    $InnerRadius  = isset($Format["Radius"]) ? $Format["Radius"] : 30;
-    $Border    = isset($Format["Border"]) ? $Format["Border"] : FALSE;
-    $BorderR    = isset($Format["BorderR"]) ? $Format["BorderR"] : 255;
-    $BorderG    = isset($Format["BorderG"]) ? $Format["BorderG"] : 255;
-    $BorderB    = isset($Format["BorderB"]) ? $Format["BorderB"] : 255;
-    $BorderAlpha  = isset($Format["BorderAlpha"]) ? $Format["BorderAlpha"] : 100;
-    $Shadow    = isset($Format["Shadow"]) ? $Format["Shadow"] : FALSE;
-    $DrawLabels  = isset($Format["DrawLabels"]) ? $Format["DrawLabels"] : FALSE;
-    $LabelStacked  = isset($Format["LabelStacked"]) ? $Format["LabelStacked"] : FALSE;
-    $LabelColor  = isset($Format["LabelColor"]) ? $Format["LabelColor"] : PIE_LABEL_COLOR_MANUAL;
-    $LabelR    = isset($Format["LabelR"]) ? $Format["LabelR"] : 0;
-    $LabelG    = isset($Format["LabelG"]) ? $Format["LabelG"] : 0;
-    $LabelB    = isset($Format["LabelB"]) ? $Format["LabelB"] : 0;
-    $LabelAlpha  = isset($Format["LabelAlpha"]) ? $Format["LabelAlpha"] : 100;
-    $WriteValues  = isset($Format["WriteValues"]) ? $Format["WriteValues"] : NULL; //PIE_VALUE_PERCENTAGE
-    $ValuePadding  = isset($Format["ValuePadding"]) ? $Format["ValuePadding"] : 5;
-    $ValuePosition  = isset($Format["ValuePosition"]) ? $Format["ValuePosition"] : PIE_VALUE_OUTSIDE;
-    $ValueSuffix  = isset($Format["ValueSuffix"]) ? $Format["ValueSuffix"] : "";
-    $ValueR    = isset($Format["ValueR"]) ? $Format["ValueR"] : 255;
-    $ValueG    = isset($Format["ValueG"]) ? $Format["ValueG"] : 255;
-    $ValueB    = isset($Format["ValueB"]) ? $Format["ValueB"] : 255;
-    $ValueAlpha  = isset($Format["ValueAlpha"]) ? $Format["ValueAlpha"] : 100;
+    $OuterRadius = isset($Format["Radius"]) ? $Format["Radius"] : 60;
+    $InnerRadius = isset($Format["Radius"]) ? $Format["Radius"] : 30;
+    $Border = isset($Format["Border"]) ? $Format["Border"] : FALSE;
+    $BorderR = isset($Format["BorderR"]) ? $Format["BorderR"] : 255;
+    $BorderG = isset($Format["BorderG"]) ? $Format["BorderG"] : 255;
+    $BorderB = isset($Format["BorderB"]) ? $Format["BorderB"] : 255;
+    $BorderAlpha = isset($Format["BorderAlpha"]) ? $Format["BorderAlpha"] : 100;
+    $Shadow = isset($Format["Shadow"]) ? $Format["Shadow"] : FALSE;
+    $DrawLabels = isset($Format["DrawLabels"]) ? $Format["DrawLabels"] : FALSE;
+    $LabelStacked = isset($Format["LabelStacked"]) ? $Format["LabelStacked"] : FALSE;
+    $LabelColor = isset($Format["LabelColor"]) ? $Format["LabelColor"] : PIE_LABEL_COLOR_MANUAL;
+    $LabelR = isset($Format["LabelR"]) ? $Format["LabelR"] : 0;
+    $LabelG = isset($Format["LabelG"]) ? $Format["LabelG"] : 0;
+    $LabelB = isset($Format["LabelB"]) ? $Format["LabelB"] : 0;
+    $LabelAlpha = isset($Format["LabelAlpha"]) ? $Format["LabelAlpha"] : 100;
+    $WriteValues = isset($Format["WriteValues"]) ? $Format["WriteValues"] : NULL; //PIE_VALUE_PERCENTAGE
+    $ValuePadding = isset($Format["ValuePadding"]) ? $Format["ValuePadding"] : 5;
+    $ValuePosition = isset($Format["ValuePosition"]) ? $Format["ValuePosition"] : PIE_VALUE_OUTSIDE;
+    $ValueSuffix = isset($Format["ValueSuffix"]) ? $Format["ValueSuffix"] : "";
+    $ValueR = isset($Format["ValueR"]) ? $Format["ValueR"] : 255;
+    $ValueG = isset($Format["ValueG"]) ? $Format["ValueG"] : 255;
+    $ValueB = isset($Format["ValueB"]) ? $Format["ValueB"] : 255;
+    $ValueAlpha = isset($Format["ValueAlpha"]) ? $Format["ValueAlpha"] : 100;
 
     /* Data Processing */
-    $Data    = $this->pDataObject->getData();
+    $Data = $this->pDataObject->getData();
     $Palette = $this->pDataObject->getPalette();
 
     /* Do we have an abscissa series defined? */
@@ -996,7 +996,7 @@ class pPie {
     $Offset = 0; $ID = 0;
     foreach($Values as $Key => $Value) {
       if ( $Shadow ) {
-        $Settings    = array("R"=>$this->pChartObject->ShadowR,"G"=>$this->pChartObject->ShadowG,"B"=>$this->pChartObject->ShadowB,"Alpha"=>$this->pChartObject->Shadowa);
+        $Settings = array("R"=>$this->pChartObject->ShadowR,"G"=>$this->pChartObject->ShadowG,"B"=>$this->pChartObject->ShadowB,"Alpha"=>$this->pChartObject->Shadowa);
         $BorderColor = $Settings;
       } else {
         if ( !isset($Palette[$ID]["R"]) ) {
@@ -1150,30 +1150,30 @@ class pPie {
   /* Draw a 3D ring chart */
   function draw3DRing($X,$Y,$Format="") {
     /* Rendering layout */
-    $OuterRadius  = isset($Format["Radius"]) ? $Format["Radius"] : 100;
-    $InnerRadius  = isset($Format["Radius"]) ? $Format["Radius"] : 30;
-    $SkewFactor  = isset($Format["SkewFactor"]) ? $Format["SkewFactor"] : .6;
-    $SliceHeight  = isset($Format["SliceHeight"]) ? $Format["SliceHeight"] : 10;
-    $DataGapAngle  = isset($Format["DataGapAngle"]) ? $Format["DataGapAngle"] : 10;
-    $DataGapRadius  = isset($Format["DataGapRadius"]) ? $Format["DataGapRadius"] : 10;
-    $Border    = isset($Format["Border"]) ? $Format["Border"] : FALSE;
-    $Shadow    = isset($Format["Shadow"]) ? $Format["Shadow"] : FALSE;
-    $DrawLabels  = isset($Format["DrawLabels"]) ? $Format["DrawLabels"] : FALSE;
-    $LabelStacked  = isset($Format["LabelStacked"]) ? $Format["LabelStacked"] : FALSE;
-    $LabelColor  = isset($Format["LabelColor"]) ? $Format["LabelColor"] : PIE_LABEL_COLOR_MANUAL;
-    $LabelR    = isset($Format["LabelR"]) ? $Format["LabelR"] : 0;
-    $LabelG    = isset($Format["LabelG"]) ? $Format["LabelG"] : 0;
-    $LabelB    = isset($Format["LabelB"]) ? $Format["LabelB"] : 0;
-    $LabelAlpha  = isset($Format["LabelAlpha"]) ? $Format["LabelAlpha"] : 100;
-    $Cf    = isset($Format["Cf"]) ? $Format["Cf"] : 20;
-    $WriteValues  = isset($Format["WriteValues"]) ? $Format["WriteValues"] : NULL;
-    $ValuePadding  = isset($Format["ValuePadding"]) ? $Format["ValuePadding"] : $SliceHeight + 15;
-    $ValuePosition  = isset($Format["ValuePosition"]) ? $Format["ValuePosition"] : PIE_VALUE_OUTSIDE;
-    $ValueSuffix  = isset($Format["ValueSuffix"]) ? $Format["ValueSuffix"] : "";
-    $ValueR    = isset($Format["ValueR"]) ? $Format["ValueR"] : 255;
-    $ValueG    = isset($Format["ValueG"]) ? $Format["ValueG"] : 255;
-    $ValueB    = isset($Format["ValueB"]) ? $Format["ValueB"] : 255;
-    $ValueAlpha  = isset($Format["ValueAlpha"]) ? $Format["ValueAlpha"] : 100;
+    $OuterRadius = isset($Format["Radius"]) ? $Format["Radius"] : 100;
+    $InnerRadius = isset($Format["Radius"]) ? $Format["Radius"] : 30;
+    $SkewFactor = isset($Format["SkewFactor"]) ? $Format["SkewFactor"] : .6;
+    $SliceHeight = isset($Format["SliceHeight"]) ? $Format["SliceHeight"] : 10;
+    $DataGapAngle = isset($Format["DataGapAngle"]) ? $Format["DataGapAngle"] : 10;
+    $DataGapRadius = isset($Format["DataGapRadius"]) ? $Format["DataGapRadius"] : 10;
+    $Border = isset($Format["Border"]) ? $Format["Border"] : FALSE;
+    $Shadow = isset($Format["Shadow"]) ? $Format["Shadow"] : FALSE;
+    $DrawLabels = isset($Format["DrawLabels"]) ? $Format["DrawLabels"] : FALSE;
+    $LabelStacked = isset($Format["LabelStacked"]) ? $Format["LabelStacked"] : FALSE;
+    $LabelColor = isset($Format["LabelColor"]) ? $Format["LabelColor"] : PIE_LABEL_COLOR_MANUAL;
+    $LabelR = isset($Format["LabelR"]) ? $Format["LabelR"] : 0;
+    $LabelG = isset($Format["LabelG"]) ? $Format["LabelG"] : 0;
+    $LabelB = isset($Format["LabelB"]) ? $Format["LabelB"] : 0;
+    $LabelAlpha = isset($Format["LabelAlpha"]) ? $Format["LabelAlpha"] : 100;
+    $Cf = isset($Format["Cf"]) ? $Format["Cf"] : 20;
+    $WriteValues = isset($Format["WriteValues"]) ? $Format["WriteValues"] : NULL;
+    $ValuePadding = isset($Format["ValuePadding"]) ? $Format["ValuePadding"] : $SliceHeight + 15;
+    $ValuePosition = isset($Format["ValuePosition"]) ? $Format["ValuePosition"] : PIE_VALUE_OUTSIDE;
+    $ValueSuffix = isset($Format["ValueSuffix"]) ? $Format["ValueSuffix"] : "";
+    $ValueR = isset($Format["ValueR"]) ? $Format["ValueR"] : 255;
+    $ValueG = isset($Format["ValueG"]) ? $Format["ValueG"] : 255;
+    $ValueB = isset($Format["ValueB"]) ? $Format["ValueB"] : 255;
+    $ValueAlpha = isset($Format["ValueAlpha"]) ? $Format["ValueAlpha"] : 100;
 
     /* Error correction for overlaying rounded corners */
     if ( $SkewFactor < .5 ) {
@@ -1181,7 +1181,7 @@ class pPie {
     }
 
     /* Data Processing */
-    $Data    = $this->pDataObject->getData();
+    $Data = $this->pDataObject->getData();
     $Palette = $this->pDataObject->getPalette();
 
     /* Do we have an abscissa series defined? */
@@ -1236,7 +1236,7 @@ class pPie {
     /* Draw the polygon ring elements */
     $Offset = 360; $ID = count($Values)-1;
     $Values = array_reverse($Values);
-    $Slice  = 0; $Slices = ""; $SliceColors = ""; $Visible = ""; $SliceAngle = "";
+    $Slice = 0; $Slices = ""; $SliceColors = ""; $Visible = ""; $SliceAngle = "";
     foreach($Values as $Key => $Value) {
       if ( !isset($Palette[$ID]["R"]) ) {
         $Color = $this->pChartObject->getRandomColor();
@@ -1248,7 +1248,7 @@ class pPie {
       $SliceColors[$Slice] = $Settings;
 
       $StartAngle = $Offset;
-      $EndAngle   = $Offset-($Value*$ScaleFactor);
+      $EndAngle = $Offset-($Value*$ScaleFactor);
       if ( $EndAngle < 0 ) {
         $EndAngle = 0;
       }
@@ -1264,7 +1264,7 @@ class pPie {
         $Visible[$Slice]["End"] = TRUE;
       }
 
-      $Step   = (360 / (2 * PI * $OuterRadius))/2;
+      $Step = (360 / (2 * PI * $OuterRadius))/2;
       $OutX1 = VOID; $OutY1 = VOID;
       for($i=$Offset;$i>=$EndAngle;$i=$i-$Step) {
         $Xc = cos(($i-90)*PI/180) * ($OuterRadius+$DataGapRadius-2) + $X;
@@ -1305,7 +1305,7 @@ class pPie {
       $Slices[$Slice]["Angle"][] = VOID;
       $Lasti = $i;
 
-      $Step   = (360 / (2 * PI * $InnerRadius))/2;
+      $Step = (360 / (2 * PI * $InnerRadius))/2;
       $InX1 = VOID; $InY1 = VOID;
       for($i=$EndAngle;$i<=$Offset;$i=$i+$Step) {
         $Xc = cos(($i-90)*PI/180) * ($InnerRadius+$DataGapRadius-1) + $X;
@@ -1379,7 +1379,7 @@ class pPie {
       $this->pChartObject->drawLine($Plots["InX2"],$Plots["InY2"],$Plots["OutX1"],$Plots["OutY1"],$Settings);
     }
 
-    $Slices      = array_reverse($Slices);
+    $Slices = array_reverse($Slices);
     $SliceColors = array_reverse($SliceColors);
 
     /* Draw the vertical edges (semi-visible) */
@@ -1523,7 +1523,7 @@ class pPie {
       }
     }
 
-    $Slices      = array_reverse($Slices);
+    $Slices = array_reverse($Slices);
     $SliceColors = array_reverse($SliceColors);
 
 
@@ -1553,7 +1553,7 @@ class pPie {
       $Offset = 360; $Step = 360 / (2 * PI * $OuterRadius);
       foreach($Values as $Key => $Value) {
         $StartAngle = $Offset;
-        $EndAngle   = $Offset-($Value*$ScaleFactor);
+        $EndAngle = $Offset-($Value*$ScaleFactor);
         if ( $EndAngle < 0 ) {
           $EndAngle = 0;
         }

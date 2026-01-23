@@ -29,8 +29,8 @@ class Default_Form_Manage_EmailWarnlist extends Default_Form_ElementList {
 
     $this->setAttrib('id', 'email_form');
     $panellist = new Zend_Form_Element_Select('emailpanel', array(
-      'required'   => false,
-      'filters'    => array('StringTrim')
+      'required' => false,
+      'filters' => array('StringTrim')
     ));
     ## TODO: add specific validator
     $panellist->addValidator(new Zend_Validate_Alnum());

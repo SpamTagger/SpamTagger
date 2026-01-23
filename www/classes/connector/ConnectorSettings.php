@@ -19,7 +19,7 @@ class ConnectorSettings {
    */
   private $settings_ = array(
     'server' => 'localhost',
-    'port'   => 0
+    'port' => 0
   );
 
   private $settings_type_ = array(
@@ -36,10 +36,10 @@ class ConnectorSettings {
     'local' => 'SQLSettings',
     'sql' => 'SQLSettings',
     'mariadb' => 'SQLSettings',
-    'imap'  => 'SimpleServerSettings',
-    'pop3'  => 'SimpleServerSettings',
-    'ldap'  => 'LDAPSettings',
-    'smtp'  => 'SimpleServerSettings',
+    'imap' => 'SimpleServerSettings',
+    'pop3' => 'SimpleServerSettings',
+    'ldap' => 'LDAPSettings',
+    'smtp' => 'SimpleServerSettings',
     'radius'=> 'RadiusSettings',
     'tequila' => 'TequilaSettings'
   );
@@ -149,7 +149,7 @@ class ConnectorSettings {
     }
 
     if (preg_match('/:/', $settings)) {
-      list($server, $port)  = preg_split ("/:/", $settings);
+      list($server, $port) = preg_split ("/:/", $settings);
     } else {
       $server = $settings;
     }

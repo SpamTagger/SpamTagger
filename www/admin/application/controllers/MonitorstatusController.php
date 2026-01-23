@@ -281,8 +281,8 @@ class MonitorstatusController extends Zend_Controller_Action
       'mode' => array('count', 'frequency'), 'selected_mode' => 'count'),
       'load' => array('type' => array('load', 'cpu'), 'selected_type' => 'load'),
       'disk' => array('type' => array('disks', 'io', 'network'), 'selected_type' => 'disks'),
-      'memory'   => array('type' => array('memory'), 'selected_type' => 'memory'),
-      'spools'   => array('type' => array('spools'), 'selected_type' => 'spools')
+      'memory' => array('type' => array('memory'), 'selected_type' => 'memory'),
+      'spools' => array('type' => array('spools'), 'selected_type' => 'spools')
     );
     $available_periods = array('hour', 'day', 'week', 'month', 'year');
     $view->periods = $available_periods;

@@ -127,7 +127,7 @@ class Default_Form_Reporting extends ZendX_JQuery_Form {
     $this->addElement($top);
 
     $submit = new Zend_Form_Element_Submit('submit', array(
-      'label'    => $t->_('Refresh'),
+      'label' => $t->_('Refresh'),
       'onclick' => 'javascript:resubmit=1;launchSearch();return false;'
     ));
     $this->addElement($submit);

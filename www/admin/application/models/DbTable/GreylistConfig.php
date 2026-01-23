@@ -10,7 +10,7 @@
 
 class Default_Model_DbTable_GreylistConfig extends Zend_Db_Table_Abstract
 {
-    protected $_name    = 'greylistd_config';
+    protected $_name = 'greylistd_config';
     protected $_primary = 'set_id';
 
     public function __construct() {

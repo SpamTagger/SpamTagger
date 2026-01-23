@@ -98,7 +98,7 @@ class GeneralsettingsController extends Zend_Controller_Action
     $defaults = new Default_Model_SystemConf();
     $defaults->load();
 
-    $form  = new Default_Form_Company($defaults);
+    $form = new Default_Form_Company($defaults);
     $form->setAction(Zend_Controller_Action_HelperBroker::getStaticHelper('url')->simple('company', 'generalsettings'));
     $message = '';
 
@@ -166,7 +166,7 @@ class GeneralsettingsController extends Zend_Controller_Action
     $defaults = new Default_Model_SystemConf();
     $defaults->load();
 
-    $form  = new Default_Form_Quarantines($defaults);
+    $form = new Default_Form_Quarantines($defaults);
     $form->setAction(Zend_Controller_Action_HelperBroker::getStaticHelper('url')->simple('quarantines', 'generalsettings'));
     $message = '';
 
@@ -200,7 +200,7 @@ class GeneralsettingsController extends Zend_Controller_Action
     $defaults = new Default_Model_SystemConf();
     $defaults->load();
 
-    $form  = new Default_Form_Tasks($defaults);
+    $form = new Default_Form_Tasks($defaults);
     $form->setAction(Zend_Controller_Action_HelperBroker::getStaticHelper('url')->simple('tasks', 'generalsettings'));
     $message = '';
 
@@ -243,7 +243,7 @@ class GeneralsettingsController extends Zend_Controller_Action
     $defaults = new Default_Model_SystemConf();
     $defaults->load();
 
-    $form  = new Default_Form_Logging($defaults);
+    $form = new Default_Form_Logging($defaults);
     $form->setAction(Zend_Controller_Action_HelperBroker::getStaticHelper('url')->simple('logging', 'generalsettings'));
     $message = '';
 
@@ -290,7 +290,7 @@ class GeneralsettingsController extends Zend_Controller_Action
     $defaults = new Default_Model_SystemConf();
     $defaults->load();
 
-    $form  = new Default_Form_Archiving($defaults);
+    $form = new Default_Form_Archiving($defaults);
     $form->setAction(Zend_Controller_Action_HelperBroker::getStaticHelper('url')->simple('archiving', 'generalsettings'));
     $message = '';
 

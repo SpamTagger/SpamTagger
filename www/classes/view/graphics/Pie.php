@@ -108,13 +108,13 @@ public function addValue($value, $name, $color) {
     $ext_height= $height + $this->width3d_ + 5;
     $image = imagecreatetruecolor($ext_width, $ext_height);
 
-    $white    = imagecolorallocate($image, 0xFF, 0xFF, 0xFF);
+    $white = imagecolorallocate($image, 0xFF, 0xFF, 0xFF);
     imagefilledrectangle($image, 0, 0, $ext_width, $ext_height, $white);
 
     $xcenter = intval($ext_width / 2);
     $ycenter = intval($ext_height / 2) - ($this->width3d_/2);
 
-    $gray    = imagecolorallocate($image, 0xC0, 0xC0, 0xC0);
+    $gray = imagecolorallocate($image, 0xC0, 0xC0, 0xC0);
     $darkgray = imagecolorallocate($image, 0x90, 0x90, 0x90);
 
     $colors = array();

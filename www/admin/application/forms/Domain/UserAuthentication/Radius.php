@@ -29,9 +29,9 @@ class Default_Form_Domain_UserAuthentication_Radius
 
     require_once('Validate/SMTPHostList.php');
     $server = new  Zend_Form_Element_Text('authserver', array(
-      'label'    => $t->_('Authentication server')." :",
+      'label' => $t->_('Authentication server')." :",
       'required' => false,
-      'filters'    => array('StringToLower', 'StringTrim'))
+      'filters' => array('StringToLower', 'StringTrim'))
     );
     $server->setValue($this->_domain->getPref('auth_server'));
     $server->addValidator(new Validate_SMTPHostList());
@@ -40,18 +40,18 @@ class Default_Form_Domain_UserAuthentication_Radius
     $this->_settings = $this->getParams();
 
     $secret = new  Zend_Form_Element_Password('radiussecret', array(
-      'label'    => $t->_('Secret')." :",
+      'label' => $t->_('Secret')." :",
       'required' => false,
       'renderPassword' => true,
-      'filters'    => array('StringTrim'))
+      'filters' => array('StringTrim'))
     );
     $secret->setValue($this->_settings['radiussecret']);
     $form->addElement($secret);
 
     $auth_type = new Zend_Form_Element_Select('radiusauthtype', array(
-      'label'      => $t->_('Authentication type')." :",
-      'required'   => false,
-      'filters'    => array('StringTrim'))
+      'label' => $t->_('Authentication type')." :",
+      'required' => false,
+      'filters' => array('StringTrim'))
     );
 
     foreach (array('PAP', 'CHAP_MD5', 'MSCHAPv1', 'MSCHAPv2') as $value) {

@@ -37,9 +37,9 @@ class Default_Form_Domain_UserAuthentication_Ldap
 
     require_once('Validate/SMTPHostList.php');
     $server = new  Zend_Form_Element_Text('ldapserver', array(
-      'label'    => $t->_('LDAP server')." :",
+      'label' => $t->_('LDAP server')." :",
       'required' => false,
-      'filters'    => array('StringToLower', 'StringTrim'))
+      'filters' => array('StringToLower', 'StringTrim'))
     );
     $server->setValue($this->_domain->getPref('auth_server'));
     $server->addValidator(new Validate_SMTPHostList());
@@ -48,40 +48,40 @@ class Default_Form_Domain_UserAuthentication_Ldap
     $this->_settings = $this->getParams();
 
     $basedn = new  Zend_Form_Element_Text('basedn', array(
-      'label'    => $t->_('Base DN')." :",
+      'label' => $t->_('Base DN')." :",
       'required' => false,
-      'filters'    => array('StringTrim'))
+      'filters' => array('StringTrim'))
     );
     $basedn->setValue($this->_settings['basedn']);
     $form->addElement($basedn);
 
     $binddn = new  Zend_Form_Element_Text('binddn', array(
-      'label'    => $t->_('Bind user')." :",
+      'label' => $t->_('Bind user')." :",
       'required' => false,
-      'filters'    => array('StringTrim'))
+      'filters' => array('StringTrim'))
     );
     $binddn->setValue($this->_settings['binddn']);
     $form->addElement($binddn);
 
     $bindpass = new  Zend_Form_Element_Password('bindpass', array(
-      'label'    => $t->_('Bind password')." :",
+      'label' => $t->_('Bind password')." :",
       'required' => false,
       'renderPassword' => true,
-      'filters'    => array('StringTrim'))
+      'filters' => array('StringTrim'))
     );
     $bindpass->setValue($this->_settings['bindpw']);
     $form->addElement($bindpass);
 
     $userattr = new  Zend_Form_Element_Text('userattribute', array(
-      'label'    => $t->_('User attribute')." :",
+      'label' => $t->_('User attribute')." :",
       'required' => false,
-      'filters'    => array('StringTrim'))
+      'filters' => array('StringTrim'))
     );
     $userattr->setValue($this->_settings['userattr']);
     $form->addElement($userattr);
 
     $ldapusesslcheck = new Zend_Form_Element_Checkbox('ldapusessl', array(
-      'label'   => $t->_('Use SSL'). " :",
+      'label' => $t->_('Use SSL'). " :",
       'uncheckedValue' => "0",
       'checkedValue' => "1"
     ));
@@ -92,9 +92,9 @@ class Default_Form_Domain_UserAuthentication_Ldap
     $form->addElement($ldapusesslcheck);
 
     $version = new Zend_Form_Element_Select('ldapversion', array(
-      'label'      => $t->_('Protocol version')." :",
-      'required'   => false,
-      'filters'    => array('StringTrim'))
+      'label' => $t->_('Protocol version')." :",
+      'required' => false,
+      'filters' => array('StringTrim'))
     );
 
     foreach (array(2, 3) as $value) {

@@ -40,9 +40,9 @@ class Default_Form_NetworkInterface extends Zend_Form {
 
     $this->setAttrib('id', 'interface_form');
     $iflist = new Zend_Form_Element_Select('selectinterface', array(
-      'label'    => $t->_('Interface')." :",
-      'required'   => false,
-      'filters'  => array('StringTrim')
+      'label' => $t->_('Interface')." :",
+      'required' => false,
+      'filters' => array('StringTrim')
     ));
     ## TODO: add specific validator
     $iflist->addValidator(new Zend_Validate_Alnum());
@@ -54,7 +54,7 @@ class Default_Form_NetworkInterface extends Zend_Form {
     $this->addElement($iflist);
 
     $enableConfigurator = new Zend_Form_Element_Checkbox('enable_configurator', array(
-      'label'   => $t->_('Enable configurator interface (192.168.1.42)'). " :",
+      'label' => $t->_('Enable configurator interface (192.168.1.42)'). " :",
       'title' => $t->_("Enable configurator interface (192.168.1.42)"),
       'uncheckedValue' => "false",
       'checkedValue' => "true"
@@ -66,9 +66,9 @@ class Default_Form_NetworkInterface extends Zend_Form {
     $this->addElement($enableConfigurator);
 
     $address = new  Zend_Form_Element_Text('address', array(
-      'label'  => $t->_('IPv4 address'). " :",
+      'label' => $t->_('IPv4 address'). " :",
       'required' => false,
-      'filters'  => array('StringTrim')
+      'filters' => array('StringTrim')
     ));
     ## TODO: add specific validator
     $address->setValue($this->_interface->getIPv4Param('address'));
@@ -79,11 +79,11 @@ class Default_Form_NetworkInterface extends Zend_Form {
     }
 
     $virtaddresses = new  Zend_Form_Element_Textarea('virtual_addresses', array(
-      'label'  => $t->_('Additional IPv4 addresses'). " :",
+      'label' => $t->_('Additional IPv4 addresses'). " :",
       'required' => false,
       'rows' => 3,
       'cols' => 30,
-      'filters'  => array('StringTrim')
+      'filters' => array('StringTrim')
     ));
     $virtaddresses->setValue(implode("\n", $this->_interface->getIPv4Param('virtual_addresses')));
     require_once('Validate/IpList.php');
@@ -94,9 +94,9 @@ class Default_Form_NetworkInterface extends Zend_Form {
     }
 
     $netmask = new  Zend_Form_Element_Text('netmask', array(
-      'label'  => $t->_('Network mask'). " :",
+      'label' => $t->_('Network mask'). " :",
       'required' => false,
-      'filters'  => array('StringTrim')
+      'filters' => array('StringTrim')
     ));
     ## TODO: add specific validator
     $netmask->setValue($this->_interface->getIPv4Param('netmask'));
@@ -107,9 +107,9 @@ class Default_Form_NetworkInterface extends Zend_Form {
     }
 
     $gateway = new  Zend_Form_Element_Text('gateway', array(
-      'label'  => $t->_('Gateway'). " :",
+      'label' => $t->_('Gateway'). " :",
       'required' => false,
-      'filters'  => array('StringTrim')
+      'filters' => array('StringTrim')
     ));
     ## TODO: add specific validator
     $gateway->setValue($this->_interface->getIPv4Param('gateway'));
@@ -124,9 +124,9 @@ class Default_Form_NetworkInterface extends Zend_Form {
     $this->addElement($ifname);
 
     $ipv4mode = new Zend_Form_Element_Select('ipv4mode', array(
-      'label'    => $t->_('Configure IPv4')." :",
-      'required'   => true,
-      'filters'  => array('StringTrim')
+      'label' => $t->_('Configure IPv4')." :",
+      'required' => true,
+      'filters' => array('StringTrim')
     ));
 
     $ipv4mode->addMultiOption('disabled', $t->_('Disabled'));
@@ -139,9 +139,9 @@ class Default_Form_NetworkInterface extends Zend_Form {
     $this->addElement($ipv4mode);
 
     $ipv6mode = new Zend_Form_Element_Select('ipv6mode', array(
-      'label'    => $t->_('Configure IPv6')." :",
-      'required'   => true,
-      'filters'  => array('StringTrim')
+      'label' => $t->_('Configure IPv6')." :",
+      'required' => true,
+      'filters' => array('StringTrim')
     ));
 
     $ipv6mode->addMultiOption('disabled', $t->_('Disabled'));
@@ -153,10 +153,10 @@ class Default_Form_NetworkInterface extends Zend_Form {
       $ipv6mode->setAttrib('disabled', 'disabled');
     }
     $ipv6address = new  Zend_Form_Element_Text('ipv6address', array(
-      'label'  => $t->_('IPv6 address'). " :",
+      'label' => $t->_('IPv6 address'). " :",
       'required' => false,
       'size' => 46,
-      'filters'  => array('StringTrim')
+      'filters' => array('StringTrim')
     ));
     $ipv6address->setValue($this->_interface->getIPv6Param('address'));
     $ipv6address->addValidator(new Zend_Validate_Ip());
@@ -166,10 +166,10 @@ class Default_Form_NetworkInterface extends Zend_Form {
     }
 
     $ipv6netmask = new  Zend_Form_Element_Text('ipv6netmask', array(
-      'label'  => $t->_('Prefix length'). " :",
+      'label' => $t->_('Prefix length'). " :",
       'required' => false,
-      'size'   => 3,
-      'filters'  => array('StringTrim')
+      'size' => 3,
+      'filters' => array('StringTrim')
     ));
     $ipv6netmask->setValue($this->_interface->getIPv6Param('netmask'));
     $ipv6netmask->addValidator(new Zend_Validate_Int());
@@ -179,10 +179,10 @@ class Default_Form_NetworkInterface extends Zend_Form {
     }
 
     $ipv6gateway = new  Zend_Form_Element_Text('ipv6gateway', array(
-      'label'  => $t->_('Gateway'). " :",
+      'label' => $t->_('Gateway'). " :",
       'required' => false,
       'size' => 46,
-      'filters'  => array('StringTrim')
+      'filters' => array('StringTrim')
     ));
     $ipv6gateway->setValue($this->_interface->getIPv6Param('gateway'));
     $ipv6gateway->addValidator(new Zend_Validate_Ip());
@@ -192,7 +192,7 @@ class Default_Form_NetworkInterface extends Zend_Form {
     }
 
     $submit = new Zend_Form_Element_Submit('submit', array(
-      'label'  => $t->_('Submit')
+      'label' => $t->_('Submit')
     ));
     $this->addElement($submit);
     if ($restrictions->isRestricted('NetworkInterface', 'submit')) {
@@ -200,7 +200,7 @@ class Default_Form_NetworkInterface extends Zend_Form {
     }
 
     $reloadnet = new Zend_Form_Element_Button('relaodnetnow', array(
-      'label'  => $t->_('Reload network now')
+      'label' => $t->_('Reload network now')
     ));
     $this->addElement($reloadnet);
     if ($restrictions->isRestricted('NetworkInterface', 'relaodnetnow')) {

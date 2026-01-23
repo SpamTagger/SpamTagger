@@ -57,7 +57,7 @@ class ContentprotectionController extends Zend_Controller_Action
     $av = new Default_Model_AntivirusConfig();
     $av->find(1);
 
-    $form  = new Default_Form_AntivirusGlobalSettings($av);
+    $form = new Default_Form_AntivirusGlobalSettings($av);
     $form->setAction(Zend_Controller_Action_HelperBroker::getStaticHelper('url')->simple('globalsettings', 'contentprotection'));
     $message = '';
 
@@ -91,7 +91,7 @@ class ContentprotectionController extends Zend_Controller_Action
     $av = new Default_Model_AntivirusConfig();
     $av->find(1);
 
-    $form  = new Default_Form_ContentAntivirus($av);
+    $form = new Default_Form_ContentAntivirus($av);
     $form->setAction(Zend_Controller_Action_HelperBroker::getStaticHelper('url')->simple('antivirus', 'contentprotection'));
     $message = '';
 
@@ -128,7 +128,7 @@ class ContentprotectionController extends Zend_Controller_Action
     $as = new Default_Model_AntispamConfig();
   $as->find(1);
 
-    $form  = new Default_Form_ContentHTMLControls($dc,$as);
+    $form = new Default_Form_ContentHTMLControls($dc,$as);
     $form->setAction(Zend_Controller_Action_HelperBroker::getStaticHelper('url')->simple('htmlcontrols', 'contentprotection'));
     $message = '';
 
@@ -161,7 +161,7 @@ class ContentprotectionController extends Zend_Controller_Action
     $dc = new Default_Model_DangerousContent();
     $dc->find(1);
 
-    $form  = new Default_Form_ContentMessageFormat($dc);
+    $form = new Default_Form_ContentMessageFormat($dc);
     $form->setAction(Zend_Controller_Action_HelperBroker::getStaticHelper('url')->simple('messageformat', 'contentprotection'));
     $message = '';
 
@@ -196,7 +196,7 @@ class ContentprotectionController extends Zend_Controller_Action
 
     $view->filenames = $filenames;
 
-    $listform  = new Default_Form_ElementList($filenames, 'Default_Model_FileName');
+    $listform = new Default_Form_ElementList($filenames, 'Default_Model_FileName');
     $listform->setAttrib('id', 'contentfilename_form');
     $listform->setAction(Zend_Controller_Action_HelperBroker::getStaticHelper('url')->simple('filename', 'contentprotection'));
     $message = '';
@@ -231,7 +231,7 @@ class ContentprotectionController extends Zend_Controller_Action
 
     $view->filetypes = $filetypes;
 
-    $listform  = new Default_Form_ElementList($filetypes, 'Default_Model_FileType');
+    $listform = new Default_Form_ElementList($filetypes, 'Default_Model_FileType');
     $listform->setAttrib('id', 'contentfiletype_form');
     $listform->setAction(Zend_Controller_Action_HelperBroker::getStaticHelper('url')->simple('filetype', 'contentprotection'));
     $message = '';

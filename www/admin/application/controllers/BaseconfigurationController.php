@@ -34,7 +34,7 @@ class BaseconfigurationController extends Zend_Controller_Action
     if (file_exists($conf->getOption('VARDIR').'/run/configurator/dis_conf_interface.enable')) {
       $wizard = Zend_Navigation_Page::factory(array(
         'label' => 'Wizard',
-        'uri'   => $this->view->serverUrl().':4242/',
+        'uri' => $this->view->serverUrl().':4242/',
       ));
       $this->config_menu->addPage($wizard);
     }
@@ -74,7 +74,7 @@ class BaseconfigurationController extends Zend_Controller_Action
     $interfaces = $interface->fetchAll();
 
     /* Interface form */
-    $form  = new Default_Form_NetworkInterface($interfaces, $interface);
+    $form = new Default_Form_NetworkInterface($interfaces, $interface);
     $form->setAction(Zend_Controller_Action_HelperBroker::getStaticHelper('url')->simple('networksettings', 'baseconfiguration'));
     $message = '';
     if ($this->getRequest()->isPost()) {
@@ -133,7 +133,7 @@ class BaseconfigurationController extends Zend_Controller_Action
     $view->selectedConfigMenuLabel = $this->config_menu->findOneBy('id', 'networksettings')->label;
     $request = $this->getRequest();
 
-    $form  = new Default_Form_ReloadNetwork();
+    $form = new Default_Form_ReloadNetwork();
     $form->setAction(Zend_Controller_Action_HelperBroker::getStaticHelper('url')->simple('reloadnetwork', 'baseconfiguration'));
     if ($this->getRequest()->isPost()) {
       $restrictions = Zend_Registry::get('restrictions');

@@ -76,7 +76,7 @@ class StatusController extends Zend_Controller_Action
             $msgs = $s->getInformationalMessages();
             foreach ($msgs as $m) {
                 if (! $m instanceof Default_Model_InformationalMessage) {
-                    $mo =  unserialize(base64_decode($m));
+                    $mo = unserialize(base64_decode($m));
                 } else {
                     $mo = $m;
                 }

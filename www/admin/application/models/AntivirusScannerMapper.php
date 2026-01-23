@@ -53,7 +53,7 @@ class Default_Model_AntivirusScannerMapper {
     $query = $this->getDbTable()->select();
     $query->where('active = 1');
     $resultSet = $this->getDbTable()->fetchAll($query);
-    $entries   = array();
+    $entries = array();
     foreach ($resultSet as $row) {
       $entry = new Default_Model_AntivirusScanner();
       $entry->find($row['id']);

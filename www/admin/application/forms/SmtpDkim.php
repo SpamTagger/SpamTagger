@@ -32,7 +32,7 @@ class Default_Form_SmtpDkim extends ZendX_JQuery_Form {
       'label' => 'Default DKIM domain'." :",
       'required' => false,
       'size' => 30,
-      'filters'    => array('StringToLower','StringTrim')
+      'filters' => array('StringToLower','StringTrim')
     ));
     $domain->setValue($this->_mta->getParam('dkim_default_domain'));
     require_once('Validate/DomainName.php');
@@ -43,14 +43,14 @@ class Default_Form_SmtpDkim extends ZendX_JQuery_Form {
       'label' => 'Default DKIM selector'." :",
       'required' => false,
       'size' => 30,
-      'filters'    => array('StringToLower','StringTrim')
+      'filters' => array('StringToLower','StringTrim')
     ));
     $selector->setValue($this->_mta->getParam('dkim_default_selector'));
     $this->addElement($selector);
 
     $pkey = new Zend_Form_Element_Textarea('dkim_default_pkey', array(
-      'label'    =>  $t->_('Default private key')." :",
-      'required'   => false,
+      'label' => $t->_('Default private key')." :",
+      'required' => false,
       'class' => 'pki_privatekey',
       'rows' => 7,
       'cols' => 50
@@ -62,7 +62,7 @@ class Default_Form_SmtpDkim extends ZendX_JQuery_Form {
     $this->addElement($pkey);
 
     $submit = new Zend_Form_Element_Submit('submit', array(
-      'label'    => $t->_('Submit')
+      'label' => $t->_('Submit')
     ));
     $this->addElement($submit);
 

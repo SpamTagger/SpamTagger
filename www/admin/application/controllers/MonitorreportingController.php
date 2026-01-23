@@ -121,7 +121,7 @@ class MonitorreportingController extends Zend_Controller_Action {
     $view=$layout->getView();
 
     $request = $this->getRequest();
-    $form  = new Default_Form_Reporting($this->getSearchParams());
+    $form = new Default_Form_Reporting($this->getSearchParams());
     $form->setAction(Zend_Controller_Action_HelperBroker::getStaticHelper('url')->simple('index', 'monitorreporting'));
     $view->thisurl = Zend_Controller_Action_HelperBroker::getStaticHelper('url')->simple('index', 'monitorreporting', NULL, array());
 

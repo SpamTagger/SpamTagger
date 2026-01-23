@@ -16,20 +16,20 @@ class Spam {
    * @var array
    */
   private $datas_ = array(
-    'exim_id'         => '',
-    'to_user'         => '',
-    'to_domain'       => '',
-    'date_in'         => '',
-    'time_in'         => '',
-    'sender'          => '',
-    'M_subject'       => '',
-    'forced'          => 0,
-    'M_score'         => 0,
-    'M_rbls'          => '',
-    'M_prefilter'     => '',
-    'M_globalscore'   => 0,
-    'store_replica'     => 0,
-    'is_newsletter'   => '0');
+    'exim_id' => '',
+    'to_user' => '',
+    'to_domain' => '',
+    'date_in' => '',
+    'time_in' => '',
+    'sender' => '',
+    'M_subject' => '',
+    'forced' => 0,
+    'M_score' => 0,
+    'M_rbls' => '',
+    'M_prefilter' => '',
+    'M_globalscore' => 0,
+    'store_replica' => 0,
+    'is_newsletter' => '0');
   /**
    * body of the spam
    * @var string
@@ -221,7 +221,7 @@ class Spam {
     if ($replica == "") {
       return false;
     }
-    $dest  = $this->getData('to');
+    $dest = $this->getData('to');
     $soaper = new Soaper();
     if (!$soaper->load($replica)) {
       echo "CANNOTCONNECTSOAPER";

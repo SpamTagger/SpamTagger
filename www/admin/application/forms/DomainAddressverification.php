@@ -29,8 +29,8 @@ class Default_Form_DomainAddressverification extends Zend_Form {
 
     $this->setAttrib('id', 'domain_form');
     $panellist = new Zend_Form_Element_Select('domainpanel', array(
-      'required'   => false,
-      'filters'    => array('StringTrim'))
+      'required' => false,
+      'filters' => array('StringTrim'))
     );
     ## TODO: add specific validator
     $panellist->addValidator(new Zend_Validate_Alnum());
@@ -49,9 +49,9 @@ class Default_Form_DomainAddressverification extends Zend_Form {
     $this->addElement($name);
 
     $domainname = new  Zend_Form_Element_Text('domainname', array(
-      'label'   => $t->_('Domain name')." :",
+      'label' => $t->_('Domain name')." :",
       'required' => false,
-      'filters'    => array('StringToLower', 'StringTrim'))
+      'filters' => array('StringToLower', 'StringTrim'))
     );
     $domainname->setValue($this->_domain->getParam('name'));
     require_once('Validate/DomainName.php');
@@ -61,16 +61,16 @@ class Default_Form_DomainAddressverification extends Zend_Form {
 
     foreach ($this->_connectors as $connector) {
       $connectorformclass = 'Default_Form_Domain_AddressVerification_'.ucfirst($connector);
-      $connectorform  = new $connectorformclass($this->_domain);
+      $connectorform = new $connectorformclass($this->_domain);
       $connectorform->addForm($this);
     }
 
     $connectorlist = new Zend_Form_Element_Select('connector', array(
-      'label'      => $t->_('Callout connector')." : ",
+      'label' => $t->_('Callout connector')." : ",
       'title' => $t->_("choose type of callout"),
-      'required'   => true,
-      'onchange'   => 'javascript:changeConnector();',
-      'filters'    => array('StringTrim'))
+      'required' => true,
+      'onchange' => 'javascript:changeConnector();',
+      'filters' => array('StringTrim'))
     );
 
     foreach ($this->_connectors as $connector) {
@@ -80,20 +80,20 @@ class Default_Form_DomainAddressverification extends Zend_Form {
     $this->addElement($connectorlist);
 
     $test = new Zend_Form_Element_Button('testcallout', array(
-      'label'    => $t->_('Test configuration'),
+      'label' => $t->_('Test configuration'),
       'onclick' => 'javascript:stopreloadtest=0;testCallout(\''.$this->_domain->getParam('name').'\', 1);')
     );
     $this->addElement($test);
 
     $submit = new Zend_Form_Element_Submit('submit', array(
-      'label'    => $t->_('Submit'))
+      'label' => $t->_('Submit'))
     );
     $this->addElement($submit);
   }
 
   public function setParams($request, $domain) {
     $connectorformclass = 'Default_Form_Domain_AddressVerification_'.ucfirst($request->getParam('connector'));
-    $connectorform  = new $connectorformclass($domain);
+    $connectorform = new $connectorformclass($domain);
     $connectorform->setParams($request, $domain);
     return true;
   }

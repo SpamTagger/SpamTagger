@@ -88,10 +88,10 @@ class SupportForm {
     $params['port']='2525';
     $mail_object =& Mail::factory('smtp', $params);
 
-    $recipients              = $sysconf_->getPref('analyse_to');
-    $headers['From']         = $sysconf_->getPref('summary_from');
-    $headers['To']           = $recipients;
-    $headers['Subject']      = "SpamTagger support request";
+    $recipients = $sysconf_->getPref('analyse_to');
+    $headers['From'] = $sysconf_->getPref('summary_from');
+    $headers['To'] = $recipients;
+    $headers['Subject'] = "SpamTagger support request";
     $headers['MIME-Version'] = '1.0';
     $headers['Content-Type'] = 'text/plain; charset=ISO-8859-1; format=flowed';
     $headers['Content-Transfer-Encoding'] = 'quoted-printable';

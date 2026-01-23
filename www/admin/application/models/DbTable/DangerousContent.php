@@ -10,7 +10,7 @@
 
 class Default_Model_DbTable_DangerousContent extends Zend_Db_Table_Abstract
 {
-    protected $_name    = 'dangerouscontent';
+    protected $_name = 'dangerouscontent';
     protected $_primary = 'set_id';
 
     public function __construct() {

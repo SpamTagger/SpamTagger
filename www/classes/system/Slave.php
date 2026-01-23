@@ -369,7 +369,7 @@ class Slave extends PrefHandler {
       return $this->getLastSoapError();
     }
     $loads = array(
-      'AVG5MIN'  => $status->avg5,
+      'AVG5MIN' => $status->avg5,
       'AVG10MIN' => $status->avg10,
       'AVG15MIN' => $status->avg15
     );
@@ -524,8 +524,8 @@ class Slave extends PrefHandler {
       'CONTENT' => $status->content
     );
     foreach ($types as $tag => $soapvalue) {
-      $tmpl =   str_replace('__VALUE__', "<font color=\"".$colors[$tag]."\">".$soapvalue."</font>", $t);
-      $ret .=   str_replace('__NAME__', "<font color=\"".$colors[$tag]."\">".$lang_->print_txt($tag)."</font>", $tmpl);
+      $tmpl = str_replace('__VALUE__', "<font color=\"".$colors[$tag]."\">".$soapvalue."</font>", $t);
+      $ret .= str_replace('__NAME__', "<font color=\"".$colors[$tag]."\">".$lang_->print_txt($tag)."</font>", $tmpl);
     }
     return $ret;
   }

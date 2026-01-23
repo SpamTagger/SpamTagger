@@ -21,7 +21,7 @@ abstract class AddressFetcher {
   static private $fetchers_ = array (
                                      'at_login' => array('add domain', 'AddParam'),
                                      'ldap' => array('ldap lookup', 'LDAPLookup'),
-                                     'text_file'  => array('text file lookup', 'FileLookup'),
+                                     'text_file' => array('text file lookup', 'FileLookup'),
                                      'param_add' => array('add a parameter', 'AddParam'),
                                      'mariadb' => array('sql lookup', 'SQLLookup'),
                                      'local' => array('local', 'SQLLookup')

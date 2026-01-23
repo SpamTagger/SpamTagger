@@ -43,9 +43,9 @@ class Default_Form_ContentMessageFormat extends ZendX_JQuery_Form
     foreach ($this->_fields as $mf => $f) {
 
       $ff = new Zend_Form_Element_Select($mf, array(
-        'label'      => $t->_($f['text'])." :",
-        'required'   => true,
-        'filters'    => array('StringTrim'))
+        'label' => $t->_($f['text'])." :",
+        'required' => true,
+        'filters' => array('StringTrim'))
       );
 
       foreach ($this->$f['options'] as $lk => $lv) {
@@ -57,7 +57,7 @@ class Default_Form_ContentMessageFormat extends ZendX_JQuery_Form
 
 
     $submit = new Zend_Form_Element_Submit('submit', array(
-      'label'    => $t->_('Submit'))
+      'label' => $t->_('Submit'))
     );
     $this->addElement($submit);
 

@@ -26,8 +26,8 @@ class Default_Form_Manage_UserGeneral extends Zend_Form {
 
     $this->setAttrib('id', 'user_form');
     $panellist = new Zend_Form_Element_Select('userpanel', array(
-      'required'   => false,
-      'filters'    => array('StringTrim')
+      'required' => false,
+      'filters' => array('StringTrim')
     ));
     ## TODO: add specific validator
     $panellist->addValidator(new Zend_Validate_Alnum());
@@ -46,7 +46,7 @@ class Default_Form_Manage_UserGeneral extends Zend_Form {
     $this->addElement($name);
 
     $submit = new Zend_Form_Element_Submit('submit', array(
-      'label'    => $t->_('Submit')
+      'label' => $t->_('Submit')
     ));
     $this->addElement($submit);
   }

@@ -32,16 +32,16 @@ class ContentQuarantine extends Quarantine {
    * @var  array
    */
   protected  $filters_ = array(
-                      'searchid'      => '',
-                      'replica'         => '127.0.0.1',
-                      'to_local'      => '',
-                      'to_domain'     => '',
-                      'from'          => '',
-                      'subject'       => '',
-                      'days'          => DEFAULT_DAYS,
-                      'order'         => array('date', 'desc'),
-                      'page'          => 1,
-                      'msg_per_page'  => DEFAULT_MSGS
+                      'searchid' => '',
+                      'replica' => '127.0.0.1',
+                      'to_local' => '',
+                      'to_domain' => '',
+                      'from' => '',
+                      'subject' => '',
+                      'days' => DEFAULT_DAYS,
+                      'order' => array('date', 'desc'),
+                      'page' => 1,
+                      'msg_per_page' => DEFAULT_MSGS
                     );
 
   /**
@@ -49,11 +49,11 @@ class ContentQuarantine extends Quarantine {
    * @var array
    */
   protected $ordered_fields_ = array(
-                     'date'       => 'date',
-                     'time'       => 'time',
-                     'tolocal'    => 'to_address',
-                     'from'       => 'from_address',
-                     'subject'    => 'subject',
+                     'date' => 'date',
+                     'time' => 'time',
+                     'tolocal' => 'to_address',
+                     'from' => 'from_address',
+                     'subject' => 'subject',
                     );
 
   /**

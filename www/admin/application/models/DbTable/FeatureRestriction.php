@@ -10,7 +10,7 @@
 
 class Default_Model_DbTable_FeatureRestriction extends Zend_Db_Table_Abstract
 {
-    protected $_name    = 'feature_restriction';
+    protected $_name = 'feature_restriction';
     protected $_primary = 'id';
 
     public function __construct() {

@@ -159,7 +159,7 @@ class STSoap_Status {
     */
   static public function Status_getHardwareHealth() {
     $disks = STSoap_Status::getMcStatusElement('disks');
-    $swap =  STSoap_Status::getMcStatusElement('swap');
+    $swap = STSoap_Status::getMcStatusElement('swap');
     return array();
   }
 

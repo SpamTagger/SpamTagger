@@ -206,10 +206,10 @@ function getMIMEPart($id, $dest, $part) {
 
   require_once 'Mail/mimeDecode.php';
   $params['include_bodies'] = true;
-  $params['decode_bodies']  = false;
+  $params['decode_bodies'] = false;
   $params['decode_headers'] = false;
-  $params['input']          = $msg;
-  $params['crlf']           = "\r\n";
+  $params['input'] = $msg;
+  $params['crlf'] = "\r\n";
 
   $structure = Mail_mimeDecode::decode($params);
   $types = extractParts($structure, $part);

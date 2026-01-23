@@ -54,7 +54,7 @@ class ZendX_JQuery_View_Helper_AjaxLink extends Zend_View_Helper_HtmlElement
      *
      * $options
      *  Key				Behaviour
-     *  =================================================================================
+     * =================================================================================
      *  'update'        Update a container with the content fetched from $url
      *  'method'        Explicit Requesting method mimicing the jQuery functionality: GET, POST
      *  'inline'        True or false, wheater to inline the javascript in onClick=""

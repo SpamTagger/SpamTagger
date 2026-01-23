@@ -51,7 +51,7 @@ class Default_Model_FirewallRuleMapper {
 
   public function fetchAll() {
     $resultSet = $this->getDbTable()->fetchAll();
-    $entries   = array();
+    $entries = array();
     foreach ($resultSet as $row) {
       $entry = new Default_Model_FirewallRule();
       $entry->setId($row->id);

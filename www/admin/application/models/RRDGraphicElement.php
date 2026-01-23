@@ -17,7 +17,7 @@ class Default_Model_RRDGraphicElement {
     'type' => '',
     'function' => '',
     'oid' => '',
-    'draw_name'  => '',
+    'draw_name' => '',
     'draw_order' => 0,
     'draw_style' => '',
     'min' => 'U',

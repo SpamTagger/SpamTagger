@@ -27,7 +27,7 @@ class Default_Form_DateAndTime extends ZendX_JQuery_Form {
     $view=$layout->getView();
 
     $date = new ZendX_JQuery_Form_Element_DatePicker('date', array(
-      'label'    => $t->_('Date'). " :")
+      'label' => $t->_('Date'). " :")
     );
     $date->addValidator(new Zend_Validate_Date());
     $date->addDecorator('ViewHelper');
@@ -38,7 +38,7 @@ class Default_Form_DateAndTime extends ZendX_JQuery_Form {
     $hour = new  Zend_Form_Element_Text('hour', array(
       'required' => false,
       'class' => 'timefield',
-      'filters'    => array('Alnum'))
+      'filters' => array('Alnum'))
     );
     $hour->addValidator(new Zend_Validate_Int());
     $hour->addValidator(new Zend_Validate_LessThan(24));
@@ -47,7 +47,7 @@ class Default_Form_DateAndTime extends ZendX_JQuery_Form {
     $minute = new  Zend_Form_Element_Text('minute', array(
       'required' => false,
       'class' => 'timefield',
-      'filters'    => array('Alnum'))
+      'filters' => array('Alnum'))
     );
     $minute->addValidator(new Zend_Validate_Int());
     $minute->addValidator(new Zend_Validate_LessThan(60));
@@ -56,14 +56,14 @@ class Default_Form_DateAndTime extends ZendX_JQuery_Form {
     $second = new  Zend_Form_Element_Text('second', array(
       'required' => false,
       'class' => 'timefield',
-      'filters'    => array('Alnum'))
+      'filters' => array('Alnum'))
     );
     $second->addValidator(new Zend_Validate_Int());
     $second->addValidator(new Zend_Validate_LessThan(60));
     $this->addElement($second);
 
     $saveandsync = new Zend_Form_Element_Submit('saveandsync', array(
-      'label'    => $t->_('Save and sync now'))
+      'label' => $t->_('Save and sync now'))
     );
     $this->addElement($saveandsync);
 
@@ -73,7 +73,7 @@ class Default_Form_DateAndTime extends ZendX_JQuery_Form {
 
     require_once('Validate/HostList.php');
     $ntpserver = new  Zend_Form_Element_Text('ntpserver', array(
-      'label'    => $t->_('NTP server'). " :",
+      'label' => $t->_('NTP server'). " :",
       'required' => false,
       'class' => 'serverlistfield')
     );
@@ -82,7 +82,7 @@ class Default_Form_DateAndTime extends ZendX_JQuery_Form {
     $this->addElement($ntpserver);
 
     $usentp = new Zend_Form_Element_Checkbox('usentp', array(
-      'label'   => $t->_('Use time server'). " :",
+      'label' => $t->_('Use time server'). " :",
       'uncheckedValue' => "0",
       'checkedValue' => "1"
     ));
@@ -90,7 +90,7 @@ class Default_Form_DateAndTime extends ZendX_JQuery_Form {
     $this->addElement($usentp);
 
     $submit = new Zend_Form_Element_Submit('datetimesubmit', array(
-      'label'    => $t->_('Set time and date'))
+      'label' => $t->_('Set time and date'))
     );
     $this->addElement($submit);
 

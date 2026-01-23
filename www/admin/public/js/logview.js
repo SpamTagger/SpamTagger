@@ -12,7 +12,7 @@ var text_size = 12;
 var search_position = 1;
 var percent = -1;
 var last_element = '';
-var text_lineheight =  14;
+var text_lineheight = 14;
 var log_text_padding = 5;
 var text_charwidth = 7.4;
 

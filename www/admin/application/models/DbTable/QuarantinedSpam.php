@@ -10,7 +10,7 @@
 
 class Default_Model_DbTable_QuarantinedSpam extends Zend_Db_Table_Abstract {
 
-  protected $_name  = 'spam';
+  protected $_name = 'spam';
   protected $_primary = 'exim_id';
 
   public function __construct() {

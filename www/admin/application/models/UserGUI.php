@@ -12,7 +12,7 @@ class Default_Model_UserGUI {
   protected $_id;
   protected $_values = array(
     'want_domainchooser' => 1,
-    'default_template'    => ''
+    'default_template' => ''
   );
 
   protected $_mapper;

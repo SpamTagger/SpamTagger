@@ -252,9 +252,9 @@ abstract class ZendX_Console_Process_Unix
             exit(0);
         } else {
             // Else this is the parent
-            $this->_isChild   = false;
+            $this->_isChild = false;
             $this->_isRunning = true;
-            $this->_pid       = $pid;
+            $this->_pid = $pid;
         }
     }
     
@@ -394,7 +394,7 @@ abstract class ZendX_Console_Process_Unix
 
         // These setting are common to both the calling types
         $this->_internalIpcData['_callMethod'] = $methodName;
-        $this->_internalIpcData['_callInput']  = $argList;
+        $this->_internalIpcData['_callInput'] = $argList;
 
         // Write the IPC data to the shared segment
         $this->_writeToIpcSegment();
@@ -477,7 +477,7 @@ abstract class ZendX_Console_Process_Unix
         @unlink($this->_ipcSemFile);
 
         $this->_isRunning = false;
-        $this->_pid       = null;
+        $this->_pid = null;
     }
 
     /**

@@ -28,11 +28,11 @@ class STSoap_Content {
 
     require_once('Zend/Db/Adapter/Pdo/Mysql.php');
     $contentDb = new Zend_Db_Adapter_Pdo_Mysql(array(
-      'host'        => 'localhost',
+      'host' => 'localhost',
       'unix_socket' => $stconfig->getOption('VARDIR')."/run/mariadb_replica/mariadbd.sock",
-      'username'    => 'spamtagger',
-      'password'    => $stconfig->getOption('MYSPAMTAGGERPWD'),
-      'dbname'      => 'st_stats'
+      'username' => 'spamtagger',
+      'password' => $stconfig->getOption('MYSPAMTAGGERPWD'),
+      'dbname' => 'st_stats'
     ));
     $query = $contentDb->select();
     $query->from('maillog');
@@ -123,11 +123,11 @@ class STSoap_Content {
 
     require_once('Zend/Db/Adapter/Pdo/Mysql.php');
     $contentDb = new Zend_Db_Adapter_Pdo_Mysql(array(
-      'host'        => 'localhost',
+      'host' => 'localhost',
       'unix_socket' => $stconfig->getOption('VARDIR')."/run/mariadb_replica/mariadbd.sock",
-      'username'    => 'spamtagger',
-      'password'    => $stconfig->getOption('MYSPAMTAGGERPWD'),
-      'dbname'      => 'st_stats'
+      'username' => 'spamtagger',
+      'password' => $stconfig->getOption('MYSPAMTAGGERPWD'),
+      'dbname' => 'st_stats'
     ));
     $query = $contentDb->select();
     $query->from('maillog');

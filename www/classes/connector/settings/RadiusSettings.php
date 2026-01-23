@@ -25,7 +25,7 @@
    */
    protected $spec_settings_ = array(
                               'secret' => '',
-                              'authtype'   => 'PAP'
+                              'authtype' => 'PAP'
                              );
 
    /**

@@ -54,7 +54,7 @@ class SmtpController extends Zend_Controller_Action {
     $mta = new Default_Model_MtaConfig();
     $mta->find(1);
 
-    $form  = new Default_Form_SmtpChecks($mta);
+    $form = new Default_Form_SmtpChecks($mta);
     $form->setAction(Zend_Controller_Action_HelperBroker::getStaticHelper('url')->simple('smtpchecks', 'smtp'));
     $message = '';
 
@@ -89,7 +89,7 @@ class SmtpController extends Zend_Controller_Action {
     $mta = new Default_Model_MtaConfig();
     $mta->find(1);
 
-    $form  = new Default_Form_SmtpConnectionControl($mta);
+    $form = new Default_Form_SmtpConnectionControl($mta);
     $form->setAction(Zend_Controller_Action_HelperBroker::getStaticHelper('url')->simple('connectioncontrol', 'smtp'));
     $message = '';
 
@@ -133,7 +133,7 @@ class SmtpController extends Zend_Controller_Action {
       $view->ssl_display_class = 'hidden';
     }
 
-    $form  = new Default_Form_SmtpTls($mta);
+    $form = new Default_Form_SmtpTls($mta);
     $form->setAction(Zend_Controller_Action_HelperBroker::getStaticHelper('url')->simple('tls', 'smtp'));
 
     $cert = new Default_Model_PKI();
@@ -201,7 +201,7 @@ class SmtpController extends Zend_Controller_Action {
       }
     }
 
-    $form  = new Default_Form_SmtpResourcesControl($mta);
+    $form = new Default_Form_SmtpResourcesControl($mta);
     $form->setAction(Zend_Controller_Action_HelperBroker::getStaticHelper('url')->simple('resourcescontrol', 'smtp'));
     $message = '';
 
@@ -254,7 +254,7 @@ class SmtpController extends Zend_Controller_Action {
     $greylist = new Default_Model_GreylistConfig();
     $greylist->find(1);
 
-    $form  = new Default_Form_SmtpGreylisting($greylist);
+    $form = new Default_Form_SmtpGreylisting($greylist);
     $form->setAction(Zend_Controller_Action_HelperBroker::getStaticHelper('url')->simple('greylisting', 'smtp'));
     $message = '';
 
@@ -290,7 +290,7 @@ class SmtpController extends Zend_Controller_Action {
     $mta = new Default_Model_MtaConfig();
     $mta->find(1);
 
-    $form  = new Default_Form_SmtpDkim($mta);
+    $form = new Default_Form_SmtpDkim($mta);
     $form->setAction(Zend_Controller_Action_HelperBroker::getStaticHelper('url')->simple('dkim', 'smtp'));
     $message = '';
 

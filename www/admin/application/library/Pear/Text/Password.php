@@ -154,8 +154,8 @@ class Text_Password {
     function createMultipleFromLogin($login, $type, $key = 0)
     {
         $passwords = array();
-        $number    = count($login);
-        $save      = $number;
+        $number = count($login);
+        $save = $number;
 
         while ($number > 0) {
             while (true) {

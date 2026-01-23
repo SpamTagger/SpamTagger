@@ -231,11 +231,11 @@ return array(
    'process_exim_stage1' => 'Incoming MTA',
    'process_exim_stage2' => 'Filtering MTA',
    'process_exim_stage4' => 'Outgoing MTA',
-   'process_apache'  => 'Web access',
+   'process_apache' => 'Web access',
    'process_mailscanner' => 'Filtering engine',
    'process_mariadb_source' => 'Master database',
    'process_mariadb_replica' => 'Slave database',
-   'process_snmpd'  => 'SNMP daemon',
+   'process_snmpd' => 'SNMP daemon',
    'process_greylistd' => 'Greylist daemon',
    'process_cron' => 'Scheduler',
    'process_firewall' => 'Firewall',
@@ -244,7 +244,7 @@ return array(
    'process_clamd' => 'ClamAV daemon',
    'process_clamspamd' => 'ClamSpam daemon',
    'process_spamhandler' => 'SpamHandler daemon',
-   'process_newsld'      => "Newsletters daemon",
+   'process_newsld' => "Newsletters daemon",
 
 ## global status
    'loadlow' => 'low',

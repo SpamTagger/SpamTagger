@@ -30,19 +30,19 @@ class Default_Form_AntiSpam_MessageSniffer extends Default_Form_AntiSpam_Default
     $t = Zend_Registry::get('translate');
 
     $licenseid = new  Zend_Form_Element_Text('licenseid', array(
-      'label'   => $t->_('Licence ID')." :",
+      'label' => $t->_('Licence ID')." :",
       'required' => false,
       'size' => 10,
-      'filters'    => array('StringTrim'))
+      'filters' => array('StringTrim'))
     );
     $licenseid->setValue($as->getParam('licenseid'));
     $this->addElement($licenseid);
 
     $authentication = new  Zend_Form_Element_Text('authentication', array(
-      'label'   => $t->_('Authentication')." :",
+      'label' => $t->_('Authentication')." :",
       'required' => false,
       'size' => 20,
-      'filters'    => array('StringTrim'))
+      'filters' => array('StringTrim'))
     );
     $authentication->setValue($as->getParam('authentication'));
     $this->addElement($authentication);

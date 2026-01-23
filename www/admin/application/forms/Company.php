@@ -29,7 +29,7 @@ class Default_Form_Company extends ZendX_JQuery_Form
     $this->setAttrib('id', 'company_form');
 
     $company = new  Zend_Form_Element_Text('companyname', array(
-      'label'    => $t->_('Company name')." :",
+      'label' => $t->_('Company name')." :",
       'size' => 40,
       'required' => false)
     );
@@ -37,7 +37,7 @@ class Default_Form_Company extends ZendX_JQuery_Form
     $this->addElement($company);
 
     $contactname = new  Zend_Form_Element_Text('contactname', array(
-      'label'    => $t->_('Contact name')." :",
+      'label' => $t->_('Contact name')." :",
       'size' => 40,
       'required' => false)
     );
@@ -45,10 +45,10 @@ class Default_Form_Company extends ZendX_JQuery_Form
     $this->addElement($contactname);
 
     $contactemail = new  Zend_Form_Element_Text('contactemail', array(
-      'label'    => $t->_('Contact email address')." :",
+      'label' => $t->_('Contact email address')." :",
       'size' => 40,
       'required' => false,
-      'filters'    => array('StringToLower', 'StringTrim'))
+      'filters' => array('StringToLower', 'StringTrim'))
     );
     $contactemail->setValue($this->_systemconf->getParam('contact_email'));
     $contactemail->addValidator(new Zend_Validate_EmailAddress(Zend_Validate_Hostname::ALLOW_LOCAL));
@@ -56,7 +56,7 @@ class Default_Form_Company extends ZendX_JQuery_Form
 
 
     $submit = new Zend_Form_Element_Submit('submit', array(
-      'label'    => $t->_('Submit'))
+      'label' => $t->_('Submit'))
     );
     $this->addElement($submit);
   }

@@ -26,9 +26,9 @@ class Default_Form_DomainAdd extends Zend_Form {
 
     $this->setAttrib('id', 'domain_form');
     $defaultvalues = new Zend_Form_Element_Select('defaultvalues', array(
-      'required'   => false,
-      'label'   =>  $t->_('Use default values from'). ": ",
-      'filters'    => array('StringTrim'))
+      'required' => false,
+      'label' => $t->_('Use default values from'). ": ",
+      'filters' => array('StringTrim'))
     );
 
     $defaultvalues->addMultiOption('__global__', $t->_('Global domains settings'));
@@ -39,9 +39,9 @@ class Default_Form_DomainAdd extends Zend_Form {
     $this->addElement($defaultvalues);
 
     $domainname = new  Zend_Form_Element_Text('domainname', array(
-      'label'   => $t->_('Domain name')." :",
+      'label' => $t->_('Domain name')." :",
       'required' => false,
-      'filters'    => array('StringToLower', 'StringTrim'))
+      'filters' => array('StringToLower', 'StringTrim'))
     );
     $domainname->setValue($this->_domain->getParam('name'));
     require_once('Validate/DomainName.php');
@@ -49,11 +49,11 @@ class Default_Form_DomainAdd extends Zend_Form {
     $this->addElement($domainname);
 
     $mdomainname = new  Zend_Form_Element_Textarea('mdomainname', array(
-      'label'   => $t->_('Domain name')." :",
+      'label' => $t->_('Domain name')." :",
       'required' => false,
       'rows' => 5,
       'cols' => 30,
-      'filters'    => array('StringToLower', 'StringTrim'))
+      'filters' => array('StringToLower', 'StringTrim'))
     );
     $this->addElement($mdomainname);
 
@@ -69,7 +69,7 @@ class Default_Form_DomainAdd extends Zend_Form {
     $this->addElement($topdomains);
 
     $submit = new Zend_Form_Element_Submit('submit', array(
-      'label'    => $t->_('Submit'))
+      'label' => $t->_('Submit'))
     );
     $this->addElement($submit);
   }

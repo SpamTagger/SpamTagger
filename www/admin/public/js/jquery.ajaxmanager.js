@@ -6,12 +6,12 @@
 (function($){
 
   $.manageAjax = (function(){
-    var cache       = {},
-      queues      = {},
-      presets     = {},
-      activeRequest   = {},
-      allRequests   = {},
-      defaults     = {
+    var cache = {},
+      queues = {},
+      presets = {},
+      activeRequest = {},
+      allRequests = {},
+      defaults = {
             queue: true, //clear
             maxRequests: 1,
             abortOld: false,
@@ -43,10 +43,10 @@
 
       $.extend(true, presets[name], $.ajaxSettings, defaults, settings);
       if(!allRequests[name]){
-        allRequests[name]   = {};
+        allRequests[name] = {};
         activeRequest[name] = {};
         activeRequest[name].queue = [];
-        queues[name]     = [];
+        queues[name] = [];
       }
       $.each($.manageAjax, function(fnName, fn){
         if($.isFunction(fn) && fnName.indexOf('_') !== 0){
@@ -114,13 +114,13 @@
       }
       opts = $.extend({}, presets[name], opts);
       //aliases
-      var allR   = allRequests[name],
+      var allR = allRequests[name],
         activeR = activeRequest[name],
-        queue  = queues[name];
+        queue = queues[name];
 
-      var id       = opts.type +'_'+ opts.url.replace(/\./g, '_'),
+      var id = opts.type +'_'+ opts.url.replace(/\./g, '_'),
         oldComplete = opts.complete,
-        ajaxFn     = function(){
+        ajaxFn = function(){
                 activeR[id] = {
                   xhr: $.ajax(opts),
                   ajaxManagerOpts: opts
@@ -178,9 +178,9 @@
           if(s != 'success'){
             return false;
           }
-          cache[id][0].responseXML   = xhr.responseXML;
-          cache[id][0].responseText   = xhr.responseText;
-          cache[id][1]         = s;
+          cache[id][0].responseXML = xhr.responseXML;
+          cache[id][0].responseText = xhr.responseText;
+          cache[id][1] = s;
           //stop memory leak
           xhr = null;
           return id; //strict

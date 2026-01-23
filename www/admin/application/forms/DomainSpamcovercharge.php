@@ -23,8 +23,8 @@ class Default_Form_DomainSpamcovercharge extends Zend_Form {
 
     $this->setAttrib('id', 'domain_form');
     $panellist = new Zend_Form_Element_Select('domainpanel', array(
-      'required'   => false,
-      'filters'  => array('StringTrim'))
+      'required' => false,
+      'filters' => array('StringTrim'))
     );
     ## TODO: add specific validator
     $panellist->addValidator(new Zend_Validate_Alnum());
@@ -43,9 +43,9 @@ class Default_Form_DomainSpamcovercharge extends Zend_Form {
     $this->addElement($name);
 
     $domainname = new  Zend_Form_Element_Text('domainname', array(
-      'label'   => $t->_('Domain name')." :",
+      'label' => $t->_('Domain name')." :",
       'required' => false,
-      'filters'  => array('StringToLower', 'StringTrim'))
+      'filters' => array('StringToLower', 'StringTrim'))
     );
     $domainname->setValue($this->_domain->getParam('name'));
     require_once('Validate/DomainName.php');
@@ -55,12 +55,12 @@ class Default_Form_DomainSpamcovercharge extends Zend_Form {
     $wwelement = new Default_Model_WWElement();
 
     $spamcovercharge = new Zend_Form_Element_Textarea('spamcovercharge', array(
-      'label'  =>  $t->_('Adjust these SpamC rules :</br>Example :</br>ST_LOTS_OF_MONEY -1.0'),
-      'title'  => $t->_("You need to enter the exact name of a SpamC rule and an associated score. Keep in mind that the original score will also be applied"),
-      'required'  => false,
-      'rows'  => 10,
-      'cols'  => 30,
-      'filters'  => array('StringTrim'))
+      'label' => $t->_('Adjust these SpamC rules :</br>Example :</br>ST_LOTS_OF_MONEY -1.0'),
+      'title' => $t->_("You need to enter the exact name of a SpamC rule and an associated score. Keep in mind that the original score will also be applied"),
+      'required' => false,
+      'rows' => 10,
+      'cols' => 30,
+      'filters' => array('StringTrim'))
     );
     $spamcovercharge->setValue($wwelement->fetchAllField('@'.$this->_domain->getParam('name'), 'SpamC', 'comments'));
 /*  if ($user_role != 'administrator') {
@@ -70,7 +70,7 @@ class Default_Form_DomainSpamcovercharge extends Zend_Form {
     $this->addElement($spamcovercharge);
 
     $submit = new Zend_Form_Element_Submit('submit', array(
-      'label'  => $t->_('Submit'))
+      'label' => $t->_('Submit'))
     );
     if ($user_role != 'administrator') {
       $submit->setAttrib('disabled', true);

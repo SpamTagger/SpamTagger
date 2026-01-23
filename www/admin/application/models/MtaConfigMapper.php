@@ -44,7 +44,7 @@ class Default_Model_MtaConfigMapper {
 
   public function fetchAll() {
     $resultSet = $this->getDbTable()->fetchAll();
-    $entries   = array();
+    $entries = array();
     foreach ($resultSet as $row) {
       $entry = new Default_Model_MtaConfig();
       $entry->setId($row->id);

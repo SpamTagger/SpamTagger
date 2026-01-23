@@ -28,9 +28,9 @@ class Default_Form_Domain_UserAuthentication_Sql {
 
     require_once('Validate/SMTPHostList.php');
     $server = new  Zend_Form_Element_Text('authserver', array(
-      'label'    => $t->_('Authentication server')." :",
+      'label' => $t->_('Authentication server')." :",
       'required' => false,
-      'filters'    => array('StringToLower', 'StringTrim'))
+      'filters' => array('StringToLower', 'StringTrim'))
     );
     $server->setValue($this->_domain->getPref('auth_server'));
     $server->addValidator(new Validate_SMTPHostList());
@@ -39,18 +39,18 @@ class Default_Form_Domain_UserAuthentication_Sql {
     $this->_settings = $this->getParams();
 
     $username = new  Zend_Form_Element_Text('sqlusername', array(
-      'label'    => $t->_('Username')." :",
+      'label' => $t->_('Username')." :",
       'required' => false,
-      'filters'    => array('StringTrim'))
+      'filters' => array('StringTrim'))
     );
     $username->setValue($this->_settings['sqlusername']);
     $form->addElement($username);
 
     $password = new  Zend_Form_Element_Password('sqlpassword', array(
-      'label'    => $t->_('Password')." :",
+      'label' => $t->_('Password')." :",
       'required' => false,
       'renderPassword' => true,
-      'filters'    => array('StringTrim'))
+      'filters' => array('StringTrim'))
     );
     $password->setValue($this->_settings['sqlpassword']);
     $form->addElement($password);

@@ -61,7 +61,7 @@ class MonitorlogsController extends Zend_Controller_Action
     $layout = Zend_Layout::getMvcInstance();
     $view=$layout->getView();
 
-    $form    = new Default_Form_Logs($this->getSearchParams());
+    $form = new Default_Form_Logs($this->getSearchParams());
     $form->setAction(Zend_Controller_Action_HelperBroker::getStaticHelper('url')->simple('index', 'monitorlogs'));
     $view->thisurl = Zend_Controller_Action_HelperBroker::getStaticHelper('url')->simple('index', 'monitorlogs', NULL, array());
 

@@ -27,29 +27,29 @@ class Default_Form_Api extends ZendX_JQuery_Form {
 
     require_once('Validate/HostList.php');
     $full_admin_ip = new Zend_Form_Element_Textarea('api_fulladmin_ips', array(
-      'label'    =>  $t->_('Grant these IP/ranges with full admin rights')." :",
-      'required'   => false,
+      'label' => $t->_('Grant these IP/ranges with full admin rights')." :",
+      'required' => false,
       'rows' => 5,
       'cols' => 30,
-      'filters'    => array('StringToLower', 'StringTrim'))
+      'filters' => array('StringToLower', 'StringTrim'))
     );
     $full_admin_ip->addValidator(new Validate_HostList());
     $full_admin_ip->setValue($this->_defaults->getParam('api_fulladmin_ips'));
     $this->addElement($full_admin_ip);
 
     $admin_ip = new Zend_Form_Element_Textarea('api_admin_ips', array(
-      'label'    =>  $t->_('Allow authenticated access from these IP/ranges')." :",
-      'required'   => false,
+      'label' => $t->_('Allow authenticated access from these IP/ranges')." :",
+      'required' => false,
       'rows' => 5,
       'cols' => 30,
-      'filters'    => array('StringToLower', 'StringTrim'))
+      'filters' => array('StringToLower', 'StringTrim'))
     );
     $admin_ip->addValidator(new Validate_HostList());
     $admin_ip->setValue($this->_defaults->getParam('api_admin_ips'));
     $this->addElement($admin_ip);
 
     $submit = new Zend_Form_Element_Submit('submit', array(
-      'label'    => $t->_('Submit'))
+      'label' => $t->_('Submit'))
     );
     $this->addElement($submit);
 

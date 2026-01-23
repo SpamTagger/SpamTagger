@@ -35,7 +35,7 @@ class ErrorController extends Zend_Controller_Action
 
         Zend_Registry::get('response')->setResponse($code, $this->view->message);
         $this->view->exception = $errors->exception;
-        $this->view->request   = $errors->request;
+        $this->view->request = $errors->request;
     }
 
 }

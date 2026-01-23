@@ -82,7 +82,7 @@ class Default_Form_AntiSpam_Spamc extends Default_Form_AntiSpam_Default {
       $el = new Zend_Form_Element_Checkbox(
         $checkname,
         array(
-          'label'   => $t->_($checklabel). " :",
+          'label' => $t->_($checklabel). " :",
           'title' => $t->_($titles[$i]),
           'uncheckedValue' => "0",
           'checkedValue' => "1"
@@ -113,7 +113,7 @@ class Default_Form_AntiSpam_Spamc extends Default_Form_AntiSpam_Default {
       $el = new Zend_Form_Element_Checkbox(
         $checkname,
         array(
-          'label'   => $t->_($check['label']). " :",
+          'label' => $t->_($check['label']). " :",
           'title' => $t->_($check['title']),
           'uncheckedValue' => "0",
           'checkedValue' => "1"
@@ -124,12 +124,12 @@ class Default_Form_AntiSpam_Spamc extends Default_Form_AntiSpam_Default {
       $el_timeout = new  Zend_Form_Element_Text(
         $check['timeout'],
         array(
-          'label'    => $t->_('timeout')." :",
-          'title'    => $t->_('Timeout: Maximum time to wait for a response'),
+          'label' => $t->_('timeout')." :",
+          'title' => $t->_('Timeout: Maximum time to wait for a response'),
           'required' => false,
-          'size'     => 4,
-          'class'    => 'fieldrighted',
-          'filters'  => array('Alnum', 'StringTrim')
+          'size' => 4,
+          'class' => 'fieldrighted',
+          'filters' => array('Alnum', 'StringTrim')
         )
       );
       $el_timeout->setValue($as->getParam($check['timeout']));

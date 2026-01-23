@@ -33,13 +33,13 @@ class Default_Form_ElementList extends ZendX_JQuery_Form {
     $this->setMethod('post');
 
     $remove = new Zend_Form_Element_Submit($this->_prefix.'remove', array(
-      'label'    => $t->_('Remove selected elements'),
+      'label' => $t->_('Remove selected elements'),
       'title' => $t->_("Remove the selected items from the list"),
     ));
     $this->addElement($remove);
 
     $disable = new Zend_Form_Element_Submit($this->_prefix.'disable', array(
-      'label'    => $t->_('Enable/Disable selected elements'),
+      'label' => $t->_('Enable/Disable selected elements'),
       'title' => $t->_("Switch the state of the selected items from Enable to Disable or from Disable to Enable"),
     ));
     $this->addElement($disable);
@@ -47,19 +47,19 @@ class Default_Form_ElementList extends ZendX_JQuery_Form {
     $addelement = new  Zend_Form_Element_Text($this->_prefix.'addelement', array(
       'required' => false,
       'class' => 'addelementfield',
-      'filters'    => array('StringTrim'))
+      'filters' => array('StringTrim'))
     );
     $this->addElement($addelement);
 
     $addcomment = new  Zend_Form_Element_Text($this->_prefix.'addcomment', array(
       'required' => false,
       'class' => 'addcommentfield',
-      'filters'    => array('StringTrim')
+      'filters' => array('StringTrim')
     ));
     $this->addElement($addcomment);
 
     $add = new Zend_Form_Element_Submit($this->_prefix.'add', array(
-      'label'    => $t->_('< Add element'),
+      'label' => $t->_('< Add element'),
       'title' => $t->_("Add the element in the Address field to the desired list"),
     ));
     $this->addElement($add);

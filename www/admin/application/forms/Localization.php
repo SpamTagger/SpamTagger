@@ -26,9 +26,9 @@ class Default_Form_Localization extends ZendX_JQuery_Form {
 
     $this->setAttrib('id', 'localization_form');
     $zlist = new Zend_Form_Element_Select('zone', array(
-      'label'      => $t->_('Main zone')." :",
-      'required'   => true,
-      'filters'    => array('StringTrim'))
+      'label' => $t->_('Main zone')." :",
+      'required' => true,
+      'filters' => array('StringTrim'))
     );
 
     foreach ($this->_locale->getZones() as $zk => $zv) {
@@ -38,9 +38,9 @@ class Default_Form_Localization extends ZendX_JQuery_Form {
     $this->addElement($zlist);
 
     $subzlist = new Zend_Form_Element_Select('selectsubzone', array(
-      'label'      => $t->_('Sub zone')." :",
-      'required'   => true,
-      'filters'    => array('StringTrim'))
+      'label' => $t->_('Sub zone')." :",
+      'required' => true,
+      'filters' => array('StringTrim'))
     );
 
     foreach ($this->_locale->getSubZones() as $zk => $zv) {
@@ -50,7 +50,7 @@ class Default_Form_Localization extends ZendX_JQuery_Form {
     $this->addElement($subzlist);
 
     $submit = new Zend_Form_Element_Submit('localesubmit', array(
-      'label'    => $t->_('Submit'))
+      'label' => $t->_('Submit'))
     );
     $this->addElement($submit);
   }

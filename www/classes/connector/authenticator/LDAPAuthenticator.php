@@ -53,7 +53,7 @@ class LDAPAuthenticator extends AuthManager {
   }
 
   public function doAuth($username) {
-    $ret =  parent::doAuth($username);
+    $ret = parent::doAuth($username);
 
     if ($ret) {
       return true;

@@ -23,8 +23,8 @@ class Default_Form_DomainAdvanced extends Zend_Form {
 
     $this->setAttrib('id', 'domain_form');
     $panellist = new Zend_Form_Element_Select('domainpanel', array(
-      'required'   => false,
-      'filters'    => array('StringTrim'))
+      'required' => false,
+      'filters' => array('StringTrim'))
     );
     ## TODO: add specific validator
     $panellist->addValidator(new Zend_Validate_Alnum());
@@ -43,9 +43,9 @@ class Default_Form_DomainAdvanced extends Zend_Form {
     $this->addElement($name);
 
     $domainname = new  Zend_Form_Element_Text('domainname', array(
-      'label'   => $t->_('Domain name')." :",
+      'label' => $t->_('Domain name')." :",
       'required' => false,
-      'filters'    => array('StringToLower', 'StringTrim'))
+      'filters' => array('StringToLower', 'StringTrim'))
     );
     $domainname->setValue($this->_domain->getParam('name'));
     require_once('Validate/DomainName.php');
@@ -56,12 +56,12 @@ class Default_Form_DomainAdvanced extends Zend_Form {
     require_once('Validate/IpList.php');
 
     $block_ip_dom = new Zend_Form_Element_Textarea('block_ip_dom', array(
-      'label'    =>  $t->_('Blocklist those IPs at SMTP stage')." :",
-      'title'    => $t->_("List of IPs or subnets to be rejected at SMTP stage for the current domain"),
-      'required'  => false,
-      'rows'    => 5,
-      'cols'    => 30,
-      'filters'  => array('StringToLower', 'StringTrim'))
+      'label' => $t->_('Blocklist those IPs at SMTP stage')." :",
+      'title' => $t->_("List of IPs or subnets to be rejected at SMTP stage for the current domain"),
+      'required' => false,
+      'rows' => 5,
+      'cols' => 30,
+      'filters' => array('StringToLower', 'StringTrim'))
     );
     $block_ip_dom->addValidator(new Validate_IpList());
     $block_ip_dom->setValue($wwelement->fetchAllField($this->_domain->getParam('name'), 'block-ip-dom', 'sender'));
@@ -72,12 +72,12 @@ class Default_Form_DomainAdvanced extends Zend_Form {
     $this->addElement($block_ip_dom);
 
     $spam_ip_dom = new Zend_Form_Element_Textarea('spam_ip_dom', array(
-      'label'    =>  $t->_('Blocklist those IPs at AntiSpam stage')." :",
+      'label' => $t->_('Blocklist those IPs at AntiSpam stage')." :",
       'title' => $t->_("List of IPs or subnets to be blocked at AntiSpam stage for the current domain"),
-      'required'   => false,
+      'required' => false,
       'rows' => 5,
       'cols' => 30,
-      'filters'    => array('StringToLower', 'StringTrim'))
+      'filters' => array('StringToLower', 'StringTrim'))
     );
     $spam_ip_dom->addValidator(new Validate_IpList());
     $spam_ip_dom->setValue($wwelement->fetchAllField($this->_domain->getParam('name'), 'spam-ip-dom', 'sender'));
@@ -88,12 +88,12 @@ class Default_Form_DomainAdvanced extends Zend_Form {
     $this->addElement($spam_ip_dom);
 
     $want_ip_dom = new Zend_Form_Element_Textarea('want_ip_dom', array(
-      'label'    =>  $t->_('Wantlist those IPs at SMTP stage')." :",
+      'label' => $t->_('Wantlist those IPs at SMTP stage')." :",
       'title' => $t->_("List of IPs or subnets to be wantlisted at SMTP stage for the current domain"),
-      'required'   => false,
+      'required' => false,
       'rows' => 5,
       'cols' => 30,
-      'filters'    => array('StringToLower', 'StringTrim')));
+      'filters' => array('StringToLower', 'StringTrim')));
     $want_ip_dom->addValidator(new Validate_IpList());
     $want_ip_dom->setValue($wwelement->fetchAllField($this->_domain->getParam('name'), 'want-ip-dom', 'sender'));
     if ($user_role != 'administrator') {
@@ -103,12 +103,12 @@ class Default_Form_DomainAdvanced extends Zend_Form {
     $this->addElement($want_ip_dom);
 
     $wh_spamc_ip_dom = new Zend_Form_Element_Textarea('wh_spamc_ip_dom', array(
-      'label'    =>  $t->_('Wantlist those IPs at AntiSpam stage')." :",
+      'label' => $t->_('Wantlist those IPs at AntiSpam stage')." :",
       'title' => $t->_("List of IPs or subnets to be wantlisted at AntiSpam stage for the current domain"),
-      'required'   => false,
+      'required' => false,
       'rows' => 5,
       'cols' => 30,
-      'filters'    => array('StringToLower', 'StringTrim'))
+      'filters' => array('StringToLower', 'StringTrim'))
     );
     $wh_spamc_ip_dom->addValidator(new Validate_IpList());
     $wh_spamc_ip_dom->setValue($wwelement->fetchAllField($this->_domain->getParam('name'), 'wh-spamc-ip-dom', 'sender'));
@@ -119,7 +119,7 @@ class Default_Form_DomainAdvanced extends Zend_Form {
     $this->addElement($wh_spamc_ip_dom);
 
     $submit = new Zend_Form_Element_Submit('submit', array(
-      'label'    => $t->_('Submit'))
+      'label' => $t->_('Submit'))
     );
     if ($user_role != 'administrator') {
       $submit->setAttrib('disabled', true);

@@ -71,7 +71,7 @@ $(document).ready(function(){
 });
 
 function loadsearch(page) {
-  url =  domainsearchurl+'/search/'+$("#search").val()+'/type/'+$("#type").val()+"/domain/"+$("#domain").val()+"/page/"+page;
+  url = domainsearchurl+'/search/'+$("#search").val()+'/type/'+$("#type").val()+"/domain/"+$("#domain").val()+"/page/"+page;
   loadsearchurl(url);
 }
 

@@ -15,7 +15,7 @@ class Default_Model_AntivirusConfig {
     'silent' => 'yes',
     'scanner_timeout' => 300,
     'file_timeout' => 20,
-    'expand_tnef' =>   'yes',
+    'expand_tnef' => 'yes',
     'deliver_bad_tnef' => 'no',
     'tnef_timeout' => 20,
     'usetnefcontent' => 'no',

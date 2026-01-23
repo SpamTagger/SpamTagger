@@ -26,7 +26,7 @@ class Default_Form_Logging extends ZendX_JQuery_Form {
     $this->setAttrib('id', 'logging_form');
 
     $usesyslog = new Zend_Form_Element_Checkbox('use_syslog', array(
-      'label'   => $t->_('Use syslog logging'). " :",
+      'label' => $t->_('Use syslog logging'). " :",
       'uncheckedValue' => "0",
       'checkedValue' => "1"
     ));
@@ -34,8 +34,8 @@ class Default_Form_Logging extends ZendX_JQuery_Form {
     $this->addElement($usesyslog);
 
     $sysloghost = new  Zend_Form_Element_Text('syslog_host', array(
-      'label'   => $t->_('Syslog server')." :",
-      'filters'    => array('StringToLower', 'StringTrim'))
+      'label' => $t->_('Syslog server')." :",
+      'filters' => array('StringToLower', 'StringTrim'))
     );
     $sysloghost->setValue($this->_systemconf->getParam('syslog_host'));
     $sysloghost->addValidator(new Zend_Validate_Hostname(Zend_Validate_Hostname::ALLOW_LOCAL | Zend_Validate_Hostname::ALLOW_IP));
@@ -46,7 +46,7 @@ class Default_Form_Logging extends ZendX_JQuery_Form {
     #}
 
     $submit = new Zend_Form_Element_Submit('submit', array(
-      'label'    => $t->_('Submit'))
+      'label' => $t->_('Submit'))
     );
     $this->addElement($submit);
   }

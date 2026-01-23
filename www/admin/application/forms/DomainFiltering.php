@@ -37,8 +37,8 @@ class Default_Form_DomainFiltering extends Zend_Form {
 
     $this->setAttrib('id', 'domain_form');
     $panellist = new Zend_Form_Element_Select('domainpanel', array(
-      'required'   => false,
-      'filters'    => array('StringTrim'))
+      'required' => false,
+      'filters' => array('StringTrim'))
     );
     ## TODO: add specific validator
     $panellist->addValidator(new Zend_Validate_Alnum());
@@ -57,7 +57,7 @@ class Default_Form_DomainFiltering extends Zend_Form {
     $this->addElement($name);
 
     $useantispam = new Zend_Form_Element_Checkbox('spamwall', array(
-      'label'   => $t->_('Enable advanced antispam controls'). " :",
+      'label' => $t->_('Enable advanced antispam controls'). " :",
       'title' => $t->_("Enable/Disable antispam part of SpamTagger"),
       'uncheckedValue' => "0",
       'checkedValue' => "1"
@@ -68,7 +68,7 @@ class Default_Form_DomainFiltering extends Zend_Form {
     $this->addElement($useantispam);
 
     $usecontent = new Zend_Form_Element_Checkbox('contentwall', array(
-      'label'   => $t->_('Enable dangerous content controls'). " :",
+      'label' => $t->_('Enable dangerous content controls'). " :",
       'title' => $t->_("Enable / disable antivirus part of SpamTagger"),
       'uncheckedValue' => "0",
       'checkedValue' => "1"
@@ -79,7 +79,7 @@ class Default_Form_DomainFiltering extends Zend_Form {
     $this->addElement($usecontent);
 
     $greylist = new Zend_Form_Element_Checkbox('greylist', array(
-      'label'   => $t->_('Enable greylisting'). " :",
+      'label' => $t->_('Enable greylisting'). " :",
       'title' => $t->_("Enable/Disable greylisting (http://www.greylisting.org/)"),
       'uncheckedValue' => "0",
       'checkedValue' => "1"
@@ -90,7 +90,7 @@ class Default_Form_DomainFiltering extends Zend_Form {
     $this->addElement($greylist);
 
     $antispoof = new Zend_Form_Element_Checkbox('prevent_spoof', array(
-      'label'   => $t->_('Enable antispoof'). " :",
+      'label' => $t->_('Enable antispoof'). " :",
       'title' => $t->_("Rejects messages from the domain you are configuring sent from an IP which is not authorized. If you need to add hosts to the list of allowed senders for your domain, please consider using SPF"),
       'uncheckedValue' => "0",
       'checkedValue' => "1"
@@ -101,7 +101,7 @@ class Default_Form_DomainFiltering extends Zend_Form {
     $this->addElement($antispoof);
 
     $reject_capital_domain = new Zend_Form_Element_Checkbox('reject_capital_domain', array(
-      'label'   => $t->_('Reject domains containing capital letters'). " :",
+      'label' => $t->_('Reject domains containing capital letters'). " :",
       'title' => $t->_("Forbidss the use of capital letters in the sender s domain name."),
       'uncheckedValue' => "0",
       'checkedValue' => "1"
@@ -112,7 +112,7 @@ class Default_Form_DomainFiltering extends Zend_Form {
     $this->addElement($reject_capital_domain);
 
     $require_incoming_tls = new Zend_Form_Element_Checkbox('require_incoming_tls', array(
-      'label'   => $t->_('Reject unencrypted SMTP sessions to this domain'). " :",
+      'label' => $t->_('Reject unencrypted SMTP sessions to this domain'). " :",
       'title' => $t->_("Refuse all unencrypted connection with other MTA"),
       'uncheckedValue' => "0",
       'checkedValue' => "1"
@@ -123,7 +123,7 @@ class Default_Form_DomainFiltering extends Zend_Form {
     $this->addElement($require_incoming_tls);
 
     $enablewantlist = new Zend_Form_Element_Checkbox('enable_wantlists', array(
-      'label'   => $t->_('Enable wantlists'). " :",
+      'label' => $t->_('Enable wantlists'). " :",
       'title' => $t->_("Enable the use of wantlist /!\ (http://spamtagger.org/antispam/documentations/wantlist.html) must be enabled in Configuration > Anti-Spam first"),
       'uncheckedValue' => "0",
       'checkedValue' => "1"
@@ -135,7 +135,7 @@ class Default_Form_DomainFiltering extends Zend_Form {
     $this->addElement($enablewantlist);
 
     $enableblocklist = new Zend_Form_Element_Checkbox('enable_blocklists', array(
-      'label'   => $t->_('Enable blocklists'). " :",
+      'label' => $t->_('Enable blocklists'). " :",
       'title' => $t->_("Enable the blocklist feature"),
       'uncheckedValue' => "0",
       'checkedValue' => "1"
@@ -147,7 +147,7 @@ class Default_Form_DomainFiltering extends Zend_Form {
     $this->addElement($enableblocklist);
 
     $enablewarnlist = new Zend_Form_Element_Checkbox('enable_warnlists', array(
-      'label'   => $t->_('Enable warnlists'). " :",
+      'label' => $t->_('Enable warnlists'). " :",
       'title' => $t->_("Enable / disable the use of warnlist. This list alert the user when a mail comes from sender from the list."),
       'uncheckedValue' => "0",
       'checkedValue' => "1"
@@ -159,7 +159,7 @@ class Default_Form_DomainFiltering extends Zend_Form {
     $this->addElement($enablewarnlist);
 
     $warnwwhit = new Zend_Form_Element_Checkbox('notice_wwlists_hit', array(
-      'label'   => $t->_('Warn admin on want/warnlist hit'). " :",
+      'label' => $t->_('Warn admin on want/warnlist hit'). " :",
       'title' => $t->_("Alert the administrator for every hit in want / warnlist"),
       'uncheckedValue' => "0",
       'checkedValue' => "1"
@@ -171,7 +171,7 @@ class Default_Form_DomainFiltering extends Zend_Form {
 
     ### newsl
     $allowNewsletters = new Zend_Form_Element_Checkbox('allow_newsletters', array(
-      'label'   =>  $t->_('Allow newsletters by default'). " :",
+      'label' => $t->_('Allow newsletters by default'). " :",
       'title' => $t->_("By default, the newsletters are delivered"),
       'uncheckedValue' => "0",
       'checkedValue' => "1")
@@ -204,7 +204,7 @@ class Default_Form_DomainFiltering extends Zend_Form {
     $this->_newslistform->addFields($this);
 
     $submit = new Zend_Form_Element_Submit('submit', array(
-      'label'    => $t->_('Submit'))
+      'label' => $t->_('Submit'))
     );
     $this->addElement($submit);
   }

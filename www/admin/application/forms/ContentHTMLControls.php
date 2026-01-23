@@ -41,10 +41,10 @@ class Default_Form_ContentHTMLControls extends ZendX_JQuery_Form
     foreach ($this->_fields as $mf => $f) {
 
       $ff = new Zend_Form_Element_Select($mf, array(
-        'label'      => $t->_($f['text'])." :",
+        'label' => $t->_($f['text'])." :",
         'title' => $t->_("Choose action to perform when this item is detected inside an HTML document"),
-        'required'   => true,
-        'filters'    => array('StringTrim'))
+        'required' => true,
+        'filters' => array('StringTrim'))
       );
 
       foreach ($disarmoptions as $lk => $lv) {
@@ -53,7 +53,7 @@ class Default_Form_ContentHTMLControls extends ZendX_JQuery_Form
       $ff->setValue($this->_dangerouscontent->getParam($mf));
       $this->addElement($ff);
       $sff = new Zend_Form_Element_Checkbox($f['silent'], array(
-        'label'   => $t->_('silently'),
+        'label' => $t->_('silently'),
         'title' => $t->_("Enable/Disable warnings"),
         'uncheckedValue' => "0",
         'checkedValue' => "1"
@@ -66,19 +66,19 @@ class Default_Form_ContentHTMLControls extends ZendX_JQuery_Form
 
     require_once('Validate/IpList.php');
     $trustednet = new Zend_Form_Element_Textarea('html_wl_ips', array(
-      'label'    =>  $t->_('Trusted IPs/Networks')." :",
+      'label' => $t->_('Trusted IPs/Networks')." :",
       'title' => $t->_("These IP/ranges are wantlist for the HTML controls"),
-      'required'   => false,
+      'required' => false,
       'rows' => 5,
       'cols' => 30,
-      'filters'    => array('StringToLower', 'StringTrim'))
+      'filters' => array('StringToLower', 'StringTrim'))
     );
     $trustednet->addValidator(new Validate_IpList());
     $trustednet->setValue($this->_antispam->getParam('html_wl_ips'));
     $this->addElement($trustednet);
 
     $submit = new Zend_Form_Element_Submit('submit', array(
-      'label'    => $t->_('Submit'))
+      'label' => $t->_('Submit'))
     );
     $this->addElement($submit);
   }

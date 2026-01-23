@@ -438,7 +438,7 @@ class ZendX_JQuery_View_Helper_JQuery_Container
      */
     public function onLoadCaptureEnd()
     {
-        $data               = ob_get_clean();
+        $data = ob_get_clean();
         $this->_captureLock = false;
 
         $this->addOnLoad($data);
@@ -468,7 +468,7 @@ class ZendX_JQuery_View_Helper_JQuery_Container
      */
     public function javascriptCaptureEnd()
     {
-        $data               = ob_get_clean();
+        $data = ob_get_clean();
         $this->_captureLock = false;
 
         $this->addJavascript($data);
@@ -647,7 +647,7 @@ class ZendX_JQuery_View_Helper_JQuery_Container
 
         $this->_isXhtml = $this->view->doctype()->isXhtml();
 
-        $html  = $this->_renderStylesheets() . PHP_EOL
+        $html = $this->_renderStylesheets() . PHP_EOL
                . $this->_renderScriptTags() . PHP_EOL
                . $this->_renderExtras();
         return $html;

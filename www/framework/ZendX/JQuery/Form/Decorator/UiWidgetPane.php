@@ -129,13 +129,13 @@ abstract class ZendX_JQuery_Form_Decorator_UiWidgetPane extends Zend_Form_Decora
     public function render($content)
     {
         $element = $this->getElement();
-        $view    = $element->getView();
+        $view = $element->getView();
         if (null === $view) {
             return $content;
         }
 
         $jQueryParams = $this->getJQueryParams();
-        $attribs     = array_merge($this->getAttribs(), $this->getOptions());
+        $attribs = array_merge($this->getAttribs(), $this->getOptions());
 
         if(isset($jQueryParams['title']) && !empty($jQueryParams['title'])) {
             if (null !== ($translator = $element->getTranslator())) {

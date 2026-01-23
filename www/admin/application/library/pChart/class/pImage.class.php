@@ -21,43 +21,43 @@ if (!extension_loaded('gd') && !extension_loaded('gd2')) {
 
 class pImage extends pDraw {
   /* Image settings, size, quality, .. */
-  var $XSize             = NULL;      // Width of the picture
-  var $YSize             = NULL;      // Height of the picture
-  var $Picture           = NULL;      // GD picture object
-  var $Antialias         = TRUE;      // Turn antialias on or off
-  var $AntialiasQuality  = 0;        // Quality of the antialiasing implementation (0-1)
-  var $Mask              = "";        // Already drawn pixels mask (Filled circle implementation)
+  var $XSize = NULL;      // Width of the picture
+  var $YSize = NULL;      // Height of the picture
+  var $Picture = NULL;      // GD picture object
+  var $Antialias = TRUE;      // Turn antialias on or off
+  var $AntialiasQuality = 0;        // Quality of the antialiasing implementation (0-1)
+  var $Mask = "";        // Already drawn pixels mask (Filled circle implementation)
   var $TransparentBackground = FALSE;      // Just to know if we need to flush the alpha channels when rendering
 
   /* Graph area settings */
-  var $GraphAreaX1       = NULL;      // Graph area X origin
-  var $GraphAreaY1       = NULL;      // Graph area Y origin
-  var $GraphAreaX2       = NULL;      // Graph area bottom right X position
-  var $GraphAreaY2       = NULL;      // Graph area bottom right Y position
+  var $GraphAreaX1 = NULL;      // Graph area X origin
+  var $GraphAreaY1 = NULL;      // Graph area Y origin
+  var $GraphAreaX2 = NULL;      // Graph area bottom right X position
+  var $GraphAreaY2 = NULL;      // Graph area bottom right Y position
 
   /* Scale settings */
   var $ScaleMinDivHeight = 20;        // Minimum height for scame divs
 
   /* Font properties */
-  var $FontName          = "fonts/GeosansLight.ttf";  // Default font file
-  var $FontSize          = 12;        // Default font size
-  var $FontBox           = NULL;      // Return the bounding box of the last written string
-  var $FontColorR        = 0;        // Default color settings
-  var $FontColorG        = 0;        // Default color settings
-  var $FontColorB        = 0;        // Default color settings
-  var $FontColorA        = 100;      // Default transparency
+  var $FontName = "fonts/GeosansLight.ttf";  // Default font file
+  var $FontSize = 12;        // Default font size
+  var $FontBox = NULL;      // Return the bounding box of the last written string
+  var $FontColorR = 0;        // Default color settings
+  var $FontColorG = 0;        // Default color settings
+  var $FontColorB = 0;        // Default color settings
+  var $FontColorA = 100;      // Default transparency
 
   /* Shadow properties */
-  var $Shadow            = TRUE;      // Turn shadows on or off
-  var $ShadowX           = NULL;      // X Offset of the shadow
-  var $ShadowY           = NULL;      // Y Offset of the shadow
-  var $ShadowR           = NULL;      // R component of the shadow
-  var $ShadowG           = NULL;      // G component of the shadow
-  var $ShadowB           = NULL;      // B component of the shadow
-  var $Shadowa           = NULL;      // Alpha level of the shadow
+  var $Shadow = TRUE;      // Turn shadows on or off
+  var $ShadowX = NULL;      // X Offset of the shadow
+  var $ShadowY = NULL;      // Y Offset of the shadow
+  var $ShadowR = NULL;      // R component of the shadow
+  var $ShadowG = NULL;      // G component of the shadow
+  var $ShadowB = NULL;      // B component of the shadow
+  var $Shadowa = NULL;      // Alpha level of the shadow
 
   /* Data Set */
-  var $DataSet           = NULL;      // Attached dataset
+  var $DataSet = NULL;      // Attached dataset
 
   /* Class constructor */
   function pImage($XSize,$YSize,$DataSet=NULL,$TransparentBackground=FALSE) {
@@ -65,8 +65,8 @@ class pImage extends pDraw {
 
     if ( $DataSet != NULL ) { $this->DataSet = $DataSet; }
 
-    $this->XSize   = $XSize;
-    $this->YSize   = $YSize;
+    $this->XSize = $XSize;
+    $this->YSize = $YSize;
     $this->Picture = imagecreatetruecolor($XSize,$YSize);
 
     if ( $this->TransparentBackground ) {
@@ -82,14 +82,14 @@ class pImage extends pDraw {
 
   /* Enable / Disable and set shadow properties */
   function setShadow($Enabled=TRUE,$Format="") {
-    $X      = isset($Format["X"]) ? $Format["X"] : 2;
-    $Y      = isset($Format["Y"]) ? $Format["Y"] : 2;
-    $R      = isset($Format["R"]) ? $Format["R"] : 0;
-    $G      = isset($Format["G"]) ? $Format["G"] : 0;
-    $B      = isset($Format["B"]) ? $Format["B"] : 0;
+    $X = isset($Format["X"]) ? $Format["X"] : 2;
+    $Y = isset($Format["Y"]) ? $Format["Y"] : 2;
+    $R = isset($Format["R"]) ? $Format["R"] : 0;
+    $G = isset($Format["G"]) ? $Format["G"] : 0;
+    $B = isset($Format["B"]) ? $Format["B"] : 0;
     $Alpha = isset($Format["Alpha"]) ? $Format["Alpha"] : 10;
 
-    $this->Shadow  = $Enabled;
+    $this->Shadow = $Enabled;
     $this->ShadowX = $X;
     $this->ShadowY = $Y;
     $this->ShadowR = $R;
@@ -164,9 +164,9 @@ class pImage extends pDraw {
 
   /* Return the surrounding box of text area */
   function getTextBox_deprecated($X,$Y,$FontName,$FontSize,$Angle,$Text) {
-    $Size    = imagettfbbox($FontSize,$Angle,$FontName,$Text);
-    $Width   = $this->getLength($Size[0],$Size[1],$Size[2],$Size[3])+1;
-    $Height  = $this->getLength($Size[2],$Size[3],$Size[4],$Size[5])+1;
+    $Size = imagettfbbox($FontSize,$Angle,$FontName,$Text);
+    $Width = $this->getLength($Size[0],$Size[1],$Size[2],$Size[3])+1;
+    $Height = $this->getLength($Size[2],$Size[3],$Size[4],$Size[5])+1;
 
     $RealPos[0]["X"] = $X; $RealPos[0]["Y"] = $Y;
     $RealPos[1]["X"] = cos((360-$Angle)*PI/180)*$Width + $RealPos[0]["X"]; $RealPos[1]["Y"] = sin((360-$Angle)*PI/180)*$Width + $RealPos[0]["Y"];
@@ -189,27 +189,27 @@ class pImage extends pDraw {
       $RealPos[$i/2]["Y"] = $Y + round($coords[$i+1] * $ca - $coords[$i] * $sa);
     }
 
-    $RealPos[TEXT_ALIGN_BOTTOMLEFT]["X"]  = $RealPos[0]["X"];  $RealPos[TEXT_ALIGN_BOTTOMLEFT]["Y"]  = $RealPos[0]["Y"];
-    $RealPos[TEXT_ALIGN_BOTTOMRIGHT]["X"]  = $RealPos[1]["X"];  $RealPos[TEXT_ALIGN_BOTTOMRIGHT]["Y"]  = $RealPos[1]["Y"];
-    $RealPos[TEXT_ALIGN_TOPLEFT]["X"]    = $RealPos[3]["X"];  $RealPos[TEXT_ALIGN_TOPLEFT]["Y"]  = $RealPos[3]["Y"];
-    $RealPos[TEXT_ALIGN_TOPRIGHT]["X"]    = $RealPos[2]["X"];  $RealPos[TEXT_ALIGN_TOPRIGHT]["Y"]  = $RealPos[2]["Y"];
-    $RealPos[TEXT_ALIGN_BOTTOMMIDDLE]["X"]  = ($RealPos[1]["X"]-$RealPos[0]["X"])/2+$RealPos[0]["X"];  $RealPos[TEXT_ALIGN_BOTTOMMIDDLE]["Y"]  = ($RealPos[0]["Y"]-$RealPos[1]["Y"])/2+$RealPos[1]["Y"];
-    $RealPos[TEXT_ALIGN_TOPMIDDLE]["X"]  = ($RealPos[2]["X"]-$RealPos[3]["X"])/2+$RealPos[3]["X"];  $RealPos[TEXT_ALIGN_TOPMIDDLE]["Y"]  = ($RealPos[3]["Y"]-$RealPos[2]["Y"])/2+$RealPos[2]["Y"];
-    $RealPos[TEXT_ALIGN_MIDDLELEFT]["X"]  = ($RealPos[0]["X"]-$RealPos[3]["X"])/2+$RealPos[3]["X"];  $RealPos[TEXT_ALIGN_MIDDLELEFT]["Y"]  = ($RealPos[0]["Y"]-$RealPos[3]["Y"])/2+$RealPos[3]["Y"];
-    $RealPos[TEXT_ALIGN_MIDDLERIGHT]["X"]  = ($RealPos[1]["X"]-$RealPos[2]["X"])/2+$RealPos[2]["X"];  $RealPos[TEXT_ALIGN_MIDDLERIGHT]["Y"]  = ($RealPos[1]["Y"]-$RealPos[2]["Y"])/2+$RealPos[2]["Y"];
-    $RealPos[TEXT_ALIGN_MIDDLEMIDDLE]["X"]  = ($RealPos[1]["X"]-$RealPos[3]["X"])/2+$RealPos[3]["X"];  $RealPos[TEXT_ALIGN_MIDDLEMIDDLE]["Y"]  = ($RealPos[0]["Y"]-$RealPos[2]["Y"])/2+$RealPos[2]["Y"];
+    $RealPos[TEXT_ALIGN_BOTTOMLEFT]["X"] = $RealPos[0]["X"];  $RealPos[TEXT_ALIGN_BOTTOMLEFT]["Y"] = $RealPos[0]["Y"];
+    $RealPos[TEXT_ALIGN_BOTTOMRIGHT]["X"] = $RealPos[1]["X"];  $RealPos[TEXT_ALIGN_BOTTOMRIGHT]["Y"] = $RealPos[1]["Y"];
+    $RealPos[TEXT_ALIGN_TOPLEFT]["X"] = $RealPos[3]["X"];  $RealPos[TEXT_ALIGN_TOPLEFT]["Y"] = $RealPos[3]["Y"];
+    $RealPos[TEXT_ALIGN_TOPRIGHT]["X"] = $RealPos[2]["X"];  $RealPos[TEXT_ALIGN_TOPRIGHT]["Y"] = $RealPos[2]["Y"];
+    $RealPos[TEXT_ALIGN_BOTTOMMIDDLE]["X"] = ($RealPos[1]["X"]-$RealPos[0]["X"])/2+$RealPos[0]["X"];  $RealPos[TEXT_ALIGN_BOTTOMMIDDLE]["Y"] = ($RealPos[0]["Y"]-$RealPos[1]["Y"])/2+$RealPos[1]["Y"];
+    $RealPos[TEXT_ALIGN_TOPMIDDLE]["X"] = ($RealPos[2]["X"]-$RealPos[3]["X"])/2+$RealPos[3]["X"];  $RealPos[TEXT_ALIGN_TOPMIDDLE]["Y"] = ($RealPos[3]["Y"]-$RealPos[2]["Y"])/2+$RealPos[2]["Y"];
+    $RealPos[TEXT_ALIGN_MIDDLELEFT]["X"] = ($RealPos[0]["X"]-$RealPos[3]["X"])/2+$RealPos[3]["X"];  $RealPos[TEXT_ALIGN_MIDDLELEFT]["Y"] = ($RealPos[0]["Y"]-$RealPos[3]["Y"])/2+$RealPos[3]["Y"];
+    $RealPos[TEXT_ALIGN_MIDDLERIGHT]["X"] = ($RealPos[1]["X"]-$RealPos[2]["X"])/2+$RealPos[2]["X"];  $RealPos[TEXT_ALIGN_MIDDLERIGHT]["Y"] = ($RealPos[1]["Y"]-$RealPos[2]["Y"])/2+$RealPos[2]["Y"];
+    $RealPos[TEXT_ALIGN_MIDDLEMIDDLE]["X"] = ($RealPos[1]["X"]-$RealPos[3]["X"])/2+$RealPos[3]["X"];  $RealPos[TEXT_ALIGN_MIDDLEMIDDLE]["Y"] = ($RealPos[0]["Y"]-$RealPos[2]["Y"])/2+$RealPos[2]["Y"];
 
     return($RealPos);
   }
 
   /* Set current font properties */
   function setFontProperties($Format="") {
-    $R    = isset($Format["R"]) ? $Format["R"] : -1;
-    $G    = isset($Format["G"]) ? $Format["G"] : -1;
-    $B    = isset($Format["B"]) ? $Format["B"] : -1;
-    $Alpha  = isset($Format["Alpha"]) ? $Format["Alpha"] : 100;
-    $FontName  = isset($Format["FontName"]) ? $Format["FontName"] : NULL;
-    $FontSize  = isset($Format["FontSize"]) ? $Format["FontSize"] : NULL;
+    $R = isset($Format["R"]) ? $Format["R"] : -1;
+    $G = isset($Format["G"]) ? $Format["G"] : -1;
+    $B = isset($Format["B"]) ? $Format["B"] : -1;
+    $Alpha = isset($Format["Alpha"]) ? $Format["Alpha"] : 100;
+    $FontName = isset($Format["FontName"]) ? $Format["FontName"] : NULL;
+    $FontSize = isset($Format["FontSize"]) ? $Format["FontSize"] : NULL;
 
     if ( $R != -1) {
       $this->FontColorR = $R;

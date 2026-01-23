@@ -27,18 +27,18 @@ class Email extends PrefHandler {
   * @var array
   */
   private $pref_ = array(
-    'delivery_type'      =>  1,
-    'spam_tag'           =>  '{Spam?}',
-    'daily_summary'      =>  0,
-    'weekly_summary'     =>  1,
-    'monthly_summary'    =>  0,
-    'summary_type'       => 'NOTSET',
-    'summary_to'         => '',
-    'quarantine_bounces' =>  0,
-    'has_wantlist'   =>    0,
-    'has_warnlist'    =>    0,
-    'has_blocklist'  => 0,
-    'language'           =>  'en',
+    'delivery_type' => 1,
+    'spam_tag' => '{Spam?}',
+    'daily_summary' => 0,
+    'weekly_summary' => 1,
+    'monthly_summary' => 0,
+    'summary_type' => 'NOTSET',
+    'summary_to' => '',
+    'quarantine_bounces' => 0,
+    'has_wantlist' => 0,
+    'has_warnlist' => 0,
+    'has_blocklist' => 0,
+    'language' => 'en',
     'gui_displayed_spams' => '20',
     'gui_displayed_days' => '7',
     'gui_mask_forced' => '0',
@@ -51,9 +51,9 @@ class Email extends PrefHandler {
    * Email datas and relations
    */
   private $infos_ = array(
-    'address' =>  '',
-    'user'    =>  '',
-    'is_main' =>  0
+    'address' => '',
+    'user' => '',
+    'is_main' => 0
   );
 
   /**

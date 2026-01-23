@@ -44,7 +44,7 @@ class Default_Form_Proxies extends ZendX_JQuery_Form {
     $this->addElement($smtp);
 
     $submit = new Zend_Form_Element_Submit('submit', array(
-      'label'    => $t->_('Submit')
+      'label' => $t->_('Submit')
     ));
     $this->addElement($submit);
   }

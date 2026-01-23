@@ -26,19 +26,19 @@ class Default_Form_Database extends ZendX_JQuery_Form {
 
     require_once('Validate/HostList.php');
     $allowed_ip = new Zend_Form_Element_Textarea('allowed_ip', array(
-      'label'    =>  $t->_('Allowed IP/ranges')." :",
+      'label' => $t->_('Allowed IP/ranges')." :",
       'title' => $t->_("IP/range allowed to request the SpamTagger databases"),
-      'required'   => false,
+      'required' => false,
       'rows' => 5,
       'cols' => 30,
-      'filters'    => array('StringToLower', 'StringTrim'))
+      'filters' => array('StringToLower', 'StringTrim'))
     );
     $allowed_ip->addValidator(new Validate_HostList());
     $allowed_ip->setValue($this->_firewallrule->getParam('allowed_ip'));
     $this->addElement($allowed_ip);
 
     $submit = new Zend_Form_Element_Submit('submit', array(
-      'label'    => $t->_('Submit'))
+      'label' => $t->_('Submit'))
     );
     $this->addElement($submit);
   }

@@ -33,12 +33,12 @@ class ExternalAccessRule extends PrefHandler {
   * @var array
   */
   static public $available_services_ = array(
-    'web'    => array('80|443', 'TCP'),
-    'mariadb'  => array('3306:3307', 'TCP'),
-    'snmp'   => array('161', 'UDP'),
-    'ssh'    => array('22', 'TCP'),
-    'mail'   => array('25', 'TCP'),
-    'soap'   => array('5132', 'TCP')
+    'web' => array('80|443', 'TCP'),
+    'mariadb' => array('3306:3307', 'TCP'),
+    'snmp' => array('161', 'UDP'),
+    'ssh' => array('22', 'TCP'),
+    'mail' => array('25', 'TCP'),
+    'soap' => array('5132', 'TCP')
   );
 
   /**

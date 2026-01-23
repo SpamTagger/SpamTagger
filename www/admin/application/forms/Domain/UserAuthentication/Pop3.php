@@ -27,9 +27,9 @@ class Default_Form_Domain_UserAuthentication_Pop3 {
 
     require_once('Validate/SMTPHostList.php');
     $server = new  Zend_Form_Element_Text('authserver', array(
-      'label'    => $t->_('Authentication server')." :",
+      'label' => $t->_('Authentication server')." :",
       'required' => false,
-      'filters'    => array('StringToLower', 'StringTrim'))
+      'filters' => array('StringToLower', 'StringTrim'))
     );
     $server->setValue($this->_domain->getPref('auth_server'));
     $server->addValidator(new Validate_SMTPHostList());
@@ -38,7 +38,7 @@ class Default_Form_Domain_UserAuthentication_Pop3 {
     $this->_settings = $this->getParams();
 
     $pop3usesslcheck = new Zend_Form_Element_Checkbox('pop3usessl', array(
-      'label'   => $t->_('Use SSL'). " :",
+      'label' => $t->_('Use SSL'). " :",
       'uncheckedValue' => "0",
       'checkedValue' => "1"
     ));

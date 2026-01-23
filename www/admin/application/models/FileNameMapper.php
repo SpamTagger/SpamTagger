@@ -44,7 +44,7 @@ class Default_Model_FileNameMapper {
 
   public function fetchAll() {
     $resultSet = $this->getDbTable()->fetchAll($this->getDbTable()->select()->order('rule ASC'));
-    $entries   = array();
+    $entries = array();
     foreach ($resultSet as $row) {
       $entry = new Default_Model_FileName();
       $entry->find($row->id);

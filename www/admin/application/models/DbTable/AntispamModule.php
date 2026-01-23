@@ -10,7 +10,7 @@
 
 class Default_Model_DbTable_AntispamModule extends Zend_Db_Table_Abstract
 {
-    protected $_name    = 'prefilter';
+    protected $_name = 'prefilter';
     protected $_primary = 'id';
 
     public function __construct() {

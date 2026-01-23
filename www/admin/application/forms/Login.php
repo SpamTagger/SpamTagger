@@ -16,9 +16,9 @@ class Default_Form_Login extends Zend_Form {
     $t = Zend_Registry::get('translate');
 
     $usernameField = $this->createElement( 'text', 'username', array(
-      'label'      => $t->_('Username')." :",
-      'required'   => true,
-      'filters'    => array('StringTrim'),
+      'label' => $t->_('Username')." :",
+      'required' => true,
+      'filters' => array('StringTrim'),
     ));
     #$usernameField->addValidator(new Zend_Validate_Alnum());
 
@@ -33,9 +33,9 @@ class Default_Form_Login extends Zend_Form {
     $this->addElement($usernameField);
 
     $passwordField = $this->createElement('password', 'password', array(
-      'label'      => $t->_('Password')." :",
-      'required'   => true,
-      'filters'    => array('StringTrim'),
+      'label' => $t->_('Password')." :",
+      'required' => true,
+      'filters' => array('StringTrim'),
       'validators' => array(array('validator' => 'StringLength', 'options' => array(0, 100))),
       'allowEmpty' => true,
     ));
@@ -49,7 +49,7 @@ class Default_Form_Login extends Zend_Form {
     $passwordField->removeDecorator('Errors');
     $this->addElement($passwordField);
 
-    $loginButton = $this->createElement('submit', 'submit', array('label'      => 'login'));
+    $loginButton = $this->createElement('submit', 'submit', array('label' => 'login'));
     $loginButton->setDecorators(array(
       'ViewHelper',
       array(array('data' => 'HtmlTag'), array('tag' => 'td', 'class' => 'element')),

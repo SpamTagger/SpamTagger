@@ -71,7 +71,7 @@ class ManagespamquarantineController extends Zend_Controller_Action
     $view=$layout->getView();
 
     $request = $this->getRequest();
-    $form    = new Default_Form_SpamQuarantine($this->getSearchParams());
+    $form = new Default_Form_SpamQuarantine($this->getSearchParams());
     $form->setAction(Zend_Controller_Action_HelperBroker::getStaticHelper('url')->simple('index', 'managespamquarantine'));
     $view->thisurl = Zend_Controller_Action_HelperBroker::getStaticHelper('url')->simple('index', 'managespamquarantine', NULL, array());
 

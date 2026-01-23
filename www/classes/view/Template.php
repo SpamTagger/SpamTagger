@@ -236,7 +236,7 @@ class Template {
 
     // replace date formatting
     if (preg_match('/\_\_FORMAT\_DATE\(([^),]+)\s*,\s*([^),]+)\s*,\s*([^),]+)\s*,\s*([^),]+)\s*\)\_\_/', $line, $matches)) {
-      $line =  preg_replace('/\_\_FORMAT\_DATE\(([^),]+)\s*,\s*([^),]+)\s*,\s*([^),]+)\s*,\s*([^),]+)\s*\)\_\_/', $this->formatDate($matches), $line);
+      $line = preg_replace('/\_\_FORMAT\_DATE\(([^),]+)\s*,\s*([^),]+)\s*,\s*([^),]+)\s*,\s*([^),]+)\s*\)\_\_/', $this->formatDate($matches), $line);
     }
 
     $line = str_replace('__TEMPLATE_PATH__', "templates/".$this->model_, $line);

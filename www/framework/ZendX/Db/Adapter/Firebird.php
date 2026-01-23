@@ -90,19 +90,19 @@ class ZendX_Db_Adapter_Firebird extends Zend_Db_Adapter_Abstract
      * @var array Associative array of datatypes to values 0, 1, or 2.
      */
     protected $_numericDataTypes = array(
-        Zend_Db::INT_TYPE    => Zend_Db::INT_TYPE,
+        Zend_Db::INT_TYPE => Zend_Db::INT_TYPE,
         Zend_Db::BIGINT_TYPE => Zend_Db::BIGINT_TYPE,
-        Zend_Db::FLOAT_TYPE  => Zend_Db::FLOAT_TYPE,
-        'SMALLINT'           => Zend_Db::INT_TYPE,
-        'INT'                => Zend_Db::INT_TYPE,
-        'INTEGER'            => Zend_Db::INT_TYPE,
-        'BIGINT'             => Zend_Db::BIGINT_TYPE,
-        'INT64'              => Zend_Db::BIGINT_TYPE,
-        'DECIMAL'            => Zend_Db::FLOAT_TYPE,
-        'DOUBLE PRECISION'   => Zend_Db::FLOAT_TYPE,
-        'DOUBLE'             => Zend_Db::FLOAT_TYPE,
-        'NUMERIC'            => Zend_Db::FLOAT_TYPE,
-        'FLOAT'              => Zend_Db::FLOAT_TYPE
+        Zend_Db::FLOAT_TYPE => Zend_Db::FLOAT_TYPE,
+        'SMALLINT' => Zend_Db::INT_TYPE,
+        'INT' => Zend_Db::INT_TYPE,
+        'INTEGER' => Zend_Db::INT_TYPE,
+        'BIGINT' => Zend_Db::BIGINT_TYPE,
+        'INT64' => Zend_Db::BIGINT_TYPE,
+        'DECIMAL' => Zend_Db::FLOAT_TYPE,
+        'DOUBLE PRECISION' => Zend_Db::FLOAT_TYPE,
+        'DOUBLE' => Zend_Db::FLOAT_TYPE,
+        'NUMERIC' => Zend_Db::FLOAT_TYPE,
+        'FLOAT' => Zend_Db::FLOAT_TYPE
     );
 
     /**
@@ -142,20 +142,20 @@ class ZendX_Db_Adapter_Firebird extends Zend_Db_Adapter_Abstract
      * The value of each array element is an associative array
      * with the following keys:
      *
-     * SCHEMA_NAME      => string; name of database or schema
-     * TABLE_NAME       => string;
-     * COLUMN_NAME      => string; column name
-     * COLUMN_POSITION  => number; ordinal position of column in table
-     * DATA_TYPE        => string; SQL datatype name of column
-     * DEFAULT          => string; default expression of column, null if none
-     * NULLABLE         => boolean; true if column can have nulls
-     * LENGTH           => number; length of CHAR/VARCHAR
-     * SCALE            => number; scale of NUMERIC/DECIMAL
-     * PRECISION        => number; precision of NUMERIC/DECIMAL
-     * UNSIGNED         => boolean; unsigned property of an integer type
-     * PRIMARY          => boolean; true if column is part of the primary key
+     * SCHEMA_NAME => string; name of database or schema
+     * TABLE_NAME => string;
+     * COLUMN_NAME => string; column name
+     * COLUMN_POSITION => number; ordinal position of column in table
+     * DATA_TYPE => string; SQL datatype name of column
+     * DEFAULT => string; default expression of column, null if none
+     * NULLABLE => boolean; true if column can have nulls
+     * LENGTH => number; length of CHAR/VARCHAR
+     * SCALE => number; scale of NUMERIC/DECIMAL
+     * PRECISION => number; precision of NUMERIC/DECIMAL
+     * UNSIGNED => boolean; unsigned property of an integer type
+     * PRIMARY => boolean; true if column is part of the primary key
      * PRIMARY_POSITION => integer; position of column in primary key
-     * IDENTITY         => integer; true if column is auto-generated with unique values
+     * IDENTITY => integer; true if column is auto-generated with unique values
      *
      * @param string $tableName
      * @param string $schemaName OPTIONAL
@@ -164,16 +164,16 @@ class ZendX_Db_Adapter_Firebird extends Zend_Db_Adapter_Abstract
     public function describeTable($tableName, $schemaName = null)
     {
         $fieldMaps = array(
-            'TEXT'      => 'CHAR',
-            'VARYING'   => 'VARCHAR',
-            'SHORT'     => 'SMALLINT',
-            'LONG'      => 'INTEGER',
-            'FLOAT'     => 'FLOAT',
-            'INT64'     => array(0 => 'BIGINT', 'NUMERIC', 'DECIMAL'),
-            'DATE'      => 'DATE',
-            'TIME'      => 'TIME',
-            'BLOB'      => 'BLOB',
-            'DOUBLE'    => 'DOUBLE PRECISION',
+            'TEXT' => 'CHAR',
+            'VARYING' => 'VARCHAR',
+            'SHORT' => 'SMALLINT',
+            'LONG' => 'INTEGER',
+            'FLOAT' => 'FLOAT',
+            'INT64' => array(0 => 'BIGINT', 'NUMERIC', 'DECIMAL'),
+            'DATE' => 'DATE',
+            'TIME' => 'TIME',
+            'BLOB' => 'BLOB',
+            'DOUBLE' => 'DOUBLE PRECISION',
             'TIMESTAMP' => 'TIMESTAMP'
         );
 
@@ -199,19 +199,19 @@ class ZendX_Db_Adapter_Firebird extends Zend_Db_Adapter_Abstract
          */
         $result = $stmt->fetchAll(Zend_Db::FETCH_NUM);
 
-        $table_name      = 0;
-        $owner           = 1;
-        $column_name     = 2;
-        $data_type       = 3;
-        $data_default    = 4;
-        $nullable        = 5;
-        $column_id       = 6;
-        $data_length     = 7;
-        $data_scale      = 8;
-        $data_precision  = 9;
+        $table_name = 0;
+        $owner = 1;
+        $column_name = 2;
+        $data_type = 3;
+        $data_default = 4;
+        $nullable = 5;
+        $column_id = 6;
+        $data_length = 7;
+        $data_scale = 8;
+        $data_precision = 9;
         $constraint_type = 10;
-        $position        = 11;
-        $sub_type        = 12;
+        $position = 11;
+        $sub_type = 12;
 
         $desc = array();
         foreach ($result as $key => $row) {
@@ -232,20 +232,20 @@ class ZendX_Db_Adapter_Firebird extends Zend_Db_Adapter_Abstract
             $row[$data_type] = $newType;
 
             $desc[trim($row[$column_name])] = array(
-                'SCHEMA_NAME'      => '',
-                'TABLE_NAME'       => trim($row[$table_name]),
-                'COLUMN_NAME'      => trim($row[$column_name]),
-                'COLUMN_POSITION'  => $row[$column_id] +1,
-                'DATA_TYPE'        => $row[$data_type],
-                'DEFAULT'          => $row[$data_default],
-                'NULLABLE'         => (bool) ($row[$nullable] != '1'),
-                'LENGTH'           => $row[$data_length],
-                'SCALE'            => ($row[$data_scale] == 0 ? null : $row[$data_scale]),
-                'PRECISION'        => ($row[$data_precision] == 0 ? null : $row[$data_precision]),
-                'UNSIGNED'         => false,
-                'PRIMARY'          => $primary,
+                'SCHEMA_NAME' => '',
+                'TABLE_NAME' => trim($row[$table_name]),
+                'COLUMN_NAME' => trim($row[$column_name]),
+                'COLUMN_POSITION' => $row[$column_id] +1,
+                'DATA_TYPE' => $row[$data_type],
+                'DEFAULT' => $row[$data_default],
+                'NULLABLE' => (bool) ($row[$nullable] != '1'),
+                'LENGTH' => $row[$data_length],
+                'SCALE' => ($row[$data_scale] == 0 ? null : $row[$data_scale]),
+                'PRECISION' => ($row[$data_precision] == 0 ? null : $row[$data_precision]),
+                'UNSIGNED' => false,
+                'PRIMARY' => $primary,
                 'PRIMARY_POSITION' => ($primary ? $primaryPosition+1 : null),
-                'IDENTITY'         => $identity
+                'IDENTITY' => $identity
             );
         }
         return $desc;
@@ -582,7 +582,7 @@ class ZendX_Db_Adapter_Firebird extends Zend_Db_Adapter_Abstract
         $service = ibase_service_attach($this->_formatDbConnString($this->_config['host'], $this->_config['port'], ''), $this->_config['username'], $this->_config['password']);
 
         if ($service != FALSE) {
-            $server_info  = ibase_server_info($service, IBASE_SVC_SERVER_VERSION);
+            $server_info = ibase_server_info($service, IBASE_SVC_SERVER_VERSION);
             ibase_service_detach($service);
             $matches = null;
             if (preg_match('/((?:[0-9]{1,2}\.){1,3}[0-9]{1,2})/', $server_info, $matches)) {

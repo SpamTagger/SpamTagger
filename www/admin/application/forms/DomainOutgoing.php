@@ -194,32 +194,32 @@ class Default_Form_DomainOutgoing extends Zend_Form {
 
     require_once('Validate/SMTPHostList.php');
     $servers_smarthost = new Zend_Form_Element_Textarea('servers_smarthost', array(
-      'label'  =>  $t->_('Server Realy Smarthost')." :",
+      'label' => $t->_('Server Realy Smarthost')." :",
       'title' => $t->_("Name or IP address of the smarthost server to relay to"),
-      'required'   => false,
+      'required' => false,
       'rows' => 5,
       'cols' => 30,
-      'filters'  => array('StringToLower', 'StringTrim'))
+      'filters' => array('StringToLower', 'StringTrim'))
     );
     $servers_smarthost->addValidator(new Validate_SMTPHostList());
     $servers_smarthost->setValue($this->_domain->getDestinationFieldString_smarthost());
     $this->addElement($servers_smarthost);
 
     $port_smarthost = new  Zend_Form_Element_Text('port_smarthost', array(
-      'label'  => $t->_('Destination port')." :",
+      'label' => $t->_('Destination port')." :",
       'required' => false,
       'size' => 4,
-      'filters'  => array('Alnum', 'StringTrim'))
+      'filters' => array('Alnum', 'StringTrim'))
     );
     $port_smarthost->setValue($this->_domain->getDestinationPort_smarthost());
     $port_smarthost->addValidator(new Zend_Validate_Int());
     $this->addElement($port_smarthost);
 
     $multiple_smarthost = new Zend_Form_Element_Select('multiple_smarthost', array(
-      'label'    => $t->_('Use multiple servers as')." :",
+      'label' => $t->_('Use multiple servers as')." :",
       'title' => $t->_("Choose method to deliver mails to destination server"),
-      'required'   => false,
-      'filters'  => array('StringTrim'))
+      'required' => false,
+      'filters' => array('StringTrim'))
     );
 
     foreach ($this->_domain->getDestinationActionOptions() as $key => $value) {

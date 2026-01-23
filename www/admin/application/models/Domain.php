@@ -14,7 +14,7 @@ class Default_Model_Domain
   protected $_values = array(
     'name' => '',
     'active' => true,
-    'destination'    => '',
+    'destination' => '',
     'prefs' => 0,
     'callout' => 'true',
     'adcheck' => 'false',
@@ -23,7 +23,7 @@ class Default_Model_Domain
     'greylist' => 'false',
     'forward_by_mx' => 'false',
     'relay_smarthost' => 0,
-    'destination_smarthost'    => '',
+    'destination_smarthost' => '',
   );
   protected $_aliases = array();
 
@@ -47,7 +47,7 @@ class Default_Model_Domain
   protected $_destination_action_options_smarthost = array('loadbalancing' => 'randomize', 'failover' => 'no_randomize');
 
   protected $_calloutconnector = 'smtp';
-  protected $_callouttest_finished  = false;
+  protected $_callouttest_finished = false;
 
   protected $domain_;
   protected $auth_;
@@ -1071,7 +1071,7 @@ class Default_Model_Domain
     //TODO: test authentication
 
     if ($this->getPref('auth_type') == 'none') {
-      return array('status' => 'OK', 'message' =>  'no authentication set.', 'addresses' => array(), 'errors' => array());
+      return array('status' => 'OK', 'message' => 'no authentication set.', 'addresses' => array(), 'errors' => array());
     }
     ## use old stuff !
     unset($_SESSION['_authsession']);
@@ -1110,10 +1110,10 @@ class Default_Model_Domain
       foreach ($addresses as $add => $ismain) {
         $addlist[] = $add;
       }
-      return array('status' => 'OK', 'message' =>  'passed', 'addresses' => $addlist, 'errors' => array());
+      return array('status' => 'OK', 'message' => 'passed', 'addresses' => $addlist, 'errors' => array());
     }
 
-    return array('status' => 'NOK', 'message' =>  'failed.', 'addresses' => array(), 'errors' => $auth_->getMessages());
+    return array('status' => 'NOK', 'message' => 'failed.', 'addresses' => array(), 'errors' => $auth_->getMessages());
   }
 
   /*

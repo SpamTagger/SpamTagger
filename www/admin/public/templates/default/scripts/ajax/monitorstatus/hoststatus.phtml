@@ -101,8 +101,8 @@
 
 
     <td class="c_memory" ><br />
-     <?php $memusage =  round((100 / $status['memoryusage']['memtotal']) * ($status['memoryusage']['memused'] - $status['memoryusage']['memcached']))?>
-     <?php if (isset($status['memoryusage']['swaptotal']) && $status['memoryusage']['swaptotal'] != 0) { $swapusage =  sprintf('%.2d', (100 / $status['memoryusage']['swaptotal']) * ($status['memoryusage']['swapused'])); } ?>
+     <?php $memusage = round((100 / $status['memoryusage']['memtotal']) * ($status['memoryusage']['memused'] - $status['memoryusage']['memcached']))?>
+     <?php if (isset($status['memoryusage']['swaptotal']) && $status['memoryusage']['swaptotal'] != 0) { $swapusage = sprintf('%.2d', (100 / $status['memoryusage']['swaptotal']) * ($status['memoryusage']['swapused'])); } ?>
 
        <span class='statusdescr'><?php echo $this->t->_('Physical memory')?>: </span>
        <span class='statusvalue'><?php echo $memusage."%"?></span>

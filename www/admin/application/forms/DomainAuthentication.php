@@ -31,8 +31,8 @@ class Default_Form_DomainAuthentication extends Zend_Form {
 
     $this->setAttrib('id', 'domain_form');
     $panellist = new Zend_Form_Element_Select('domainpanel', array(
-      'required'   => false,
-      'filters'    => array('StringTrim'))
+      'required' => false,
+      'filters' => array('StringTrim'))
     );
     ## TODO: add specific validator
     $panellist->addValidator(new Zend_Validate_Alnum());
@@ -50,9 +50,9 @@ class Default_Form_DomainAuthentication extends Zend_Form {
     $name->setValue($this->_domain->getParam('name'));
     $this->addElement($name);
     $domainname = new  Zend_Form_Element_Text('domainname', array(
-      'label'   => $t->_('Domain name')." :",
+      'label' => $t->_('Domain name')." :",
       'required' => false,
-      'filters'    => array('StringToLower', 'StringTrim'))
+      'filters' => array('StringToLower', 'StringTrim'))
     );
     $domainname->setValue($this->_domain->getParam('name'));
     require_once('Validate/DomainName.php');
@@ -61,16 +61,16 @@ class Default_Form_DomainAuthentication extends Zend_Form {
 
     foreach ($this->_connectors as $connector) {
       $connectorformclass = 'Default_Form_Domain_UserAuthentication_'.ucfirst($connector);
-      $connectorform  = new $connectorformclass($this->_domain);
+      $connectorform = new $connectorformclass($this->_domain);
       $connectorform->addForm($this);
     }
 
     $connectorlist = new Zend_Form_Element_Select('connector', array(
-      'label'      => $t->_('Authentication type')." : ",
+      'label' => $t->_('Authentication type')." : ",
       'title' => $t->_("Choose how users will authenticate on SpamTagger web interface"),
-      'required'   => true,
-      'onchange'   => 'javascript:changeAuthConnector();',
-      'filters'    => array('StringTrim'))
+      'required' => true,
+      'onchange' => 'javascript:changeAuthConnector();',
+      'filters' => array('StringTrim'))
     );
 
     foreach ($this->_connectors as $connector) {
@@ -81,10 +81,10 @@ class Default_Form_DomainAuthentication extends Zend_Form {
 
 
     $usernameformat = new Zend_Form_Element_Select('usernameformat', array(
-      'label'      => $t->_('Username modifier')." : ",
+      'label' => $t->_('Username modifier')." : ",
       'title' => $t->_("How SpamTagger will send the login to the auth server"),
-      'required'   => false,
-      'filters'    => array('StringTrim'))
+      'required' => false,
+      'filters' => array('StringTrim'))
     );
 
     foreach ($this->_usernameformats as $format) {
@@ -94,10 +94,10 @@ class Default_Form_DomainAuthentication extends Zend_Form {
     $this->addElement($usernameformat);
 
     $addresslookup = new Zend_Form_Element_Select('addresslookup', array(
-      'label'      => $t->_('Address lookup')." : ",
+      'label' => $t->_('Address lookup')." : ",
       'title' => $t->_("How SpamTagger fetch or build address for a user"),
-      'required'   => false,
-      'filters'    => array('StringTrim'))
+      'required' => false,
+      'filters' => array('StringTrim'))
     );
 
     foreach ($this->_addresslookups as $lookup) {
@@ -107,28 +107,28 @@ class Default_Form_DomainAuthentication extends Zend_Form {
     $this->addElement($addresslookup);
 
     $submit = new Zend_Form_Element_Submit('submit', array(
-      'label'    => $t->_('Submit'))
+      'label' => $t->_('Submit'))
     );
     $this->addElement($submit);
 
 
     $testusername = new  Zend_Form_Element_Text('testusername', array(
-      'label'    => $t->_('Test username')." :",
+      'label' => $t->_('Test username')." :",
       'title' => $t->_("Data used to ensure the chosen authentication type is working"),
       'required' => false,
-      'filters'    => array('StringTrim'))
+      'filters' => array('StringTrim'))
     );
     $this->addElement($testusername);
 
     $testpassword = new  Zend_Form_Element_Password('testpassword', array(
-      'label'    => $t->_('Test password')." :",
+      'label' => $t->_('Test password')." :",
       'title' => $t->_("Data used to ensure the chosen authentication type is working"),
       'required' => false
     ));
     $this->addElement($testpassword);
 
     $test = new Zend_Form_Element_Button('testuserauth', array(
-      'label'    => $t->_('Test authentication'),
+      'label' => $t->_('Test authentication'),
       'onclick' => 'javascript:stopreloadtest=0;testUserauth(\''.$this->_domain->getParam('name').'\', 1);')
     );
     $this->addElement($test);
@@ -136,7 +136,7 @@ class Default_Form_DomainAuthentication extends Zend_Form {
 
   public function setParams($request, $domain) {
     $connectorformclass = 'Default_Form_Domain_UserAuthentication_'.ucfirst($request->getParam('connector'));
-    $connectorform  = new $connectorformclass($domain);
+    $connectorform = new $connectorformclass($domain);
     $domain->setPref('auth_modif', $request->getParam('usernameformat'));
     $domain->setPref('address_fetcher', $request->getParam('addresslookup'));
     $connectorform->setParams($request, $domain);

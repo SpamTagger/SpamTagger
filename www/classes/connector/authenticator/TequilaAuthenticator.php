@@ -57,9 +57,9 @@ class TequilaAuthenticator extends AuthManager {
     $url .= $settings->getSetting('server').":".$settings->getSetting('port');
     $tequila = new TequilaClient($url, '/tmp/tequila');
     $requestInfo = array(
-      'urlacces'  => $tequila->getCurrentUrl(),
-      'service'   => 'SpamTagger',
-      'request'   => $settings->getSetting('fields'),
+      'urlacces' => $tequila->getCurrentUrl(),
+      'service' => 'SpamTagger',
+      'request' => $settings->getSetting('fields'),
     );
     $tequila->setApplicationName('SpamTagger');
     $tequila->SetWantedAttributes(split(',', $settings->getSetting('fields')));

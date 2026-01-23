@@ -25,9 +25,9 @@ class Default_Form_Domain_AddressVerification_Smtp
 
     require_once('Validate/SMTPHostList.php');
     $alternateserver = new  Zend_Form_Element_Text('alternate', array(
-      'label'    => $t->_('Use alternate server')." :",
+      'label' => $t->_('Use alternate server')." :",
       'required' => false,
-      'filters'    => array('StringToLower', 'StringTrim'))
+      'filters' => array('StringToLower', 'StringTrim'))
     );
     $alternateserver->setValue($this->_domain->getParam('altcallout'));
     $alternateserver->addValidator(new Validate_SMTPHostList());

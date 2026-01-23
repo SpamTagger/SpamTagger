@@ -91,7 +91,7 @@ class AccessesController extends Zend_Controller_Action {
     $view=$layout->getView();
     $request = $this->getRequest();
 
-    $form    = new Default_Form_AdminEdit($view->admin);
+    $form = new Default_Form_AdminEdit($view->admin);
     $form->setAction(Zend_Controller_Action_HelperBroker::getStaticHelper('url')->simple('add', 'accesses'));
     $message = '';
     if ($request->isPost()) {
@@ -140,7 +140,7 @@ class AccessesController extends Zend_Controller_Action {
     $view=$layout->getView();
     $request = $this->getRequest();
 
-    $form    = new Default_Form_AdminEdit($view->admin);
+    $form = new Default_Form_AdminEdit($view->admin);
     #$form->setAction(Zend_Controller_Action_HelperBroker::getStaticHelper('url')->simple('edit', 'accesses'));
     $form->setAction($view->searchurl."/name/".$view->name);
     $message = '';

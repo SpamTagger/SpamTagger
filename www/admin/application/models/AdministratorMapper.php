@@ -95,7 +95,7 @@ class Default_Model_AdministratorMapper {
       $query->where('username LIKE ?', $str."%");
     }
     $resultSet = $this->getDbTable()->fetchAll($query);
-    $entries   = array();
+    $entries = array();
     foreach ($resultSet as $row) {
       $entry = new Default_Model_Administrator();
       $entry->find($row['username']);

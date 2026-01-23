@@ -116,7 +116,7 @@ class Default_Form_SpamQuarantine extends ZendX_JQuery_Form {
     $this->addElement($tm);
 
     $forced = new Zend_Form_Element_Checkbox('forced', array(
-      'label'   => $t->_('Hide user-released messages'),
+      'label' => $t->_('Hide user-released messages'),
       'uncheckedValue' => "0",
       'checkedValue' => "1"
     ));
@@ -126,7 +126,7 @@ class Default_Form_SpamQuarantine extends ZendX_JQuery_Form {
     $this->addElement($forced);
 
     $hidedup = new Zend_Form_Element_Checkbox('hidedup', array(
-      'label'   => $t->_('Show multi-recipient messages only once '),
+      'label' => $t->_('Show multi-recipient messages only once '),
       'uncheckedValue' => "0",
       'checkedValue' => "1"
     ));
@@ -151,14 +151,14 @@ class Default_Form_SpamQuarantine extends ZendX_JQuery_Form {
     $this->addElement($mpp);
 
     $showSpamOnly = new Zend_Form_Element_Checkbox('showSpamOnly', array(
-      'label'   => $t->_('Show spam only'),
+      'label' => $t->_('Show spam only'),
       'uncheckedValue' => "0",
       'checkedValue' => "1"
     ));
 
     ### newsl
     $showNewslettersOnly = new Zend_Form_Element_Checkbox('showNewslettersOnly', array(
-      'label'   => $t->_('Show newsletters only'),
+      'label' => $t->_('Show newsletters only'),
       'uncheckedValue' => "0",
       'checkedValue' => "1"
     ));
@@ -174,7 +174,7 @@ class Default_Form_SpamQuarantine extends ZendX_JQuery_Form {
     $this->addElement($showNewslettersOnly);
 
     $submit = new Zend_Form_Element_Submit('submit', array(
-      'label'    => $t->_('Refresh'),
+      'label' => $t->_('Refresh'),
       'onclick' => 'javascript:launchSearch();return false;'
     ));
     $this->addElement($submit);

@@ -27,7 +27,7 @@ class Default_Form_ContentQuarantine extends ZendX_JQuery_Form {
     $this->setAttrib('id', 'filter_form');
 
     $reference = new  Zend_Form_Element_Text('$reference', array(
-      'label' =>  $t->_('Message ID')." : ",
+      'label' => $t->_('Message ID')." : ",
       'size' => 24,
       'required' => false)
     );
@@ -128,12 +128,12 @@ class Default_Form_ContentQuarantine extends ZendX_JQuery_Form {
     $this->addElement($mpp);
 
     $submit = new Zend_Form_Element_Submit('submit', array(
-      'label'    => $t->_('Refresh'),
+      'label' => $t->_('Refresh'),
       'onclick' => 'javascript:launchSearch();return false;')
     );
     $this->addElement($submit);
     $dosearch = new Zend_Form_Element_Submit('dosearch', array(
-      'label'    => $t->_('Search'),
+      'label' => $t->_('Search'),
       'onclick' => 'javascript:launchSearch();return false;')
     );
     $this->addElement($dosearch);

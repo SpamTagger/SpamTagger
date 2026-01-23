@@ -27,9 +27,9 @@ class Default_Form_Tasks extends ZendX_JQuery_Form {
     $this->setAttrib('id', 'tasks_form');
 
     $daily = new Zend_Form_Element_Select('cron_time', array(
-      'label'      => $t->_('Daily tasks run at')." :",
-      'required'   => true,
-      'filters'    => array('StringTrim')
+      'label' => $t->_('Daily tasks run at')." :",
+      'required' => true,
+      'filters' => array('StringTrim')
     ));
 
     for ($i = 0; $i < 24; $i++) {
@@ -40,9 +40,9 @@ class Default_Form_Tasks extends ZendX_JQuery_Form {
     $this->addElement($daily);
 
     $weekly = new Zend_Form_Element_Select('cron_weekday', array(
-      'label'      => $t->_('Weekly tasks run on')." :",
-      'required'   => true,
-      'filters'    => array('StringTrim')
+      'label' => $t->_('Weekly tasks run on')." :",
+      'required' => true,
+      'filters' => array('StringTrim')
     ));
 
     foreach (array('1' => 'Sunday', '2' => 'Monday', '3' => 'Tuesday', '4' => 'Wednesday', '5' => 'Thursday', '6' => 'Friday', '7' => 'Saturday') as $k => $v) {
@@ -52,9 +52,9 @@ class Default_Form_Tasks extends ZendX_JQuery_Form {
     $this->addElement($weekly);
 
     $monthly = new Zend_Form_Element_Select('cron_monthday', array(
-      'label'      => $t->_('Monthly tasks run at day')." :",
-      'required'   => true,
-      'filters'    => array('StringTrim')
+      'label' => $t->_('Monthly tasks run at day')." :",
+      'required' => true,
+      'filters' => array('StringTrim')
     ));
 
     for ($i = 1; $i < 32; $i++) {
@@ -64,7 +64,7 @@ class Default_Form_Tasks extends ZendX_JQuery_Form {
     $this->addElement($monthly);
 
     $submit = new Zend_Form_Element_Submit('submit', array(
-      'label'    => $t->_('Submit')
+      'label' => $t->_('Submit')
     ));
     $this->addElement($submit);
 

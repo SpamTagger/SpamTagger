@@ -35,10 +35,10 @@ class Default_Form_AntiSpam_UriRBLs extends Default_Form_AntiSpam_Default
     $rbllist->load();
 
     $spam_list_to_be_spam = new Zend_Form_Element_Select('listeduristobespam', array(
-      'label'      => $t->_('URL hits to be spam')." :",
-      'title'    => $t->_("Number of RBLs (below) to meet to be considered as spam by this module"),
-      'required'   => false,
-      'filters'    => array('StringTrim'))
+      'label' => $t->_('URL hits to be spam')." :",
+      'title' => $t->_("Number of RBLs (below) to meet to be considered as spam by this module"),
+      'required' => false,
+      'filters' => array('StringTrim'))
     );
 
     for ($i = 1; $i <= count($rbllist->getRBLs('URIRBL')); $i++) {
@@ -61,8 +61,8 @@ class Default_Form_AntiSpam_UriRBLs extends Default_Form_AntiSpam_Default
     }
 
     $resolve_shorteners = new Zend_Form_Element_Checkbox('resolve_shorteners', array(
-      'label'   => $t->_('Resolve URL shorteners/redirects'). " :",
-      'title'    => $t->_("If a URL shortener was used, expand the URL to analyze it"),
+      'label' => $t->_('Resolve URL shorteners/redirects'). " :",
+      'title' => $t->_("If a URL shortener was used, expand the URL to analyze it"),
       'uncheckedValue' => "0",
       'checkedValue' => "1"
     ));
@@ -70,12 +70,12 @@ class Default_Form_AntiSpam_UriRBLs extends Default_Form_AntiSpam_Default
     $this->addElement($resolve_shorteners);
     require_once('Validate/SMTPHostList.php');
     $avoidhosts = new Zend_Form_Element_Textarea('avoidhosts', array(
-      'label'    =>  $t->_('Don\'t check these hosts')." :",
-      'title'   => $t->_("IPs/hosts added here will not be checked against the RBLs"),
-      'required'   => false,
+      'label' => $t->_('Don\'t check these hosts')." :",
+      'title' => $t->_("IPs/hosts added here will not be checked against the RBLs"),
+      'required' => false,
       'rows' => 5,
       'cols' => 30,
-      'filters'    => array('StringToLower', 'StringTrim'))
+      'filters' => array('StringToLower', 'StringTrim'))
     );
     $avoidhosts->addValidator(new Validate_SMTPHostList());
     $hoststoavoid = preg_replace('/,\s\;/', "\n", $as->getParam('avoidhosts'));

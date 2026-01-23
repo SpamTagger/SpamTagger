@@ -30,7 +30,7 @@ class Default_Form_SmtpGreylisting extends ZendX_JQuery_Form {
       'required' => false,
       'size' => 6,
       'class' => 'fieldrighted',
-      'filters'    => array('Alnum', 'StringTrim')
+      'filters' => array('Alnum', 'StringTrim')
     ));
     $retrymin->setValue($this->_greylist->getParam('retry_min'));
     $retrymin->addValidator(new Zend_Validate_Int());
@@ -40,7 +40,7 @@ class Default_Form_SmtpGreylisting extends ZendX_JQuery_Form {
       'required' => false,
       'size' => 6,
       'class' => 'fieldrighted',
-      'filters'    => array('Alnum', 'StringTrim')
+      'filters' => array('Alnum', 'StringTrim')
     ));
     $retrymax->setValue($this->_greylist->getParam('retry_max'));
     $retrymax->addValidator(new Zend_Validate_Int());
@@ -52,7 +52,7 @@ class Default_Form_SmtpGreylisting extends ZendX_JQuery_Form {
       'title' => $t->_("Cached item timelife"),
       'size' => 6,
       'class' => 'fieldrighted',
-      'filters'    => array('Alnum', 'StringTrim')
+      'filters' => array('Alnum', 'StringTrim')
     ));
     $expiretime->setValue($this->_greylist->getParam('expire'));
     $expiretime->addValidator(new Zend_Validate_Int());
@@ -60,19 +60,19 @@ class Default_Form_SmtpGreylisting extends ZendX_JQuery_Form {
 
     require_once('Validate/DomainList.php');
     $avoiddomains = new Zend_Form_Element_Textarea('avoid_domains', array(
-      'label'    =>  $t->_('Avoid greylisting for these domains')." :",
+      'label' => $t->_('Avoid greylisting for these domains')." :",
       'title' => $t->_("Wantlist for the greylist (!)"),
-      'required'   => false,
+      'required' => false,
       'rows' => 5,
       'cols' => 30,
-      'filters'    => array('StringToLower', 'StringTrim')
+      'filters' => array('StringToLower', 'StringTrim')
     ));
     $avoiddomains->addValidator(new Validate_DomainList());
     $avoiddomains->setValue(preg_replace('/\s+/', "\n", $this->_greylist->getParam('avoid_domains')));
     $this->addElement($avoiddomains);
 
     $submit = new Zend_Form_Element_Submit('submit', array(
-      'label'    => $t->_('Submit')
+      'label' => $t->_('Submit')
     ));
     $this->addElement($submit);
   }

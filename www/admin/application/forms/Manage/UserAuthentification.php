@@ -29,8 +29,8 @@ class Default_Form_Manage_UserAuthentification extends Zend_Form {
 
     $this->setAttrib('id', 'user_form');
     $panellist = new Zend_Form_Element_Select('userpanel', array(
-      'required'   => false,
-      'filters'    => array('StringTrim')
+      'required' => false,
+      'filters' => array('StringTrim')
     ));
     ## TODO: add specific validator
     $panellist->addValidator(new Zend_Validate_Alnum());
@@ -56,25 +56,25 @@ class Default_Form_Manage_UserAuthentification extends Zend_Form {
     $this->addElement($domain);
 
     $realname = new  Zend_Form_Element_Text('realname', array(
-      'label'   => $t->_('Real name')." :",
+      'label' => $t->_('Real name')." :",
       'required' => false,
-      'filters'    => array('StringTrim')
+      'filters' => array('StringTrim')
     ));
     $realname->setValue($this->_local->getParam('realname'));
     $this->addElement($realname);
 
     if ($this->_user->getDomainObject()->isFetcherLocal()) {
       $address = new  Zend_Form_Element_Text('email', array(
-        'label'   => $t->_('Email address')." :",
+        'label' => $t->_('Email address')." :",
         'required' => true,
-        'filters'    => array('StringToLower', 'StringTrim')
+        'filters' => array('StringToLower', 'StringTrim')
       ));
       $address->setValue($this->_local->getParam('email'));
       $this->addElement($address);
     }
 
     $password = new  Zend_Form_Element_Password('password', array(
-      'label'    => $t->_('Password')." :",
+      'label' => $t->_('Password')." :",
       'renderPassword' => true,
       'required' => false
     ));
@@ -84,7 +84,7 @@ class Default_Form_Manage_UserAuthentification extends Zend_Form {
     $this->addElement($password);
 
     $confirm = new  Zend_Form_Element_Password('confirm', array(
-      'label'    => $t->_('Confirm')." :",
+      'label' => $t->_('Confirm')." :",
       'renderPassword' => true,
       'required' => false
     ));
@@ -94,7 +94,7 @@ class Default_Form_Manage_UserAuthentification extends Zend_Form {
     $this->addElement($confirm);
 
     $submit = new Zend_Form_Element_Submit('submit', array(
-      'label'    => $t->_('Submit')
+      'label' => $t->_('Submit')
     ));
     $this->addElement($submit);
   }

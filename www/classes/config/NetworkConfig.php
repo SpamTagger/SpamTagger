@@ -222,7 +222,7 @@ class NetworkConfig
    * @return  string  dns servers list
    */
   public function getDNSString() {
-    $ret  = "";
+    $ret = "";
     foreach ($this->getProperty('dns_servers') as $server => $active) {
       $ret .= "$server, ";
     }

@@ -18,10 +18,10 @@ class Quarantine {
    * @var  array
    */
   protected  $filters_ = array(
-    'to_local'      => '',
-    'to_domain'     => '',
+    'to_local' => '',
+    'to_domain' => '',
     'msg_per_page' => 20,
-    'page'         => 1,
+    'page' => 1,
   );
 
   /**

@@ -32,7 +32,7 @@ class UserController extends Zend_Controller_Action {
 
 
     $request = $this->getRequest();
-    $form  = new Default_Form_Login();
+    $form = new Default_Form_Login();
 
     // Display only loggedOut message
     if ($this->getRequest()->getParam('message') == "loggedOut") {

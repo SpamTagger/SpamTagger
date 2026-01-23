@@ -48,7 +48,7 @@ class Default_Model_SlaveMapper
     public function fetchAll()
     {
         $resultSet = $this->getDbTable()->fetchAll(null, "id ASC");
-        $entries   = array();
+        $entries = array();
         foreach ($resultSet as $row) {
             $entry = new Default_Model_Slave();
             $entry->setId($row->id);

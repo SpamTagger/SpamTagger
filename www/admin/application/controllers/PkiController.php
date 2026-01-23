@@ -29,7 +29,7 @@ class PkiController extends Zend_Controller_Action
     $view=$layout->getView();
 
     $request = $this->getRequest();
-    $params = array('type' => $request->getParam('t'), 'length' =>  $request->getParam('l'));
+    $params = array('type' => $request->getParam('t'), 'length' => $request->getParam('l'));
 
     $pki = new Default_Model_PKI();
     $pki->createKey($params);

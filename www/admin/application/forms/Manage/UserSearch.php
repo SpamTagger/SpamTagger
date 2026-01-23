@@ -23,7 +23,7 @@ class Default_Form_Manage_UserSearch extends Zend_Form {
     $t = Zend_Registry::get('translate');
 
     $searchtypeField = new  Zend_Form_Element_Select('type', array(
-      'label'    => $t->_('Search by')." :",
+      'label' => $t->_('Search by')." :",
       'required' => false
     ));
     $searchtypeField->addMultiOption('user', $t->_('user'));
@@ -32,7 +32,7 @@ class Default_Form_Manage_UserSearch extends Zend_Form {
     $this->addElement($searchtypeField);
 
     $username = new  Zend_Form_Element_Text('search', array(
-      'label'    => $t->_('Username')." :",
+      'label' => $t->_('Username')." :",
       'required' => false
     ));
     $username->setValue($this->_params['search']);
@@ -51,7 +51,7 @@ class Default_Form_Manage_UserSearch extends Zend_Form {
     $this->addElement($domainField);
 
     $submit = new Zend_Form_Element_Submit('submit', array(
-      'label'    => $t->_('Edit or add >>'),
+      'label' => $t->_('Edit or add >>'),
       'class' => 'useraddsubmit'
     ));
     $this->addElement($submit);

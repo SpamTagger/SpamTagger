@@ -32,19 +32,19 @@ class SpamQuarantine extends Quarantine {
    * @var  array
    */
   protected  $filters_ = array(
-    'to_local'      => '',
-    'to_domain'     => '',
-    'from'          => '',
-    'subject'       => '',
-    'days'          => DEFAULT_DAYS,
-    'mask_forced'   => 0,
-    'mask_bounces'  => 0,
-    'spam_only'     => 0,
-    'newsl_only'    => 0,
+    'to_local' => '',
+    'to_domain' => '',
+    'from' => '',
+    'subject' => '',
+    'days' => DEFAULT_DAYS,
+    'mask_forced' => 0,
+    'mask_bounces' => 0,
+    'spam_only' => 0,
+    'newsl_only' => 0,
     'group_quarantines' => 0,
-    'msg_per_page'  => DEFAULT_MSGS,
-    'order'         => array('date', 'desc'),
-    'page'          => 1
+    'msg_per_page' => DEFAULT_MSGS,
+    'order' => array('date', 'desc'),
+    'page' => 1
   );
 
   /**
@@ -52,27 +52,27 @@ class SpamQuarantine extends Quarantine {
    * @var array
    */
   protected $ordered_fields_ = array(
-    'date'       => 'date_in',
-    'time'       => 'time_in',
+    'date' => 'date_in',
+    'time' => 'time_in',
     'globalscore'=> 'M_globalscore',
-    'tolocal'    => 'to_user',
-    'from'       => 'sender',
-    'subject'    => 'M_subject',
-    'forced'     => 'forced'
+    'tolocal' => 'to_user',
+    'from' => 'sender',
+    'subject' => 'M_subject',
+    'forced' => 'forced'
   );
 
   protected $order_tags_ = array(
     'date' => 'ODATE',
     'time' => 'OTIME',
     'globalscore'=> 'OSCORE',
-    'tolocal'    => 'ODESTINATION',
-    'from'       => 'OSENDER',
-    'subject'    => 'OSUBJECT',
-    'forced'     => 'OFORCED'
+    'tolocal' => 'ODESTINATION',
+    'from' => 'OSENDER',
+    'subject' => 'OSUBJECT',
+    'forced' => 'OFORCED'
   );
 
   private $stats_ = array(
-    'msgs'  => 0,
+    'msgs' => 0,
     'spams' => 0,
     'pspams' => 0,
     'bytes' => 0,
@@ -366,7 +366,7 @@ class SpamQuarantine extends Quarantine {
 
         if (empty($result)) {
           $hrefNews = "/fm.php?id=" . $id . "&a=" . urlencode($recipient) . '&s=' . $replica . "&n=1&pop=up";
-          $link =  '<span style="float: right;"><a style="border: thin solid grey; padding: 2px; background-color: lightgrey; box-shadow: 2px 1px 0px lightgrey; text-decoration: none;" data-id="%s" data-a="%s" href="#" onClick="MyWindow=window.open(\'%s\',\'MyWindow\',\'width=600,height=500\'); return false;" class="allow">%s</a></span>';
+          $link = '<span style="float: right;"><a style="border: thin solid grey; padding: 2px; background-color: lightgrey; box-shadow: 2px 1px 0px lightgrey; text-decoration: none;" data-id="%s" data-a="%s" href="#" onClick="MyWindow=window.open(\'%s\',\'MyWindow\',\'width=600,height=500\'); return false;" class="allow">%s</a></span>';
           $rule = 'allow';
           $label = $lang_->print_txt('NEWSLETTERACCEPT');
 

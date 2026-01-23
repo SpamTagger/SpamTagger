@@ -45,7 +45,7 @@ class Default_Model_WWElementMapper {
 
   public function fetchAll($destination, $type) {
     $resultSet = $this->getDbTable()->fetchAll($this->getDbTable()->select()->where('recipient = ?', $destination)->where('type = ?', $type)->order('recipient ASC'));
-    $entries   = array();
+    $entries = array();
     foreach ($resultSet as $row) {
       $entry = new Default_Model_WWElement();
       $entry->find($row->id);
@@ -72,11 +72,11 @@ class Default_Model_WWElementMapper {
       foreach ($senders_array as $sender) {
         $this->getDbTable()->insert(
           array(
-            'sender'  => $sender,
-            'recipient'  => $domain,
-            'type'  => $type,
-            'expiracy'  => '',
-            'status'  => 1,
+            'sender' => $sender,
+            'recipient' => $domain,
+            'type' => $type,
+            'expiracy' => '',
+            'status' => 1,
           )
         );
       }
@@ -93,12 +93,12 @@ class Default_Model_WWElementMapper {
       foreach ($comments_array as $comment) {
         $this->getDbTable()->insert(
           array(
-            'sender'  => '',
-            'recipient'  => $domain,
-            'type'  => $type,
-            'expiracy'  => '',
-            'status'  => 1,
-            'comments'  => $comment,
+            'sender' => '',
+            'recipient' => $domain,
+            'type' => $type,
+            'expiracy' => '',
+            'status' => 1,
+            'comments' => $comment,
           )
         );
       }

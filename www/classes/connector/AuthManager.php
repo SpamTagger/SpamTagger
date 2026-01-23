@@ -27,7 +27,7 @@ abstract class AuthManager {
   static private $authenticators_ = array (
     'local' => array('local', 'SQLAuthenticator'),
     'imap' => array('imap', 'POPIMAPAuthenticator'),
-    'pop3'  => array('pop3', 'POPIMAPAuthenticator'),
+    'pop3' => array('pop3', 'POPIMAPAuthenticator'),
     'ldap' => array('ldap/active directory', 'LDAPAuthenticator'),
     'radius' => array('radius', 'RadiusAuthenticator'),
     'smtp' => array('smtp', 'SMTPAuthenticator'),

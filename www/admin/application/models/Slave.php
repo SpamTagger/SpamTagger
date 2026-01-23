@@ -248,7 +248,7 @@ class Default_Model_Slave
 
         if (!isset($what['stats']) ||!is_array($what['stats'])) {
             $what['stats'] = array('cleans' => 'globalCleanCount',
-                                   'spams'=>  'globalSpamCount',
+                                   'spams'=> 'globalSpamCount',
                                    'dangerous' => 'globalVirusCount+globalNameCount+globalOtherCount');
         }
 
@@ -312,7 +312,7 @@ class Default_Model_Slave
     public function getTodayGlobalPie() {
         $what = array();
         $what['stats'] = array('cleans' => 'globalCleanCount',
-                               'spams'=>  'globalRefusedCount+globalSpamCount',
+                               'spams'=> 'globalRefusedCount+globalSpamCount',
                                'dangerous' => 'globalVirusCount+globalNameCount+globalOtherCount',
                                'outgoing' => 'globalRelayedCount');
         $ret = $this->getTodaySNMPStats($what);
@@ -323,7 +323,7 @@ class Default_Model_Slave
     public function getTodaySessionsPie() {
         $what = array();
         $what['stats'] = array('accepted' => 'globalMsgCount',
-                               'refused'=>  'globalRefusedCount',
+                               'refused'=> 'globalRefusedCount',
                                'delayed' => 'globalDelayedCount',
                                'relayed' => 'globalRelayedCount');
         $ret = $this->getTodaySNMPStats($what);
@@ -334,7 +334,7 @@ class Default_Model_Slave
     public function getTodayAcceptedPie() {
         $what = array();
         $what['stats'] = array('cleans' => 'globalCleanCount',
-                               'spams'=>  'globalSpamCount',
+                               'spams'=> 'globalSpamCount',
                                'dangerous' => 'globalVirusCount+globalNameCount+globalOtherCount');
         $ret = $this->getTodaySNMPStats($what);
         $stats = new Default_Model_ReportingStats();
@@ -344,7 +344,7 @@ class Default_Model_Slave
     public function getTodayRefusedPie() {
         $what = array();
         $what['stats'] = array('rbl' => 'globalRefusedRBLCount+globalRefusedBackscatterCount',
-                               'blocklists'=>  'globalRefusedHostCount+globalRefusedBadSenderCount',
+                               'blocklists'=> 'globalRefusedHostCount+globalRefusedBadSenderCount',
                                'relay' => 'globalRefusedRelayCount',
                                'bad signature' => 'globalRefusedBATVCount+globalRefusedBadSPFCount+globalRefusedBadRDNSCount',
                                'callout' => 'globalRefusedCalloutCount',
@@ -357,7 +357,7 @@ class Default_Model_Slave
     public function getTodayDelayedPie() {
         $what = array();
         $what['stats'] = array('greylisted' => 'globalDelayedGreylistCount',
-                               'rate limited'=>  'globalDelayedRatelimitCount');
+                               'rate limited'=> 'globalDelayedRatelimitCount');
         $ret = $this->getTodaySNMPStats($what);
         $stats = new Default_Model_ReportingStats();
         $stats->createPieChart(0,$ret,array('render'=>true, 'label_orientation'=>'vertical'));
@@ -366,7 +366,7 @@ class Default_Model_Slave
     public function getTodayRelayedPie() {
         $what = array();
         $what['stats'] = array('by hosts' => 'globalRelayedHostCount',
-                               'authentified'=>  'globalRelayedAuthenticatedCount',
+                               'authentified'=> 'globalRelayedAuthenticatedCount',
                                'refused' => 'globalRelayedRefusedCount',
                                'virus' => 'globalRelayedVirusCount');
         $ret = $this->getTodaySNMPStats($what);

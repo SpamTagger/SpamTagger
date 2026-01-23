@@ -16,13 +16,13 @@ class WWEntry extends PrefHandler {
    * @var array
    */
   private $datas_ = array(
-    'id'         => '',
-    'sender'         => '',
-    'recipient'       => '',
-    'type'         => 'warn',
-    'expiracy'         => '',
-    'status'          => 0,
-    'comments'       => '',
+    'id' => '',
+    'sender' => '',
+    'recipient' => '',
+    'type' => 'warn',
+    'expiracy' => '',
+    'status' => 0,
+    'comments' => '',
   );
 
   /**

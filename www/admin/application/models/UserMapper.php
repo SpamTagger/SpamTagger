@@ -68,7 +68,7 @@ class Default_Model_UserMapper {
   }
 
   public function fetchAllName($params) {
-    $entries   = array();
+    $entries = array();
     if (!$params['domain']){
       return $entries;
     }

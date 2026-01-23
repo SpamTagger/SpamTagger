@@ -22,7 +22,7 @@ abstract class LoginFormatter {
   static private $formatters_ = array (
                                      'username_only' => array('username', 'SimpleFormatter'),
                                      'at_add' => array('username@domain', 'DomainAddFormatter'),
-                                     'percent_add'  => array('username%domain', 'DomainAddFormatter')
+                                     'percent_add' => array('username%domain', 'DomainAddFormatter')
                                      );
 
   /**

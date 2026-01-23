@@ -35,8 +35,8 @@ class Default_Form_Manage_UserAddressgroup extends Default_Form_ElementList {
 
     $this->setAttrib('id', 'user_form');
     $panellist = new Zend_Form_Element_Select('userpanel', array(
-      'required'   => false,
-      'filters'    => array('StringTrim')
+      'required' => false,
+      'filters' => array('StringTrim')
     ));
     ## TODO: add specific validator
     $panellist->addValidator(new Zend_Validate_Alnum());
@@ -66,7 +66,7 @@ class Default_Form_Manage_UserAddressgroup extends Default_Form_ElementList {
     $this->getElement('remove')->setLabel($t->_('Remove address from group'));
 
     $submit = new Zend_Form_Element_Submit('submit', array(
-      'label'    => $t->_('Submit')
+      'label' => $t->_('Submit')
     ));
     $this->addElement($submit);
   }

@@ -19,10 +19,10 @@ class Api_Model_UserAPI
   *
   * General:
   *  user => user name, can be only local part or username with domain in the form of 'username[@%]domain' - cannot be modified
-  *  domain  => domain the user belongs to - cannot be modified
+  *  domain => domain the user belongs to - cannot be modified
   *
   * Interface display:
-  *  language =>  preferred language
+  *  language => preferred language
   *
   * Quarantine display:
   *  gui_default_address => address to be displayed first in interface

@@ -21,7 +21,7 @@ class Default_Model_Logfile {
     'clamspamd' => array('basefile' => 'clamav/clamspamd.log', 'cat' => 'Filter engine', 'name' => 'Spam signatures engine', 'pos' => 3),
     'spamhandler' => array('basefile' => 'spamtagger/SpamHandler.log', 'cat' => 'Filter engine', 'name' => 'Spam handling process', 'pos' => 5),
 
-    'freshclam' =>  array('basefile' => 'clamav/freshclam.log', 'cat' => 'Updates', 'name' => 'Antivirus engine', 'pos' => 1),
+    'freshclam' => array('basefile' => 'clamav/freshclam.log', 'cat' => 'Updates', 'name' => 'Antivirus engine', 'pos' => 1),
 
     'apache' => array('basefile' => 'apache/access.log', 'cat' => 'Misc', 'name' => 'Web server', 'pos' => 1),
     'mariadb_replica' => array('basefile' => 'mariadb_replica/mariadb.log', 'cat' => 'Misc', 'name' => 'Local database', 'pos' => 2),

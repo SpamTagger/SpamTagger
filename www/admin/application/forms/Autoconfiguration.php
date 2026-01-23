@@ -38,7 +38,7 @@ class Default_Form_Autoconfiguration extends ZendX_JQuery_Form {
     $this->addElement($autoconf);
 
     $submit = new Zend_Form_Element_Submit('submit', array(
-      'label'    => $t->_('Submit'))
+      'label' => $t->_('Submit'))
     );
     $this->addElement($submit);
   }

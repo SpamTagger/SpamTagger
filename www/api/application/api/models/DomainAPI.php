@@ -19,7 +19,7 @@ class Api_Model_DomainAPI
    *
    *   General:
    *    name => string, domain name - cannot be modified
-   *    aliases  => comma or \n separated string of aliases domains (use '' to delete all aliases)
+   *    aliases => comma or \n separated string of aliases domains (use '' to delete all aliases)
    *    defaults => can be any existent domain name.
    *                Values will be copied from it first as default vaules,
    *                otherwise, default values are taken from the global domains settings
@@ -30,7 +30,7 @@ class Api_Model_DomainAPI
    *    supportemail => Support email
    *
    *   Delivery:
-   *    destination =>  comma or \n separated string of destination server with port
+   *    destination => comma or \n separated string of destination server with port
    *    destination_mode => can be 'loadbalancing' or 'failover'
    *    destination_usemx => can be 0 or 1
    *
@@ -83,7 +83,7 @@ class Api_Model_DomainAPI
    *     reject_capital_domain => can be 0 or 1, rejects domain names containing capitals (if set to 0)
    *
    *   Outgoing:
-   *     allow_smtp_auth =>  can be 0 or 1, set if users can authenticate using SMTP for relaying
+   *     allow_smtp_auth => can be 0 or 1, set if users can authenticate using SMTP for relaying
    *     require_outgoing_tls => can be 0 or 1, reject unencrypted relaying sessions from this domain
    *     batv_enable => can be 0 or 1, enable BATV control and signing for this domain
    *     batv_secret => string, BATV secret key
@@ -295,7 +295,7 @@ class Api_Model_DomainAPI
     if (isset($params['callout_connector'])) {
       $connectorformclass = 'Default_Form_Domain_AddressVerification_'.ucfirst($params['callout_connector']);
       if (class_exists($connectorformclass)) {
-        $connectorform  = new $connectorformclass($domain);
+        $connectorform = new $connectorformclass($domain);
         $data = array();
         foreach (array(
           'callout_server' => 'callout_server',
@@ -342,7 +342,7 @@ class Api_Model_DomainAPI
     if (isset($params['auth_connector'])) {
       $connectorformclass = 'Default_Form_Domain_UserAuthentication_'.ucfirst($params['auth_connector']);
       if (class_exists($connectorformclass)) {
-        $connectorform  = new $connectorformclass($domain);
+        $connectorform = new $connectorformclass($domain);
         $data = array();
         foreach (array(
           'auth_server' => 'auth_server',
@@ -467,7 +467,7 @@ class Api_Model_DomainAPI
     }
     $connectorformclass = 'Default_Form_Domain_AddressVerification_'.ucfirst($domain->getCalloutConnector());
     if (class_exists($connectorformclass)) {
-      $connectorform  = new $connectorformclass($domain);
+      $connectorform = new $connectorformclass($domain);
       $calloutparams = $connectorform->getParams();
       foreach (array(
         'c_base_dn' => 'basedn',
@@ -511,7 +511,7 @@ class Api_Model_DomainAPI
     }
     $connectorformclass = 'Default_Form_Domain_UserAuthentication_'.ucfirst($domain->getAuthConnector());
     if (class_exists($connectorformclass)) {
-      $connectorform  = new $connectorformclass($domain);
+      $connectorform = new $connectorformclass($domain);
       $authparams = $connectorform->getParams();
       foreach (array(
         'a_base_dn' => 'basedn',

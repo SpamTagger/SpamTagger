@@ -25,7 +25,7 @@
    */
    protected $spec_settings_ = array(
                               'basedn' => '',
-                              'useratt'   => '',
+                              'useratt' => '',
                               'binduser' => '',
                               'bindpassword' => '',
                               'usessl' => false,
@@ -38,7 +38,7 @@
     */
    protected $spec_settings_type_ = array(
                               'basedn' => array('text', 30),
-                              'useratt'   => array('text', 20),
+                              'useratt' => array('text', 20),
                               'binduser' => array('text', 20),
                               'bindpassword' => array('password', 20),
                               'usessl' => array('checkbox', 'true'),

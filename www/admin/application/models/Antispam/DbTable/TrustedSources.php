@@ -10,7 +10,7 @@
 
 class Default_Model_Antispam_DbTable_TrustedSources extends Zend_Db_Table_Abstract
 {
-    protected $_name    = 'trustedSources';
+    protected $_name = 'trustedSources';
     protected $_primary = 'set_id';
 
     public function __construct() {

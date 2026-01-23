@@ -76,7 +76,7 @@ abstract class ZendX_JQuery_View_Helper_UiWidget extends Zend_View_Helper_HtmlEl
         if(!isset($attribs['id'])) {
             $attribs['id'] = $id;
         }
-        $attribs['name']  = $id;
+        $attribs['name'] = $id;
         $attribs['value'] = (string) $value;
 
         return $attribs;
