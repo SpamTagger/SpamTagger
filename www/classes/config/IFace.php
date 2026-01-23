@@ -11,19 +11,18 @@ define(INTERFACE_FILE, "/etc/network/interfaces");
 /**
  * This is the class is a configuration wrapper for a network interface
  */
-class Iface
-{
+class Iface {
   /**
    * interface settings
    */
   private $props_ = array(
-                       'if' => "",
-                       'ip' => "0.0.0.0",
-                       'netmask' => "255.255.255.0",
-                       'gateway' => "0.0.0.0",
-                       'netbase' => '0.0.0.0',
-                       'broadcast' => '0.0.0.0'
-                 );
+    'if' => "",
+    'ip' => "0.0.0.0",
+    'netmask' => "255.255.255.0",
+    'gateway' => "0.0.0.0",
+    'netbase' => '0.0.0.0',
+    'broadcast' => '0.0.0.0'
+  );
 
   /**
    * constructor

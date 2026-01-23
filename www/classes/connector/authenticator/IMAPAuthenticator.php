@@ -18,32 +18,32 @@ require_once("Auth.php");
  */
 class IMAPAuthenticator extends AuthManager {
 
-    protected $exhaustive_ = false;
+  protected $exhaustive_ = false;
 
-    function create($domain) {
-       $settings = $domain->getConnectorSettings();
-       if (! $settings instanceof SimpleServerSettings) {
-            return false;
-        }
-
-       $basedsn = '/imap/notls/norsh';
-       if ($settings->getSetting('usessl') == "true" || $settings->getSetting('usessl')) {
-         $basedsn = '/imap/ssl/novalidate-cert';
-       }
-
-       $funct = array ("LoginDialog", "loginFunction");
-       $params = array (
-                        "host" => $settings->getSetting('server'),
-                        "port" => $settings->getSetting('port'),
-                        "baseDSN" => $basedsn,
-                        'enableLogging' => true,
-                        );
-      $this->auth_ = new Auth('IMAP', $params, $funct);
-      if ($this->auth_ instanceof Auth) {
-        $this->setUpAuth();
-        return true;
-      }
+  function create($domain) {
+    $settings = $domain->getConnectorSettings();
+    if (! $settings instanceof SimpleServerSettings) {
       return false;
     }
+
+    $basedsn = '/imap/notls/norsh';
+    if ($settings->getSetting('usessl') == "true" || $settings->getSetting('usessl')) {
+      $basedsn = '/imap/ssl/novalidate-cert';
+    }
+
+    $funct = array ("LoginDialog", "loginFunction");
+    $params = array (
+      "host" => $settings->getSetting('server'),
+      "port" => $settings->getSetting('port'),
+      "baseDSN" => $basedsn,
+      'enableLogging' => true,
+    );
+    $this->auth_ = new Auth('IMAP', $params, $funct);
+    if ($this->auth_ instanceof Auth) {
+      $this->setUpAuth();
+      return true;
+    }
+    return false;
+  }
 }
 ?>

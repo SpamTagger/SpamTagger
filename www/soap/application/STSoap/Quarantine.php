@@ -6,8 +6,7 @@
  * @copyright 2025, SpamTagger
  */
 
-class STSoap_Quarantine
-{
+class STSoap_Quarantine {
 
   /**
    * This function will fetch information on quarantined message

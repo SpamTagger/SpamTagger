@@ -15,29 +15,29 @@
 abstract class LoginFormatter {
 
 
- /**
-  * List of available connector with corresponding classes
-  * @var array
-  */
+  /**
+   * List of available connector with corresponding classes
+   * @var array
+   */
   static private $formatters_ = array (
-                                     'username_only' => array('username', 'SimpleFormatter'),
-                                     'at_add' => array('username@domain', 'DomainAddFormatter'),
-                                     'percent_add' => array('username%domain', 'DomainAddFormatter')
-                                     );
+    'username_only' => array('username', 'SimpleFormatter'),
+    'at_add' => array('username@domain', 'DomainAddFormatter'),
+    'percent_add' => array('username%domain', 'DomainAddFormatter')
+  );
 
   /**
    * internal type of formatter
    * @var  string
    */
-   private $type_ = 'username_only';
+  private $type_ = 'username_only';
 
-   /**
+  /**
     * constructor
     * @param  $type  string  internal formatter type
     */
-   public function __construct($type) {
-        $this->type_ = $type;
-   }
+  public function __construct($type) {
+    $this->type_ = $type;
+  }
 
   /**
    * Formatter factory
@@ -61,7 +61,7 @@ abstract class LoginFormatter {
   * @param  $domain_name  string  the name of the domain of the user
   * @return               string  reformatted login name
   */
- abstract public function format($login_given, $domain_name);
+  abstract public function format($login_given, $domain_name);
 
 
  /**
@@ -76,12 +76,12 @@ abstract class LoginFormatter {
    * get the list available formatters
    * @return   array  list of available formatters
    */
-   static public function getAvailableFormatters() {
-     $ret = array();
-     foreach (self::$formatters_ as $key => $value) {
-        $ret[$value[0]] = $key;
-     }
-     return $ret;
-   }
+  static public function getAvailableFormatters() {
+    $ret = array();
+    foreach (self::$formatters_ as $key => $value) {
+      $ret[$value[0]] = $key;
+    }
+    return $ret;
+  }
 }
 ?>

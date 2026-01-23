@@ -8,12 +8,11 @@
  * PreRBLs internal table
  */
 
-class Default_Model_Antispam_DbTable_PreRBLs extends Zend_Db_Table_Abstract
-{
-    protected $_name = 'PreRBLs';
-    protected $_primary = 'set_id';
+class Default_Model_Antispam_DbTable_PreRBLs extends Zend_Db_Table_Abstract {
+  protected $_name = 'PreRBLs';
+  protected $_primary = 'set_id';
 
-    public function __construct() {
-    	$this->_db = Zend_Registry::get('writedb');
-    }
+  public function __construct() {
+  	$this->_db = Zend_Registry::get('writedb');
+  }
 }

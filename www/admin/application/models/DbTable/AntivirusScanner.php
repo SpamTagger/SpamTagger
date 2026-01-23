@@ -8,11 +8,10 @@
  * Antivirus scanner table
  */
 
-class Default_Model_DbTable_AntivirusScanner extends Zend_Db_Table_Abstract
-{
-    protected $_name = 'scanner';
+class Default_Model_DbTable_AntivirusScanner extends Zend_Db_Table_Abstract {
+  protected $_name = 'scanner';
 
-    public function __construct() {
-    	$this->_db = Zend_Registry::get('writedb');
-    }
+  public function __construct() {
+  	$this->_db = Zend_Registry::get('writedb');
+  }
 }

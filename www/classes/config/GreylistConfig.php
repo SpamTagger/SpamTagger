@@ -9,7 +9,7 @@
 /**
  * this is a preference handler
  */
- require_once('helpers/PrefHandler.php');
+require_once('helpers/PrefHandler.php');
 
 /**
  * This class is only a settings wrapper for the Greylist Daemon configurations

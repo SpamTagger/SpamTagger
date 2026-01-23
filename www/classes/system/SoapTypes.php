@@ -65,22 +65,23 @@ class SoapProcesses {
   public $firewall;
 
   static public function isOK($status) {
-    if ( $status->mtaincoming == 0 ||
-         $status->mtafiltering == 0 ||
-         $status->mtaoutgoing == 0 ||
-         $status->httpd == 0 ||
-         $status->engine == 0 ||
-         $status->sourcedb == 0 ||
-         $status->replicadb == 0 ||
-         $status->snmpd == 0 ||
-         $status->greylistd == 0 ||
-         $status->cron == 0 ||
-         $status->prefdaemon = 0 ||
-         $status->firewall == 0
-     ) {
-       return false;
-     }
-     return true;
+    if (
+      $status->mtaincoming == 0 ||
+      $status->mtafiltering == 0 ||
+      $status->mtaoutgoing == 0 ||
+      $status->httpd == 0 ||
+      $status->engine == 0 ||
+      $status->sourcedb == 0 ||
+      $status->replicadb == 0 ||
+      $status->snmpd == 0 ||
+      $status->greylistd == 0 ||
+      $status->cron == 0 ||
+      $status->prefdaemon = 0 ||
+      $status->firewall == 0
+    ) {
+      return false;
+    }
+    return true;
   }
 }
 
@@ -161,15 +162,15 @@ class SoapStats {
 }
 
 $SoapClassMap = array(
-                    "reasons" => "SoapReasons",
-                    "messagelines" => "SoapText",
-                    "servicestatus" => "SoapServiceStatus",
-                    "processes" => "SoapProcesses",
-                    "spools" => "SoapSpools",
-                    "load" => "SoapLoad",
-                    "diskusage" => "SoapDiskUsage",
-                    "memusage" => "SoapMemoryUsage",
-                    "stats" => "SoapStats"
-                    );
+  "reasons" => "SoapReasons",
+  "messagelines" => "SoapText",
+  "servicestatus" => "SoapServiceStatus",
+  "processes" => "SoapProcesses",
+  "spools" => "SoapSpools",
+  "load" => "SoapLoad",
+  "diskusage" => "SoapDiskUsage",
+  "memusage" => "SoapMemoryUsage",
+  "stats" => "SoapStats"
+);
 
 ?>

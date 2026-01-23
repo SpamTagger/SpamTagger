@@ -92,15 +92,6 @@ class Default_Form_AntiSpam_Spamc extends Default_Form_AntiSpam_Default {
       $this->addElement($el);
       $i++;
     }
-    /*
-    $netchecks = array(
-      'use_rbls' => array('label' => 'Enable RBLs controls', 'timeout' => 'rbls_timeout', 'title' => 'Use DNS RBLs for Spam detection'),
-      'use_dcc' => array('label' => 'Enable DCC control', 'timeout' => 'dcc_timeout', 'title' => 'The idea of DCC is that if mail recipients could compare the mail they receive, they could recognize unsolicited bulk mail'),
-      'use_razor' => array('label' => 'Enable Razor control', 'timeout' => 'razor_timeout', 'title' => 'Vipul's Razor is a distributed, collaborative, spam detection and filtering network'),
-      'use_pyzor' => array('label' => 'Enable Pyzor control', 'timeout' => 'pyzor_timeout', 'title' => 'Exactly the same thing than razor. Chose/Select only of one of them'),
-      'use_spf' => array('label' => 'Enable SPF control', 'timeout' => 'spf_timeout', 'title' => 'This plugin checks a message against Sender Policy Framework records published by the domain owners in DNS to fight email address forgery and make it easier to identify spams'),
-      'use_dkim' => array('label' => 'Enable DKIM control', 'timeout' => 'dkim_timeout', 'title' => 'DomainKeys Identified Mail (DKIM) is a method by which emails are signed by the organisation responsible for the senders domain and are placed in the DKIM-Signature: header field ')
-    );*/
     $netchecks = array(
       'use_rbls' => array('label' => 'Enable RBLs controls', 'timeout' => 'rbls_timeout', 'title' => "Use DNS RBLs for Spam detection"),
       'use_dcc' => array('label' => 'Enable DCC control', 'timeout' => 'dcc_timeout', 'title' => "The idea of DCC is that if mail recipients could compare the mail they receive, they could recognize unsolicited bulk mail"),

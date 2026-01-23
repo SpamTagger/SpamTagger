@@ -50,21 +50,21 @@ function forceContent($sid, $path) {
  */
 function forceSpam($id, $dest) {
 
- if (! preg_match('/^([a-z,A-Z,0-9]{6}-[a-z,A-Z,0-9]{6,11}-[a-z,A-Z,0-9]{2,4})$/', $id)) {
-   return "BADPARAMS";
- }
- if (! preg_match('/^\S+\@\S+$/', $dest)) {
-   return "BADPARAMS";
- }
+  if (! preg_match('/^([a-z,A-Z,0-9]{6}-[a-z,A-Z,0-9]{6,11}-[a-z,A-Z,0-9]{2,4})$/', $id)) {
+    return "BADPARAMS";
+  }
+  if (! preg_match('/^\S+\@\S+$/', $dest)) {
+    return "BADPARAMS";
+  }
 
- $sysconf_ = SystemConfig::getInstance();
- $id = escapeshellarg($id);
- $dest = escapeshellarg($dest);
- $cmd = $sysconf_->SRCDIR_."/bin/force_message.pl $id $dest";
- $res_a = array();
- exec($cmd, $res_a);
+  $sysconf_ = SystemConfig::getInstance();
+  $id = escapeshellarg($id);
+  $dest = escapeshellarg($dest);
+  $cmd = $sysconf_->SRCDIR_."/bin/force_message.pl $id $dest";
+  $res_a = array();
+  exec($cmd, $res_a);
 
- return $res_a[0];
+  return $res_a[0];
 }
 
 /**
@@ -75,10 +75,10 @@ function forceSpam($id, $dest) {
  */
 function addToNewslist($dest, $sender) {
   if (!preg_match('/^\S+\@\S+$/', $dest)) {
-      return "BADPARAMS";
+    return "BADPARAMS";
   }
   if (!preg_match('/^\S*\@\S+$/', $sender)) {
-      return "BADPARAMS";
+    return "BADPARAMS";
   }
   $sysconf_ = SystemConfig::getInstance();
   $dest = escapeshellarg($dest);
@@ -98,10 +98,10 @@ function addToNewslist($dest, $sender) {
  */
 function addToWantlist($dest, $sender) {
   if (!preg_match('/^\S+\@\S+$/', $dest)) {
-      return "BADPARAMS";
+    return "BADPARAMS";
   }
   if (!preg_match('/^\S*\@\S+$/', $sender)) {
-      return "BADPARAMS";
+    return "BADPARAMS";
   }
   $sysconf_ = SystemConfig::getInstance();
   $dest = escapeshellarg($dest);
@@ -121,10 +121,10 @@ function addToWantlist($dest, $sender) {
  */
 function addToBlocklist($dest, $sender) {
   if (!preg_match('/^\S+\@\S+$/', $dest)) {
-      return "BADPARAMS";
+    return "BADPARAMS";
   }
   if (!preg_match('/^\S*\@\S+$/', $sender)) {
-      return "BADPARAMS";
+    return "BADPARAMS";
   }
   $sysconf_ = SystemConfig::getInstance();
   $dest = escapeshellarg($dest);
@@ -144,11 +144,11 @@ function addToBlocklist($dest, $sender) {
  */
 function getHeaders($id, $dest) {
   if (! preg_match('/^([a-z,A-Z,0-9]{6}-[a-z,A-Z,0-9]{6,11}-[a-z,A-Z,0-9]{2,4})$/', $id)) {
-   return "BADPARAMS";
+    return "BADPARAMS";
   }
   $matches = array();
   if (! preg_match('/^\S+\@(\S+)$/', $dest, $matches)) {
-   return "BADPARAMS";
+    return "BADPARAMS";
   }
   $domain = $matches[1];
   $sysconf_ = SystemConfig::getInstance();
@@ -179,11 +179,11 @@ function getHeaders($id, $dest) {
 
 function getMIMEPart($id, $dest, $part) {
   if (! preg_match('/^([a-z,A-Z,0-9]{6}-[a-z,A-Z,0-9]{6,11}-[a-z,A-Z,0-9]{2,4})$/', $id)) {
-   return "BADPARAMS";
+    return "BADPARAMS";
   }
   $matches = array();
   if (! preg_match('/^\S+\@(\S+)$/', $dest, $matches)) {
-   return "BADPARAMS";
+    return "BADPARAMS";
   }
   $domain = $matches[1];
   $sysconf_ = SystemConfig::getInstance();
@@ -228,14 +228,14 @@ function getMIMEPart($id, $dest, $part) {
 function getBody($id, $dest, $nblines) {
 
   if (! preg_match('/^([a-z,A-Z,0-9]{6}-[a-z,A-Z,0-9]{6,11}-[a-z,A-Z,0-9]{2,4})$/', $id)) {
-   return "BADPARAMS";
+    return "BADPARAMS";
   }
   if (!is_numeric($nblines)) {
-   return "BADPARAMS";
+    return "BADPARAMS";
   }
   $matches = array();
   if (! preg_match('/^\S+\@(\S+)$/', $dest, $matches)) {
-   return "BADPARAMS";
+    return "BADPARAMS";
   }
   $domain = $matches[1];
   $sysconf_ = SystemConfig::getInstance();
@@ -280,7 +280,6 @@ function getBody($id, $dest, $nblines) {
   return $soap_ret;
 }
 
-
 /**
  * return the array of reasons why the message has been detected as a spam
  * @param  $id   string   message id
@@ -291,29 +290,29 @@ function getBody($id, $dest, $nblines) {
 function getReasons($id, $dest, $lang) {
 
   if (! preg_match('/^([a-z,A-Z,0-9]{6}-[a-z,A-Z,0-9]{6,11}-[a-z,A-Z,0-9]{2,4})$/', $id)) {
-   return "BADPARAMS";
- }
- if (! preg_match('/^\S+\@\S+$/', $dest)) {
-   return "BADPARAMS";
- }
- $sysconf_ = SystemConfig::getInstance();
- $id = escapeshellarg($id);
- $dest = escapeshellarg($dest);
- $lang = escapeshellarg($lang);
+    return "BADPARAMS";
+  }
+  if (! preg_match('/^\S+\@\S+$/', $dest)) {
+    return "BADPARAMS";
+  }
+  $sysconf_ = SystemConfig::getInstance();
+  $id = escapeshellarg($id);
+  $dest = escapeshellarg($dest);
+  $lang = escapeshellarg($lang);
 
- $cmd = $sysconf_->SRCDIR_."/bin/get_reasons.pl $id $dest $lang";
- $res = "";
- exec($cmd, $res);
- $ret = array();
- if (!is_array($res)) {
+  $cmd = $sysconf_->SRCDIR_."/bin/get_reasons.pl $id $dest $lang";
+  $res = "";
+  exec($cmd, $res);
+  $ret = array();
+  if (!is_array($res)) {
     return $res;
- }
- $soap_ret = new SoapReasons();
- foreach($res as $line) {
-  array_push($ret, utf8_encode($line));
- }
- $soap_ret->reasons = $ret;
- return $soap_ret;
+  }
+  $soap_ret = new SoapReasons();
+  foreach($res as $line) {
+    array_push($ret, utf8_encode($line));
+  }
+  $soap_ret->reasons = $ret;
+  return $soap_ret;
 }
 
 /**
@@ -323,20 +322,20 @@ function getReasons($id, $dest, $lang) {
  * @return       array    array of reasons on success, error code on failure
  */
 function sendToAnalyse($id, $dest) {
- if (! preg_match('/^([a-z,A-Z,0-9]{6}-[a-z,A-Z,0-9]{6,11}-[a-z,A-Z,0-9]{2,4})$/', $id)) {
-   return "BADPARAMS";
- }
- if (! preg_match('/^\S+\@\S+$/', $dest)) {
-   return "BADPARAMS";
- }
- $sysconf_ = SystemConfig::getInstance();
- $id = escapeshellarg($id);
- $dest = escapeshellarg($dest);
+  if (! preg_match('/^([a-z,A-Z,0-9]{6}-[a-z,A-Z,0-9]{6,11}-[a-z,A-Z,0-9]{2,4})$/', $id)) {
+    return "BADPARAMS";
+  }
+  if (! preg_match('/^\S+\@\S+$/', $dest)) {
+    return "BADPARAMS";
+  }
+  $sysconf_ = SystemConfig::getInstance();
+  $id = escapeshellarg($id);
+  $dest = escapeshellarg($dest);
 
- $cmd = $sysconf_->SRCDIR_."/bin/send_to_analyse.pl $id $dest";
- $res_a = array();
- exec($cmd, $res_a);
- return $res_a[0];
+  $cmd = $sysconf_->SRCDIR_."/bin/send_to_analyse.pl $id $dest";
+  $res_a = array();
+  exec($cmd, $res_a);
+  return $res_a[0];
 }
 
 function extractParts($structure, $part) {

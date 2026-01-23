@@ -8,20 +8,17 @@
  * index page controller
  */
 
-class QuarantineController extends Zend_Controller_Action
-{
+class QuarantineController extends Zend_Controller_Action {
 
-  public function init()
-  {
+  public function init() {
     $this->_helper->layout->disableLayout();
     $this->_helper->viewRenderer->setNoRender(true);
   }
 
-  public function getspamAction()
-  {
-     $request = $this->getRequest();
-     $api = new Api_Model_QuarantineAPI();
-     $api->getSpam($request->getParams());
+  public function getspamAction() {
+    $request = $this->getRequest();
+    $api = new Api_Model_QuarantineAPI();
+    $api->getSpam($request->getParams());
   }
 
 }

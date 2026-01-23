@@ -39,7 +39,7 @@ function getStatus($sid, $params) {
 function getSpools($sid) {
   $ret = getStatus($sid, "-p");
   if (!preg_match('/^(\|\d+){3}$/', $ret)) {
-     return "ERRORFETCHINGSPOOLSSTATUS ($ret)";
+    return "ERRORFETCHINGSPOOLSSTATUS ($ret)";
   }
   list($tmp, $stage1, $stage2, $stage4) = split('\|', $ret);
   $soap_res = new SoapSpools($stage1, $stage2, $stage4);
@@ -54,7 +54,7 @@ function getSpools($sid) {
 function getLoad($sid) {
   $ret = getStatus($sid, "-l");
   if (!preg_match('/^(\|[\d\.]+){3}$/', $ret)) {
-     return "ERRORFETCHINGLOADSTATUS";
+    return "ERRORFETCHINGLOADSTATUS";
   }
   list($tmp, $av5, $av10, $av15) = split('\|', $ret);
   $soap_res = new SoapLoad($av5, $av10, $av15);
@@ -108,7 +108,7 @@ function getQueueTime($sid) {
 function getLastPatch($sid) {
   $ret = getStatus($sid, "-u");
   if (!preg_match('/^(\d+)$/', $ret) && $ret != "") {
-   return "ERRORFETCHINGLASTPATCH ()";
+    return "ERRORFETCHINGLASTPATCH ()";
   }
   return $ret;
 }
@@ -123,7 +123,7 @@ function getTodaysCounts($sid, $spec) {
   $admin_ = getAdmin($sid);
   if (!$admin_ || $admin_->getPref('username') == "") {
     if (isset($admin_)) {
-       return $admin_;
+      return $admin_;
     }
     return "NOTAUTHENTICATED";
   }
@@ -166,8 +166,8 @@ function getTodaysCounts($sid, $spec) {
       }
       list($msg, $spam, $highspam, $virus, $names, $others, $cleans, $bytes, $users, $domains) = split('\|', $res_a[0]);
       return new SoapStats($bytes, $msg, $spam, 0, $virus, 0, $names+$others, 0, $users, $cleans, 0);
-    }
-    else
+    } else {
       return "ERRORFETCHINGCOUNTS";
+    }
   }
 ?>

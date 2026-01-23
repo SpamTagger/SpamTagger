@@ -8,11 +8,10 @@
  * User/Email preferences table
  */
 
-class Default_Model_DbTable_UserPref extends Zend_Db_Table_Abstract
-{
-    protected $_name = 'user_pref';
+class Default_Model_DbTable_UserPref extends Zend_Db_Table_Abstract {
+  protected $_name = 'user_pref';
 
-    public function __construct() {
-    	$this->_db = Zend_Registry::get('writedb');
-    }
+  public function __construct() {
+  	$this->_db = Zend_Registry::get('writedb');
+  }
 }

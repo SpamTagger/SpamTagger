@@ -9,25 +9,25 @@
 /**
  * this is a preference handler
  */
- require_once('helpers/PrefHandler.php');
+require_once('helpers/PrefHandler.php');
 
 /**
  * This class is only a settings wrapper for the PreFilter modules configuration
  */
 class Generic extends PreFilter {
 
-public function subload() {}
+  public function subload() {}
 
-public function addSpecPrefs() {}
+  public function addSpecPrefs() {}
 
-public function getSpecificTMPL() {
-  return "";
-}
+  public function getSpecificTMPL() {
+    return "";
+  }
 
-public function getSpeciticReplace($template, $form) {
-  return array();
-}
+  public function getSpeciticReplace($template, $form) {
+    return array();
+  }
 
-public function subsave($posted) {}
+  public function subsave($posted) {}
 }
 ?>

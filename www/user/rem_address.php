@@ -41,14 +41,14 @@ $template_ = new Template('rem_address.tmpl');
 $params = $_GET;
 $params['doit'] = '1';
 $replace = array(
-        '__INCLUDE_JS__' =>
+  '__INCLUDE_JS__' =>
 "<script type=\"text/javascript\" language=\"javascript\">
     function confirm() {
         window.location.href=\"".$_SERVER['PHP_SELF']."?add=$add&doit=1\";
     }
 </script>",
-        '__MESSAGE__' => $message,
-        '__CONFIRM_BUTTON__' => confirm_button()
+  '__MESSAGE__' => $message,
+  '__CONFIRM_BUTTON__' => confirm_button()
 );
 // display page
 $template_->output($replace);
@@ -60,7 +60,7 @@ $template_->output($replace);
 function confirm_button() {
   $lang_ = Language::getInstance('user');
   if (! isset($_GET['doit'])) {
-     return "&nbsp;<input type=\"button\" onClick=\"javascript:confirm()\" value=\"".$lang_->print_txt('CONFIRM')."\" />";
+    return "&nbsp;<input type=\"button\" onClick=\"javascript:confirm()\" value=\"".$lang_->print_txt('CONFIRM')."\" />";
   }
   return ;
 }

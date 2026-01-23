@@ -18,25 +18,25 @@ require_once("Auth.php");
  */
 class POP3Authenticator extends AuthManager {
 
-    protected $exhaustive_ = false;
+  protected $exhaustive_ = false;
 
-    function create($domain) {
-       $settings = $domain->getConnectorSettings();
-       if (! $settings instanceof SimpleServerSettings) {
-            return false;
-        }
-
-       $funct = array ("LoginDialog", "loginFunction");
-       $params = array (
-                        "host" => $settings->getSetting('server'),
-                        "port" => $settings->getSetting('port')
-                        );
-      $this->auth_ = new Auth('POP3', $params, $funct);
-      if ($this->auth_ instanceof Auth) {
-        $this->setUpAuth();
-        return true;
-      }
+  function create($domain) {
+    $settings = $domain->getConnectorSettings();
+    if (! $settings instanceof SimpleServerSettings) {
       return false;
     }
+
+    $funct = array ("LoginDialog", "loginFunction");
+    $params = array (
+      "host" => $settings->getSetting('server'),
+      "port" => $settings->getSetting('port')
+    );
+    $this->auth_ = new Auth('POP3', $params, $funct);
+    if ($this->auth_ instanceof Auth) {
+      $this->setUpAuth();
+      return true;
+    }
+    return false;
+  }
 }
 ?>

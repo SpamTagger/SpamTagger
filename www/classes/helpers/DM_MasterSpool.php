@@ -16,22 +16,22 @@ require_once ('helpers/DataManager.php');
  */
 class DM_MasterSpool extends DataManager {
 
-    private static $instance;
+  private static $instance;
 
-    public function __construct() {
-        parent :: __construct();
+  public function __construct() {
+    parent :: __construct();
 
-        $socket = $this->getConfig('VARDIR')."/run/mariadb_source/mariadbd.sock";
-        $this->setOption('SOCKET', $socket);
-        $this->setOption('DATABASE', 'st_spool');
+    $socket = $this->getConfig('VARDIR')."/run/mariadb_source/mariadbd.sock";
+    $this->setOption('SOCKET', $socket);
+    $this->setOption('DATABASE', 'st_spool');
+  }
+
+  public static function getInstance() {
+    if (empty (self :: $instance)) {
+      self :: $instance = new DM_MasterSpool();
     }
-
-    public static function getInstance() {
-        if (empty (self :: $instance)) {
-            self :: $instance = new DM_MasterSpool();
-        }
-        return self :: $instance;
-    }
+    return self :: $instance;
+  }
 
 }
 ?>

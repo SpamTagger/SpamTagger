@@ -14,38 +14,37 @@ require_once('helpers/ListManager.php');
 /**
  * This will takes care of fetching list of filtered domains
  */
-class DomainList extends ListManager
-{
+class DomainList extends ListManager {
 
-/**
- * load domains from database
- * @return  boolean  true on success, false on failure
- */
-public function Load() {
-  require_once('helpers/DM_SlaveConfig.php');
-  $db_replicaconf = DM_SlaveConfig :: getInstance();
+  /**
+   * load domains from database
+   * @return  boolean  true on success, false on failure
+   */
+  public function Load() {
+    require_once('helpers/DM_SlaveConfig.php');
+    $db_replicaconf = DM_SlaveConfig :: getInstance();
 
-  global $admin_;
+    global $admin_;
 
-  $query = "SELECT name FROM domain WHERE name != '__global__'";
-  $row = $db_replicaconf->get_list($query);
-  foreach( $row as $domain) {
-    if ($admin_->canManageDomain($domain)) {
-      $d = new Domain();
-      $d->load($domain);
-      $this->setElement($domain, $d);
+    $query = "SELECT name FROM domain WHERE name != '__global__'";
+    $row = $db_replicaconf->get_list($query);
+    foreach( $row as $domain) {
+      if ($admin_->canManageDomain($domain)) {
+        $d = new Domain();
+        $d->load($domain);
+        $this->setElement($domain, $d);
+      }
     }
+    return true;
   }
-  return true;
-}
 
-/**
- * check if a domain is filtered or not
- * @param  $d  string  domain name
- * @return     boolean true if domain is filtered, false if not
- */
-public function is_filtered($d) {
-  return $this->hasElement($d);
-}
+  /**
+   * check if a domain is filtered or not
+   * @param  $d  string  domain name
+   * @return     boolean true if domain is filtered, false if not
+   */
+  public function is_filtered($d) {
+    return $this->hasElement($d);
+  }
 }
 ?>

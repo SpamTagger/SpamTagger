@@ -27,50 +27,50 @@ $soapsession_timeout = 60* 10;
  * @return            string  session id if successful, error message otherwise
  */
 function setAuthenticated($username, $usertype, $hostname) {
- global $soapsession_timeout;
- $sysconf_ = SystemConfig::getInstance();
+  global $soapsession_timeout;
+  $sysconf_ = SystemConfig::getInstance();
 
- $remote_ip = $_SERVER['REMOTE_ADDR'];
- $res = "remote = $remote_ip";
- $allowed_hosts = $sysconf_->getMastersName();
- $allowed = false;
- // check if requesting host is allowed
- foreach ($allowed_hosts as $host) {
+  $remote_ip = $_SERVER['REMOTE_ADDR'];
+  $res = "remote = $remote_ip";
+  $allowed_hosts = $sysconf_->getMastersName();
+  $allowed = false;
+  // check if requesting host is allowed
+  foreach ($allowed_hosts as $host) {
 
-   $ip = gethostbyname($host);
-   $res .= " | testing: $ip";
-   if ($remote_ip == $ip || $remote_ip == gethostbyaddr($ip)) {
+    $ip = gethostbyname($host);
+    $res .= " | testing: $ip";
+    if ($remote_ip == $ip || $remote_ip == gethostbyaddr($ip)) {
       $allowed = true;
-   }
- }
- if (!$allowed) return "NOTALLOWED ($res)";
+    }
+  }
+  if (!$allowed) return "NOTALLOWED ($res)";
 
 
- // required here for sanity checks
- require_once ('helpers/DM_SlaveSpool.php');
- $db_replicaspool = DM_SlaveSpool :: getInstance();
- if (! $db_replicaspool instanceof DM_SlaveSpool) {
-   return "ERRORWITHDBCONNECTOR";
- }
+  // required here for sanity checks
+  require_once ('helpers/DM_SlaveSpool.php');
+  $db_replicaspool = DM_SlaveSpool :: getInstance();
+  if (! $db_replicaspool instanceof DM_SlaveSpool) {
+    return "ERRORWITHDBCONNECTOR";
+  }
 
- // set session id
- $id = md5 (uniqid (rand()));
- $clean_sql['username'] = $db_replicaspool->sanitize($username);
- if ($usertype != 'admin') {
-    $usertype = 'user';
- }
- $clean_sql['hostname'] = $db_replicaspool->sanitize($hostname);
- $query = "INSERT INTO soap_auth SET id='$id', time=NOW(), user='".$clean_sql['username']."', user_type='$usertype', host='".$clean_sql['hostname']."'";
+  // set session id
+  $id = md5 (uniqid (rand()));
+  $clean_sql['username'] = $db_replicaspool->sanitize($username);
+  if ($usertype != 'admin') {
+     $usertype = 'user';
+  }
+  $clean_sql['hostname'] = $db_replicaspool->sanitize($hostname);
+  $query = "INSERT INTO soap_auth SET id='$id', time=NOW(), user='".$clean_sql['username']."', user_type='$usertype', host='".$clean_sql['hostname']."'";
 
- if (!$db_replicaspool->doExecute($query)) {
+  if (!$db_replicaspool->doExecute($query)) {
     return 'ERRORWHILESETTINGSESSION';
- }
+  }
 
- // purge old sessions
- $query = "DELETE FROM soap_auth WHERE CAST(UNIX_TIMESTAMP(NOW()) AS SIGNED) - CAST(UNIX_TIMESTAMP(time) AS SIGNED) >= $soapsession_timeout";
- $db_replicaspool->doExecute($query);
+  // purge old sessions
+  $query = "DELETE FROM soap_auth WHERE CAST(UNIX_TIMESTAMP(NOW()) AS SIGNED) - CAST(UNIX_TIMESTAMP(time) AS SIGNED) >= $soapsession_timeout";
+  $db_replicaspool->doExecute($query);
 
- return $id;
+  return $id;
 }
 
 /**
@@ -120,7 +120,7 @@ function getAdminName($sid) {
   require_once("config/Administrator.php");
   $admin_ = getAdmin($sid);
   if (isset($admin_) && $admin_ instanceof Administrator) {
-   return $admin_->getPref('username');
+    return $admin_->getPref('username');
   }
   return "";
 }

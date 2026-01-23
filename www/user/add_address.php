@@ -33,12 +33,12 @@ if (isset($_POST['address']) && is_string($_POST['address'])) {
 $template_ = new Template('add_address.tmpl');
 // prepare replacements
 $replace = array(
-        '__MESSAGE__' => $message,
-        '__BEGIN_FORM__' => "<form name=\"add_alias\" method=\"post\" action=\"".$_SERVER['PHP_SELF']."\">",
-        '__ADDRESS_FIELD__' => "<input type=\"text\" size=\"30\" name=\"address\" value=\"\" />",
-        '__INPUT_BUTTON__' => "<input type=\"submit\" value=\"".$lang_->print_txt('ADD')."\" />",
-        '__CLOSE_FORM__' => "</form>"
-       );
+  '__MESSAGE__' => $message,
+  '__BEGIN_FORM__' => "<form name=\"add_alias\" method=\"post\" action=\"".$_SERVER['PHP_SELF']."\">",
+  '__ADDRESS_FIELD__' => "<input type=\"text\" size=\"30\" name=\"address\" value=\"\" />",
+  '__INPUT_BUTTON__' => "<input type=\"submit\" value=\"".$lang_->print_txt('ADD')."\" />",
+  '__CLOSE_FORM__' => "</form>"
+);
 // display page
 $template_->output($replace);
 ?>

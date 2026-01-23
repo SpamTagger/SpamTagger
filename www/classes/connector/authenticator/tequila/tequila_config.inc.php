@@ -11,9 +11,10 @@ $aConfig = array (
 ********************************************************/
 function GetConfigOption($sOption, $sDefault = '') {
   global $aConfig;
-  if (!array_key_exists ($sOption, $aConfig))
+  if (!array_key_exists ($sOption, $aConfig)) {
     return ($sDefault);
-  else
+  } else {
     return ($aConfig [$sOption]);
+  }
 }
 ?>

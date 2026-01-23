@@ -19,35 +19,35 @@ abstract class AddressFetcher {
   * @var array
   */
   static private $fetchers_ = array (
-                                     'at_login' => array('add domain', 'AddParam'),
-                                     'ldap' => array('ldap lookup', 'LDAPLookup'),
-                                     'text_file' => array('text file lookup', 'FileLookup'),
-                                     'param_add' => array('add a parameter', 'AddParam'),
-                                     'mariadb' => array('sql lookup', 'SQLLookup'),
-                                     'local' => array('local', 'SQLLookup')
-                                     );
+    'at_login' => array('add domain', 'AddParam'),
+    'ldap' => array('ldap lookup', 'LDAPLookup'),
+    'text_file' => array('text file lookup', 'FileLookup'),
+    'param_add' => array('add a parameter', 'AddParam'),
+    'mariadb' => array('sql lookup', 'SQLLookup'),
+    'local' => array('local', 'SQLLookup')
+  );
 
   /**
    * internal type of fetcher
    * @var  string
    */
-   private $type_ = 'local';
+  private $type_ = 'local';
 
-   /**
-    * list of addresses
-    * @var array
-    */
-   private $addresses_ = array();
+  /**
+   * list of addresses
+   * @var array
+   */
+  private $addresses_ = array();
 
-   /**
-    * constructor
-    * @param  $type  string  internal fetcher type
-    */
-   public function __construct($type) {
-        $this->type_ = $type;
-   }
+  /**
+   * constructor
+   * @param  $type  string  internal fetcher type
+   */
+  public function __construct($type) {
+    $this->type_ = $type;
+  }
 
-   /**
+  /**
    * AddressFetcher factory
    */
   static public function getFetcher($type) {
@@ -72,10 +72,10 @@ abstract class AddressFetcher {
  abstract public function fetch($username, $domain);
 
 
- /**
-  * get the internal formatter type
-  * @return  string  internal formatter type
-  */
+  /**
+   * get the internal formatter type
+   * @return  string  internal formatter type
+   */
   public function getType() {
     return $this->type_;
   }
@@ -86,43 +86,43 @@ abstract class AddressFetcher {
    * @param  $main     bool    true if this is a main address, false otherwise
    * @return           bool    true on success, false on failure
    */
-   protected function addAddress($address, $main) {
-     $address = strtolower($address);
-     $address = utf8_decode($address);
-     $this->addresses_[$address] = $main;
-   }
+  protected function addAddress($address, $main) {
+    $address = strtolower($address);
+    $address = utf8_decode($address);
+    $this->addresses_[$address] = $main;
+  }
 
-   /**
+  /**
     * get the addresses list
     * @return  array  address list
     */
-    protected function getAddresses() {
-        // fetch already registered addresses
-        return $this->addresses_;
+  protected function getAddresses() {
+    // fetch already registered addresses
+    return $this->addresses_;
+  }
+
+  /**
+    * get the list of available address fetchers
+    * return  array  list of available fetchers
+    */
+  static public function getAvailableFetchers() {
+    $ret = array();
+    foreach(self::$fetchers_ as $key => $val) {
+      $ret[$val[0]] = $key;
     }
+    return $ret;
+  }
 
-    /**
-     * get the list of available address fetchers
-     * return  array  list of available fetchers
-     */
-     static public function getAvailableFetchers() {
-        $ret = array();
-        foreach(self::$fetchers_ as $key => $val) {
-            $ret[$val[0]] = $key;
-        }
-        return $ret;
-     }
+  /**
+    * return if the list of address is static or if it can be externally modified
+    * @return  bool  true if list can be modified, false if not
+    */
+  public function canModifyList() {
+    return true;
+  }
 
-     /**
-      * return if the list of address is static or if it can be externally modified
-      * @return  bool  true if list can be modified, false if not
-      */
-      public function canModifyList() {
-        return true;
-      }
-
-      public function isExhaustive() {
-         return !$this->canModifyList();
-      }
+  public function isExhaustive() {
+    return !$this->canModifyList();
+  }
 }
 ?>

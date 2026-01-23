@@ -17,23 +17,23 @@ require_once('helpers/ListManager.php');
 class EmailList extends ListManager
 {
   /**
-  * this is the local part of the address to be searched for
-  * @var  string
-  */
+   * this is the local part of the address to be searched for
+   * @var  string
+   */
   private $s_local_part_ = "";
   /**
-  * this is the domain part of the address to be searched for
-  * @var  string
-  */
+   * this is the domain part of the address to be searched for
+   * @var  string
+   */
   private $s_domain_part_ = "";
 
-/**
- * Search email addresses given local part and domain
- * @param  $local     string  string to be search as local part
- * @param  $domain    string  domain in which email should be searched
- * @param  $remote    bool    if we must do the remote connector search (may take some time)
- * @return            bool    true on success, false on failure
- */
+  /**
+   * Search email addresses given local part and domain
+   * @param  $local     string  string to be search as local part
+   * @param  $domain    string  domain in which email should be searched
+   * @param  $remote    bool    if we must do the remote connector search (may take some time)
+   * @return            bool    true on success, false on failure
+   */
   public function search($local, $domain, $remote) {
     global $admin_;
     global $sysconf_;

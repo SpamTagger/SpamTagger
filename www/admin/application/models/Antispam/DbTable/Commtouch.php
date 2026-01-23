@@ -8,12 +8,11 @@
  * Commtouch internal table
  */
 
-class Default_Model_Antispam_DbTable_Commtouch extends Zend_Db_Table_Abstract
-{
-    protected $_name = 'Commtouch';
-    protected $_primary = 'set_id';
+class Default_Model_Antispam_DbTable_Commtouch extends Zend_Db_Table_Abstract {
+  protected $_name = 'Commtouch';
+  protected $_primary = 'set_id';
 
-    public function __construct() {
-    	$this->_db = Zend_Registry::get('writedb');
-    }
+  public function __construct() {
+  	$this->_db = Zend_Registry::get('writedb');
+  }
 }

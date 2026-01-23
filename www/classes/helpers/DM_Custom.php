@@ -16,22 +16,22 @@ require_once ('helpers/DataManager.php');
  */
 class DM_Custom extends DataManager {
 
-    private static $instance;
+  private static $instance;
 
-    public function __construct($host, $port, $username, $password, $database) {
-        parent :: __construct();
+  public function __construct($host, $port, $username, $password, $database) {
+    parent :: __construct();
 
-        $this->setOption('HOST', $host);
-        $this->setOption('PORT', $port);
-        $this->setOption('USER', $username);
-        $this->setOption('PASSWORD', $password);
-        $this->setOption('DATABASE', $database);
-    }
+    $this->setOption('HOST', $host);
+    $this->setOption('PORT', $port);
+    $this->setOption('USER', $username);
+    $this->setOption('PASSWORD', $password);
+    $this->setOption('DATABASE', $database);
+  }
 
-    public static function getInstance($host, $port, $username, $password, $database) {
-        self :: $instance = new DM_Custom($host, $port, $username, $password, $database);
-        return self :: $instance;
-    }
+  public static function getInstance($host, $port, $username, $password, $database) {
+    self :: $instance = new DM_Custom($host, $port, $username, $password, $database);
+    return self :: $instance;
+  }
 
 }
 ?>

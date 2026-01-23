@@ -18,8 +18,7 @@ define(IFACE_DEV_FILE, "/proc/net/dev");
 /**
  * this class take car of the whole network configuration of the system
  */
-class NetworkConfig
-{
+class NetworkConfig {
   /**
    * list of interface available on system
    * @var  array
@@ -31,9 +30,9 @@ class NetworkConfig
    * @var  $array
    */
   private $props_ = array(
-                      'dns_servers' => "",
-                      'search_domains' => ""
-                   );
+    'dns_servers' => "",
+    'search_domains' => ""
+  );
 
 
   /**
@@ -104,7 +103,7 @@ class NetworkConfig
    */
   public function getInterface($iface) {
     if (isset($this->interfaces_[$iface])) {
-        return $this->interfaces_[$iface];
+      return $this->interfaces_[$iface];
     }
     return null;
   }
@@ -279,16 +278,16 @@ class NetworkConfig
    * @return           boolean true on success, false on failure
    */
   private function setDNSServers($servers) {
-     if (!is_string($servers)) {
-        return false;
-     }
-     $dns = split('\,', $servers);
-     $servs = array();
-     foreach ($dns as $s) {
-        $servs[trim($s)] = true;
-     }
-     $this->setProperty('dns_servers', $servs);
-     return true;
+    if (!is_string($servers)) {
+      return false;
+    }
+    $dns = split('\,', $servers);
+    $servs = array();
+    foreach ($dns as $s) {
+      $servs[trim($s)] = true;
+    }
+    $this->setProperty('dns_servers', $servs);
+    return true;
   }
 
   /**
@@ -297,16 +296,16 @@ class NetworkConfig
    * @return           boolean true on success, false on failure
    */
   private function setSearchDomains($domains) {
-     if (!is_string($domains)) {
-        return false;
-     }
-     $d = split('\,', $domains);
-     $doms = array();
-     foreach ($d as $s) {
-       $doms[trim($s)] = true;
-     }
-     $this->setProperty('search_domains', $doms);
-     return true;
+    if (!is_string($domains)) {
+      return false;
+    }
+    $d = split('\,', $domains);
+    $doms = array();
+    foreach ($d as $s) {
+      $doms[trim($s)] = true;
+    }
+    $this->setProperty('search_domains', $doms);
+    return true;
   }
 
   /**

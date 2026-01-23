@@ -18,27 +18,27 @@ require_once("Auth.php");
  */
 class RadiusAuthenticator extends AuthManager {
 
-    protected $exhaustive_ = true;
+  protected $exhaustive_ = true;
 
-    function create($domain) {
-       $settings = $domain->getConnectorSettings();
-       if (! $settings instanceof RadiusSettings) {
-            return false;
-        }
-
-       $ser = array(  array($settings->getSetting('server'), $settings->getSetting('port'), $settings->getSetting('secret')) );
-
-       $funct = array ("LoginDialog", "loginFunction");
-       $params = array (
-                        "servers" => $ser,
-                        "authtype" => $settings->getSetting('authtype')
-                      );
-      $this->auth_ = new Auth('RADIUS', $params, $funct);
-      if ($this->auth_ instanceof Auth) {
-        $this->setUpAuth();
-        return true;
-      }
+  function create($domain) {
+    $settings = $domain->getConnectorSettings();
+    if (! $settings instanceof RadiusSettings) {
       return false;
     }
+
+    $ser = array(  array($settings->getSetting('server'), $settings->getSetting('port'), $settings->getSetting('secret')) );
+
+    $funct = array ("LoginDialog", "loginFunction");
+    $params = array (
+      "servers" => $ser,
+      "authtype" => $settings->getSetting('authtype')
+    );
+    $this->auth_ = new Auth('RADIUS', $params, $funct);
+    if ($this->auth_ instanceof Auth) {
+      $this->setUpAuth();
+      return true;
+    }
+    return false;
+  }
 }
 ?>

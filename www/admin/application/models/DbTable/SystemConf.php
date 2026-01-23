@@ -8,11 +8,10 @@
  * System configuration table
  */
 
-class Default_Model_DbTable_SystemConf extends Zend_Db_Table_Abstract
-{
-    protected $_name = 'system_conf';
+class Default_Model_DbTable_SystemConf extends Zend_Db_Table_Abstract {
+  protected $_name = 'system_conf';
 
-    public function __construct() {
-    	$this->_db = Zend_Registry::get('writedb');
-    }
+  public function __construct() {
+  	$this->_db = Zend_Registry::get('writedb');
+  }
 }

@@ -27,16 +27,16 @@ require_once('system/Soaper.php');
  * @return string The from email address of the sender of the email
  */
 function get_sender_address_body($spam_mail) {
-    // Get the mail sender
-    $headers = $spam_mail->getHeadersArray();
+  // Get the mail sender
+  $headers = $spam_mail->getHeadersArray();
 
-    $sender = array();
-    preg_match('/[<]?([-0-9a-zA-Z.+_\']+@[-0-9a-zA-Z.+_\']+\.[a-zA-Z-0-9]+)[>]?/', trim($headers['From']), $sender);
+  $sender = array();
+  preg_match('/[<]?([-0-9a-zA-Z.+_\']+@[-0-9a-zA-Z.+_\']+\.[a-zA-Z-0-9]+)[>]?/', trim($headers['From']), $sender);
 
-    if (!empty($sender[1])) {
-        return $sender[1];
-    }
-    return false;
+  if (!empty($sender[1])) {
+    return $sender[1];
+  }
+  return false;
 }
 
 /**
@@ -45,7 +45,7 @@ function get_sender_address_body($spam_mail) {
  * @return string The email address of the sender of the email
  */
 function get_sender_address($spam_mail) {
-    return $spam_mail->getData("sender");
+  return $spam_mail->getData("sender");
 }
 
 /**
@@ -55,11 +55,11 @@ function get_sender_address($spam_mail) {
  * @return string $soap_host The IP of the machine
  */
 function get_soap_host($exim_id, $dest) {
-    $sysconf_ = SystemConfig::getInstance();
-    $spam_mail = new Spam();
-    $spam_mail->loadDatas($exim_id, $dest);
-    $soap_host = $sysconf_->getSlaveName($spam_mail->getData('store_replica'));
-    return $soap_host;
+  $sysconf_ = SystemConfig::getInstance();
+  $spam_mail = new Spam();
+  $spam_mail->loadDatas($exim_id, $dest);
+  $soap_host = $sysconf_->getSlaveName($spam_mail->getData('store_replica'));
+  return $soap_host;
 }
 
 /**
@@ -67,10 +67,10 @@ function get_soap_host($exim_id, $dest) {
  * @return string $soap_host The IP of the machine
  */
 function get_source_soap_host() {
-    $sysconf_ = SystemConfig::getInstance();
-    foreach ($sysconf_->getMastersName() as $source){
-        return $source;
-    }
+  $sysconf_ = SystemConfig::getInstance();
+  foreach ($sysconf_->getMastersName() as $source){
+    return $source;
+  }
 }
 
 /**
@@ -82,13 +82,13 @@ function get_source_soap_host() {
  * @return bool Status of the request. If True, everything went well
  */
 function send_SOAP_request($host, $request, $params) {
-    $soaper = new Soaper();
-    $ret = @$soaper->load($host);
-    if ($ret == "OK") {
-        return $soaper->queryParam($request, $params);
-    } else {
-        return "FAILEDCONNSOURCE";
-    }
+  $soaper = new Soaper();
+  $ret = @$soaper->load($host);
+  if ($ret == "OK") {
+    return $soaper->queryParam($request, $params);
+  } else {
+    return "FAILEDCONNSOURCE";
+  }
 }
 
 // get the global objects instances
@@ -104,68 +104,63 @@ if (isset($_GET['l'])) {
   $lang_->reload();
 }
 
-
 // Cheking if the necessary arguments are here
 $in_args = array('id', 'a');
 foreach ($in_args as $arg) {
-    if (!isset($_GET[$arg])){
-        $bad_arg = $arg;
-    }
+  if (!isset($_GET[$arg])){
+    $bad_arg = $arg;
+  }
 }
-
-
 
 // Renaming the args for easier reading
 $exim_id = $_GET['id'];
 $dest = $_GET['a'];
 
 if (!isset($bad_arg)) {
-
-    // Get the Spam mail
-    $spam_mail = new Spam();
-    $spam_mail->loadDatas($exim_id, $dest);
-    if (!$spam_mail->loadHeadersAndBody()) {
-        $is_sender_added_to_news = $lang_->print_txt('CANNOTLOADMESSAGE');
-        $is_sender_added_to_wl = $lang_->print_txt('CANNOTLOADMESSAGE');
+  // Get the Spam mail
+  $spam_mail = new Spam();
+  $spam_mail->loadDatas($exim_id, $dest);
+  if (!$spam_mail->loadHeadersAndBody()) {
+    $is_sender_added_to_news = $lang_->print_txt('CANNOTLOADMESSAGE');
+    $is_sender_added_to_wl = $lang_->print_txt('CANNOTLOADMESSAGE');
+  } else {
+    // Get both sender and from addresses
+    $sender = extractSender(get_sender_address($spam_mail));
+    if (!isset($sender) || $sender == '') {
+      $sender = get_sender_address($spam_mail);
+    }
+    if (isset($_GET['t']) && $_GET['t'] != '') {
+      $sender_body = $_GET['t'];
     } else {
-
-        // Get both sender and from addresses
-        $sender = extractSender(get_sender_address($spam_mail));
-        if (!isset($sender) || $sender == '') {
-            $sender = get_sender_address($spam_mail);
-        }
-        if (isset($_GET['t']) && $_GET['t'] != '') {
-            $sender_body = $_GET['t'];
-        } else {
-            // Get both sender and from addresses
-            $sender_body = get_sender_address_body($spam_mail);
-        }
-
-        $replica = get_soap_host($exim_id, $dest);
-        $source = get_source_soap_host();
-
-        $is_sender_added_to_news = send_SOAP_request(
-            $source,
-            "addToNewslist",
-            array($dest, $sender_body)
-        );
-        if ($is_sender_added_to_news != 'OK') {
-            $is_sender_added_to_news = $lang_->print_txt($is_sender_added_to_news);
-        }
-
-        $is_sender_added_to_wl = send_SOAP_request(
-            $source,
-            "addToWantlist",
-            array($dest, $sender)
-        );
-        if ($is_sender_added_to_wl != 'OK') {
-            $is_sender_added_to_wl = $lang_->print_txt($is_sender_added_to_wl);
-        }
+      // Get both sender and from addresses
+      $sender_body = get_sender_address_body($spam_mail);
     }
 
+    $replica = get_soap_host($exim_id, $dest);
+    $source = get_source_soap_host();
+
+    $is_sender_added_to_news = send_SOAP_request(
+      $source,
+      "addToNewslist",
+      array($dest, $sender_body)
+    );
+    if ($is_sender_added_to_news != 'OK') {
+      $is_sender_added_to_news = $lang_->print_txt($is_sender_added_to_news);
+    }
+
+    $is_sender_added_to_wl = send_SOAP_request(
+      $source,
+      "addToWantlist",
+      array($dest, $sender)
+    );
+    if ($is_sender_added_to_wl != 'OK') {
+      $is_sender_added_to_wl = $lang_->print_txt($is_sender_added_to_wl);
+    }
+  }
+
 } else {
-    $is_sender_added_to_news = $lang_->print_txt_param('BADARGS', $bad_arg);
-    $is_sender_added_to_wl = $lang_->print_txt_param('BADARGS', $bad_arg);
+  $is_sender_added_to_news = $lang_->print_txt_param('BADARGS', $bad_arg);
+  $is_sender_added_to_wl = $lang_->print_txt_param('BADARGS', $bad_arg);
 }
 
 // Parse the template
@@ -174,21 +169,21 @@ $replace = array();
 
 // Setting the page text
 if ($is_sender_added_to_wl == 'OK' && $is_sender_added_to_wl == 'OK') {
-    $replace['__HEAD__'] = $lang_->print_txt('NEWSWANTLISTHEAD');
-    $replace['__MESSAGE__'] = $lang_->print_txt('NEWSWANTLISTBODY');
+  $replace['__HEAD__'] = $lang_->print_txt('NEWSWANTLISTHEAD');
+  $replace['__MESSAGE__'] = $lang_->print_txt('NEWSWANTLISTBODY');
 } elseif ($is_sender_added_to_news == 'OK') {
-    $replace['__HEAD__'] = $lang_->print_txt('NEWSNOTWANTHEAD');
-    $replace['__MESSAGE__'] = $lang_->print_txt('NEWSNOTWANTBODY') . ' ' . $is_sender_added_to_wl;
+  $replace['__HEAD__'] = $lang_->print_txt('NEWSNOTWANTHEAD');
+  $replace['__MESSAGE__'] = $lang_->print_txt('NEWSNOTWANTBODY') . ' ' . $is_sender_added_to_wl;
 } elseif ($is_sender_added_to_wl == 'OK') {
-    $replace['__HEAD__'] = $lang_->print_txt('WANTNOTNEWSHEAD');
-    $replace['__MESSAGE__'] = $lang_->print_txt('WANTNOTNEWSBODY') . ' ' . $is_sender_added_to_news;
+  $replace['__HEAD__'] = $lang_->print_txt('WANTNOTNEWSHEAD');
+  $replace['__MESSAGE__'] = $lang_->print_txt('WANTNOTNEWSBODY') . ' ' . $is_sender_added_to_news;
 } else {
-    $replace['__HEAD__'] = $lang_->print_txt('NOTNEWSWANTHEAD');
-    if ($is_sender_added_to_news == $is_sender_added_to_wl) {
-        $replace['__MESSAGE__'] = $lang_->print_txt('NOTNEWSWANTBODY') . ' ' . $is_sender_added_to_news;
-    } else {
-        $replace['__MESSAGE__'] = $lang_->print_txt('NOTNEWSWANTBODY') . ' ' . $lang_->print_txt('NEWSLISTTOPIC') . ': ' . $is_sender_added_to_news . ' ' . $lang_->print_txt('WANTLISTTOPIC') . ': ' . $is_sender_added_to_wl;
-    }
+  $replace['__HEAD__'] = $lang_->print_txt('NOTNEWSWANTHEAD');
+  if ($is_sender_added_to_news == $is_sender_added_to_wl) {
+    $replace['__MESSAGE__'] = $lang_->print_txt('NOTNEWSWANTBODY') . ' ' . $is_sender_added_to_news;
+  } else {
+    $replace['__MESSAGE__'] = $lang_->print_txt('NOTNEWSWANTBODY') . ' ' . $lang_->print_txt('NEWSLISTTOPIC') . ': ' . $is_sender_added_to_news . ' ' . $lang_->print_txt('WANTLISTTOPIC') . ': ' . $is_sender_added_to_wl;
+  }
 }
 
 // display page

@@ -6,8 +6,7 @@
  * @copyright 2025, SpamTagger
  */
 
-class Api_Model_QuarantineAPI
-{
+class Api_Model_QuarantineAPI {
 
   public function getSpam($params) {
 

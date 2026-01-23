@@ -8,11 +8,10 @@
  * Filetype table
  */
 
-class Default_Model_DbTable_FileType extends Zend_Db_Table_Abstract
-{
-    protected $_name = 'filetype';
+class Default_Model_DbTable_FileType extends Zend_Db_Table_Abstract {
+  protected $_name = 'filetype';
 
-    public function __construct() {
-    	$this->_db = Zend_Registry::get('writedb');
-    }
+  public function __construct() {
+  	$this->_db = Zend_Registry::get('writedb');
+  }
 }

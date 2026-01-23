@@ -63,10 +63,10 @@ if ($askfirst) {
 // prepare replacements
 $replace = array(
   '__INCLUDE_JS__' => "<script type=\"text/javascript\" charset=\"utf-8\">
-                        function confirmation() {
-                          window.location.href=\"".$_SERVER['PHP_SELF']."?".preg_replace('/&/', ';', $_SERVER['QUERY_STRING']."&doit=1")."\";
-                       }
-                       </script>",
+  function confirmation() {
+    window.location.href=\"".$_SERVER['PHP_SELF']."?".preg_replace('/&/', ';', $_SERVER['QUERY_STRING']."&doit=1")."\";
+  }
+</script>",
   '__MESSAGE__' => $message,
   '__CONFIRM_BUTTON__' => confirm_button($askfirst),
   '__CANCELCLOSE__' => $cancelclose
@@ -82,10 +82,8 @@ $template_->output($replace);
 function confirm_button($askfirst) {
   $lang_ = Language::getInstance('user');
   if ($askfirst) {
-     return "<input type=\"button\" id=\"confirm\" class=\"button\" onclick=\"javascript:confirmation();\" value=\"".$lang_->print_txt('SUBMIT')."\" />";
+    return "<input type=\"button\" id=\"confirm\" class=\"button\" onclick=\"javascript:confirmation();\" value=\"".$lang_->print_txt('SUBMIT')."\" />";
   }
   return "";
 }
-
 ?>
-

@@ -14,24 +14,23 @@ require_once('helpers/ListManager.php');
 /**
  * This will takes care of fetching list of administrators
  */
-class AdminList extends ListManager
-{
+class AdminList extends ListManager {
 
-/**
- * load adminsitrator from database
- * @return  boolean  true on success, false on failure
- */
-public function Load() {
-  require_once('helpers/DM_SlaveConfig.php');
-  $db_replicaconf = DM_SlaveConfig :: getInstance();
+  /**
+   * load adminsitrator from database
+   * @return  boolean  true on success, false on failure
+   */
+  public function Load() {
+    require_once('helpers/DM_SlaveConfig.php');
+    $db_replicaconf = DM_SlaveConfig :: getInstance();
 
-  $query = "SELECT username FROM administrator";
-  $row = $db_replicaconf->getList($query);
-  foreach( $row as $admin) {
-    $this->setElement($admin, $admin);
+    $query = "SELECT username FROM administrator";
+    $row = $db_replicaconf->getList($query);
+    foreach( $row as $admin) {
+      $this->setElement($admin, $admin);
+    }
+    return true;
   }
-  return true;
-}
 
 }
 ?>

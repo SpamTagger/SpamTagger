@@ -53,7 +53,7 @@ $user->load($username);
 
 $message = "NONLOCALDOMAIN";
 if ($user->isLocalUser()) {
-    $message = $user->resetLocalPassword();
+  $message = $user->resetLocalPassword();
 }
 
 $lang_ = Language::getInstance('user');

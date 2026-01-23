@@ -8,12 +8,11 @@
  * Administrator table
  */
 
-class Default_Model_DbTable_FeatureRestriction extends Zend_Db_Table_Abstract
-{
-    protected $_name = 'feature_restriction';
-    protected $_primary = 'id';
+class Default_Model_DbTable_FeatureRestriction extends Zend_Db_Table_Abstract {
+  protected $_name = 'feature_restriction';
+  protected $_primary = 'id';
 
-    public function __construct() {
-    	$this->_db = Zend_Registry::get('writedb');
-    }
+  public function __construct() {
+  	$this->_db = Zend_Registry::get('writedb');
+  }
 }
