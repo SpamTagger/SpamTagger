@@ -11,8 +11,8 @@
  * It can manage multiple table with simple constrains (id reference)
  *
  * @package SpamTagger
- * @author Olivier Diserens
- * @copyright 2025, SpamTagger
+ * @author John Mertz
+ * @copyright 2026, SpamTagger
  */
 class PrefHandler {
   /**

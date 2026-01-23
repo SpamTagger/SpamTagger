@@ -126,8 +126,8 @@ $txt['FORTHEXLASTDAYS'] = "__PARAM__ últimos dias";
 /**
  * @license https://www.gnu.org/licenses/gpl-3.0.en.html
  * @package SpamTagger
- * @author Olivier Diserens
- * @copyright 2025, SpamTagger
+ * @author John Mertz
+ * @copyright 2026, SpamTagger
  */
 ### newsl
 $txt['NEWSLETTERMODULE'] = "Newsletter";

@@ -1,10 +1,10 @@
 <?php
 
 /**
- * @license http://www.mailcleaner.net/open/licence_en.html Mailcleaner Public License
- * @package mailcleaner
- * @author Olivier Diserens, John Mertz
- * @copyright 2006, Olivier Diserens; 2023, John Mertz
+ * @license https://www.gnu.org/licenses/gpl-3.0.en.html
+ * @package SpamTagger
+ * @author John Mertz
+ * @copyright 2026, SpamTagger
  */
 
 /**************************

@@ -1,7 +1,7 @@
 #!/bin/bash
 #
 #   SpamTagger - Open Source Spam Filtering
-#   Copyright (C) 2017 Florian Billebault <florian.billebault@gmail.com>
+#   Copyright (C) 2026 John Mertz <git@john.me.tz>
 #
 #   This program is free software; you can redistribute it and/or modify
 #   it under the terms of the GNU General Public License as published by
