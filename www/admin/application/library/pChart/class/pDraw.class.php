@@ -249,7 +249,7 @@ class pDraw {
       if ( $Value == .8 ) {
         return(.8);
       };
-      if ( $Value == .9 ) { 
+      if ( $Value == .9 ) {
         return(.9);
       };
     }
@@ -955,7 +955,7 @@ class pDraw {
         }
 
         if ( $Mode == 1 ) {
-          $this->drawAntialiasPixel($X,$Y,array("R"=>$R,"G"=>$G,"B"=>$B,"Alpha"=>$Alpha)); 
+          $this->drawAntialiasPixel($X,$Y,array("R"=>$R,"G"=>$G,"B"=>$B,"Alpha"=>$Alpha));
         }
 
         $Cpt++;
@@ -1867,7 +1867,7 @@ class pDraw {
       if ( $Pos == SCALE_POS_LEFTRIGHT && $AxisParameter["Identity"] == AXIS_Y) {
         $Height = $this->GraphAreaY2-$this->GraphAreaY1 - $YMargin*2;
       } elseif ( $Pos == SCALE_POS_LEFTRIGHT && $AxisParameter["Identity"] == AXIS_X) {
-        $Height = $this->GraphAreaX2-$this->GraphAreaX1; 
+        $Height = $this->GraphAreaX2-$this->GraphAreaX1;
       } elseif ( $Pos == SCALE_POS_TOPBOTTOM && $AxisParameter["Identity"] == AXIS_Y) {
         $Height = $this->GraphAreaX2-$this->GraphAreaX1 - $YMargin*2;
       } else {
@@ -1957,7 +1957,7 @@ class pDraw {
       if ( $Pos == SCALE_POS_LEFTRIGHT ) { $Data["Axis"][$AxisID]["Position"] = AXIS_POSITION_BOTTOM; } else { $Data["Axis"][$AxisID]["Position"] = AXIS_POSITION_LEFT; }
       if ( isset($Data["AbscissaName"]) ) { $Data["Axis"][$AxisID]["Name"] = $Data["AbscissaName"]; }
       if ( $XMargin == AUTO ) {
-        if ( $Pos == SCALE_POS_LEFTRIGHT ) { 
+        if ( $Pos == SCALE_POS_LEFTRIGHT ) {
           $Height = $this->GraphAreaX2-$this->GraphAreaX1;
         } else {
           $Height = $this->GraphAreaY2-$this->GraphAreaY1;
@@ -2102,7 +2102,7 @@ class pDraw {
               $FloatingOffset = $YMargin;
               $this->drawLine($this->GraphAreaX1+$Parameters["Margin"],$AxisPos["T"],$this->GraphAreaX2-$Parameters["Margin"],$AxisPos["T"],array("R"=>$AxisR,"G"=>$AxisG,"B"=>$AxisB,"Alpha"=>$AxisAlpha));
             } else {
-              $FloatingOffset = 0; $this->drawLine($this->GraphAreaX1,$AxisPos["T"],$this->GraphAreaX2,$AxisPos["T"],array("R"=>$AxisR,"G"=>$AxisG,"B"=>$AxisB,"Alpha"=>$AxisAlpha)); 
+              $FloatingOffset = 0; $this->drawLine($this->GraphAreaX1,$AxisPos["T"],$this->GraphAreaX2,$AxisPos["T"],array("R"=>$AxisR,"G"=>$AxisG,"B"=>$AxisB,"Alpha"=>$AxisAlpha));
             }
 
             if ( $DrawArrows ) {
@@ -2189,7 +2189,7 @@ class pDraw {
               $this->drawLine($AxisPos["L"],$this->GraphAreaY1+$Parameters["Margin"],$AxisPos["L"],$this->GraphAreaY2-$Parameters["Margin"],array("R"=>$AxisR,"G"=>$AxisG,"B"=>$AxisB,"Alpha"=>$AxisAlpha));
             } else {
               $FloatingOffset = 0;
-              $this->drawLine($AxisPos["L"],$this->GraphAreaY1,$AxisPos["L"],$this->GraphAreaY2,array("R"=>$AxisR,"G"=>$AxisG,"B"=>$AxisB,"Alpha"=>$AxisAlpha)); 
+              $this->drawLine($AxisPos["L"],$this->GraphAreaY1,$AxisPos["L"],$this->GraphAreaY2,array("R"=>$AxisR,"G"=>$AxisG,"B"=>$AxisB,"Alpha"=>$AxisAlpha));
             }
 
             if ( $DrawArrows ) {
@@ -2276,7 +2276,7 @@ class pDraw {
             if ( $Floating ) {
               $FloatingOffset = $YMargin; $this->drawLine($AxisPos["R"],$this->GraphAreaY1+$Parameters["Margin"],$AxisPos["R"],$this->GraphAreaY2-$Parameters["Margin"],array("R"=>$AxisR,"G"=>$AxisG,"B"=>$AxisB,"Alpha"=>$AxisAlpha));
             } else {
-              $FloatingOffset = 0; $this->drawLine($AxisPos["R"],$this->GraphAreaY1,$AxisPos["R"],$this->GraphAreaY2,array("R"=>$AxisR,"G"=>$AxisG,"B"=>$AxisB,"Alpha"=>$AxisAlpha)); 
+              $FloatingOffset = 0; $this->drawLine($AxisPos["R"],$this->GraphAreaY1,$AxisPos["R"],$this->GraphAreaY2,array("R"=>$AxisR,"G"=>$AxisG,"B"=>$AxisB,"Alpha"=>$AxisAlpha));
             }
 
             if ( $DrawArrows ) {
@@ -2384,7 +2384,7 @@ class pDraw {
               }
 
               if ( $DrawYLines == ALL || in_array($AxisID,$DrawYLines) ) {
-                $this->drawLine($this->GraphAreaX1+$FloatingOffset,$YPos,$this->GraphAreaX2-$FloatingOffset,$YPos,array("R"=>$GridR,"G"=>$GridG,"B"=>$GridB,"Alpha"=>$GridAlpha,"Ticks"=>$GridTicks)); 
+                $this->drawLine($this->GraphAreaX1+$FloatingOffset,$YPos,$this->GraphAreaX2-$FloatingOffset,$YPos,array("R"=>$GridR,"G"=>$GridG,"B"=>$GridB,"Alpha"=>$GridAlpha,"Ticks"=>$GridTicks));
               }
 
               if ( $DrawSubTicks && $i != $Parameters["Rows"] ) {
@@ -3333,7 +3333,7 @@ class pDraw {
 
             if ( $X == VOID && $LastX != NULL ) {
               $this->drawSpline($WayPoints,array("Force"=>$Force,"R"=>$R,"G"=>$G,"B"=>$B,"Alpha"=>$Alpha,"Ticks"=>$Ticks,"Weight"=>$Weight));
-              $WayPoints = ""; 
+              $WayPoints = "";
             }
 
             if ( $X != VOID && $LastX == NULL && $LastGoodX != NULL && !$BreakVoid ) {
@@ -5242,7 +5242,7 @@ class pDraw {
               if ( $ShadedSlopeBox && $LastColor != NULL ) { // && $Slope != 0
                 $GradientSettings = array("StartR"=>$LastColor["R"],"StartG"=>$LastColor["G"],"StartB"=>$LastColor["B"],"EndR"=>$R,"EndG"=>$G,"EndB"=>$B);
                 $this->drawGradientArea($LastX,$TopY,$X,$BottomY,DIRECTION_HORIZONTAL,$GradientSettings);
-              } elseif ( !$ShadedSlopeBox || $LastColor == NULL ) { // || $Slope == 0 
+              } elseif ( !$ShadedSlopeBox || $LastColor == NULL ) { // || $Slope == 0
                $this->drawFilledRectangle(floor($LastX),$TopY,floor($X),$BottomY,$Color);
               }
 

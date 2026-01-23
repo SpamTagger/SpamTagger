@@ -503,7 +503,7 @@ class User extends PrefHandler {
     if (isset($admin) && !$admin->canManageDomain($this->getPref('domain'))) {
       return "NOTALLOWED";
     }
- 
+
     $ret = $this->deletePrefs(null);
 
     foreach ($this->addresses_ as $add => $val) {

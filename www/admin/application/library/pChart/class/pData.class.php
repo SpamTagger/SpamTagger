@@ -135,18 +135,18 @@ class pData {
   }
 
   /* Return the values array */
-  function getValues($Serie) { 
-    if (isset($this->Data["Series"][$Serie]["Data"])) { 
-      return($this->Data["Series"][$Serie]["Data"]); 
-    } else { 
-      return(NULL); 
-    } 
+  function getValues($Serie) {
+    if (isset($this->Data["Series"][$Serie]["Data"])) {
+      return($this->Data["Series"][$Serie]["Data"]);
+    } else {
+      return(NULL);
+    }
   }
 
   /* Reverse the values in the given series */
   function reverseSerie($Series) {
-    if ( !is_array($Series) ) { 
-      $Series = $this->convertToArray($Series); 
+    if ( !is_array($Series) ) {
+      $Series = $this->convertToArray($Series);
     }
     foreach($Series as $Key => $Serie) {
       if (isset($this->Data["Series"][$Serie]["Data"])) {
@@ -156,7 +156,7 @@ class pData {
   }
 
   /* Return the sum of the series values */
-  function getSum($Serie) { 
+  function getSum($Serie) {
     if (isset($this->Data["Series"][$Serie])) {
       return(array_sum($this->Data["Series"][$Serie]["Data"]));
     } else {
@@ -237,7 +237,7 @@ class pData {
 
   /* Set the display mode of the  X Axis */
   function setXAxisDisplay($Mode,$Format=NULL) {
-    $this->Data["XAxisDisplay"] = $Mode; $this->Data["XAxisFormat"]  = $Format; 
+    $this->Data["XAxisDisplay"] = $Mode; $this->Data["XAxisFormat"]  = $Format;
   }
 
   /* Set the unit that will be displayed on the X axis */

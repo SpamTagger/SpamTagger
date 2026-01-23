@@ -61,7 +61,7 @@ class FileName extends PrefHandler {
     if ($this->getPref('description') == "") {
       $this->setPref('description', '-');
     }
-  
+
     return $this->savePrefs('', '', '');
   }
 

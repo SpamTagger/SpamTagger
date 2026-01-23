@@ -78,11 +78,11 @@ function loadcounts() {
           currentcountblocks =  countsblock.slice();
         }
         currentblock = currentcountblocks.shift();
-  
+
         $("#countsbloc"+currentblock).html(msg);
         if (previousblock) {
           $("#countsbloc"+previousblock).fadeOut(function() { $("#countsbloc"+previousblock).empty(); });
-  
+
           $("#countsbloc"+currentblock).fadeIn(function() {});
           alignStats();
         } else {

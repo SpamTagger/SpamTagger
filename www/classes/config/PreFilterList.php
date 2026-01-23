@@ -140,7 +140,7 @@ class PreFilterList {
 
       $t = str_replace('__NEG_DECISIVE__', $form->checkbox("neg_decisive_".$pf->getPref('position'), 1, $pf->getPref('neg_decisive'), '', $enable), $t);
       $t = str_replace('__POS_DECISIVE__', $form->checkbox("pos_decisive_".$pf->getPref('position'), 1, $pf->getPref('pos_decisive'), '', $enable), $t);
-  
+
       $ret .= $t;
     }
     return $ret;

@@ -253,7 +253,7 @@ class Statistics {
     }
     return ceil( $this->stats_[$what]*$ratio );
   }
-  
+
   public function getStats() {
     return $this->stats_;
   }
@@ -271,7 +271,7 @@ class Statistics {
     }
     return true;
   }
-  
+
   public static function getAnyDateAsArray($date) {
     $matches = array();
     if ($date == 'today' || !preg_match('/^(\d{4})(\d{2})(\d{2})$/', $date, $matches)) {
@@ -280,7 +280,7 @@ class Statistics {
     }
     return array('day' => $matches[3], 'month' => $matches[2], 'year' => $matches[1]);
   }
-  
+
   public static function colorToArray($color) {
     if (!preg_match('/^(\S{2})(\S{2})(\S{2})$/', $color, $matches) ) {
       return array(0xFF, 0xFF, 0xFF);
@@ -291,7 +291,7 @@ class Statistics {
     $gv = eval("return $g;");
     $b = '0x'.$matches[3];
     $bv = eval("return $b;");
-  
+
     return array($rv, $gv, $bv);
   }
 

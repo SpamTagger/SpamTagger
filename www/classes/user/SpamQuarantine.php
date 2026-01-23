@@ -159,7 +159,7 @@ class SpamQuarantine extends Quarantine {
     if ($this->getFilter('group_quarantines'))  {
       $index = '';
     }
-  
+
     // now prepare the where statement
     // domain and user filters
     if ( (! $admin_ instanceof Administrator) ) {
@@ -254,7 +254,7 @@ class SpamQuarantine extends Quarantine {
     if ($this->getFilter('page') > $this->getNBPages()) {
       $this->setFilter('page', 1);
     }
-  
+
     // get statistics
     $sysconf = SystemConfig::getInstance();
     if (count($sysconf->getSlaves()) < 1) {

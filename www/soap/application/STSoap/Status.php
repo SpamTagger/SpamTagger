@@ -21,13 +21,13 @@ class STSoap_Status {
     }
     $lines = file($statusfile);
     if (!$lines) { return $ret; }
-  
+
     foreach ($lines as $line_num => $line) {
       if (preg_match("/^$element\s*:\s*(.*)\s*$/", $line, $val)) {
         return $val[1];
       }
     }
-  
+
     if ( preg_match('/^loadavg(05|10|15)/', $element, $matches)) {
       $cmdres = `/bin/cat /proc/loadavg`;
       if (preg_match('/^([0-9.]+)\s+([0-9.]+)\s+([0-9.]+)/', $cmdres, $cmdmatches)) {
@@ -42,7 +42,7 @@ class STSoap_Status {
         }
       }
     }
-  
+
     if ($element == 'disksusage') {
       $data = array();
       $cmdres = `/bin/df -lP`;
@@ -81,7 +81,7 @@ class STSoap_Status {
       }
       return $data;
     }
-  
+
     if ($element == 'spools') {
       $data = array();
       $cmd = $config->getOption('SRCDIR')."/bin/check_spools.sh";

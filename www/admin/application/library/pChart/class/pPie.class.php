@@ -857,7 +857,7 @@ class pPie {
         foreach($this->LabelPos as $Key => $Settings) {
           if ( !$Done ) {
             if ( $Angle <= 90 && (($YTop >= $Settings["YTop"] && $YTop <= $Settings["YBottom"]) || ($YBottom >= $Settings["YTop"] && $YBottom <= $Settings["YBottom"]))) {
-              $this->shift(0,180,-($Height+2),$Reversed); $Done = TRUE; 
+              $this->shift(0,180,-($Height+2),$Reversed); $Done = TRUE;
             }
             if ( $Angle > 90 && $Angle <= 180 && (($YTop >= $Settings["YTop"] && $YTop <= $Settings["YBottom"]) || ($YBottom >= $Settings["YTop"] && $YBottom <= $Settings["YBottom"]))) {
               $this->shift(0,180,-($Height+2),$Reversed);
@@ -1529,7 +1529,7 @@ class pPie {
 
     /* Draw the top pie splice */
     foreach($Slices as $SliceID => $Plots) {
-      $Settings = $SliceColors[$SliceID]; 
+      $Settings = $SliceColors[$SliceID];
       $Settings["NoBorder"] = TRUE;
       $Settings["R"] = $Settings["R"]+$Cf*2;
       $Settings["G"] = $Settings["G"]+$Cf*2;
@@ -1605,7 +1605,7 @@ class pPie {
     $Result = "";
 
     for($i=count($Plots)-1;$i>=0;$i=$i-2) {
-      $Result[] = $Plots[$i-1]; $Result[] = $Plots[$i]; 
+      $Result[] = $Plots[$i-1]; $Result[] = $Plots[$i];
     }
 
     return($Result);

@@ -70,7 +70,7 @@ restrict default ignore
     }
     $lines = file($this->getConfigFilePath());
     $matches = array();
-  
+
     foreach($lines as $line) {
       if (preg_match('/^\s*server\s+(\S+)/', $line, $matches)) {
         $this->setUseNTP(true);
@@ -165,10 +165,10 @@ restrict default ignore
     }
     $ret = rtrim($ret);
     $ret = rtrim($ret, '\,');
-  
+
     return htmlspecialchars($ret, ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8');
   }
-  
+
   /**
   * save the configuration to file
   * @return   string  OKSAVED on success, error code on failure
@@ -176,7 +176,7 @@ restrict default ignore
   public function save() {
     $res_a = array();
     $res = "";
-  
+
     $sudocmd = "/usr/bin/sudo";
     if (file_exists("/usr/sudo/bin/sudo")) {
       $sudocmd = "/usr/sudo/bin/sudo";
@@ -214,7 +214,7 @@ restrict default ignore
         # return "CANNOTSYNCHRONIZECLOCK";
         #}
       }
-  
+
       if (file_exists('/etc/init.d/ntp')) {
         exec("$sudocmd /etc/init.d/ntp start", $res_a, $res);
         #if ((!preg_match('/done\.$/', $res_a[0]) && !preg_match('/No such process/', $res_a[0])) || $res != 0) {
@@ -222,7 +222,7 @@ restrict default ignore
         #}
         unset($res_a);
       }
-  
+
     } else {
       if (file_exists('/etc/init.d/ntpd')) {
         exec("$sudocmd /etc/init.d/ntp-server stop", $res_a, $res);
@@ -234,10 +234,10 @@ restrict default ignore
       $date_str = escapeshellarg($date_str);
       exec("$sudocmd /bin/date $date_str", $res_a, $res);
     }
-  
+
     return "OKSAVED";
   }
-  
+
   /**
   * set a preference
   * @param $pref   string  preference name
@@ -264,7 +264,7 @@ restrict default ignore
         break;
     }
   }
-  
+
   /**
   * return the formatted date string
   * @return  string  formatted date

@@ -225,7 +225,7 @@ class Language {
 
     foreach ($txt as $t => $str) {
       $this->txts_[$t] = $str;
-  
+
       return true;
     }
 

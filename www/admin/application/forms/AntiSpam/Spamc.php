@@ -111,7 +111,7 @@ class Default_Form_AntiSpam_Spamc extends Default_Form_AntiSpam_Default {
     );
     foreach ($netchecks as $checkname => $check) {
       $el = new Zend_Form_Element_Checkbox(
-        $checkname, 
+        $checkname,
         array(
           'label'   => $t->_($check['label']). " :",
           'title' => $t->_($check['title']),

@@ -140,7 +140,7 @@ class Template {
     $lines = file($this->file_);
     $this->parseLines($lines);
   }
-  
+
   /**
    * return the template file to be used
    * @return string template filename

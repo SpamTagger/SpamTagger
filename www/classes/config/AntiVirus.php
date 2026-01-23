@@ -87,11 +87,11 @@ class AntiVirus extends PrefHandler {
     if (! $this->loadPrefs('', '', false)) {
       return false;
     }
-  
+
     $db_replicaconf = DM_SlaveConfig :: getInstance();
     $query = "SELECT name FROM scanner";
     $list = $db_replicaconf->getList($query);
-  
+
     foreach($list as $scanner_name) {
       $s = new Scanner;
       if ($s->load($scanner_name)) {

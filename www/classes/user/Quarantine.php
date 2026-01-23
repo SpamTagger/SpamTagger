@@ -201,7 +201,7 @@ class Quarantine {
 
   public function getPagesLinks($limit) {
     $ret = "";
- 
+
     if ($this->getNBPages() < 2) {
       return "";
     }

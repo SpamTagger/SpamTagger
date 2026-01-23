@@ -211,16 +211,16 @@ class pImage extends pDraw {
     $FontName  = isset($Format["FontName"]) ? $Format["FontName"] : NULL;
     $FontSize  = isset($Format["FontSize"]) ? $Format["FontSize"] : NULL;
 
-    if ( $R != -1) { 
+    if ( $R != -1) {
       $this->FontColorR = $R;
     }
-    if ( $G != -1) { 
+    if ( $G != -1) {
       $this->FontColorG = $G;
     }
-    if ( $B != -1) { 
+    if ( $B != -1) {
       $this->FontColorB = $B;
     }
-    if ( $Alpha != NULL) { 
+    if ( $Alpha != NULL) {
       $this->FontColorA = $Alpha;
     }
 

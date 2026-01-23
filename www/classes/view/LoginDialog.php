@@ -5,7 +5,7 @@
   * @author Olivier Diserens
   * @copyright 2025, SpamTagger
   */
-  
+
 /**
   * LoginDialog needs the authentication connectors
   */
@@ -15,7 +15,7 @@ require_once("view/Language.php");
 require_once("user/User.php");
 require_once("domain/Domain.php");
 require_once("connector/AuthManager.php");
-  
+
 /**
   * constant definitions
   */
@@ -24,35 +24,35 @@ define("AUTHLOGFILE", "st_auth.log");
   * this class take care of setting the correct authentication connectors
   */
 class LoginDialog {
-  
+
   /**
    * Authmanager object used
    * @var AuthManager
    */
   private $auth_;
-  
+
   /**
    * username entered by the user, needed as it may be rewritten by connector
    * @var string
    */
   private $username_;
-  
+
   /**
    * domain entered by the user or auto detected
    * @var string
    */
   private $domain_;
-  
+
   /**
    * constructor, if defined, set the posted value and find out the other variables (f.e. domain)
    */
   public function __construct() {
-  
+
     // first, unset any Auth session, this ensure that user is really logged out
     unset($_SESSION['_authsession']);
     // get global objects instances
     $sysconf = SystemConfig :: getInstance();
-  
+
     // detect if credential are passed through an HTTP request (POST or GET)
     $encrypted_password = "";
     if (isset($_REQUEST['id'])) {
@@ -63,34 +63,34 @@ class LoginDialog {
         $encrypted_password = $res[2];
       }
     }
-  
+
     // check if a username has been posted
     if (isset($_REQUEST['username'])) {
-  
+
       /** try to detect the domain for this username...
        * maybe given by POST or in username
        */
-  
+
       // first get default domain
       $domain = $sysconf->getPref('default_domain');
       $this->username_ = $_REQUEST['username'];
       $this->username_ = str_replace('\'', '\\\'', $this->username_); // avoid problems with ' in usernames..
-  
+
       // if we can find domain in login name given (such as login@domain)
       $ret = array();
       if (preg_match('/(.+)[@%](\S+)$/', $this->username_, $ret)) {
         $domain = $ret[2];
       }
-  
+
       // if the domain is explicitly set in the POST
       if (isset($_REQUEST['domain']) && in_array($_REQUEST['domain'], $sysconf->getFilteredDomains())) {
         $domain = $_REQUEST['domain'];
       }
-  
+
       // create domain object
       $this->domain_ = new Domain();
       $this->domain_->load($domain);
-  
+
       // decrypt password if needed
       if ($encrypted_password != "") {
         if ($this->domain_->getPref('presharedkey') != "") {
@@ -104,13 +104,13 @@ class LoginDialog {
         }
         $_POST['password'] = $password;
       }
-  
+
       // then format username and create corresponding connector
       $this->username_ = $this->domain_->getFormatedLogin($this->username_);
       $_POST['username'] = $this->username_;
       $this->auth_ = AuthManager::getAuthenticator($this->domain_->getPref('auth_type'));
       $this->auth_->create($this->domain_);
-  
+
     } else {
       // check if we want to authenticate using digest ID
       if (isset($_REQUEST['d']) && preg_match('/^[0-9a-f]{32}(?:[0-9a-f]{8})?$/i', $_REQUEST['d'])) {
@@ -128,7 +128,7 @@ class LoginDialog {
       $this->auth_->create($this->domain_);
     }
   }
-  
+
   /**
    * start the authentication
    * This check authentication and if, success, register the session and redirect to the index page
@@ -139,10 +139,10 @@ class LoginDialog {
     if (!isset($this->auth_) || !$this->auth_ instanceof AuthManager) {
       return false;
     }
-  
+
     // and start authentication objects
     $this->auth_->start();
-  
+
     // ok, now check if user has given a good login/password pair !
     $_POST['username'] = utf8_decode($this->username_);
     if (isset($_POST['password'])) {
@@ -172,7 +172,7 @@ class LoginDialog {
           $user->setTmpPref($p, $this->auth_->getValue($p));
         }
       }
-  
+
       // if we have a stub user (i.e. digest mode) so we need to feed it with address preferences
       if ($this->auth_->getValue('stub_user') != "" && $this->auth_->getValue('stub_user') > 0) {
         $user->setStub(true);
@@ -223,7 +223,7 @@ class LoginDialog {
     }
     return false;
   }
-  
+
   /**
    * get the html string of the domain chooser select field if needed
    * @return    string  html select string
@@ -244,7 +244,7 @@ class LoginDialog {
     }
     return $ret;
   }
-  
+
   public function hasDomainChooser() {
     $sysconf = SystemConfig::getInstance();
     if ($sysconf->getPref('want_domainchooser') == 1) {
@@ -252,7 +252,7 @@ class LoginDialog {
     }
     return false;
   }
-  
+
   /**
    * get the html string of the language chooser select field if needed
    * @param $curr which is the key of the current selected lang
@@ -274,7 +274,7 @@ class LoginDialog {
     $ret .= "</select>\n";
     return $ret;
   }
-  
+
   /**
    * get the html string dispalying the status of the login
    * @return  string  status html string
@@ -292,13 +292,13 @@ class LoginDialog {
     }
     return "";
   }
-  
+
   public function isLocal() {
     if (isset($this->domain_) && $this->domain_->getPref('auth_type') == 'local') {
       return true;
     }
     return false;
   }
-  
+
 }
 ?>

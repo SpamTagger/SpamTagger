@@ -40,7 +40,7 @@ class Default_Form_AdminEdit extends ZendX_JQuery_Form
     $this->addElement($username);
 
     $password = new Zend_Form_Element_Password(
-      'password', 
+      'password',
       array(
         'label' => $t->_('Password')." :",
         'renderPassword' => true,
@@ -66,7 +66,7 @@ class Default_Form_AdminEdit extends ZendX_JQuery_Form
     $this->addElement($confirm);
 
     $roleselect = new Zend_Form_Element_Select(
-      'role', 
+      'role',
       array(
         'label' => $t->_('Role')." :",
         'required' => false,

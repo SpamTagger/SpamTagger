@@ -135,11 +135,11 @@ class Administrator extends PrefHandler {
    * @return        boolean true on success, false on failure
    */
   public function load($name) {
-  
+
     if (!is_string($name) || $name == "") {
       return false;
     }
-  
+
     require_once('helpers/DM_SlaveConfig.php');
     $db_replicaconf = DM_SlaveConfig :: getInstance();
     $name = $db_replicaconf->sanitize($name);
@@ -152,10 +152,10 @@ class Administrator extends PrefHandler {
       }
     }
     $this->password_ = $this->getPref('password');
-  
+
     return $ret;
   }
-  
+
   /**
    * save administrator datas to database
    * @return  'OKSAVED' or 'OKADDED' on success, error message on failure

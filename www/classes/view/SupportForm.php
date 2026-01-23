@@ -78,7 +78,7 @@ class SupportForm {
   public function get_badfield() {
     return $this->bad_field_;
   }
-  
+
   public function send() {
     global $sysconf_;
     global $user_;
