@@ -18,81 +18,81 @@ require_once("Auth.php");
  */
 class LDAPAuthenticator extends AuthManager {
 
-    protected $exhaustive_ = true;
-    protected $domain_ = null;
+  protected $exhaustive_ = true;
+  protected $domain_ = null;
 
-    function create($domain) {
-       $settings = $domain->getConnectorSettings();
-       if (! $settings instanceof LDAPSettings) {
-            return false;
-        }
-       $this->domain_ = $domain;
-       $url = $settings->getURL();
-
-       $funct = array ("LoginDialog", "loginFunction");
-       $params = array (
-                        "url" => $url,
-                        "basedn" => $settings->getSetting('basedn'),
-                        "binddn" => $settings->getSetting('binduser'),
-                        "bindpw" => $settings->getSetting('bindpassword'),
-                        "userattr" => $settings->getSetting('useratt'),
-                        "useroc" => '*',
-                        "userfilter" => "",
-                        "debug" => 'false',
-                        "version" => intval($settings->getSetting('version')),
-                        "referrals" => false,
-			"start_tls" => true,
-                      );
-
-      $this->auth_ = new Auth('LDAP', $params, $funct);
-      if ($this->auth_ instanceof Auth) {
-        $this->setUpAuth();
-        return true;
-      }
+  function create($domain) {
+    $settings = $domain->getConnectorSettings();
+    if (! $settings instanceof LDAPSettings) {
       return false;
     }
+    $this->domain_ = $domain;
+    $url = $settings->getURL();
 
-    public function doAuth($username) {
-      $ret =  parent::doAuth($username);
+    $funct = array ("LoginDialog", "loginFunction");
+    $params = array (
+      "url" => $url,
+      "basedn" => $settings->getSetting('basedn'),
+      "binddn" => $settings->getSetting('binduser'),
+      "bindpw" => $settings->getSetting('bindpassword'),
+      "userattr" => $settings->getSetting('useratt'),
+      "useroc" => '*',
+      "userfilter" => "",
+      "debug" => 'false',
+      "version" => intval($settings->getSetting('version')),
+      "referrals" => false,
+      "start_tls" => true,
+    );
 
-      if ($ret) {
-        return true;
-      }
-
-      // if failed, try the same without startTLS enforcement
-      $settings = $this->domain_->getConnectorSettings();
-      if (! $settings instanceof LDAPSettings) {
-        return false;
-      }
-      $url = $settings->getURL();
-      $funct = array ("LoginDialog", "loginFunction");
-      $params = array (
-                        "url" => $url,
-                        "basedn" => $settings->getSetting('basedn'),
-                        "binddn" => $settings->getSetting('binduser'),
-                        "bindpw" => $settings->getSetting('bindpassword'),
-                        "userattr" => $settings->getSetting('useratt'),
-                        "useroc" => '*',
-                        "userfilter" => "",
-                        "debug" => 'false',
-                        "version" => intval($settings->getSetting('version')),
-                        "referrals" => false,
-                        "start_tls" => false,
-                      );
-      $this->auth_ = new Auth('LDAP', $params, $funct);
-      if (!$this->auth_ instanceof Auth) {
-        return false;
-      }
+    $this->auth_ = new Auth('LDAP', $params, $funct);
+    if ($this->auth_ instanceof Auth) {
       $this->setUpAuth();
+      return true;
+    }
+    return false;
+  }
 
-      $this->logObserver_ = new Auth_Log_Observer(PEAR_LOG_DEBUG);
-      $this->auth_->attachLogObserver($this->logObserver_);
-      $this->auth_->start();
-      if ($this->auth_->getAuth()) {
-        return true;
-      }
+  public function doAuth($username) {
+    $ret =  parent::doAuth($username);
 
+    if ($ret) {
+      return true;
+    }
+
+    // if failed, try the same without startTLS enforcement
+    $settings = $this->domain_->getConnectorSettings();
+    if (! $settings instanceof LDAPSettings) {
       return false;
     }
+    $url = $settings->getURL();
+    $funct = array ("LoginDialog", "loginFunction");
+    $params = array (
+      "url" => $url,
+      "basedn" => $settings->getSetting('basedn'),
+      "binddn" => $settings->getSetting('binduser'),
+      "bindpw" => $settings->getSetting('bindpassword'),
+      "userattr" => $settings->getSetting('useratt'),
+      "useroc" => '*',
+      "userfilter" => "",
+      "debug" => 'false',
+      "version" => intval($settings->getSetting('version')),
+      "referrals" => false,
+      "start_tls" => false,
+    );
+    $this->auth_ = new Auth('LDAP', $params, $funct);
+    if (!$this->auth_ instanceof Auth) {
+      return false;
+    }
+    $this->setUpAuth();
+
+    $this->logObserver_ = new Auth_Log_Observer(PEAR_LOG_DEBUG);
+    $this->auth_->attachLogObserver($this->logObserver_);
+    $this->auth_->start();
+    if ($this->auth_->getAuth()) {
+      return true;
+    }
+
+    return false;
+  }
 }
 ?>

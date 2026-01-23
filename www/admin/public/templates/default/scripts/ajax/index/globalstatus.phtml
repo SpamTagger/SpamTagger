@@ -13,7 +13,7 @@
     <tr>
       <td class="globalstatuskey"><img src="<?php echo $this->images_path;?>/status_domains.gif" alt="domains" /></td>
       <td class="globalstatusvalue"><strong><?php echo $this->domains?></strong> <?php echo $this->t->_('domains');?>
-          <?php if ($this->domains != $this->distinctdomains) { ?> (<?php echo $this->distinctdomains?> <?php echo $this->t->_('distincts')?>) <?php } ?></td>
+        <?php if ($this->domains != $this->distinctdomains) { ?> (<?php echo $this->distinctdomains?> <?php echo $this->t->_('distincts')?>) <?php } ?></td>
     </tr>
     <tr>
       <td class="globalstatuskey"><img src="<?php echo $this->images_path;?>/status_users.gif" alt="users" /></td>
@@ -33,11 +33,11 @@
   <tr>
     <td class="globalstatuskey">
       <img src="<?php echo $this->images_path?>/<?php if ($status['status'] == 'ok') {
-         echo "status_ok.png";
+        echo "status_ok.png";
       } else if ($status['status'] == 'warning') {
-      	 echo "status_warning.png";
+        echo "status_warning.png";
       } else {
-      	 echo "status_critical.png";
+        echo "status_critical.png";
       } ?>" alt="<?php echo $status['status'];?>" />
     </td>
 

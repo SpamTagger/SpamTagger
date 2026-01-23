@@ -50,15 +50,15 @@
           <?php }?>
 
           <?php
-		echo $this->InputRow($this->form->getElement('relay_smarthost'));
-		if ($this->form->getElement('relay_smarthost')->isChecked() ) {
-			echo $this->InputRow($this->form->getElement('servers_smarthost'),array('label_addclass'=>'flabeltextarea'));
+    echo $this->InputRow($this->form->getElement('relay_smarthost'));
+    if ($this->form->getElement('relay_smarthost')->isChecked() ) {
+      echo $this->InputRow($this->form->getElement('servers_smarthost'),array('label_addclass'=>'flabeltextarea'));
 
-			foreach (array('port_smarthost', 'multiple_smarthost') as $f) {
-				echo $this->InputRow($this->form->getElement($f));
-			}
-		}
-		echo $this->SubmitRow($this->form->getElement('submit'));
+      foreach (array('port_smarthost', 'multiple_smarthost') as $f) {
+        echo $this->InputRow($this->form->getElement($f));
+      }
+    }
+    echo $this->SubmitRow($this->form->getElement('submit'));
           ?>
        </table>
 </fieldset>

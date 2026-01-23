@@ -18,8 +18,8 @@ if ($user && $user->getUserType() == 'administrator') {
     $urltoget = $urltoget.'st-info-box.php';
 
     $curl = curl_init();
-	curl_setopt($curl, CURLOPT_CONNECTTIMEOUT, 3);
-	curl_setopt($curl, CURLOPT_TIMEOUT, 3); //timeout in seconds
+  curl_setopt($curl, CURLOPT_CONNECTTIMEOUT, 3);
+  curl_setopt($curl, CURLOPT_TIMEOUT, 3); //timeout in seconds
     curl_setopt_array($curl, array(
         CURLOPT_RETURNTRANSFER => 1,
         CURLOPT_SSL_VERIFYHOST => 0,
@@ -69,8 +69,8 @@ if (!$this->is_replica) {
 
             $id = 1;
             foreach ($replica->fetchAll() as $s) {
-	            curl_setopt($curl, CURLOPT_CONNECTTIMEOUT, 3);
-	            curl_setopt($curl, CURLOPT_TIMEOUT, 3); //timeout in seconds
+              curl_setopt($curl, CURLOPT_CONNECTTIMEOUT, 3);
+              curl_setopt($curl, CURLOPT_TIMEOUT, 3); //timeout in seconds
                 curl_setopt_array($curl, array(
                     CURLOPT_RETURNTRANSFER => 1,
                     CURLOPT_SSL_VERIFYHOST => 0,

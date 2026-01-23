@@ -8,78 +8,73 @@
  * Pending alias request
  */
 
-class Default_Model_PendingAlias
-{
-	protected $_id;
+class Default_Model_PendingAlias {
 
-	protected $_values = array(
-      'date_in' => '',
-	  'alias' => '',
-	  'user' => 0,
-    );
+  protected $_id;
 
-	protected $_mapper;
+  protected $_values = array(
+    'date_in' => '',
+    'alias' => '',
+    'user' => 0,
+  );
 
-	public function setParam($param, $value) {
-		if (array_key_exists($param, $this->_values)) {
-			$this->_values[$param] = $value;
-		}
-	}
+  protected $_mapper;
 
-	public function getParam($param) {
-		$ret = null;
-		if (array_key_exists($param, $this->_values)) {
-			$ret = $this->_values[$param];
-		}
-	    if ($ret == 'false') {
-			return 0;
-		}
-		return $ret;
-	}
-
-	public function getParamArray() {
-		return $this->_values;
-	}
-
-	public function setId($id) {
-	   $this->_id = $id;
-	}
-	public function getId() {
-		return $this->_id;
-	}
-
-    public function setMapper($mapper)
-    {
-        $this->_mapper = $mapper;
-        return $this;
+  public function setParam($param, $value) {
+    if (array_key_exists($param, $this->_values)) {
+      $this->_values[$param] = $value;
     }
+  }
 
-    public function getMapper()
-    {
-        if (null === $this->_mapper) {
-            $this->setMapper(new Default_Model_PendingAliasMapper());
-        }
-        return $this->_mapper;
+  public function getParam($param) {
+    $ret = null;
+    if (array_key_exists($param, $this->_values)) {
+      $ret = $this->_values[$param];
     }
+    if ($ret == 'false') {
+      return 0;
+    }
+    return $ret;
+  }
 
-    public function find($address)
-    {
-        $this->getMapper()->find($address, $this);
-        return $this;
-    }
+  public function getParamArray() {
+    return $this->_values;
+  }
 
-    public function fetchAll($params = NULL) {
-    	return $this->getMapper()->fetchAll($params);
-    }
+  public function setId($id) {
+    $this->_id = $id;
+  }
+  public function getId() {
+    return $this->_id;
+  }
 
-    public function save()
-    {
-        return $this->getMapper()->save($this);
-    }
+  public function setMapper($mapper) {
+    $this->_mapper = $mapper;
+    return $this;
+  }
 
-    public function delete()
-    {
-    	return $this->getMapper()->delete($this);
+  public function getMapper() {
+    if (null === $this->_mapper) {
+      $this->setMapper(new Default_Model_PendingAliasMapper());
     }
+    return $this->_mapper;
+  }
+
+  public function find($address) {
+    $this->getMapper()->find($address, $this);
+    return $this;
+  }
+
+  public function fetchAll($params = NULL) {
+    return $this->getMapper()->fetchAll($params);
+  }
+
+  public function save() {
+    return $this->getMapper()->save($this);
+  }
+
+  public function delete() {
+    return $this->getMapper()->delete($this);
+  }
 
 }

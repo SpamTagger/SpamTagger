@@ -30,22 +30,22 @@ class DataManager {
    * @param  array
    */
   private $db_config = array(
-                        'HOST' => 'localhost',
-                        'PORT' => '3306',
-                        'USER' => 'spamtagger',
-                        'MYSPAMTAGGERPWD' => '',
-                        'PASSWORD' => '',
-                        'SOCKET' => '',
-                        'DATABASE' => 'st_config',
-                       );
+    'HOST' => 'localhost',
+    'PORT' => '3306',
+    'USER' => 'spamtagger',
+    'MYSPAMTAGGERPWD' => '',
+    'PASSWORD' => '',
+    'SOCKET' => '',
+    'DATABASE' => 'st_config',
+  );
   /**
    * default base system configuration options
    * @param  array
    */
   private $base_config = array(
-                        'VARDIR' => '/var/spamtagger',
-                        'SRCDIR' => '/usr/spamtagger'
-                       );
+    'VARDIR' => '/var/spamtagger',
+    'SRCDIR' => '/usr/spamtagger'
+  );
 
   /**
    * maintain the last error encountered
@@ -60,8 +60,8 @@ class DataManager {
     $baseconf = DataManager::getFileConfig(SystemConfig::$CONFIGFILE_);
 
     foreach ($baseconf as $option => $value) {
-        $this->setOption($option, $value);
-        $this->setConfig($option, $value);
+      $this->setOption($option, $value);
+      $this->setConfig($option, $value);
     }
   }
 
@@ -72,11 +72,11 @@ class DataManager {
    * @return          boolean true on success, false on failure
    */
   protected function setOption($option, $value) {
-     if (isset($this->db_config[$option])) {
-        $this->db_config[$option] = $value;
-        return true;
-     }
-     return false;
+    if (isset($this->db_config[$option])) {
+      $this->db_config[$option] = $value;
+      return true;
+    }
+    return false;
   }
   /**
    * set a global system configuration setting
@@ -85,11 +85,11 @@ class DataManager {
    * @return          boolean true on success, false on failure
    */
   protected function setConfig($option, $value) {
-     if (isset($this->base_config[$option])) {
-        $this->base_config[$option] = $value;
-        return true;
-     }
-     return false;
+    if (isset($this->base_config[$option])) {
+      $this->base_config[$option] = $value;
+      return true;
+    }
+    return false;
   }
   /**
    * return a database setting value
@@ -98,7 +98,7 @@ class DataManager {
    */
   protected function getOption($option) {
     if (isset($this->db_config[$option])) {
-        return $this->db_config[$option];
+      return $this->db_config[$option];
     }
     return "";
   }
@@ -109,7 +109,7 @@ class DataManager {
    */
   protected function getConfig($option) {
     if (isset($this->base_config[$option])) {
-        return $this->base_config[$option];
+      return $this->base_config[$option];
     }
     return "";
   }
@@ -135,9 +135,9 @@ class DataManager {
     if (!$lines) { return; }
 
     foreach ($lines as $line_num => $line) {
-        if (preg_match('/^([A-Z0-9]+)\s+=\s+(\S+)/', $line, $val)) {
-            $ret[$val[1]] = $val[2];
-        }
+      if (preg_match('/^([A-Z0-9]+)\s+=\s+(\S+)/', $line, $val)) {
+        $ret[$val[1]] = $val[2];
+      }
     }
     return $ret;
   }
@@ -148,28 +148,27 @@ class DataManager {
    */
   private function connect() {
     if (! isset($this->db_handle) or DB::isError($this->db_handle)) {
-        if ($this->getOption('SOCKET') != "") {
-          $dsn = "mariadb://".$this->getOption('USER').":".$this->getOption('MYSPAMTAGGERPWD').
-                "@unix(".$this->getOption('SOCKET').")/".$this->getOption('DATABASE');
-        } else {
-          $dsn = "mariadb://".$this->getOption('USER').":".$this->getOption('PASSWORD').
-                "@".$this->getOption('HOST').":".$this->getOption('PORT')."/".$this->getOption('DATABASE');
-        }
-        $options = array(
-                    'persistent' => true,
-                    'debug' => 0
-                );
+      if ($this->getOption('SOCKET') != "") {
+        $dsn = "mariadb://".$this->getOption('USER').":".$this->getOption('MYSPAMTAGGERPWD').
+          "@unix(".$this->getOption('SOCKET').")/".$this->getOption('DATABASE');
+      } else {
+        $dsn = "mariadb://".$this->getOption('USER').":".$this->getOption('PASSWORD').
+          "@".$this->getOption('HOST').":".$this->getOption('PORT')."/".$this->getOption('DATABASE');
+      }
+      $options = array(
+        'persistent' => true,
+        'debug' => 0
+      );
 
-
-        $this->db_handle =& DB::connect($dsn, $options);
-        if (DB::isError($this->db_handle)) {
-            // ERROR MSG
-            $this->last_error_ = "error connecting to db, $dsn";
-            return false;
-        }
+      $this->db_handle =& DB::connect($dsn, $options);
+      if (DB::isError($this->db_handle)) {
+        // ERROR MSG
+        $this->last_error_ = "error connecting to db, $dsn";
+        return false;
+      }
     }
     if (isset($this->db_handle) && !DB::isError($this->db_handle)) {
-        return true;
+      return true;
     }
     // ERROR MSG
     $this->last_error_ = "no db handle";
@@ -181,136 +180,110 @@ class DataManager {
   * @param  $query  string  query string to execute
   * @return         mixed   query result set
   */
- private function execute($query) {
+  private function execute($query) {
     global $log_;
     if ($log_) {
       $log_->log("executing query: $query", PEAR_LOG_DEBUG);
     }
     if (!$this->connect()) {
-        // ERROR MSG
-	//echo "lost connection...";
-	$this->last_error_ = "lost connection...";
-        return null;
+      // ERROR MSG
+      //echo "lost connection...";
+      $this->last_error_ = "lost connection...";
+      return null;
     }
     $res =& $this->db_handle->query($query);
 
     if (DB::isError($res)) {
-        if ($res->getCode()==-5) {
-         return "RECORDALREADYEXISTS";
-        }
-        // ERROR MSG
-        // echo "missed query ($query)<br/>";
-        echo $res->getMessage()." (".$res->getCode().")";
-	return null;
+      if ($res->getCode()==-5) {
+        return "RECORDALREADYEXISTS";
+      }
+      // ERROR MSG
+      // echo "missed query ($query)<br/>";
+      echo $res->getMessage()." (".$res->getCode().")";
+      return null;
     }
 
     return $res;
- }
+  }
 
  /**
   * execute a query and return the results in a hash (used for single row queries)
   * @param  $query  string  query to execute
   * @return         array   results as an hash table
   */
- public function getHash($query) {
+  public function getHash($query) {
     $res = $this->execute($query);
     if (!$res) {
-        return null;
+      return null;
     }
     $row =& $res->fetchRow(DB_FETCHMODE_ASSOC);
     $ret = array();
     if (isset($row)) {
-        $ret = $row;
+      $ret = $row;
     }
     $res->free();
     return $ret;
- }
+  }
 
  /**
   * execute a query and return the results as a simple list (used for id list queries for example)
   * @param  $query  string  query to execute
   * @return         array() list of values
   */
- public function getList($query) {
-      $res = $this->execute($query);
-      $res_a = array();
-      while ($row = $res->fetchRow(DB_FETCHMODE_ORDERED)) {
-        $res_a[$row[0]] = $row[0];
-      }
-      $res->free();
-      return $res_a;
- }
+  public function getList($query) {
+    $res = $this->execute($query);
+    $res_a = array();
+     while ($row = $res->fetchRow(DB_FETCHMODE_ORDERED)) {
+       $res_a[$row[0]] = $row[0];
+     }
+     $res->free();
+     return $res_a;
+  }
 
  /**
   * execute a query and return the results as an list of hash tables
   * @param  $query  string  query to execute
   * @return         array   result set as array of hashes
   */
- public function getListOfHash($query) {
-     if (!$this->connect()) { return null; }
+  public function getListOfHash($query) {
+    if (!$this->connect()) { return null; }
 
-     $res =& $this->db_handle->query($query);
-     if (DB::isError($res)) { return null; }
+    $res =& $this->db_handle->query($query);
+    if (DB::isError($res)) { return null; }
 
-     $res_a = array();
-     while ($row =& $res->fetchRow(DB_FETCHMODE_ASSOC)) {
-       $res_a[$row['id']] = $row;
-     }
-     $res->free();
-     return $res_a;
-   }
+    $res_a = array();
+    while ($row =& $res->fetchRow(DB_FETCHMODE_ASSOC)) {
+      $res_a[$row['id']] = $row;
+    }
+    $res->free();
+    return $res_a;
+  }
 
  /**
   * execute a single query without result (such as insert, delete, etc..)
   * @param  $query  string  query to execute
   * @return         boolean true on success, false on failure
   */
- public function doExecute($query) {
-     if (!$this->connect()) { return false; }
+  public function doExecute($query) {
+    if (!$this->connect()) { return false; }
 
-     $res = $this->execute($query);
-     if ($res == "RECORDALREADYEXISTS") {
-        $this->last_error_ = $res;
-     	return false;
-     }
-     if (DB::isError($res)) { return false; }
-     return true;
- }
+    $res = $this->execute($query);
+    if ($res == "RECORDALREADYEXISTS") {
+      $this->last_error_ = $res;
+      return false;
+    }
+    if (DB::isError($res)) { return false; }
+    return true;
+  }
 
  /**
   * sanitize a value through the database functions
   * @param  $value  string  value to be sanitized
   * @return         string  clean value
   */
- public function sanitize($value) {
+  public function sanitize($value) {
     if (!$this->connect()) { return false; }
     return $this->db_handle->escapeSimple($value);
- }
-/*
-   public function getSimpleValue($query) {
-     $ret = "";
-     if (!$this->db_handle) { return $ret; }
-
-     $res =& $this->db_handle->query($query);
-     if (DB::isError($res)) { return $ret; }
-     $ret = "";
-     if ($res->numRows() > 0) {
-       if ($row =& $res->fetchRow(DB_FETCHMODE_ORDERED)) {
-         $ret = $row[0];
-       }
-     }
-     $res->free();
-     return $ret;
-   }
-
-  public function executeSimple($query) {
-     $ret = "";
-     if (!$this->db_handle) { return $ret; }
-
-     $res =& $this->db_handle->query($query);
-     if (DB::isError($res)) { return "FAILED"; }
-     return $ret;
   }
-*/
 }
 ?>

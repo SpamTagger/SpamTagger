@@ -10,35 +10,37 @@
 
 class Default_Form_ChangeHostId extends ZendX_JQuery_Form {
 
-	protected $_changeHostIdmgr;
-	public function __construct($mgr) {
-		$this->_changeHostIdmgr = $mgr;
-		parent::__construct();
-	}
+  protected $_changeHostIdmgr;
+  public function __construct($mgr) {
+    $this->_changeHostIdmgr = $mgr;
+    parent::__construct();
+  }
 
-	public function init() {
-		$t = Zend_Registry::get('translate');
-		$layout = Zend_Layout::getMvcInstance();
-	  $view=$layout->getView();
+  public function init() {
+    $t = Zend_Registry::get('translate');
+    $layout = Zend_Layout::getMvcInstance();
+    $view=$layout->getView();
 
-		$this->setMethod('post');
+    $this->setMethod('post');
 
-		$config = new SpamTagger_Config();
-		$hid = $config->getOption('HOSTID');
+    $config = new SpamTagger_Config();
+    $hid = $config->getOption('HOSTID');
 
-		$host_id = new  Zend_Form_Element_Text('host_id', array(
+    $host_id = new  Zend_Form_Element_Text('host_id', array(
       'label' => $t->_('Host ID'). " :",
-      'required' => true));
+      'required' => true)
+    );
     $host_id->setValue($hid);
     $host_id->addValidator(new Zend_Validate_Digits());
     $this->addElement($host_id);
 
-		$this->setAttrib('id', 'changehostid_form');
+    $this->setAttrib('id', 'changehostid_form');
 
-	  $submit = new Zend_Form_Element_Submit('changehostid', array(
-		  'label'    => $t->_('Submit'),
-		  'attribs'    => $attribs));
-	  $this->addElement($submit);
-	}
+    $submit = new Zend_Form_Element_Submit('changehostid', array(
+      'label'    => $t->_('Submit'),
+      'attribs'    => $attribs)
+    );
+    $this->addElement($submit);
+  }
 
 }

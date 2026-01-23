@@ -8,46 +8,45 @@
  * Administrator
  */
 
-class Default_Model_InformationalMessage
-{
-	protected $_title = 'Unknown message';
-	protected $_description = '';
-	protected $_replicas = array();
-	protected $_toshow = false;
-	protected $_link = array();
+class Default_Model_InformationalMessage {
+  protected $_title = 'Unknown message';
+  protected $_description = '';
+  protected $_replicas = array();
+  protected $_toshow = false;
+  protected $_link = array();
 
-	public function getTitle() {
-		$t = Zend_Registry::get('translate');
-		return $t->_($this->_title);
-	}
+  public function getTitle() {
+    $t = Zend_Registry::get('translate');
+    return $t->_($this->_title);
+  }
 
-	public function getDescription() {
-		$t = Zend_Registry::get('translate');
-		return $t->_($this->_description);
-	}
+  public function getDescription() {
+    $t = Zend_Registry::get('translate');
+    return $t->_($this->_description);
+  }
 
-	public function fetchAll() {
-		return array();
-	}
+  public function fetchAll() {
+    return array();
+  }
 
-	public function shouldShow() {
-		return $this->_toshow;
-	}
+  public function shouldShow() {
+    return $this->_toshow;
+  }
 
-	public function getLink() {
-                if (isset($this->_link['controller'])) {
-		  return $this->_link;
-                }
-                return null;
-	}
+  public function getLink() {
+    if (isset($this->_link['controller'])) {
+      return $this->_link;
+    }
+    return null;
+  }
 
-	public function getSlavesList() {
-		return implode(', ',$this->_replicas);
-	}
+  public function getSlavesList() {
+    return implode(', ',$this->_replicas);
+  }
 
-	public function addSlave($replica) {
-           if (!in_array($replica, $this->_replicas)) {
-    		array_push($this->_replicas, $replica);
-	   }
-        }
+  public function addSlave($replica) {
+    if (!in_array($replica, $this->_replicas)) {
+      array_push($this->_replicas, $replica);
+    }
+  }
 }

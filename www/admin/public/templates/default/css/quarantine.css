@@ -72,8 +72,8 @@ img {
 }
 
 .searchsubmit {
-	padding-top: 30px;
-	margin-left: 10px;
+  padding-top: 30px;
+  margin-left: 10px;
 }
 
 .subsearch {
@@ -105,7 +105,7 @@ img {
 }
 
 #mpp {
-	margin-right: 20px;
+  margin-right: 20px;
 }
 
 #referencefield {
@@ -115,8 +115,8 @@ img {
 }
 
 .orhr {
-	margin-bottom: 13px;
-    width: 90%;
+  margin-bottom: 13px;
+  width: 90%;
 }
 
 /* quarantine panel */
@@ -145,7 +145,7 @@ img {
   padding: 0px;
   white-space: nowrap;
   border-bottom: solid 1px #D4D3D2;
-	border-top: solid 1px #D4D3D2;
+  border-top: solid 1px #D4D3D2;
   border-left: solid 1px #D4D3D2;
   border-right: solid 1px #D4D3D2;
   border-spacing: 0px;
@@ -186,7 +186,7 @@ img {
 #quarantinebanner {
   height: 48px;
   background-image:none;
-	background-color: #F5F5F5;
+  background-color: #F5F5F5;
   overflow: hidden;
   white-space: nowrap;
   text-align: left;
@@ -227,7 +227,7 @@ img {
 
 #quarantineheader td {
   color: #552056;
-	background-color: #F5F5F5;
+  background-color: #F5F5F5;
 }
 
 #quarantineheader img {
@@ -262,21 +262,21 @@ img {
 .c_taction { width: 59px; padding-left: 7px !important; padding-right: 2px !important;}
 .c_date { width: 112px; }
 .c_globalscore {
-	 width: 45px;
-	 padding: 0px !important;
-	 margin: 0px !important;
-	 line-height: 23px !important;
-	 text-align: center;
-	 padding-left: 9px !important;
-	 padding-right: 0px !important;
+   width: 45px;
+   padding: 0px !important;
+   margin: 0px !important;
+   line-height: 23px !important;
+   text-align: center;
+   padding-left: 9px !important;
+   padding-right: 0px !important;
 }
 .c_content {
-	width: 60px;
-	text-align: center !important;
+  width: 60px;
+  text-align: center !important;
 }
 .c_content img {
-	margin-top: 0px;
-	margin-bottom: 10px;
+  margin-top: 0px;
+  margin-bottom: 10px;
 }
 
 .c_from { width: 200px; }
@@ -320,19 +320,19 @@ img {
 }
 
 .m_accepted {
-	color: #00CC00;
+  color: #00CC00;
 }
 .m_rejected {
-	color: #FF0000;
+  color: #FF0000;
 }
 .m_relayed {
-        color: #0000FF;
+  color: #0000FF;
 }
 .m_warning {
-	color: #FFA500;
+  color: #FFA500;
 }
 .m_failed {
-	color: #FF0000;
+  color: #FF0000;
 }
 
 #tracinglog .descmessage {
@@ -372,7 +372,7 @@ img {
   padding: 5px 10px;
 }
 #pagination a:hover {
-    background-color:#D4D3D2;
+  background-color:#D4D3D2;
 }
 
 #pagination td {
@@ -479,7 +479,7 @@ img {
 
 /* bouton Newsletter*/
 .newsletter{
-	border: solid 1px #E93A00;
-    color: #E93A00;
-    padding: 0px 20px 0px 20px;
+  border: solid 1px #E93A00;
+  color: #E93A00;
+  padding: 0px 20px 0px 20px;
 }

@@ -29,7 +29,7 @@ class Controller {
   }
 
   public function addReplace($replace, $template) {
-  	return $replace;
+    return $replace;
   }
 }
 ?>

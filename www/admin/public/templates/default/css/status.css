@@ -118,11 +118,11 @@
   min-width: 50px;
 }
 .stopstartvalue img {
-	display: inline;
-	margin: 0px;
-	padding: 0px;
-    vertical-align: middle;
-    margin-bottom: 1px;
+  display: inline;
+  margin: 0px;
+  padding: 0px;
+  vertical-align: middle;
+  margin-bottom: 1px;
 }
 
 .diskusagebar {
@@ -161,10 +161,10 @@
    color: #BBBBBB;
 }
 .graprowresc p {
-	text-align: right;
+  text-align: right;
 }
 .graprowrescp {
-    font-weight: bold;
+  font-weight: bold;
 }
 
 .statusvaluesrow td {
@@ -234,24 +234,24 @@
 }
 
 .host_status_head {
-	width: 100%;
+  width: 100%;
 }
 .host_status_head td {
-    border: none;
+  border: none;
 }
 .host_status_head_info {
-	width: 55%;
-    text-align: right !important;
+  width: 55%;
+  text-align: right !important;
 }
 .host_status_head_value {
-    width: 45%;
-    text-align: left !important;
+  width: 45%;
+  text-align: left !important;
 }
 .stophoststatusimg {
-	width: 10px;
-	height: 10px;
-	border: none;
-	margin-left: 3px;
+  width: 10px;
+  height: 10px;
+  border: none;
+  margin-left: 3px;
 }
 .hostbloc {
   margin-left: 16px;

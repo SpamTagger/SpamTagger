@@ -14,8 +14,8 @@
     <xsd:complexType name="spools">
       <xsd:all>
          <xsd:element name="incoming" type="xsd:int"/>
-	 <xsd:element name="filtering" type="xsd:int"/>
-	 <xsd:element name="outgoing" type="xsd:int"/>
+   <xsd:element name="filtering" type="xsd:int"/>
+   <xsd:element name="outgoing" type="xsd:int"/>
       </xsd:all>
     </xsd:complexType>
 

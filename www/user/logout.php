@@ -31,14 +31,14 @@ $http->load();
 $http_sheme = 'http';
 $port = '';
 if ($http->getPref('use_ssl')) {
-	$http_sheme = 'https';
-	if ($http->getPref('https_port') != 443) {
-		$port = ':' . $http->getPref('https_port');
-	}
+  $http_sheme = 'https';
+  if ($http->getPref('https_port') != 443) {
+    $port = ':' . $http->getPref('https_port');
+  }
 } else {
-	if ($http->getPref('http_port') != 80) {
-		$port = ':' . $http->getPref('http_port');
-	}
+  if ($http->getPref('http_port') != 80) {
+    $port = ':' . $http->getPref('http_port');
+  }
 }
 
 $stlink="https://spamtagger.org";
@@ -46,10 +46,10 @@ $stlinklabel="spamtagger.org";
 
 // prepare replacements
 $replace = array(
-    "__BASE_URL__" => $_SERVER['SERVER_NAME'],
-    "__BEENLOGGEDOUT__" => $lang_->print_txt_param('BEENLOGGEDOUT', $http_sheme."://".$_SERVER['SERVER_NAME'].$port),
-    "__STLINK__" => $stlink,
-    "__STLINKLABEL__" => $stlinklabel,
+  "__BASE_URL__" => $_SERVER['SERVER_NAME'],
+  "__BEENLOGGEDOUT__" => $lang_->print_txt_param('BEENLOGGEDOUT', $http_sheme."://".$_SERVER['SERVER_NAME'].$port),
+  "__STLINK__" => $stlink,
+  "__STLINKLABEL__" => $stlinklabel,
 );
 //display page
 $template_->output($replace);

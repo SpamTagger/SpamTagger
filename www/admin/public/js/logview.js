@@ -27,127 +27,126 @@ var searchtext_timeout;
 
 $(document).ready(function(){
 
-	initial_window_width = $(window).width();
-	initial_window_height = $(window).height();
-	initial_logpanel_width = $("#logviewpanel").width();
-	initial_logpanel_height = $("#logviewpanel").height();
-	text_size = $("#logviewpanel").css('font-size');
-	//text_lineheight = $("#logviewpanel").css('line-height');
-	//log_text_padding = $("#logviewpanel").css('padding');
+  initial_window_width = $(window).width();
+  initial_window_height = $(window).height();
+  initial_logpanel_width = $("#logviewpanel").width();
+  initial_logpanel_height = $("#logviewpanel").height();
+  text_size = $("#logviewpanel").css('font-size');
 
+  if ($("#logviewpanel").html()) {
+    loadText();
+  }
 
-	if ($("#logviewpanel").html()) {
-		loadText();
-	}
+  $(window).resize(function() {
+    if (resize_timeout) {
+      clearTimeout(resize_timeout);
+    }
+    $("#logviewpanel").width(initial_logpanel_width - (initial_window_width - $(window).width()));
+    $("#logviewpanel").height(initial_logpanel_height - (initial_window_height - $(window).height()));
 
-	$(window).resize(function() {
-		if (resize_timeout) {
-			clearTimeout(resize_timeout);
-		}
-		$("#logviewpanel").width(initial_logpanel_width - (initial_window_width - $(window).width()));
-		$("#logviewpanel").height(initial_logpanel_height - (initial_window_height - $(window).height()));
+    // set a timeout to avoid reloading data while being actually resizing. Just wait it's done.
+    resize_timeout = setTimeout('loadText()', 200);
+  });
 
-		// set a timeout to avoid reloading data while being actually resizing. Just wait it's done.
-		resize_timeout = setTimeout('loadText()', 200);
-	});
-
-	initEventHandlers();
+  initEventHandlers();
 });
 
 function loadText() {
-   if (! $("#logviewpanel").html()) {
-		return;
-   }
+  if (! $("#logviewpanel").html()) {
+    return;
+  }
 
-   if (loadtextrequest) {
-      loadtextrequest.abort();
-   }
-   calculateNbLines();
-   toline = fromline + maxlines;
-   if ($('#logtextsearch_value').val()) {
-       search_string = $('#logtextsearch_value').val();
-   } else {
-	   search_string = initial_search;
-	   if (last_element == '') {
-    	   last_element = 'search';
-	   }
-   }
+  if (loadtextrequest) {
+    loadtextrequest.abort();
+  }
+  calculateNbLines();
+  toline = fromline + maxlines;
+  if ($('#logtextsearch_value').val()) {
+    search_string = $('#logtextsearch_value').val();
+  } else {
+    search_string = initial_search;
+    if (last_element == '') {
+      last_element = 'search';
+    }
+  }
 
-   data = {
-	   fl:  fromline,
-	   tl:  toline,
-	   le:  last_element,
-	   s:   search_string,
-	   sp:  search_position,
-	   percent: percent,
-	   maxlines: maxlines,
-	   maxchars: maxchars
-   };
+  data = {
+    fl:  fromline,
+    tl:  toline,
+    le:  last_element,
+    s:   search_string,
+    sp:  search_position,
+    percent: percent,
+    maxlines: maxlines,
+    maxchars: maxchars
+  };
 
-   loadtextrequest = $.ajax({
-	  	  type: "GET",
-	  	  url: baseurl,
-	  	  dataType: "html",
-	  	  data: data,
-		  async: false,
-                  timeout: 10000,
-	  	  success: function(msg){
-	      $("#logviewpanel").html(msg);
-	      percent = -1;
-	    },
-	    error: function() {
-	  	  $("#logviewpanel").html('jserror');
-	    }
-	  });
-   initEventHandlers();
+  loadtextrequest = $.ajax({
+    type: "GET",
+    url: baseurl,
+    dataType: "html",
+    data: data,
+    async: false,
+    timeout: 10000,
+    success: function(msg){
+      $("#logviewpanel").html(msg);
+      percent = -1;
+    },
+    error: function() {
+      $("#logviewpanel").html('jserror');
+    }
+  });
+  initEventHandlers();
 }
 
 function calculateNbLines() {
-	if (text_size) {
-    	text_size = text_size.replace(/\D+/g, '');
-    	maxlines = Math.floor( ($("#logviewpanel").height() - log_text_padding) / (text_lineheight));
-    	maxchars = Math.floor( $("#logviewpanel").width() / text_charwidth);
-	}
+  if (text_size) {
+    text_size = text_size.replace(/\D+/g, '');
+    maxlines = Math.floor( ($("#logviewpanel").height() - log_text_padding) / (text_lineheight));
+    maxchars = Math.floor( $("#logviewpanel").width() / text_charwidth);
+  }
 }
 
 function initEventHandlers() {
-    $("#logtextsearch_value").keyup(function(event) {
-    	if (searchtext_timeout) {
-    		clearTimeout(searchtext_timeout);
-		}
-    	searchtext_timeout = setTimeout('loadText()', 1000);
-    	last_element = 'search';
-	});
+  $("#logtextsearch_value").keyup(function(event) {
+    if (searchtext_timeout) {
+      clearTimeout(searchtext_timeout);
+    }
+    searchtext_timeout = setTimeout('loadText()', 1000);
+    last_element = 'search';
+  });
 
-    $("#loglinefrom_value").keyup(function(event) {
-    	if (searchtext_timeout) {
-    		clearTimeout(searchtext_timeout);
-		}
-    	fromline = $("#loglinefrom_value").val();
-    	searchtext_timeout = setTimeout('loadText()', 1000);
-    	last_element = 'linefrom';
-	});
+  $("#loglinefrom_value").keyup(function(event) {
+    if (searchtext_timeout) {
+      clearTimeout(searchtext_timeout);
+    }
+    fromline = $("#loglinefrom_value").val();
+    searchtext_timeout = setTimeout('loadText()', 1000);
+    last_element = 'linefrom';
+  });
 
-    $("#logpercent_value").keyup(function(event) {
-    	if (searchtext_timeout) {
-    		clearTimeout(searchtext_timeout);
-		}
-    	percent = $("#logpercent_value").val();
-    	searchtext_timeout = setTimeout('loadText()', 1000);
-    	last_element = 'linepercent';
-	});
+  $("#logpercent_value").keyup(function(event) {
+    if (searchtext_timeout) {
+      clearTimeout(searchtext_timeout);
+    }
+    percent = $("#logpercent_value").val();
+    searchtext_timeout = setTimeout('loadText()', 1000);
+    last_element = 'linepercent';
+  });
 
-    $("#logviewnavig").height($("#logviewpanel").height());
-    $("#loglines").height($("#logviewpanel").height()+12);
-    $("#logtext").height($("#logviewpanel").height()+12);
+  $("#logviewnavig").height($("#logviewpanel").height());
+  $("#loglines").height($("#logviewpanel").height()+12);
+  $("#logtext").height($("#logviewpanel").height()+12);
 }
+
 function goToMatch(match) {
-	search_position = match;
-	last_element = 'match';
-	loadText();
+  search_position = match;
+  last_element = 'match';
+  loadText();
 }
+
 function goToLine(line) {
-   last_element = 'linefrom';
-   fromline=line;
-   loadText();
+  last_element = 'linefrom';
+  fromline=line;
+  loadText();
 }

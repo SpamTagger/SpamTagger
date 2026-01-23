@@ -44,7 +44,7 @@ $posted = $form->getResult();
 if (isset($posted['a']) && $posted['a']) {
   $select_wanted = $posted['a'];
   if ($select_wanted != 'ALL') {
-  	$wanted_addresses_ = array($select_wanted);
+    $wanted_addresses_ = array($select_wanted);
   }
 }
 if (isset($posted['datetype']) && $posted['datetype'] == 'date') {
@@ -53,7 +53,7 @@ if (isset($posted['datetype']) && $posted['datetype'] == 'date') {
   $datetype = 'date';
 } else {
   if (isset($posted['period']) && $posted['period']) {
-  	$period = $posted['period'];
+    $period = $posted['period'];
   }
   $startdate = '-'.$period;
   $period = $period;
@@ -107,29 +107,29 @@ for ($i=2006; $i <= $today['year']; $i++ ) {
 $startd = Statistics::getAnyDateAsArray($startdate);
 $stopd = Statistics::getAnyDateAsArray($stopdate);
 if (!isset($posted['datetype'])) {
-    $posted['datetype'] = '';
+  $posted['datetype'] = '';
 }
 $replace = array(
-    "__PRINT_USERNAME__" => $user_->getName(),
-    "__LINK_LOGOUT__" => '/logout.php',
-    '__BEGIN_FILTER_FORM__' => $form->open(),
-    '__END_FILTER_FORM__' => $form->close(),
-    '__ADDRESS_SELECTOR__' => $form->select('a', $addresses, $select_wanted, "" ),
+  "__PRINT_USERNAME__" => $user_->getName(),
+  "__LINK_LOGOUT__" => '/logout.php',
+  '__BEGIN_FILTER_FORM__' => $form->open(),
+  '__END_FILTER_FORM__' => $form->close(),
+  '__ADDRESS_SELECTOR__' => $form->select('a', $addresses, $select_wanted, "" ),
 
-    '__INPUT_PERIODRADIO__' => $form->radiojs('datetype', 'period', $datetype, 'javascript:useDateSearchType(\'period\');'),
-    '__INPUT_DATERADIO__' => $form->radiojs('datetype', 'date', $datetype, 'javascript:useDateSearchType(\'date\');'),
-    '__INPUT_PERIODSELECT__' => $form->input('period', 5, $period),
-    '__DATESEARCHTYPE__' => $posted['datetype'],
+  '__INPUT_PERIODRADIO__' => $form->radiojs('datetype', 'period', $datetype, 'javascript:useDateSearchType(\'period\');'),
+  '__INPUT_DATERADIO__' => $form->radiojs('datetype', 'date', $datetype, 'javascript:useDateSearchType(\'date\');'),
+  '__INPUT_PERIODSELECT__' => $form->input('period', 5, $period),
+  '__DATESEARCHTYPE__' => $posted['datetype'],
 
-    '__INPUT_STARTDAY__' => $form->select('startday', $days, $startd['day'], ';'),
-    '__INPUT_STARTMONTH__' => $form->select('startmonth', $months, $startd['month'], ';'),
-    '__INPUT_STARTYEAR__' => $form->select('startyear', $years, $startd['year'], ';'),
-    '__INPUT_STOPDAY__' => $form->select('stopday', $days, $stopd['day'], ';'),
-    '__INPUT_STOPMONTH__' => $form->select('stopmonth', $months, $stopd['month'], ';'),
-    '__INPUT_STOPYEAR__' => $form->select('stopyear', $years, $stopd['year'], ';'),
-    '__REFRESH_BUTTON__' => $form->submit('submit', $lang_->print_txt('REFRESH'), ''),
-    '__DISPLAY_STATSLIST__' => displayStatsList(),
-    '__DISPLAY_GLOBALSTAT__' => displayGlobalStats()
+  '__INPUT_STARTDAY__' => $form->select('startday', $days, $startd['day'], ';'),
+  '__INPUT_STARTMONTH__' => $form->select('startmonth', $months, $startd['month'], ';'),
+  '__INPUT_STARTYEAR__' => $form->select('startyear', $years, $startd['year'], ';'),
+  '__INPUT_STOPDAY__' => $form->select('stopday', $days, $stopd['day'], ';'),
+  '__INPUT_STOPMONTH__' => $form->select('stopmonth', $months, $stopd['month'], ';'),
+  '__INPUT_STOPYEAR__' => $form->select('stopyear', $years, $stopd['year'], ';'),
+  '__REFRESH_BUTTON__' => $form->submit('submit', $lang_->print_txt('REFRESH'), ''),
+  '__DISPLAY_STATSLIST__' => displayStatsList(),
+  '__DISPLAY_GLOBALSTAT__' => displayGlobalStats()
 );
 
 // display page
@@ -142,7 +142,7 @@ function displayStatsList() {
 
   $ret = "";
   foreach ($wanted_stats_ as $add => $stat) {
-  	$ret .= $stat->getStatInTemplate($template_, 'STAT');
+    $ret .= $stat->getStatInTemplate($template_, 'STAT');
   }
   return $ret;
 }
@@ -153,7 +153,7 @@ function displayGlobalStats() {
   global $global_stat;
 
   if (count($wanted_stats_) < 2) {
-  	return "";
+    return "";
   }
   return $global_stat->getStatInTemplate($template_, 'GLOBALSTAT');
 }

@@ -24,12 +24,12 @@
    <?php foreach ($this->modules as $module) {?>
       <?php if ($module->getParam('visible') != 0) {?>
          <li onclick="javascript:goTo('<?php echo $this->url(array('controller'=>'antispam','action'=>'editmodule','prefilter' => $module->getParam('name')))?>');"
-	        class="void<?php if ($module->getParam('active') < 1) { ?> disabledsubmenuitem<?php }?>">
-		       <a href="<?php echo $this->url(array('controller'=>'antispam','action'=>'editmodule','prefilter' => $module->getParam('name')))?>">
-		                <?php echo  $module->getParam('position')?> - <?php echo $module->getParam('name');?>
-				       </a>
-				          </li>
-					     <?php }?>
+          class="void<?php if ($module->getParam('active') < 1) { ?> disabledsubmenuitem<?php }?>">
+           <a href="<?php echo $this->url(array('controller'=>'antispam','action'=>'editmodule','prefilter' => $module->getParam('name')))?>">
+                    <?php echo  $module->getParam('position')?> - <?php echo $module->getParam('name');?>
+               </a>
+                  </li>
+               <?php }?>
    <?php }?>
  </ul>
 </div>

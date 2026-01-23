@@ -10,353 +10,353 @@
 
 class MonitorstatusController extends Zend_Controller_Action
 {
-	protected $_columns = array('messages', 'load', 'disks', 'memory', 'spools', 'processes');
-    protected $_statscachefile = '/tmp/host.stat.cache';
+  protected $_columns = array('messages', 'load', 'disks', 'memory', 'spools', 'processes');
+  protected $_statscachefile = '/tmp/host.stat.cache';
 
-	public function init()
-	{
-		$layout = Zend_Layout::getMvcInstance();
-		$view=$layout->getView();
-		$view->headLink()->appendStylesheet($view->css_path.'/main.css');
-		$view->headLink()->appendStylesheet($view->css_path.'/navigation.css');
-		$view->headLink()->appendStylesheet($view->css_path.'/status.css');
-        $view->headScript()->appendFile($view->scripts_path.'/status.js', 'text/javascript');
+  public function init() {
+    $layout = Zend_Layout::getMvcInstance();
+    $view=$layout->getView();
+    $view->headLink()->appendStylesheet($view->css_path.'/main.css');
+    $view->headLink()->appendStylesheet($view->css_path.'/navigation.css');
+    $view->headLink()->appendStylesheet($view->css_path.'/status.css');
+    $view->headScript()->appendFile($view->scripts_path.'/status.js', 'text/javascript');
 
-		$main_menus = Zend_Registry::get('main_menu')->findOneBy('id', 'Monitoring')->class = 'menuselected';
-		$view->selectedMenu = 'Monitoring';
-		$main_menus = Zend_Registry::get('main_menu')->findOneBy('id', 'submonitor_Status')->class = 'submenuelselected';
-		$view->selectedSubMenu = 'Status';
-	}
+    $main_menus = Zend_Registry::get('main_menu')->findOneBy('id', 'Monitoring')->class = 'menuselected';
+    $view->selectedMenu = 'Monitoring';
+    $main_menus = Zend_Registry::get('main_menu')->findOneBy('id', 'submonitor_Status')->class = 'submenuelselected';
+    $view->selectedSubMenu = 'Status';
+  }
 
-	public function indexAction() {
+  public function indexAction() {
 
-		$layout = Zend_Layout::getMvcInstance();
-		$view=$layout->getView();
+    $layout = Zend_Layout::getMvcInstance();
+    $view=$layout->getView();
 
-		$replica = new Default_Model_Slave();
-		$replicas = $replica->fetchAll();
+    $replica = new Default_Model_Slave();
+    $replicas = $replica->fetchAll();
 
-		$view->replicas = $replicas;
+    $view->replicas = $replicas;
 
-		$view->pieLink = Zend_Controller_Action_HelperBroker::getStaticHelper('url')->simple('todaypie', 'monitorstatus', NULL, array());
-		$view->columns = $this->_columns;
-		$config = new SpamTagger_Config();
-		$view->quarantinedir = $config->getOption('VARDIR')."/spam";
-    	$view->initial_loading = 1;
-	    $request = $this->getRequest();
-		if ($request->getParam('r') == '') {
-			$salt = uniqid();
-		} else {
-			$salt = $request->getParam('r');
-		}
-		$view->salt = $salt;
-	}
+    $view->pieLink = Zend_Controller_Action_HelperBroker::getStaticHelper('url')->simple('todaypie', 'monitorstatus', NULL, array());
+    $view->columns = $this->_columns;
+    $config = new SpamTagger_Config();
+    $view->quarantinedir = $config->getOption('VARDIR')."/spam";
+    $view->initial_loading = 1;
+    $request = $this->getRequest();
+    if ($request->getParam('r') == '') {
+      $salt = uniqid();
+    } else {
+      $salt = $request->getParam('r');
+    }
+    $view->salt = $salt;
+  }
 
-	public function todaypieAction() {
-		$this->_helper->viewRenderer->setNoRender();
-		$this->_helper->layout->disableLayout();
-		$layout = Zend_Layout::getMvcInstance();
-		$view=$layout->getView();
+  public function todaypieAction() {
+    $this->_helper->viewRenderer->setNoRender();
+    $this->_helper->layout->disableLayout();
+    $layout = Zend_Layout::getMvcInstance();
+    $view=$layout->getView();
 
-		$request = $this->getRequest();
-		if ($request->getParam('s') == '') {
-			return;
-		}
-                $stats_type = $request->getParam('t');
-                if (!isset($stats_type) || !$stats_type || $stats_type == '') {
-                    $stats_type = 'global';
-                }
+    $request = $this->getRequest();
+    if ($request->getParam('s') == '') {
+      return;
+    }
+    $stats_type = $request->getParam('t');
+    if (!isset($stats_type) || !$stats_type || $stats_type == '') {
+      $stats_type = 'global';
+    }
 
 
-		$replica = new Default_Model_Slave();
-		$replica->find($request->getparam('s'));
+    $replica = new Default_Model_Slave();
+    $replica->find($request->getparam('s'));
 
-		$reporting = new Default_Model_ReportingStats();
-		$what = array();
-		$what['stats'] = $reporting->getTodayStatElements($stats_type);
-                $usecache = 1;
-                $graph_params = array();
-                if ($request->getparam('gs') && is_numeric($request->getparam('gs'))) {
-                   $graph_params['size'] = array($request->getparam('gs'), $request->getparam('gs'));
-                }
-                if ($request->getparam('gr') && is_numeric($request->getparam('gr'))) {
-                   $graph_params['radius'] = $request->getparam('gr');
-                }
-		return $reporting->getTodayPie($what, $replica->getId(), $usecache, $stats_type, $graph_params);
-	}
+    $reporting = new Default_Model_ReportingStats();
+    $what = array();
+    $what['stats'] = $reporting->getTodayStatElements($stats_type);
+    $usecache = 1;
+    $graph_params = array();
+    if ($request->getparam('gs') && is_numeric($request->getparam('gs'))) {
+      $graph_params['size'] = array($request->getparam('gs'), $request->getparam('gs'));
+    }
+    if ($request->getparam('gr') && is_numeric($request->getparam('gr'))) {
+      $graph_params['radius'] = $request->getparam('gr');
+    }
+    return $reporting->getTodayPie($what, $replica->getId(), $usecache, $stats_type, $graph_params);
+  }
 
-	public function restartserviceAction() {
-		$layout = Zend_Layout::getMvcInstance();
-		$view=$layout->getView();
-		$layout->disableLayout();
-		$view->addScriptPath(Zend_Registry::get('ajax_script_path'));
+  public function restartserviceAction() {
+    $layout = Zend_Layout::getMvcInstance();
+    $view=$layout->getView();
+    $layout->disableLayout();
+    $view->addScriptPath(Zend_Registry::get('ajax_script_path'));
 
-		$status = 0;
-		$replicaid = 0;
-		$process = '';
-		$request = $this->getRequest();
-		if (is_numeric($request->getParam('s')) && $request->getParam('p') != '' && $request->getParam('a') != '') {
+    $status = 0;
+    $replicaid = 0;
+    $process = '';
+    $request = $this->getRequest();
+    if (is_numeric($request->getParam('s')) && $request->getParam('p') != '' && $request->getParam('a') != '') {
 
-			$process = $request->getParam('p');
-			$replicaid = $request->getParam('s');
+      $process = $request->getParam('p');
+      $replicaid = $request->getParam('s');
 
-			$replica = new Default_Model_Slave();
-			$replica->find($replicaid);
+      $replica = new Default_Model_Slave();
+      $replica->find($replicaid);
 
-			$res = $replica->sendSoapRequest('Service_silentStopStart', array('service' => $process, 'action' => $request->getParam('a'), 'soap_timeout' => 100));
-			#var_dump($res);
-			#sleep(3);
+      $res = $replica->sendSoapRequest('Service_silentStopStart', array('service' => $process, 'action' => $request->getParam('a'), 'soap_timeout' => 100));
+      #var_dump($res);
+      #sleep(3);
 
-			$processes = $replica->sendSoap('Status_getProcessesStatus');
-			if (isset($processes[$process])) {
-				$status = $processes[$process];
-			}
-		}
-		$view->replicaid = $replicaid;
-		$view->process = $process;
-		$view->status = $status;
-	}
+      $processes = $replica->sendSoap('Status_getProcessesStatus');
+      if (isset($processes[$process])) {
+        $status = $processes[$process];
+      }
+    }
+    $view->replicaid = $replicaid;
+    $view->process = $process;
+    $view->status = $status;
+  }
 
-	public function showprocessAction() {
-		$layout = Zend_Layout::getMvcInstance();
-		$view=$layout->getView();
-		$layout->disableLayout();
-		$view->addScriptPath(Zend_Registry::get('ajax_script_path'));
+  public function showprocessAction() {
+    $layout = Zend_Layout::getMvcInstance();
+    $view=$layout->getView();
+    $layout->disableLayout();
+    $view->addScriptPath(Zend_Registry::get('ajax_script_path'));
 
-		$status = 0;
-		$replicaid = 0;
-		$process = '';
-		$request = $this->getRequest();
-		if (is_numeric($request->getParam('s')) && $request->getParam('p') != '') {
-			$process = $request->getParam('p');
-			$replicaid = $request->getParam('s');
+    $status = 0;
+    $replicaid = 0;
+    $process = '';
+    $request = $this->getRequest();
+    if (is_numeric($request->getParam('s')) && $request->getParam('p') != '') {
+      $process = $request->getParam('p');
+      $replicaid = $request->getParam('s');
 
-			$replica = new Default_Model_Slave();
-			$replica->find($replicaid);
+      $replica = new Default_Model_Slave();
+      $replica->find($replicaid);
 
-			$processes = $replica->sendSoap('Status_getProcessesStatus');
-			if (isset($processes[$process])) {
-				$status = $processes[$process];
-			}
-		}
-		$view->replicaid = $replicaid;
-		$view->process = $process;
-		$view->status = $status;
-	}
+      $processes = $replica->sendSoap('Status_getProcessesStatus');
+      if (isset($processes[$process])) {
+        $status = $processes[$process];
+      }
+    }
+    $view->replicaid = $replicaid;
+    $view->process = $process;
+    $view->status = $status;
+  }
 
-	public function viewspoolAction() {
-		$layout = Zend_Layout::getMvcInstance();
-		$view=$layout->getView();
-		$layout->disableLayout();
-		$view->headLink()->appendStylesheet($view->css_path.'/quarantine.css');
-		$view->headScript()->setFile($view->scripts_path.'/spools.js', 'text/javascript');
-        $view->headScript()->appendFile($view->scripts_path.'/tooltip.js', 'text/javascript');
+  public function viewspoolAction() {
+    $layout = Zend_Layout::getMvcInstance();
+    $view=$layout->getView();
+    $layout->disableLayout();
+    $view->headLink()->appendStylesheet($view->css_path.'/quarantine.css');
+    $view->headScript()->setFile($view->scripts_path.'/spools.js', 'text/javascript');
+    $view->headScript()->appendFile($view->scripts_path.'/tooltip.js', 'text/javascript');
 
-		$request = $this->getRequest();
-		if ($request->isXmlHttpRequest()) {
-			$view->addScriptPath(Zend_Registry::get('ajax_script_path'));
-		}
+    $request = $this->getRequest();
+    if ($request->isXmlHttpRequest()) {
+      $view->addScriptPath(Zend_Registry::get('ajax_script_path'));
+    }
 
-		$replica = new Default_Model_Slave();
-		$spool=1;
-		$msgs = array();
-		$nbmsgs = 0;
-		$page = 1;
-		$pages = 1;
-		$limit = 25;
-		$offset = 0;
+    $replica = new Default_Model_Slave();
+    $spool=1;
+    $msgs = array();
+    $nbmsgs = 0;
+    $page = 1;
+    $pages = 1;
+    $limit = 25;
+    $offset = 0;
 
-		if (is_numeric($request->getParam('offset'))) {
-			$offset = $request->getParam('offset');
-		}
-		if (is_numeric($request->getParam('limit'))) {
-			$limit = $request->getParam('limit');
-		}
-		if (is_numeric($request->getParam('replica')) && is_numeric($request->getParam('spool')) ) {
-			$replicaid = $request->getParam('replica');
-			$spool = $request->getParam('spool');
+    if (is_numeric($request->getParam('offset'))) {
+      $offset = $request->getParam('offset');
+    }
+    if (is_numeric($request->getParam('limit'))) {
+      $limit = $request->getParam('limit');
+    }
+    if (is_numeric($request->getParam('replica')) && is_numeric($request->getParam('spool')) ) {
+      $replicaid = $request->getParam('replica');
+      $spool = $request->getParam('spool');
 
-			$replica->find($replicaid);
+      $replica->find($replicaid);
 
-			$params = array('limit' => $limit, 'offset' => $offset, 'spool' => $spool);
-			if ($request->isXmlHttpRequest()) {
-				$call_res = $replica->getSpool($spool, $params);
-				if (isset($call_res['msgs'])) {
-					$msgs = $call_res['msgs'];
-					$nbmsgs = $call_res['nbmsgs'];
-					$page = $call_res['page'];
-					$pages = $call_res['pages'];
-				}
-			}
-		}
-
-		$view->replica = $replica;
-		$view->spool = $spool;
-		$view->msgs = $msgs;
-		$view->nbmsgs = $nbmsgs;
-		$view->pages = $pages;
-		$view->page = $page;
-		$view->nextoffset = -1;
-		if ($page*$limit < $nbmsgs) {
-			$view->nextoffset = ($page)*$limit;
-		}
-		$view->prevoffset = -1;
-		if ($page > 1) {
-			$view->prevoffset = ($page - 2)*$limit;
-		}
-
-		$spools = array(1 => 'incoming', 2 => 'filtering', 4 => 'outgoing');
-		$t = Zend_Registry::get('translate');
-        $view->headTitle($t->_('Spool view')." - ".$replica->getId()." (".$replica->getHostname().") - ".$t->_($spools[$spool]));
-	}
-
-	public function spooldeleteAction() {
-		$layout = Zend_Layout::getMvcInstance();
-        $view=$layout->getView();
-        $layout->disableLayout();
-
-        $replica = new Default_Model_Slave();
-        $spool=1;
-        require_once('Validate/MessageID.php');
-        $msgvalidator = new Validate_MessageID();
-
-        $request = $this->getRequest();
-        if (is_numeric($request->getParam('replica')) && is_numeric($request->getParam('spool')) && $msgvalidator->isValid($request->getParam('msg'))) {
-        	$replicaid = $request->getParam('replica');
-            $spool = $request->getParam('spool');
-
-            $replica->find($replicaid);
-            $res = $replica->deleteSpoolMessage($spool, $request->getParam('msg'));
+      $params = array('limit' => $limit, 'offset' => $offset, 'spool' => $spool);
+      if ($request->isXmlHttpRequest()) {
+        $call_res = $replica->getSpool($spool, $params);
+        if (isset($call_res['msgs'])) {
+          $msgs = $call_res['msgs'];
+          $nbmsgs = $call_res['nbmsgs'];
+          $page = $call_res['page'];
+          $pages = $call_res['pages'];
         }
-	}
+      }
+    }
 
-	public function spooltryAction() {
-		$layout = Zend_Layout::getMvcInstance();
-        $view=$layout->getView();
-        $layout->disableLayout();
+    $view->replica = $replica;
+    $view->spool = $spool;
+    $view->msgs = $msgs;
+    $view->nbmsgs = $nbmsgs;
+    $view->pages = $pages;
+    $view->page = $page;
+    $view->nextoffset = -1;
+    if ($page*$limit < $nbmsgs) {
+      $view->nextoffset = ($page)*$limit;
+    }
+    $view->prevoffset = -1;
+    if ($page > 1) {
+      $view->prevoffset = ($page - 2)*$limit;
+    }
 
-        $replica = new Default_Model_Slave();
-        $spool=1;
-        require_once('Validate/MessageID.php');
-        $msgvalidator = new Validate_MessageID();
+    $spools = array(1 => 'incoming', 2 => 'filtering', 4 => 'outgoing');
+    $t = Zend_Registry::get('translate');
+    $view->headTitle($t->_('Spool view')." - ".$replica->getId()." (".$replica->getHostname().") - ".$t->_($spools[$spool]));
+  }
 
-        $request = $this->getRequest();
-        if (is_numeric($request->getParam('replica')) && is_numeric($request->getParam('spool')) && $msgvalidator->isValid($request->getParam('msg')) ) {
-        	$replicaid = $request->getParam('replica');
-            $spool = $request->getParam('spool');
+  public function spooldeleteAction() {
+    $layout = Zend_Layout::getMvcInstance();
+    $view=$layout->getView();
+    $layout->disableLayout();
 
-            $replica->find($replicaid);
-            $res = $replica->trySpoolMessage($spool, $request->getParam('msg'));
+    $replica = new Default_Model_Slave();
+    $spool=1;
+    require_once('Validate/MessageID.php');
+    $msgvalidator = new Validate_MessageID();
+
+    $request = $this->getRequest();
+    if (is_numeric($request->getParam('replica')) && is_numeric($request->getParam('spool')) && $msgvalidator->isValid($request->getParam('msg'))) {
+      $replicaid = $request->getParam('replica');
+      $spool = $request->getParam('spool');
+
+      $replica->find($replicaid);
+      $res = $replica->deleteSpoolMessage($spool, $request->getParam('msg'));
+    }
+  }
+
+  public function spooltryAction() {
+    $layout = Zend_Layout::getMvcInstance();
+    $view=$layout->getView();
+    $layout->disableLayout();
+
+    $replica = new Default_Model_Slave();
+    $spool=1;
+    require_once('Validate/MessageID.php');
+    $msgvalidator = new Validate_MessageID();
+
+    $request = $this->getRequest();
+    if (is_numeric($request->getParam('replica')) && is_numeric($request->getParam('spool')) && $msgvalidator->isValid($request->getParam('msg')) ) {
+      $replicaid = $request->getParam('replica');
+      $spool = $request->getParam('spool');
+
+      $replica->find($replicaid);
+      $res = $replica->trySpoolMessage($spool, $request->getParam('msg'));
+    }
+  }
+
+  public function hoststatusAction() {
+    $layout = Zend_Layout::getMvcInstance();
+    $view=$layout->getView();
+    $layout->disableLayout();
+    $view->addScriptPath(Zend_Registry::get('ajax_script_path'));
+
+    $request = $this->getRequest();
+
+    $replicaid = 1;
+    if (is_numeric($request->getParam('replica'))) {
+      $replicaid = $request->getParam('replica');
+    }
+    $replica = new Default_Model_Slave();
+    $replica->find($replicaid);
+    $view->pieLink = Zend_Controller_Action_HelperBroker::getStaticHelper('url')->simple('todaypie', 'monitorstatus', NULL, array());
+    $view->graphBaseLink = Zend_Controller_Action_HelperBroker::getStaticHelper('url')->simple('graph', 'monitorreporting', NULL, array());
+    $view->replica = $replica;
+    $view->columns = $this->_columns;
+    $config = new SpamTagger_Config();
+    $view->quarantinedir = $config->getOption('VARDIR')."/spam";
+    $view->initial_loading = 0;
+
+    $reporting = new Default_Model_ReportingStats();
+    $salt = uniqid();
+    $view->salt = $salt;
+
+    $morecontent = array(
+      'messages' => array('type' => array('global', 'sessions', 'accepted', 'refused', 'relayed'),
+      'selected_type' => 'global',
+      'mode' => array('count', 'frequency'), 'selected_mode' => 'count'),
+      'load' => array('type' => array('load', 'cpu'), 'selected_type' => 'load'),
+      'disk' => array('type' => array('disks', 'io', 'network'), 'selected_type' => 'disks'),
+      'memory'   => array('type' => array('memory'), 'selected_type' => 'memory'),
+      'spools'   => array('type' => array('spools'), 'selected_type' => 'spools')
+    );
+    $available_periods = array('hour', 'day', 'week', 'month', 'year');
+    $view->periods = $available_periods;
+    foreach ($morecontent as $cname => $c) {
+      if (!isset($morecontent[$cname]['selected_period'])) {
+        $morecontent[$cname]['selected_period'] = 'day';
+      }
+      if (!isset($morecontent[$cname]['selected_mode'])) {
+        $morecontent[$cname]['selected_mode'] = 'count';
+      }
+    }
+    $types = preg_split('/,/', $request->getParam('t'));
+    foreach ($types as $type) {
+      if (preg_match('/^([a-z0-9]+)_([a-z0-9]+)/', $type, $matches)) {
+        $s_col = $matches[1];
+        $s_type = $matches[2];
+        if (isset($morecontent[$s_col]) && in_array($s_type, $morecontent[$s_col]['type']))  {
+          $morecontent[$s_col]['selected_type'] = $s_type;
         }
-	}
+      }
+    }
+    $stats_type = $morecontent['messages']['selected_type'];
 
-	public function hoststatusAction() {
-		$layout = Zend_Layout::getMvcInstance();
-        $view=$layout->getView();
-        $layout->disableLayout();
-		$view->addScriptPath(Zend_Registry::get('ajax_script_path'));
-
-    	$request = $this->getRequest();
-
-    	$replicaid = 1;
-    	if (is_numeric($request->getParam('replica'))) {
-    		$replicaid = $request->getParam('replica');
-    	}
-    	$replica = new Default_Model_Slave();
-    	$replica->find($replicaid);
-    	$view->pieLink = Zend_Controller_Action_HelperBroker::getStaticHelper('url')->simple('todaypie', 'monitorstatus', NULL, array());
-		$view->graphBaseLink = Zend_Controller_Action_HelperBroker::getStaticHelper('url')->simple('graph', 'monitorreporting', NULL, array());
-    	$view->replica = $replica;
-		$view->columns = $this->_columns;
-		$config = new SpamTagger_Config();
-		$view->quarantinedir = $config->getOption('VARDIR')."/spam";
-    	$view->initial_loading = 0;
-
-    	$reporting = new Default_Model_ReportingStats();
-    	$salt = uniqid();
-		$view->salt = $salt;
-
-		$morecontent = array(
-                 'messages' => array('type' => array('global', 'sessions', 'accepted', 'refused', 'relayed'), 'selected_type' => 'global',
-                                     'mode' => array('count', 'frequency'), 'selected_mode' => 'count'),
-                 'load'     => array('type' => array('load', 'cpu'), 'selected_type' => 'load'),
-                 'disk'     => array('type' => array('disks', 'io', 'network'), 'selected_type' => 'disks'),
-                 'memory'   => array('type' => array('memory'), 'selected_type' => 'memory'),
-                 'spools'   => array('type' => array('spools'), 'selected_type' => 'spools')
-        );
-        $available_periods = array('hour', 'day', 'week', 'month', 'year');
-        $view->periods = $available_periods;
-        foreach ($morecontent as $cname => $c) {
-        	if (!isset($morecontent[$cname]['selected_period'])) {
-            	$morecontent[$cname]['selected_period'] = 'day';
-        	}
-        	if (!isset($morecontent[$cname]['selected_mode'])) {
-        		$morecontent[$cname]['selected_mode'] = 'count';
-        	}
+    $modes = preg_split('/,/', $request->getParam('m'));
+    foreach ($modes as $mode) {
+      if (preg_match('/^([a-z0-9]+)_([a-z0-9]+)/', $mode, $matches)) {
+        $s_col = $matches[1];
+        $s_mode = $matches[2];
+        if (isset($morecontent[$s_col]) && in_array($s_mode, $morecontent[$s_col]['mode']))  {
+          $morecontent[$s_col]['selected_mode'] = $s_mode;
         }
-        $types = preg_split('/,/', $request->getParam('t'));
-        foreach ($types as $type) {
-        	if (preg_match('/^([a-z0-9]+)_([a-z0-9]+)/', $type, $matches)) {
-               $s_col = $matches[1];
-               $s_type = $matches[2];
-               if (isset($morecontent[$s_col]) && in_array($s_type, $morecontent[$s_col]['type']))  {
-               	  $morecontent[$s_col]['selected_type'] = $s_type;
-               }
-        	}
+      }
+    }
+    $stats_mode = $morecontent['messages']['selected_mode'];
+
+    $periods = preg_split('/,/', $request->getParam('p'));
+    foreach ($periods as $period) {
+      if (preg_match('/^([a-z0-9]+)_([a-z0-9]+)/', $period, $matches)) {
+        $s_col = $matches[1];
+        $s_period = $matches[2];
+        if (isset($morecontent[$s_col]) && in_array($s_period, $available_periods))  {
+          $morecontent[$s_col]['selected_period'] = $s_period;
         }
-		$stats_type = $morecontent['messages']['selected_type'];
+      }
+    }
+    $stats_period = $morecontent['messages']['selected_period'];
+    $what = array();
+    $what['stats'] = $reporting->getTodayStatElements($stats_type);
+    $data = $reporting->getTodayValues($what, $replicaid, $stats_type);
 
-		$modes = preg_split('/,/', $request->getParam('m'));
-        foreach ($modes as $mode) {
-        	if (preg_match('/^([a-z0-9]+)_([a-z0-9]+)/', $mode, $matches)) {
-               $s_col = $matches[1];
-               $s_mode = $matches[2];
-               if (isset($morecontent[$s_col]) && in_array($s_mode, $morecontent[$s_col]['mode']))  {
-               	  $morecontent[$s_col]['selected_mode'] = $s_mode;
-               }
-        	}
-        }
-		$stats_mode = $morecontent['messages']['selected_mode'];
+    $view->pielink = $view->baseurl.'/monitorstatus/todaypie/c/1/s/'.$replica->getId();
+    $view->pielink .= '/t/'.$stats_type;
+    $view->pielink .= '/r/'.uniqid();
 
-		$periods = preg_split('/,/', $request->getParam('p'));
-        foreach ($periods as $period) {
-        	if (preg_match('/^([a-z0-9]+)_([a-z0-9]+)/', $period, $matches)) {
-               $s_col = $matches[1];
-               $s_period = $matches[2];
-               if (isset($morecontent[$s_col]) && in_array($s_period, $available_periods))  {
-               	  $morecontent[$s_col]['selected_period'] = $s_period;
-               }
-        	}
-        }
-		$stats_period = $morecontent['messages']['selected_period'];
-        $what = array();
-	    $what['stats'] = $reporting->getTodayStatElements($stats_type);
-        $data = $reporting->getTodayValues($what, $replicaid, $stats_type);
+    $view->stats_type = $stats_type;
+    $total = 0;
+    foreach ($data as $d) {
+      $total += $d;
+    }
+    $view->stats_total = $total;
+    $view->stats = $data;
 
-        $view->pielink = $view->baseurl.'/monitorstatus/todaypie/c/1/s/'.$replica->getId();
-        $view->pielink .= '/t/'.$stats_type;
-        $view->pielink .= '/r/'.uniqid();
+    $template = Zend_Registry::get('default_template');
+    include_once(APPLICATION_PATH . '/../public/templates/'.$template.'/css/pieColors.php');
+    $view->colors = $data_colors;
 
-        $view->stats_type = $stats_type;
-        $total = 0;
-        foreach ($data as $d) {
-        	$total += $d;
-        }
-        $view->stats_total = $total;
-    	$view->stats = $data;
+    $graphfinder = new Default_Model_RRDGraphic();
+    $graphs = array();
+    foreach ($this->_columns as $gc) {
+      $graphs[$gc] = $graphfinder->fetchAll(array('family' => $gc));
+    }
+    $view->graphs = $graphs;
 
-    	$template = Zend_Registry::get('default_template');
-    	include_once(APPLICATION_PATH . '/../public/templates/'.$template.'/css/pieColors.php');
-    	$view->colors = $data_colors;
-
-    	$graphfinder = new Default_Model_RRDGraphic();
-    	$graphs = array();
-    	foreach ($this->_columns as $gc) {
-    		$graphs[$gc] = $graphfinder->fetchAll(array('family' => $gc));
-    	}
-    	$view->graphs = $graphs;
-
-    	$view->more_content = $morecontent;
-    	$view->more_to_show = preg_split('/,/', $request->getParam('mts'));
-	}
+    $view->more_content = $morecontent;
+    $view->more_to_show = preg_split('/,/', $request->getParam('mts'));
+  }
 }

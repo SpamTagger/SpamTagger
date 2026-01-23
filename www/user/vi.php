@@ -80,7 +80,7 @@ $template_->output($replace);
 function displayHit($value) {
   global $lang_;
   if ($value == "" || $value== "0.000") {
-  	return $lang_->print_txt('NONE');
+    return $lang_->print_txt('NONE');
   }
   if (! is_numeric($value) ) {
       return $value;

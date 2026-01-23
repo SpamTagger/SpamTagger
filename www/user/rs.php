@@ -16,10 +16,10 @@ include('Mail/mime.php');
 $sysconf = SystemConfig::getInstance();
 $latest_plugin = '1.0.3';
 if (isset($_REQUEST['ver'])) {
-   $version = $_REQUEST['ver'];
-   if (getNumericVersion($version) < getNumericVersion($latest_plugin)) {
-      die('OLDVERSION');
-   }
+  $version = $_REQUEST['ver'];
+  if (getNumericVersion($version) < getNumericVersion($latest_plugin)) {
+    die('OLDVERSION');
+  }
 }
 
 ## get posted message
@@ -71,11 +71,11 @@ foreach ( $lines as $line) {
     break;
   }
   if (preg_match('/^Received: /', $line)) {
-     $inreceived = 1;
-     continue;
+    $inreceived = 1;
+    continue;
   }
   if (preg_match('/^\S+: /', $line)) {
-  	$inreceived = 0;
+    $inreceived = 0;
   }
   if ($sender == "" && $inreceived && preg_match('/for\s+[<_](\S+)\@(\S+)[_>]/', $line, $matches)) {
     $sender_local = $matches[1];
@@ -146,8 +146,8 @@ fwrite($f, $message);
 fclose($f);
 
 $headers = array(
-   'From' => $destination,
-   'Subject' => 'Report Spam'
+  'From' => $destination,
+  'Subject' => 'Report Spam'
 );
 $text = 'Spam not detected:'."\n
 From: ".trim($sender)."
@@ -182,21 +182,20 @@ if ($mail_object->send($destination, $hdrs, $body)) {
 unlink($filename);
 rmdir($dir);
 
-
 function getNumericVersion($string) {
-   if (preg_match('/(\d+)\.?(\d+)?\.?(\d+)?/', $string, $matches)) {
-     $major = $matches[1];
-     $minor = 0;
-     $subminor = 0;
-     if (isset($matches[2])) {
-       $minor = $matches[2];
-     }
-     if (isset($matches[3])) {
-       $subminor = $matches[3];
-     }
+  if (preg_match('/(\d+)\.?(\d+)?\.?(\d+)?/', $string, $matches)) {
+    $major = $matches[1];
+    $minor = 0;
+    $subminor = 0;
+    if (isset($matches[2])) {
+      $minor = $matches[2];
+    }
+    if (isset($matches[3])) {
+      $subminor = $matches[3];
+    }
 
-     return $major*100000 + $minor*1000 + $subminor;
-   }
-   return 0;
+    return $major*100000 + $minor*1000 + $subminor;
+  }
+  return 0;
 }
 ?>

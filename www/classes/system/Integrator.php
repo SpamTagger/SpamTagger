@@ -10,21 +10,21 @@
 /**
  * this class takes care of the system integrator information
  */
-class Integrator extends PrefHandler
-{
+class Integrator extends PrefHandler {
+
   /**
    * integrator information
    * @var array
    */
   private $infos_ = array(
-                        'Name_T' => "",
-                        'Surname_T' => "",
-                        'Phone_T' => "",
-                        'Mail_T' => "",
-                        'Company' => "",
-                        'SiteInternet' => "",
-                        'Phone' => ""
-                        );
+    'Name_T' => "",
+    'Surname_T' => "",
+    'Phone_T' => "",
+    'Mail_T' => "",
+    'Company' => "",
+    'SiteInternet' => "",
+    'Phone' => ""
+  );
 
  /**
   * constructor
@@ -40,7 +40,7 @@ class Integrator extends PrefHandler
     $matches = array();
     foreach ($values as $line) {
       if (preg_match('/^(\S+)\s*\=\s*(.*)/', $line, $matches)) {
-      	$this->setInfo($matches[1], $matches[2]);
+        $this->setInfo($matches[1], $matches[2]);
       }
     }
   }
@@ -51,9 +51,9 @@ class Integrator extends PrefHandler
    * @return      mixed   information value
    */
   public function getInfo($name) {
-  	if (isset($this->infos_[$name])) {
+    if (isset($this->infos_[$name])) {
       return $this->infos_[$name];
-  	}
+    }
     return "";
   }
 
@@ -64,7 +64,7 @@ class Integrator extends PrefHandler
    * @return       boolean true on success, false on failure
    */
   private function setInfo($name, $value) {
-  	if (isset($this->infos_[$name])) {
+    if (isset($this->infos_[$name])) {
       $this->infos_[$name] = $value;
       return true;
     }

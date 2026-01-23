@@ -8,138 +8,125 @@
  * admin application bootstrap
  */
 
-class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
-{
+class Bootstrap extends Zend_Application_Bootstrap_Bootstrap {
 
-	protected function _initAutoload()
-	{
-		$autoloader = new Zend_Application_Module_Autoloader(array(
-            'namespace' => 'Api_',
-            'basePath'  => dirname(__FILE__),
-		));
+  protected function _initAutoload() {
+    $autoloader = new Zend_Application_Module_Autoloader(array(
+      'namespace' => 'Api_',
+      'basePath'  => dirname(__FILE__),
+    ));
 
-		$defaultLoader = new Zend_Application_Module_Autoloader(array(
-              'basePath'  => APPLICATION_PATH . '/../../guis/admin/application/',
-              'namespace' => 'Default_',
-		));
-		$loader = Zend_Loader_Autoloader::getInstance();
-		$loader->pushAutoloader($defaultLoader);
+    $defaultLoader = new Zend_Application_Module_Autoloader(array(
+        'basePath'  => APPLICATION_PATH . '/../../guis/admin/application/',
+        'namespace' => 'Default_',
+    ));
+    $loader = Zend_Loader_Autoloader::getInstance();
+    $loader->pushAutoloader($defaultLoader);
 
-		return $autoloader;
-	}
+    return $autoloader;
+  }
 
 
-	protected function _initRegistry()
-	{
-		$controller = Zend_Controller_Front::getInstance();
-		$controller->addModuleDirectory(APPLICATION_PATH . '/../application/');
+  protected function _initRegistry() {
+    $controller = Zend_Controller_Front::getInstance();
+    $controller->addModuleDirectory(APPLICATION_PATH . '/../application/');
 
-		require_once('Api/Responder.php');
-		$responder = new Api_Responder();
-		Zend_Registry::set('response', $responder);
-		Zend_Registry::set('soap', false);
-	}
+    require_once('Api/Responder.php');
+    $responder = new Api_Responder();
+    Zend_Registry::set('response', $responder);
+    Zend_Registry::set('soap', false);
+  }
 
-	protected function _initDatabases()
-	{
-		require_once('SpamTagger/Config.php');
-		$stconfig = SpamTagger_Config::getInstance();
+  protected function _initDatabases() {
+    require_once('SpamTagger/Config.php');
+    $stconfig = SpamTagger_Config::getInstance();
 
-		$writeConfigDb = new Zend_Db_Adapter_Pdo_Mysql(array(
-    	                      'host'        => 'localhost',
-                              'unix_socket' => $stconfig->getOption('VARDIR')."/run/mariadb_source/mariadbd.sock",
-                              'username'    => 'spamtagger',
-                              'password'    => $stconfig->getOption('MYSPAMTAGGERPWD'),
-                              'dbname'      => 'st_config'
-                              ));
+    $writeConfigDb = new Zend_Db_Adapter_Pdo_Mysql(array(
+      'host'        => 'localhost',
+      'unix_socket' => $stconfig->getOption('VARDIR')."/run/mariadb_source/mariadbd.sock",
+      'username'    => 'spamtagger',
+      'password'    => $stconfig->getOption('MYSPAMTAGGERPWD'),
+      'dbname'      => 'st_config'
+    ));
 
-                              Zend_Registry::set('writedb', $writeConfigDb);
-	}
+    Zend_Registry::set('writedb', $writeConfigDb);
+  }
 
-	protected function _initAuth()
-	{
-                $config = SpamTagger_Config::getInstance();
-                if ($config->getOption('ISSOURCE') != 'Y' ) {
-                   Zend_Registry::get('response')->setResponse(404, 'API is only available on source host');
-                }
+  protected function _initAuth() {
+    $config = SpamTagger_Config::getInstance();
+    if ($config->getOption('ISSOURCE') != 'Y' ) {
+      Zend_Registry::get('response')->setResponse(404, 'API is only available on source host');
+    }
 
-		function netMatch ($CIDR,$IP) {
-			if (!preg_match('/\//', $CIDR)) {
-				return $CIDR == $IP;
-			} else {
-				list ($net, $mask) = explode ('/', $CIDR);
-				return ( ip2long ($IP) & ~((1 << (32 - $mask)) - 1) ) == ip2long ($net);
-			}
-		}
+    function netMatch ($CIDR,$IP) {
+      if (!preg_match('/\//', $CIDR)) {
+        return $CIDR == $IP;
+      } else {
+        list ($net, $mask) = explode ('/', $CIDR);
+        return ( ip2long ($IP) & ~((1 << (32 - $mask)) - 1) ) == ip2long ($net);
+      }
+    }
 
-		$sysconf = new Default_Model_SystemConf();
-		$sysconf->load();
+    $sysconf = new Default_Model_SystemConf();
+    $sysconf->load();
 
-		foreach (preg_split('/[\s,:]/', $sysconf->getParam('api_fulladmin_ips')) as $allowed) {
-			if (netMatch($allowed, $_SERVER['REMOTE_ADDR']) || netMatch('127.0.0.1', $_SERVER['REMOTE_ADDR'])) {
-				$user = new Default_Model_Administrator();
-				$user->find('admin');
-				Zend_Registry::set('user', $user);
-				break;
-			}
-		}
-		foreach (preg_split('/[\s,:]/', $sysconf->getParam('api_admin_ips')) as $allowed) {
-			if (netMatch($allowed, $_SERVER['REMOTE_ADDR'])) {
-				$authentified = false;
-				if ( (isset($_SERVER['PHP_AUTH_USER']) && isset($_SERVER['PHP_AUTH_PW'])) ||
-                     (isset($_REQUEST['username']) && isset($_REQUEST['password']))
-                    ) {
-                    $user = new Default_Model_Administrator();
-                    $username = '';
-                    $password = '';
-                    if (isset($_SERVER['PHP_AUTH_USER']) && isset($_SERVER['PHP_AUTH_PW'])) {
-                        $username = $_SERVER['PHP_AUTH_USER'];
-                        $password = $_SERVER['PHP_AUTH_PW'];
-                    } elseif (isset($_REQUEST['username']) && isset($_REQUEST['password'])) {
-                        $username = $_REQUEST['username'];
-                        $password = $_REQUEST['password'];
-                    }
-                    if ($user->checkAPIAuthentication($username, $password)) {
-                    	$user->find($username);
-                        Zend_Registry::set('user', $user);
-                        $authentified = true;
-                    } else {
-                    	Zend_Registry::get('response')->setResponse(401, 'authentication failed');
-                    }
-                }
-				### if we need to have interactive authentication (which is probably not the case for an API)
-				#if (!$authentified) {
-				#	header('WWW-Authenticate: Basic realm="SpamTagger API"');
-				#	header('HTTP/1.0 401 Unauthorized');
-				#	die();
-				#}
-				break;
-			}
-		}
-	}
+    foreach (preg_split('/[\s,:]/', $sysconf->getParam('api_fulladmin_ips')) as $allowed) {
+      if (netMatch($allowed, $_SERVER['REMOTE_ADDR']) || netMatch('127.0.0.1', $_SERVER['REMOTE_ADDR'])) {
+        $user = new Default_Model_Administrator();
+        $user->find('admin');
+        Zend_Registry::set('user', $user);
+        break;
+      }
+    }
+    foreach (preg_split('/[\s,:]/', $sysconf->getParam('api_admin_ips')) as $allowed) {
+      if (netMatch($allowed, $_SERVER['REMOTE_ADDR'])) {
+        $authentified = false;
+        if ( (isset($_SERVER['PHP_AUTH_USER']) && isset($_SERVER['PHP_AUTH_PW'])) ||
+          (isset($_REQUEST['username']) && isset($_REQUEST['password'])) )
+        {
+          $user = new Default_Model_Administrator();
+          $username = '';
+          $password = '';
+          if (isset($_SERVER['PHP_AUTH_USER']) && isset($_SERVER['PHP_AUTH_PW'])) {
+            $username = $_SERVER['PHP_AUTH_USER'];
+            $password = $_SERVER['PHP_AUTH_PW'];
+          } elseif (isset($_REQUEST['username']) && isset($_REQUEST['password'])) {
+            $username = $_REQUEST['username'];
+            $password = $_REQUEST['password'];
+          }
+          if ($user->checkAPIAuthentication($username, $password)) {
+            $user->find($username);
+            Zend_Registry::set('user', $user);
+            $authentified = true;
+          } else {
+            Zend_Registry::get('response')->setResponse(401, 'authentication failed');
+          }
+        }
+        break;
+      }
+    }
+  }
 
-	protected function _initView() {
-		$view = new Zend_View();
+  protected function _initView() {
+    $view = new Zend_View();
 
-		$controller = Zend_Controller_Front::getInstance();
-		require_once('Plugin/XMLResponder.php');
-		$controller->registerPlugin(new Plugin_XMLResponder());
+    $controller = Zend_Controller_Front::getInstance();
+    require_once('Plugin/XMLResponder.php');
+    $controller->registerPlugin(new Plugin_XMLResponder());
 
-		return $view;
-	}
+    return $view;
+  }
 
-	protected function _initLayout()
-	{
-		Zend_Layout::startMvc();
-		$layout = Zend_Layout::getMvcInstance();
+  protected function _initLayout() {
+    Zend_Layout::startMvc();
+    $layout = Zend_Layout::getMvcInstance();
 
-		$view=$layout->getView();
-		$view->doctype('XHTML11');
-		$view->headTitle('SpamTagger API');
-		$view->headTitle()->setSeparator(' - ');
+    $view=$layout->getView();
+    $view->doctype('XHTML11');
+    $view->headTitle('SpamTagger API');
+    $view->headTitle()->setSeparator(' - ');
 
-		return $layout;
-	}
+    return $layout;
+  }
 
 }
-

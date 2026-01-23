@@ -17,159 +17,159 @@ class ConnectorSettings {
    * Settings array with default values
    * @var array
    */
-   private $settings_ = array(
-                              'server' => 'localhost',
-                              'port'   => 0
-                             );
+  private $settings_ = array(
+    'server' => 'localhost',
+    'port'   => 0
+  );
 
-   private $settings_type_ = array(
-                               'server' => array('text', 20),
-                               'port' => array('text', 5)
-                               );
+  private $settings_type_ = array(
+    'server' => array('text', 20),
+    'port' => array('text', 5)
+  );
 
-   /**
-    * List of available connector with corresponding classes
-    * @var array
-    */
-    static private $connectors_ = array (
-                              'none' => 'SQLSettings',
-                              'local' => 'SQLSettings',
-                              'sql' => 'SQLSettings',
-                              'mariadb' => 'SQLSettings',
-                              'imap'  => 'SimpleServerSettings',
-                              'pop3'  => 'SimpleServerSettings',
-                              'ldap'  => 'LDAPSettings',
-                              'smtp'  => 'SimpleServerSettings',
-                              'radius'=> 'RadiusSettings',
-                              'tequila' => 'TequilaSettings'
-                           );
+  /**
+  * List of available connector with corresponding classes
+  * @var array
+  */
+  static private $connectors_ = array (
+    'none' => 'SQLSettings',
+    'local' => 'SQLSettings',
+    'sql' => 'SQLSettings',
+    'mariadb' => 'SQLSettings',
+    'imap'  => 'SimpleServerSettings',
+    'pop3'  => 'SimpleServerSettings',
+    'ldap'  => 'LDAPSettings',
+    'smtp'  => 'SimpleServerSettings',
+    'radius'=> 'RadiusSettings',
+    'tequila' => 'TequilaSettings'
+  );
 
-    /**
-     * internal type of connector
-     * @var string
-     */
-     private $type_ = 'local';
+  /**
+  * internal type of connector
+  * @var string
+  */
+  private $type_ = 'local';
 
-   /**
-    * Constructor
-    * Add the specialized settings to the parent settings
-    */
-   public function __construct($type) {
-     foreach($this->spec_settings_ as $setting => $value) {
-        $this->addSetting($setting, $value);
-     }
-     if (isset(self::$connectors_[$type])) {
-       $this->type_ = $type;
-     }
-     // set some defaults here are these use generic settings
-     switch($this->type_) {
-        case 'imap':
-          $this->setSetting('port', 143);
-          break;
-        case 'pop3':
-          $this->setSetting('port', 110);
-          break;
-     }
-   }
+  /**
+  * Constructor
+  * Add the specialized settings to the parent settings
+  */
+  public function __construct($type) {
+    foreach($this->spec_settings_ as $setting => $value) {
+      $this->addSetting($setting, $value);
+    }
+    if (isset(self::$connectors_[$type])) {
+      $this->type_ = $type;
+    }
+    // set some defaults here are these use generic settings
+    switch($this->type_) {
+      case 'imap':
+        $this->setSetting('port', 143);
+        break;
+      case 'pop3':
+        $this->setSetting('port', 110);
+        break;
+    }
+  }
 
-   /**
-    * Settings factory
-    */
-    static public function getConnectorSettings($type) {
-      if (!isset(self::$connectors_[$type])) {
-        return null;
-      }
-      $filename = "connector/settings/".self::$connectors_[$type].".php";
-      include_once($filename);
-      $class = self::$connectors_[$type];
-      if (class_exists($class)) {
-        return new $class($type);
-      }
+  /**
+  * Settings factory
+  */
+  static public function getConnectorSettings($type) {
+    if (!isset(self::$connectors_[$type])) {
       return null;
     }
+    $filename = "connector/settings/".self::$connectors_[$type].".php";
+    include_once($filename);
+    $class = self::$connectors_[$type];
+    if (class_exists($class)) {
+      return new $class($type);
+    }
+    return null;
+  }
 
-   /**
-    * Set a setting value
-    * @param $setting  string  setting name
-    * @param $value    mixed   new setting value
-    * @return          bool    true on success, false on failure
-    */
-   public function setSetting($setting, $value) {
+  /**
+  * Set a setting value
+  * @param $setting  string  setting name
+  * @param $value    mixed   new setting value
+  * @return          bool    true on success, false on failure
+  */
+  public function setSetting($setting, $value) {
     if (isset($this->settings_[$setting])) {
       $this->settings_[$setting] = $value;
       return true;
     }
     return false;
-   }
+  }
 
-   /**
-    * Add a setting with a value
-    * @param $setting  string setting name
-    * @param $value    mixed  default value
-    * @return          bool    true on success, false on failure
-    */
-   protected function addSetting($setting, $value) {
-      $this->settings_[$setting] = $value;
-      return true;
-   }
-   /**
-    * Get a setting value
-    * @param $setting  string  setting name
-    * @return          mixed   setting value, or null if not found
-    */
-    public function getSetting($setting) {
-      if (isset($this->settings_[$setting])) {
-        return $this->settings_[$setting];
-      }
+  /**
+  * Add a setting with a value
+  * @param $setting  string setting name
+  * @param $value    mixed  default value
+  * @return          bool    true on success, false on failure
+  */
+  protected function addSetting($setting, $value) {
+    $this->settings_[$setting] = $value;
+    return true;
+  }
+
+  /**
+  * Get a setting value
+  * @param $setting  string  setting name
+  * @return          mixed   setting value, or null if not found
+  */
+  public function getSetting($setting) {
+    if (isset($this->settings_[$setting])) {
+      return $this->settings_[$setting];
+    }
+    return false;
+  }
+
+  /**
+  * Get the available settings list
+  * @return   array  available setting list
+  */
+  public function getSettingsList() {
+    $ret = array();
+    foreach ($this->settings_ as $key => $value) {
+      $ret[$key] = $key;
+    }
+    return $ret;
+  }
+
+  /**
+  * Set the server settings from the auth_server field of the domain preferences
+  * domain preferences are formatted like this: server:port
+  * @param $settings  string  settings string from the domain preference
+  * @return           bool    true on success, false on failure
+  */
+  public function setServerSettings($settings) {
+    if ($this->getType() == 'local') {
+      return;
+    }
+
+    if (preg_match('/:/', $settings)) {
+      list($server, $port)  = preg_split ("/:/", $settings);
+    } else {
+      $server = $settings;
+    }
+    if (!isset($server) or $server == "") {
       return false;
     }
-
-    /**
-     * Get the available settings list
-     * @return   array  available setting list
-     */
-     public function getSettingsList() {
-        $ret = array();
-        foreach ($this->settings_ as $key => $value) {
-            $ret[$key] = $key;
-        }
-        return $ret;
-     }
-
-
-    /**
-     * Set the server settings from the auth_server field of the domain preferences
-     * domain preferences are formatted like this: server:port
-     * @param $settings  string  settings string from the domain preference
-     * @return           bool    true on success, false on failure
-     */
-    public function setServerSettings($settings) {
-        if ($this->getType() == 'local') {
-            return;
-        }
-
-        if (preg_match('/:/', $settings)) {
-           list($server, $port)  = preg_split ("/:/", $settings);
-        } else {
-        	$server = $settings;
-        }
-        if (!isset($server) or $server == "") {
-          return false;
-        }
-        if (!isset($port) or $port == "") {
-          $port = $this->getSetting('port');
-        }
-        $this->setSetting('server', $server);
-        $this->setSetting('port', $port);
-        return true;
+    if (!isset($port) or $port == "") {
+      $port = $this->getSetting('port');
     }
+    $this->setSetting('server', $server);
+    $this->setSetting('port', $port);
+    return true;
+  }
 
-    /**
-     * Set the parameters settings from the auth_param field of the domain
-     * @param $settings  string  settings string from the domain preference
-     * @return           bool    true on success, false on failure
-     */
-    public function setParamSettings($settings) {
+  /**
+  * Set the parameters settings from the auth_param field of the domain
+  * @param $settings  string  settings string from the domain preference
+  * @return           bool    true on success, false on failure
+  */
+  public function setParamSettings($settings) {
     $fields = preg_split('/\:/', $settings);
     if (count($fields) != count($this->spec_settings_)) {
       return false;
@@ -183,62 +183,62 @@ class ConnectorSettings {
       next($this->spec_settings_);
     }
     return true;
-   }
+  }
 
 
-    /**
-     * return the servers settings as a flattened string as expected by the auth_server preference of domain
-     * @return  string  flattened server settings
-     */
-    public function getFlatServerSettings() {
-        return $this->getSetting('server').":".$this->getSetting('port');
-    }
+  /**
+  * return the servers settings as a flattened string as expected by the auth_server preference of domain
+  * @return  string  flattened server settings
+  */
+  public function getFlatServerSettings() {
+    return $this->getSetting('server').":".$this->getSetting('port');
+  }
 
-    /**
-     * return the parameters settings as a flattened string as expected by the auth_param preference of domain
-     * @return  string  flattened param settings
-     */
-    public function getFlatParamSetting() {
+  /**
+  * return the parameters settings as a flattened string as expected by the auth_param preference of domain
+  * @return  string  flattened param settings
+  */
+  public function getFlatParamSetting() {
     $ret = "";
     foreach ($this->settings_ as $key => $value) {
       if ($key=='server' or $key=='port') { continue; }
-      // escape collons
-      $clean = str_replace(':', '__C__', $this->getSetting($key));
-      $ret .= $clean.":";
-    }
-    $ret = rtrim($ret);
-    $ret = rtrim($ret, '\:');
-    return $ret;
-   }
-
-   /**
-    * Get the internal connector type
-    * @return   string  connector type
-    */
-    public function getType(){
-      return $this->type_;
+        // escape collons
+        $clean = str_replace(':', '__C__', $this->getSetting($key));
+        $ret .= $clean.":";
+      }
+      $ret = rtrim($ret);
+      $ret = rtrim($ret, '\:');
+      return $ret;
     }
 
-    /**
-     * Get the field type of a setting
-     * @return array field type and values if needed
-     */
-     public function getFieldType($field_name) {
-        if (isset($this->settings_type_[$field_name])) {
-            return $this->settings_type_[$field_name];
-        }
-        if (isset($this->spec_settings_type_[$field_name])) {
-            return $this->spec_settings_type_[$field_name];
-        }
-        return null;
-     }
+  /**
+  * Get the internal connector type
+  * @return   string  connector type
+  */
+  public function getType(){
+    return $this->type_;
+  }
 
-    /**
-     * get the template tag for the condition
-     * @return string  template condition
-     */
-    public function getTemplateCondition() {
-      return $this->template_tag_;
+  /**
+  * Get the field type of a setting
+  * @return array field type and values if needed
+  */
+  public function getFieldType($field_name) {
+    if (isset($this->settings_type_[$field_name])) {
+      return $this->settings_type_[$field_name];
     }
+    if (isset($this->spec_settings_type_[$field_name])) {
+      return $this->spec_settings_type_[$field_name];
+    }
+    return null;
+  }
+
+  /**
+  * get the template tag for the condition
+  * @return string  template condition
+  */
+  public function getTemplateCondition() {
+    return $this->template_tag_;
+  }
 }
 ?>

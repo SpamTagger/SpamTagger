@@ -43,8 +43,8 @@
 }
 
 #search {
-	width: 120px !important;
-	border: 1px solid #d0c2ca;
+  width: 120px !important;
+  border: 1px solid #d0c2ca;
 }
 
 /* pagination */
@@ -114,8 +114,8 @@
 }
 
 #userconfigpanel {
-    width: 626px;
-    margin-left: 80px !important;
+  width: 626px;
+  margin-left: 80px !important;
 }
 
 .fleft {
@@ -131,10 +131,10 @@
 }
 
 .listinform {
-	padding-top: 15px !important;
-	padding-bottom: 15px;
-	padding-left: 1px;
-	padding-right: 5px;
+  padding-top: 15px !important;
+  padding-bottom: 15px;
+  padding-left: 1px;
+  padding-right: 5px;
 }
 
 .shortconfiglist {

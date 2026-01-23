@@ -25,14 +25,14 @@ $baseconf = DataManager::getFileConfig(SystemConfig::$CONFIGFILE_); ?>
     <!-- TODO: temporarily hide commercial rbls
     <?php foreach ($this->form->_ip_rbls as $check) {
         if (preg_match('/^INACTIVE/',$check->getLabel())) {
-	  echo '<input type="checkbox" onclick="return false;" /><span>' . preg_replace('/^use_rbl_/','',$check->getName()) . "&nbsp;&nbsp;";
-	  if (isset($baseconf['REGISTERED']) && $baseconf['REGISTERED'] == '1') {
+    echo '<input type="checkbox" onclick="return false;" /><span>' . preg_replace('/^use_rbl_/','',$check->getName()) . "&nbsp;&nbsp;";
+    if (isset($baseconf['REGISTERED']) && $baseconf['REGISTERED'] == '1') {
             echo '<button onclick="window.open(\'https://spamtagger.org/free-trial-options.html\', \'_blank\');">Free Trial</button></span><br />';
           } else {
             echo '<button onclick="window.open(\'https://spamtagger.org/community-edition-add-ons.html\', \'_blank\');">Premium Add-On</button></span><br />';
           }
-	} else {
-	  echo $this->InputRow($check, array('field_only'=>true,'nobox'=>'true','post_field_text'=>$check->getLabel()."<br />"));
+  } else {
+    echo $this->InputRow($check, array('field_only'=>true,'nobox'=>'true','post_field_text'=>$check->getLabel()."<br />"));
         }
     } ?>
     -->
@@ -45,14 +45,14 @@ $baseconf = DataManager::getFileConfig(SystemConfig::$CONFIGFILE_); ?>
     <!-- TODO: temporarily hide commercial rbls
     <?php foreach ($this->form->_uri_rbls as $check) {
         if (preg_match('/^INACTIVE/',$check->getLabel())) {
-	  echo '<input type="checkbox" onclick="return false;" /><span>' . preg_replace('/^use_rbl_/','',$check->getName()) . "&nbsp;&nbsp;";
-	  if (isset($baseconf['REGISTERED']) && $baseconf['REGISTERED'] == '1') {
+    echo '<input type="checkbox" onclick="return false;" /><span>' . preg_replace('/^use_rbl_/','',$check->getName()) . "&nbsp;&nbsp;";
+    if (isset($baseconf['REGISTERED']) && $baseconf['REGISTERED'] == '1') {
             echo '<button onclick="window.open(\'https://spamtagger.org/free-trial-options.html\', \'_blank\');">Free Trial</button></span><br />';
           } else {
             echo '<button onclick="window.open(\'https://spamtagger.org/community-edition-add-ons.html\', \'_blank\');">Premium Add-On</button></span><br />';
           }
-	} else {
-	  echo $this->InputRow($check, array('field_only'=>true,'nobox'=>'true','post_field_text'=>$check->getLabel()."<br />"));
+  } else {
+    echo $this->InputRow($check, array('field_only'=>true,'nobox'=>'true','post_field_text'=>$check->getLabel()."<br />"));
         }
     } ?>
     -->

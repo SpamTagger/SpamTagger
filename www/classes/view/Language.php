@@ -19,52 +19,51 @@ require_once("system/SystemConfig.php");
 * @package SpamTagger
 */
 
-class Language
-{
-    /**
-     * Language actually used (default is English)
-     * @var  string
-     */
-    private	$lang_ = "en";
+class Language {
+  /**
+   * Language actually used (default is English)
+   * @var  string
+   */
+  private  $lang_ = "en";
 
-    /*
-     * Available language
-     * @var array array of language. Shortcut name as key, and full name as value
-     */
-    private $available_languages_ = array();
+  /*
+   * Available language
+   * @var array array of language. Shortcut name as key, and full name as value
+   */
+  private $available_languages_ = array();
 
-    /*
-     * Available languages array in reversed key <==> value
-     * This one is useful for html select inputs
-     * @var array  array of language. Full name as key, and shortcut as value
-     */
-    private $inversed_languages_ = array();
+  /*
+   * Available languages array in reversed key <==> value
+   * This one is useful for html select inputs
+   * @var array  array of language. Full name as key, and shortcut as value
+   */
+  private $inversed_languages_ = array();
 
-    /**
-     * Array of translated message
-     * Stored with tags as keys and translated text as value
-     * @var array
-     */
-    private	$txts_;
+  /**
+   * Array of translated message
+   * Stored with tags as keys and translated text as value
+   * @var array
+   */
+  private  $txts_;
 
-    /**
-     * class instance of the SystemConfig object
-     * @var SystemConfig
-     */
-    private	$sysconf_;
+  /**
+   * class instance of the SystemConfig object
+   * @var SystemConfig
+   */
+  private  $sysconf_;
 
-    /**
-     * work mode of the language class. It can be 'user' or 'admin' depending of the interface displayed
-     * This mode will define where the languages file will be searched (in user htdocs or in admin htdocs)
-     * @var  string
-     */
-    private	$type_="user";
+  /**
+   * work mode of the language class. It can be 'user' or 'admin' depending of the interface displayed
+   * This mode will define where the languages file will be searched (in user htdocs or in admin htdocs)
+   * @var  string
+   */
+  private  $type_="user";
 
-    /**
-     * Instance of this singleton
-     * @var $Language
-     */
-    static private $instance_;
+  /**
+   * Instance of this singleton
+   * @var $Language
+   */
+  static private $instance_;
 
 
   /**
@@ -98,31 +97,31 @@ class Language
     // for langs.
     $currLangs = array("en" => "en_US", "de" => "de_DE", "fr" => "fr_FR", "it" => "it_IT", "nl" => "nl_NL", "es" => "es_ES");
     foreach ($dirs as $l) {
-        foreach ($language_codes as $l_code => $l_title) {
-                $ll = basename($l);
-		// Ignore duplicates
-		if (array_key_exists($ll, $this->available_languages_) || in_array($l_title, $this->available_languages_) ) {
-			continue;
-		}
-		if (array_key_exists($ll, $currLangs)) {
-			if ( in_array($language_codes[$currLangs[$ll]], $this->available_languages_) ) {
-				continue;
-			}
-		}
-
-                        if (array_key_exists($ll, $currLangs)) {
-                                $this->available_languages_[$ll] = $language_codes[$currLangs[$ll]];
-                                $this->inversed_languages_[$language_codes[$currLangs[$ll]]] = $ll;
-                                break;
-                        } else {
-                                if (preg_match("/^${ll}/", $l_code) == 1) {
-                                        $this->available_languages_[$ll] = $l_title;
-                                        $this->inversed_languages_[$l_title] = $ll;
-                                        break;
-                                }
-                        }
-
+      foreach ($language_codes as $l_code => $l_title) {
+        $ll = basename($l);
+        // Ignore duplicates
+        if (array_key_exists($ll, $this->available_languages_) || in_array($l_title, $this->available_languages_) ) {
+          continue;
         }
+        if (array_key_exists($ll, $currLangs)) {
+          if ( in_array($language_codes[$currLangs[$ll]], $this->available_languages_) ) {
+            continue;
+          }
+        }
+
+        if (array_key_exists($ll, $currLangs)) {
+          $this->available_languages_[$ll] = $language_codes[$currLangs[$ll]];
+          $this->inversed_languages_[$language_codes[$currLangs[$ll]]] = $ll;
+          break;
+        } else {
+          if (preg_match("/^${ll}/", $l_code) == 1) {
+            $this->available_languages_[$ll] = $l_title;
+            $this->inversed_languages_[$l_title] = $ll;
+            break;
+          }
+        }
+
+      }
     }
 
     asort($this->available_languages_);
@@ -133,39 +132,39 @@ class Language
     if (isset($user_)) {
       $lang = $user_->getPref('language');
       if ($user_->isStub()) {
-       $mainaddress = $user_->getMainAddress();
-       $addo = new Email();
-       if ($addo->load($mainaddress)) {
-         $lang = $addo->getPref('language');
-       }
-     }
-   }
+        $mainaddress = $user_->getMainAddress();
+        $addo = new Email();
+        if ($addo->load($mainaddress)) {
+          $lang = $addo->getPref('language');
+        }
+      }
+    }
 
-   if (isset($_SESSION['admin'])) {
-    $lang = 'en';
-  }
+    if (isset($_SESSION['admin'])) {
+      $lang = 'en';
+    }
     // third, if a lang variable is passed through the url, it overrides preferences
-  if (isset($_REQUEST['lang']) && $this->is_available($_REQUEST['lang'])) {
-    $lang = $_REQUEST['lang'];
-  }
-  if (isset($_GET['l']) && $this->is_available($_GET['l'])) {
-    $lang = $_GET['l'];
-  }
+    if (isset($_REQUEST['lang']) && $this->is_available($_REQUEST['lang'])) {
+      $lang = $_REQUEST['lang'];
+    }
+    if (isset($_GET['l']) && $this->is_available($_GET['l'])) {
+      $lang = $_GET['l'];
+    }
 
     // finally we check that the language exists and is available
-  if (! $this->is_available($lang)) {
-    $this->lang_="en";
-  } else {
-    $this->lang_=$lang;
-  }
+    if (! $this->is_available($lang)) {
+      $this->lang_="en";
+    } else {
+      $this->lang_=$lang;
+    }
 
     // admin actually only exists in English
-  if ($type == 'admin') {
-    $this->lang_="en";
-  }
+    if ($type == 'admin') {
+      $this->lang_="en";
+    }
 
-  $this->type_ = $type;
-  $this->reload();
+    $this->type_ = $type;
+    $this->reload();
   }
 
   /**
@@ -182,11 +181,11 @@ class Language
    * @return       bool   true on success, false on failure
    */
   public function setLanguage($lang) {
-   if (isset($this->available_languages_[$lang])) {
-     $this->lang_ = $lang;
-     return true;
-   }
-   return false;
+    if (isset($this->available_languages_[$lang])) {
+      $this->lang_ = $lang;
+      return true;
+    }
+    return false;
   }
 
   /**
@@ -197,9 +196,9 @@ class Language
   */
   public static function getInstance($type) {
     if (empty(self::$instance_)) {
-     self::$instance_ = new Language($type);
-   }
-   return self::$instance_;
+      self::$instance_ = new Language($type);
+    }
+    return self::$instance_;
   }
 
   /**
@@ -208,27 +207,27 @@ class Language
    * @return   bool  true on success, false on failure
    */
   function reload() {
-   if ($this->type_ == 'admin') {
-    $this->lang_ = 'en';
-  }
+    if ($this->type_ == 'admin') {
+      $this->lang_ = 'en';
+    }
 
-  $txt = array();
-  $this->txts_ = array();
+    $txt = array();
+    $this->txts_ = array();
 
     // Load the default arrays and overwrite it by selected language.
     // This permits to have default words for missing translations.
-  include($this->sysconf_->SRCDIR_."/www/".$this->type_."/htdocs/lang/en/texts.php");
+    include($this->sysconf_->SRCDIR_."/www/".$this->type_."/htdocs/lang/en/texts.php");
 
-  foreach ($txt as $t => $str) {
-    $this->txts_[$t] = $str;
-  }
-  include($this->sysconf_->SRCDIR_."/www/".$this->type_."/htdocs/lang/".$this->lang_."/texts.php");
+    foreach ($txt as $t => $str) {
+      $this->txts_[$t] = $str;
+    }
+    include($this->sysconf_->SRCDIR_."/www/".$this->type_."/htdocs/lang/".$this->lang_."/texts.php");
 
-  foreach ($txt as $t => $str) {
-    $this->txts_[$t] = $str;
-  }
-  return true;
-  }
+    foreach ($txt as $t => $str) {
+      $this->txts_[$t] = $str;
+  
+      return true;
+    }
 
   /**
    * Get the languages array
@@ -274,10 +273,10 @@ class Language
    */
   public function print_txt_param($text_tag, $param) {
     if (isset($this->txts_[$text_tag])) {
-    	$str = $this->txts_[$text_tag];
-     return str_replace('__PARAM__', $param, $str);
-   }
-   return "";
+      $str = $this->txts_[$text_tag];
+      return str_replace('__PARAM__', $param, $str);
+    }
+    return "";
   }
 
   public function print_txt_mparam($text_tag, $params) {
@@ -312,10 +311,10 @@ class Language
    * @return        bool    true if language exists, false otherwise
    */
   public function is_available($lang) {
-   if (isset($this->available_languages_[$lang])) {
-    return true;
-  }
-  return false;
+    if (isset($this->available_languages_[$lang])) {
+      return true;
+    }
+    return false;
   }
 }
 ?>

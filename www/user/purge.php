@@ -68,7 +68,7 @@ if (isset($_GET['doit'])) {
         $res = $lang_->print_txt_mparam('ASKPURGECONFIRM', array($_GET['days'], $_GET['a']));
       } else {
         $res = $lang_->print_txt('DESTNOTVALID');
-	//$doit = false;
+        //$doit = false;
       }
     } else {
       $addresses = [];
@@ -93,10 +93,10 @@ if ($doit) {
 // prepare replacements
 $replace = array(
   '__INCLUDE_JS__' => "<script type=\"text/javascript\" charset=\"utf-8\">
-                        function confirmation() {
-                          window.location.href=\"".$_SERVER['PHP_SELF']."?".$_SERVER['QUERY_STRING']."&doit=1\";
-                        }
-                       </script>",
+  function confirmation() {
+    window.location.href=\"".$_SERVER['PHP_SELF']."?".$_SERVER['QUERY_STRING']."&doit=1\";
+  }
+  </script>",
   '__MESSAGE__' => $res,
   '__CONFIRM_BUTTON__' => confirm_button($doit)
 );
@@ -110,11 +110,11 @@ $template_->output($replace);
  * @return            string   html button string if needed, or "" if not
  */
 function confirm_button($doit) {
- $ret = "";
-  global $lang_;
-  if (!$doit) {
-     $ret = "<input type=\"button\" id=\"confirm\" class=\"button\" onclick=\"javascript:confirmation();\" value=\"".$lang_->print_txt('CONFIRM')."\" />";
-  }
-  return $ret;
+  $ret = "";
+    global $lang_;
+    if (!$doit) {
+      $ret = "<input type=\"button\" id=\"confirm\" class=\"button\" onclick=\"javascript:confirmation();\" value=\"".$lang_->print_txt('CONFIRM')."\" />";
+    }
+    return $ret;
 }
 ?>

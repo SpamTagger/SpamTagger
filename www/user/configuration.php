@@ -41,21 +41,16 @@ if ($antispam_->getPref('enable_warnlists') && $user_->getDomain()->getPref('ena
   $topics['warn'] = array('WARNLISTTOPIC', 'conf_warnlist.tmpl', 'ConfigUserWWList');
 }
 
-/*
-if ($antispam_->getPref('enable_wantlists') && $user_->getDomain()->getPref('enable_wantlists')) {
-} */
-
 $topics['want'] = array('WANTLISTTOPIC', 'conf_wantlist.tmpl', 'ConfigUserWWList');
 $topics['block'] = array('BLOCKLISTTOPIC', 'conf_blocklist.tmpl', 'ConfigUserWWList');
 $topics['wnews'] = array('NEWSLISTTOPIC', 'conf_newslist.tmpl', 'ConfigUserWWList');
-
 
 $topic = 'int';
 if (isset($_GET['t']) && isset($topics[$_GET['t']])) {
   $topic = $_GET['t'];
 }
 if (!isset($topics[$topic])) {
-	$topic = key($topics);
+  $topic = key($topics);
 }
 
 // get specific controller
@@ -67,20 +62,18 @@ $controller->processInput();
 $template_ = new Template($topics[$topic][1]);
 
 $replace = array(
-    "__PRINT_USERNAME__" => $user_->getName(),
-    "__LINK_LOGOUT__" => '/logout.php',
-
-    "__MENULIST__" => getMenuList(),
-    "__THISTOPIC__" => $topic,
-    "__TOPIC_TITLE__" => $lang_->print_txt($topics[$topic][0]."TITLE"),
-    '__SELECTOR_LANG__' => $lang_->html_select(),
+  "__PRINT_USERNAME__" => $user_->getName(),
+  "__LINK_LOGOUT__" => '/logout.php',
+  "__MENULIST__" => getMenuList(),
+  "__THISTOPIC__" => $topic,
+  "__TOPIC_TITLE__" => $lang_->print_txt($topics[$topic][0]."TITLE"),
+  '__SELECTOR_LANG__' => $lang_->html_select(),
 );
 
 $replace = $controller->addReplace($replace, $template_);
 
 // display page
 $template_->output($replace);
-
 
 function getMenuList() {
   global $template_;
@@ -90,7 +83,7 @@ function getMenuList() {
   $ret = "";
   foreach ($topics as $topicname => $topic) {
     $t = $template_->getTemplate('MENUITEM');
-  	$t = str_replace('__TOPIC__', $topicname, $t);
+    $t = str_replace('__TOPIC__', $topicname, $t);
     $t = str_replace('__TOPIC_TEXT__', $lang_->print_txt($topic[0]), $t);
     $ret .= $t;
   }

@@ -23,72 +23,73 @@ require_once("connector/LoginFormatter.php");
  */
 class Domain extends PrefHandler {
 
- /**
+  /**
   * Domain destination SMTP port
   * This value is taken from the destination field below which is formatted like this 'server/port'
   * @var number
   */
- private $destination_port_ = 25;
+  private $destination_port_ = 25;
 
- /**
+  /**
   * Domain configuration set with default values (will be stored in domain table)
   * @var array
   */
- private $pref_domain_ = array(
-                      'id'                    => 0,
-                      'name'                  => '',
-                      'destination'           => '',
-                      'callout'               => 'false',
-                      'altcallout'            => '',
-                      'adcheck'               => 'false',
-                      'forward_by_mx'         => 'false',
-                      'greylist'              => 'false',
-                     );
+  private $pref_domain_ = array(
+    'id'                    => 0,
+    'name'                  => '',
+    'destination'           => '',
+    'callout'               => 'false',
+    'altcallout'            => '',
+    'adcheck'               => 'false',
+    'forward_by_mx'         => 'false',
+    'greylist'              => 'false',
+  );
+
   /**
-   * Domain preferences set with default values (will be stored in domain_pref table)
-   * it's id is references by the domain configuration (field prefs)
-   * @var array
-   */
+  * Domain preferences set with default values (will be stored in domain_pref table)
+  * it's id is references by the domain configuration (field prefs)
+  * @var array
+  */
   private $pref_domain_prefs_ = array(
-                      'delivery_type'         => 1,
-                      'viruswall'             => 1,
-                      'virus_subject'         => '{Virus?}',
-                      'spamwall'              => 1,
-                      'spam_tag'              => '{Spam?}',
-                      'contentwall'           => 1,
-                      'content_subject'       => '{Content?}',
-                      'auth_type'             => 'local',
-                      'auth_server'           => 'localhost',
-                      'auth_modif'            => 'username_only',
-                      'auth_param'            => '',
-                      'address_fetcher'       => 'local',
-                      'allow_smtp_auth'       => 0,
-                      'daily_summary'         => 0,
-                      'weekly_summary'        => 1,
-                      'monthly_summary'       => 0,
-                      'language'              => 'en',
-                       'gui_displayed_spams'  => '20',
-                       'gui_displayed_days'   => '7',
-                       'gui_mask_forced'      => '0',
-                       'gui_graph_type'       => 'bar',
-                       'gui_default_address'  => '',
-                       'gui_group_quarantines' => 0,
-                      'web_template'          => 'default',
-                      'summary_template'      => 'default',
-                      'summary_type'          => 'html',
-                      'report_template'       => 'default',
-                      'support_email'         => '',
-                      'quarantine_bounces'    => 0,
-                      'presharedkey'          => '',
-                      'enable_wantlists'     => '0',
-                      'enable_warnlists'      => '0',
-		      'enable_blocklists'     => '0',
-                      'notice_wwlists_hit'    => '0',
-                      'warnhit_template'      => 'default',
-                      'falseneg_to'           => '',
-                      'falsepos_to'           => '',
-                      'supportemail'          => ''
-                    );
+    'delivery_type'         => 1,
+    'viruswall'             => 1,
+    'virus_subject'         => '{Virus?}',
+    'spamwall'              => 1,
+    'spam_tag'              => '{Spam?}',
+    'contentwall'           => 1,
+    'content_subject'       => '{Content?}',
+    'auth_type'             => 'local',
+    'auth_server'           => 'localhost',
+    'auth_modif'            => 'username_only',
+    'auth_param'            => '',
+    'address_fetcher'       => 'local',
+    'allow_smtp_auth'       => 0,
+    'daily_summary'         => 0,
+    'weekly_summary'        => 1,
+    'monthly_summary'       => 0,
+    'language'              => 'en',
+    'gui_displayed_spams'   => '20',
+    'gui_displayed_days'    => '7',
+    'gui_mask_forced'       => '0',
+    'gui_graph_type'        => 'bar',
+    'gui_default_address'   => '',
+    'gui_group_quarantines' => 0,
+    'web_template'          => 'default',
+    'summary_template'      => 'default',
+    'summary_type'          => 'html',
+    'report_template'       => 'default',
+    'support_email'         => '',
+    'quarantine_bounces'    => 0,
+    'presharedkey'          => '',
+    'enable_wantlists'      => '0',
+    'enable_warnlists'      => '0',
+    'enable_blocklists'     => '0',
+    'notice_wwlists_hit'    => '0',
+    'warnhit_template'      => 'default',
+    'falseneg_to'           => '',
+    'falsepos_to'           => '',
+    'supportemail'          => ''
+  );
 
   /**
    * Authentication connector object used by the domain
@@ -144,8 +145,8 @@ class Domain extends PrefHandler {
       $where_clause .= " AND d.name='".$name."'";
     }
     if (!$this->loadPrefs("d.id as id, d.name as name, p.id as pid,", $where_clause, true)) {
-	$this->formatter_ = LoginFormatter::getFormatter('');
-	return false;
+      $this->formatter_ = LoginFormatter::getFormatter('');
+      return false;
     }
 
     if (preg_match('/(.+)\/(\d+)/', $this->getPref('destination'), $matches)) {
@@ -189,10 +190,10 @@ class Domain extends PrefHandler {
       $this->destination_port_ = $value;
     }
     if ($pref == "viruswall") {
-    	$this->setPref('contentwall', $value);
+      $this->setPref('contentwall', $value);
     }
     if ($pref == 'summary_type' && !preg_match('/^(html|text|digest)$/', $value)) {
-    	$value = 'html';
+      $value = 'html';
     }
     return parent::setPref($pref, $value);
   }
@@ -238,14 +239,14 @@ class Domain extends PrefHandler {
     # save value
     $ret = $this->savePrefs(null, null, '');
     if (!$ret) {
-    	return $ret;
+      return $ret;
     }
     ## set as default domain if needed
     if ($sysconf_->getPref('default_domain') == "your_domain" ||
-           $sysconf_->getPref('default_domain') == "" ||
-           $sysconf_->getPref('default_domain') == 'localdomain' ) {
-       $sysconf_->setPref('default_domain', $this->getPref('name'));
-       $sysconf_->save();
+      $sysconf_->getPref('default_domain') == "" ||
+      $sysconf_->getPref('default_domain') == 'localdomain' ) {
+      $sysconf_->setPref('default_domain', $this->getPref('name'));
+      $sysconf_->save();
     }
     ## dump the configuration through all hosts
     $res = $sysconf_->dumpConfiguration('domains', $this->getPref('name'));
@@ -273,7 +274,7 @@ class Domain extends PrefHandler {
     global $sysconf_;
     $ret = $this->deletePrefs(null);
     if (!$ret) {
-    	return $ret;
+      return $ret;
     }
     ## dump the configuration through all hosts
     $res = $sysconf_->dumpConfiguration('domains', $this->getPref('name'));
@@ -285,7 +286,7 @@ class Domain extends PrefHandler {
    * @return  ConnectorSettings  ConnectorSettings object
    */
    public function getConnectorSettings() {
-    return $this->connector;
+     return $this->connector;
    }
 
    /**
@@ -295,7 +296,7 @@ class Domain extends PrefHandler {
     */
     public function getFormatedLogin($login_given) {
       if (!$this->formatter_) {
-      	return ' ';
+        return ' ';
       }
       return $this->formatter_->format($login_given, $this->getPref('name'));
     }

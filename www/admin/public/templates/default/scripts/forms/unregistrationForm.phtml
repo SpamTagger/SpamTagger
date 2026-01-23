@@ -11,15 +11,15 @@
  <fieldset id="localesettings">
        <table class="ftable">
           <tr><td colspan="2"><p style="font-size:14px"><strong>Unregister your SpamTagger:</strong></p></td></tr>
-	  <?php if ($this->registered == 1) {?>
-		<tr><td colspan="2"><font color="red"><strong>WARNING:</strong></font> By unregistering your SpamTagger, you will lose all Enterprise Edition elements like RBLs, bayesians, spamassassin rules, etc...</td></tr>
+    <?php if ($this->registered == 1) {?>
+    <tr><td colspan="2"><font color="red"><strong>WARNING:</strong></font> By unregistering your SpamTagger, you will lose all Enterprise Edition elements like RBLs, bayesians, spamassassin rules, etc...</td></tr>
           <?php } else { ?>
-		<tr><td colspan="2"><font color="red"><strong>WARNING:</strong></font> By unregister your SpamTagger, you will lose all your custom elements !</td></tr>
+    <tr><td colspan="2"><font color="red"><strong>WARNING:</strong></font> By unregister your SpamTagger, you will lose all your custom elements !</td></tr>
           <?php } ?>
 
           <?php if ($this->registered == 1) {?>
-	  	<?php echo $this->InputRow($this->form->getElement('rsp'));?>
-	  <?php } ?>
+      <?php echo $this->InputRow($this->form->getElement('rsp'));?>
+    <?php } ?>
           <?php echo $this->SubmitRow($this->form->getElement('unregister'));?>
        </table>
      </fieldset>

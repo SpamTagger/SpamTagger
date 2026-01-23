@@ -14,8 +14,7 @@
  * @author Olivier Diserens
  * @copyright 2025, SpamTagger
  */
-class PrefHandler
-{
+class PrefHandler {
   /**
    * The main preferences set arrays
    * This is an array of array containing arrays of preferences set, one per database table
@@ -75,7 +74,7 @@ class PrefHandler
   protected function addPrefSet($table_name, $table_shortcut, $pref_array) {
     $this->tables_shortcuts_[$table_name] = $table_shortcut;
     foreach ($pref_array as $preference => $default_value) {
-       $this->pref_tables_[$table_name][$preference] = $default_value;
+      $this->pref_tables_[$table_name][$preference] = $default_value;
     }
     return true;
   }
@@ -91,7 +90,7 @@ class PrefHandler
    */
   protected function setPrefSetRelation($target_table, $link_field) {
     if (is_string($target_table)) {
-        $this->relations_[$target_table] = $link_field;
+      $this->relations_[$target_table] = $link_field;
     }
     return true;
   }
@@ -105,10 +104,10 @@ class PrefHandler
    */
   public function setPref($pref, $value) {
     foreach ($this->pref_tables_ as $table_name => $table) {
-        if (array_key_exists($pref, $this->pref_tables_[$table_name])) {
-            $this->pref_tables_[$table_name][$pref] = $value;
-            return true;
-        }
+      if (array_key_exists($pref, $this->pref_tables_[$table_name])) {
+        $this->pref_tables_[$table_name][$pref] = $value;
+        return true;
+      }
     }
     return false;
   }
@@ -121,15 +120,15 @@ class PrefHandler
    */
   public function getPref($pref) {
     foreach ($this->pref_tables_ as $table) {
-        if (isset($table[$pref])) {
-          if ($table[$pref] == 'true') {
-            return true;
-          }
-          if ($table[$pref] == 'false') {
-            return false;
-          }
-          return $table[$pref];
+      if (isset($table[$pref])) {
+        if ($table[$pref] == 'true') {
+          return true;
         }
+        if ($table[$pref] == 'false') {
+          return false;
+        }
+        return $table[$pref];
+      }
     }
     return null;
   }
@@ -161,7 +160,7 @@ class PrefHandler
    */
    public function getRecordId($table_name) {
     if (isset($this->record_ids_[$this->tables_shortcuts_[$table_name]])) {
-        return $this->record_ids_[$this->tables_shortcuts_[$table_name]];
+      return $this->record_ids_[$this->tables_shortcuts_[$table_name]];
     }
     return 0;
    }
@@ -179,25 +178,25 @@ class PrefHandler
     $this->use_ids_ = $use_id;
 
     if (is_string($additional_fields)) {
-        $query .= $additional_fields." ";
+      $query .= $additional_fields." ";
     }
 
     foreach ($this->pref_tables_ as $table_name => $table) {
+      if ($this->tables_shortcuts_[$table_name] != "") {
+        if ($this->use_ids_) {
+          if (!isset($this->id_fields_[$table_name])) {
+            $query .= $this->tables_shortcuts_[$table_name].".id as ".$this->tables_shortcuts_[$table_name]."_id, ";
+          } else {
+            $query .= $this->tables_shortcuts_[$table_name].".".$this->id_fields_[$table_name]." as ".$this->tables_shortcuts_[$table_name]."_id, ";
+          }
+        }
+      }
+      foreach ($table as $pref => $val) {
         if ($this->tables_shortcuts_[$table_name] != "") {
-            if ($this->use_ids_) {
-              if (!isset($this->id_fields_[$table_name])) {
-                $query .= $this->tables_shortcuts_[$table_name].".id as ".$this->tables_shortcuts_[$table_name]."_id, ";
-              } else {
-                $query .= $this->tables_shortcuts_[$table_name].".".$this->id_fields_[$table_name]." as ".$this->tables_shortcuts_[$table_name]."_id, ";
-              }
-            }
+          $query .= $this->tables_shortcuts_[$table_name].".";
         }
-        foreach ($table as $pref => $val) {
-            if ($this->tables_shortcuts_[$table_name] != "") {
-                $query .= $this->tables_shortcuts_[$table_name].".";
-            }
-            $query .= $pref." as ".$pref.", ";
-        }
+        $query .= $pref." as ".$pref.", ";
+      }
     }
     $query = rtrim($query);
     $query = rtrim($query, '\,');
@@ -214,22 +213,22 @@ class PrefHandler
     $query = rtrim($query, '\,');
 
     if (is_string($where_clause) && $where_clause != "") {
-        $query .= " WHERE ".$where_clause;
+      $query .= " WHERE ".$where_clause;
     }
     require_once ('helpers/DataManager.php');
     $db_sourceconf = DM_MasterConfig :: getInstance();
     $this->last_query_ = $query;
     $res = $db_sourceconf->getHash($query);
     if (!is_array($res) || empty($res)) {
-        return false;
+      return false;
     }
     $matches = array();
     //var_dump($res);
     foreach ($res as $key => $value) {
-        if (preg_match('/^(\S+)\_id$/', $key, $matches)) {
-            $this->record_ids_[$matches[1]] = $value;
-        }
-        $this->setPref($key, $value);
+      if (preg_match('/^(\S+)\_id$/', $key, $matches)) {
+        $this->record_ids_[$matches[1]] = $value;
+      }
+      $this->setPref($key, $value);
     }
     $this->loaded_ = true;
     return true;
@@ -243,16 +242,16 @@ class PrefHandler
    */
   protected function shouldUpdate() {
     if (!$this->use_ids_ && empty($this->relations_) && $this->loaded_) {
-        return true;
+      return true;
     }
     foreach ($this->pref_tables_ as $table_name => $table) {
-        if (!isset($this->record_ids_[$this->tables_shortcuts_[$table_name]])) {
-            return false;
-        }
-        $id = $this->record_ids_[$this->tables_shortcuts_[$table_name]];
-        if ( (is_numeric($id) && $id == 0) || $id == "") {
-            return false;
-        }
+      if (!isset($this->record_ids_[$this->tables_shortcuts_[$table_name]])) {
+        return false;
+      }
+      $id = $this->record_ids_[$this->tables_shortcuts_[$table_name]];
+      if ( (is_numeric($id) && $id == 0) || $id == "") {
+        return false;
+      }
     }
     return true;
   }
@@ -278,65 +277,65 @@ class PrefHandler
     require_once ('helpers/DataManager.php');
     $db_sourceconf = DM_MasterConfig :: getInstance();
     if ($this->shouldUpdate()) {
-        foreach ($this->pref_tables_ as $table_name => $table) {
-            $query = "UPDATE $table_name ";
-            if ($this->tables_shortcuts_[$table_name] != "") {
-               $query .= $this->tables_shortcuts_[$table_name];
-            }
-            $query .= " SET ";
-            $query .= $this->getSQLPrefSet($table_name);
-            if ($this->use_ids_) {
-              if (!isset($this->id_fields_[$table_name])) {
-                $query .= " WHERE id=".$this->record_ids_[$this->tables_shortcuts_[$table_name]];
-              } else {
-                $query .= " WHERE ".$this->id_fields_[$table_name]."='".$this->record_ids_[$this->tables_shortcuts_[$table_name]]."'";
-              }
-            } else {
-                if ($where_clause != "" && ($w_table == "" || $w_table == $this->tables_shortcuts_[$table_name])) {
-                $query .= " WHERE ".$where_clause;
-                }
-            }
-            $this->last_query = $query;
-            if (!$db_sourceconf->doExecute($query)) {
-                return 'ERR_SAVEPREF_EXECUTEQUERY';
-            }
-            continue;
+      foreach ($this->pref_tables_ as $table_name => $table) {
+        $query = "UPDATE $table_name ";
+        if ($this->tables_shortcuts_[$table_name] != "") {
+          $query .= $this->tables_shortcuts_[$table_name];
         }
-        $retok = 'OKSAVED';
-    } else {
-        $query = array();
-        if (count($this->relations_) > 0) {
-            foreach ($this->relations_ as $target_table => $link_field) {
-              $target_table_name = $this->getTableNameFromShortcut($target_table);
-              $query[$target_table_name] = "INSERT INTO $target_table_name SET ".$this->getSQLPrefSet($target_table_name);
-              $link_array=array();
-              if (preg_match('/^(\S+)\.(\S+)$/', $link_field, $link_array)) {
-                  $link_table_name = $this->getTableNameFromShortcut($link_array[1]);
-                  $query[$link_table_name] = "INSERT INTO ".$link_table_name." SET ".$this->getSQLPrefSet($link_table_name);
-                  $query[$link_table_name] .= ", ".$link_array[2]."=LAST_INSERT_ID()";
-                }
-            }
+        $query .= " SET ";
+        $query .= $this->getSQLPrefSet($table_name);
+        if ($this->use_ids_) {
+          if (!isset($this->id_fields_[$table_name])) {
+            $query .= " WHERE id=".$this->record_ids_[$this->tables_shortcuts_[$table_name]];
+          } else {
+            $query .= " WHERE ".$this->id_fields_[$table_name]."='".$this->record_ids_[$this->tables_shortcuts_[$table_name]]."'";
+          }
         } else {
-            foreach ($this->pref_tables_ as $table_name => $table) {
-                $query[$table_name] = "INSERT INTO $table_name SET ".$this->getSQLPrefSet($table_name);
-            }
+          if ($where_clause != "" && ($w_table == "" || $w_table == $this->tables_shortcuts_[$table_name])) {
+            $query .= " WHERE ".$where_clause;
+          }
         }
-        foreach ($query as $q_table => $q) {
-            $this->last_query_ = $q;
-            if (!$db_sourceconf->doExecute($q)) {
-                if ($db_sourceconf->getLastError() == "RECORDALREADYEXISTS") {
-                	return $db_sourceconf->getLastError();
-                }
-                return 'ERR_SADDPREF_EXECUTEQUERY';
-            }
-            // get last_id
-            $id_query = "SELECT LAST_INSERT_ID() as id";
-            $res = $db_sourceconf->getHash($id_query);
-            if (is_array($res)) {
-               $this->record_ids_[$this->tables_shortcuts_[$q_table]] = $res['id'];
-            }
+        $this->last_query = $query;
+        if (!$db_sourceconf->doExecute($query)) {
+          return 'ERR_SAVEPREF_EXECUTEQUERY';
         }
-        $retok = 'OKADDED';
+        continue;
+      }
+      $retok = 'OKSAVED';
+    } else {
+      $query = array();
+      if (count($this->relations_) > 0) {
+        foreach ($this->relations_ as $target_table => $link_field) {
+          $target_table_name = $this->getTableNameFromShortcut($target_table);
+          $query[$target_table_name] = "INSERT INTO $target_table_name SET ".$this->getSQLPrefSet($target_table_name);
+          $link_array=array();
+          if (preg_match('/^(\S+)\.(\S+)$/', $link_field, $link_array)) {
+            $link_table_name = $this->getTableNameFromShortcut($link_array[1]);
+            $query[$link_table_name] = "INSERT INTO ".$link_table_name." SET ".$this->getSQLPrefSet($link_table_name);
+            $query[$link_table_name] .= ", ".$link_array[2]."=LAST_INSERT_ID()";
+          }
+        }
+      } else {
+        foreach ($this->pref_tables_ as $table_name => $table) {
+          $query[$table_name] = "INSERT INTO $table_name SET ".$this->getSQLPrefSet($table_name);
+        }
+      }
+      foreach ($query as $q_table => $q) {
+        $this->last_query_ = $q;
+        if (!$db_sourceconf->doExecute($q)) {
+          if ($db_sourceconf->getLastError() == "RECORDALREADYEXISTS") {
+            return $db_sourceconf->getLastError();
+          }
+          return 'ERR_SADDPREF_EXECUTEQUERY';
+        }
+        // get last_id
+        $id_query = "SELECT LAST_INSERT_ID() as id";
+        $res = $db_sourceconf->getHash($id_query);
+        if (is_array($res)) {
+          $this->record_ids_[$this->tables_shortcuts_[$q_table]] = $res['id'];
+        }
+      }
+      $retok = 'OKADDED';
     }
     return $retok;
   }
@@ -352,7 +351,7 @@ class PrefHandler
     require_once ('helpers/DataManager.php');
     $db_replicaconf = DM_SlaveConfig :: getInstance();
     foreach ($this->pref_tables_[$table_name] as $pref => $value) {
-        $ret .= $pref."='".$db_replicaconf->sanitize($value)."', ";
+      $ret .= $pref."='".$db_replicaconf->sanitize($value)."', ";
     }
     $ret = rtrim($ret);
     $ret = rtrim($ret, '\,');
@@ -379,22 +378,22 @@ class PrefHandler
     require_once ('helpers/DataManager.php');
     $db_sourceconf = DM_MasterConfig :: getInstance();
     foreach ($this->pref_tables_ as $table_name => $table) {
-        $query = "DELETE FROM ".$table_name;
-        if ($this->use_ids_) {
-          if (!isset($this->id_fields_[$table_name])) {
-            $query .= " WHERE id=".$this->record_ids_[$this->tables_shortcuts_[$table_name]];
-          } else {
-            $query .= " WHERE ".$this->id_fields_[$table_name]."='".$this->record_ids_[$this->tables_shortcuts_[$table_name]]."'";
-          }
+      $query = "DELETE FROM ".$table_name;
+      if ($this->use_ids_) {
+        if (!isset($this->id_fields_[$table_name])) {
+          $query .= " WHERE id=".$this->record_ids_[$this->tables_shortcuts_[$table_name]];
         } else {
-          if (is_string($where_clause)) {
-              $query .= " WHERE ".$where_clause;
-          }
+          $query .= " WHERE ".$this->id_fields_[$table_name]."='".$this->record_ids_[$this->tables_shortcuts_[$table_name]]."'";
         }
-        $this->last_query_ = $query;
-        if (!$db_sourceconf->doExecute($query)) {
-            return 'ERR_DELETEPREF_EXECUTEQUERY';
+      } else {
+        if (is_string($where_clause)) {
+          $query .= " WHERE ".$where_clause;
         }
+      }
+      $this->last_query_ = $query;
+      if (!$db_sourceconf->doExecute($query)) {
+        return 'ERR_DELETEPREF_EXECUTEQUERY';
+      }
     }
     return 'OKDELETED';
   }

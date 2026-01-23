@@ -31,7 +31,7 @@
  <?php }?>
    <?php foreach ($this->logs as $log) {
      if ($log->getParam('category') == $c && $log->getParam('replica_id') == $replica->getId()) {
-   	?>
+     ?>
     <tr class="logrow">
       <td class="lognamefield"><?php echo $log->getParam('name');?> : </td>
       <?php if ($log->getParam('file') != '') {?>

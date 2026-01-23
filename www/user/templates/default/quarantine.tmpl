@@ -12,10 +12,10 @@
   <link rel="stylesheet" type="text/css" href="css/navigation.css" media="screen" />
   <link rel="stylesheet" type="text/css" href="css/quarantine.css" media="screen" />
 
-      <link rel="stylesheet" href="templates/default/newsletters/js/jquery-ui.min.css">
-    <link rel="stylesheet" href="templates/default/newsletters/css/newsletters.css">
-    <script src="templates/default/newsletters/js/external/jquery/jquery.js"></script>
-    <script src="templates/default/newsletters/js/jquery-ui.min.js"></script>
+  <link rel="stylesheet" href="templates/default/newsletters/js/jquery-ui.min.css">
+  <link rel="stylesheet" href="templates/default/newsletters/css/newsletters.css">
+  <script src="templates/default/newsletters/js/external/jquery/jquery.js"></script>
+  <script src="templates/default/newsletters/js/jquery-ui.min.js"></script>
 
   <script type="text/javascript" charset="utf-8">
    var template_path = '__TEMPLATE_PATH__';
@@ -83,14 +83,6 @@
    }
   </style>
 
-
-<!--[if gt IE 5]>
-<link rel="stylesheet" type="text/css" href="css/ie.css" media="screen" />
-<![endif]-->
-<!--[if lt IE 7]>
-<link rel="stylesheet" type="text/css" href="css/ie6.css" media="screen" />
-<![endif]-->
-
  </head>
 <body>
 
@@ -100,7 +92,6 @@
 <div id="tooltip">
 </div>
 <!-- END flyover box -->
-
 
 __INCLUDE__(header.tmpl)
 __IF__ MSGTODISPLAY
@@ -116,15 +107,15 @@ __FI__ MSGTODISPLAY
 <div id="pagecontent">
 __BEGIN_FILTER_FORM__
 <div id="addressselectpanel">
-	<p>__LANG_SELECTEDADDRESS__: </p>
-	__ADDRESS_SELECTOR__ __GROUPQUARANTINES__ __LANG_GROUPQUARANTINES__<br/>
-	__SPAMONLY__ __LANG_SPAMONLY__<br/>
-	__NEWSLONLY__ __LANG_NEWSLONLY__
+  <p>__LANG_SELECTEDADDRESS__: </p>
+  __ADDRESS_SELECTOR__ __GROUPQUARANTINES__ __LANG_GROUPQUARANTINES__<br/>
+  __SPAMONLY__ __LANG_SPAMONLY__<br/>
+  __NEWSLONLY__ __LANG_NEWSLONLY__
 </div>
 
  <div id="searchpanel">
  <img src="images/loupe.png" alt="__LANG_SEARCH__" />
-	__LANG_SENDER__: __SEARCHFROM_FIELD__
+  __LANG_SENDER__: __SEARCHFROM_FIELD__
     __LANG_SUBJECT__: __SEARCHSUBJECT_FIELD__
   <!--  __LAST_NBDAYS__ -->
     __SEARCH_BUTTON__

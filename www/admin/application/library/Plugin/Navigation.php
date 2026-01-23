@@ -25,17 +25,17 @@ class Plugin_Navigation extends Zend_Controller_Plugin_Abstract {
 
     $role = 'guest';
     try {
-    	$this->_role = Zend_Registry::get('user')->getUserType();
-    	$this->_acl = Zend_Registry::get('acl');
+      $this->_role = Zend_Registry::get('user')->getUserType();
+      $this->_acl = Zend_Registry::get('acl');
     } catch(Exception $e) {
-    	return;
+      return;
     }
 
     foreach ($main_menus_defs as $mk => $m) {
-    	if (!$this->_acl->isAllowed($this->_role, 'Menu_'.$mk)) {
-    		continue;
-    	}
-    	$page = new Zend_Navigation_Page_Mvc(array('label' => $t->_($mk), 'id' => "$mk", 'action' => '', 'controller' => $m['controller'], 'class' => 'menubutton'));
+      if (!$this->_acl->isAllowed($this->_role, 'Menu_'.$mk)) {
+        continue;
+      }
+      $page = new Zend_Navigation_Page_Mvc(array('label' => $t->_($mk), 'id' => "$mk", 'action' => '', 'controller' => $m['controller'], 'class' => 'menubutton'));
       $main_menu->addPage($page);
     }
 
@@ -64,22 +64,22 @@ class Plugin_Navigation extends Zend_Controller_Plugin_Abstract {
   protected function setupConfigurationMenu($nav) {
     $t = Zend_Registry::get('translate');
     $config_menus_defs = array(
-    	'BaseSystem' => array('controller' => 'baseconfiguration', 'action' => 'networksettings'),
-    	'GeneralSettings' => array('controller' => 'generalsettings', 'action' => 'defaults'),
-    	'Domains' => array('controller' => 'domain', 'action' => ''),
-    	'SMTP' => array('controller' => 'smtp', 'action' => 'smtpchecks'),
-    	'AntiSpam' => array('controller' => 'antispam', 'action' => 'globalsettings'),
-    	'ContentProtection' => array('controller' => 'contentprotection', 'action' => 'globalsettings'),
-    	'Accesses' => array('controller' => 'accesses', 'action' => ''),
-    	'Services' => array('controller' => 'services', 'action' => 'httpd'),
+      'BaseSystem' => array('controller' => 'baseconfiguration', 'action' => 'networksettings'),
+      'GeneralSettings' => array('controller' => 'generalsettings', 'action' => 'defaults'),
+      'Domains' => array('controller' => 'domain', 'action' => ''),
+      'SMTP' => array('controller' => 'smtp', 'action' => 'smtpchecks'),
+      'AntiSpam' => array('controller' => 'antispam', 'action' => 'globalsettings'),
+      'ContentProtection' => array('controller' => 'contentprotection', 'action' => 'globalsettings'),
+      'Accesses' => array('controller' => 'accesses', 'action' => ''),
+      'Services' => array('controller' => 'services', 'action' => 'httpd'),
 #     'Cluster' => array('controller' => 'cluster', 'action' => '')
     );
 
     foreach ($config_menus_defs as $mk => $m) {
       if (!$this->_acl->isAllowed($this->_role, $m['controller'])) {
-    		continue;
-    	}
-    	$page = new Zend_Navigation_Page_Mvc(array('label' => $t->_($mk), 'id' => "subconfig_$mk", 'action' => $m['action'], 'controller' => $m['controller'], 'class' => 'submenubutton'));
+        continue;
+      }
+      $page = new Zend_Navigation_Page_Mvc(array('label' => $t->_($mk), 'id' => "subconfig_$mk", 'action' => $m['action'], 'controller' => $m['controller'], 'class' => 'submenubutton'));
       $nav->addPage($page);
     }
   }
@@ -87,13 +87,13 @@ class Plugin_Navigation extends Zend_Controller_Plugin_Abstract {
   protected function setupManagementMenu($nav) {
     $t = Zend_Registry::get('translate');
     $manage_menus_defs = array(
-    	'Users' => array('controller' => 'manageuser', 'action' => ''),
-    	'SpamQuarantine' => array('controller' => 'managespamquarantine', 'action' => ''),
-    	'ContentQuarantine' => array('controller' => 'managecontentquarantine', 'action' => ''),
-    	'Tracing' => array('controller' => 'managetracing', 'action' => '')
+      'Users' => array('controller' => 'manageuser', 'action' => ''),
+      'SpamQuarantine' => array('controller' => 'managespamquarantine', 'action' => ''),
+      'ContentQuarantine' => array('controller' => 'managecontentquarantine', 'action' => ''),
+      'Tracing' => array('controller' => 'managetracing', 'action' => '')
     );
     foreach ($manage_menus_defs as $mk => $m) {
-    	$page = new Zend_Navigation_Page_Mvc(array('label' => $t->_($mk), 'id' => "submanage_$mk", 'action' => '', 'controller' => $m['controller'], 'class' => 'submenubutton'));
+      $page = new Zend_Navigation_Page_Mvc(array('label' => $t->_($mk), 'id' => "submanage_$mk", 'action' => '', 'controller' => $m['controller'], 'class' => 'submenubutton'));
       $nav->addPage($page);
     }
   }
@@ -101,16 +101,16 @@ class Plugin_Navigation extends Zend_Controller_Plugin_Abstract {
   protected function setupMonitoringMenu($nav) {
     $t = Zend_Registry::get('translate');
     $monitor_menus_defs = array(
-    	'Reporting' => array('controller' => 'monitorreporting', 'action' => ''),
-    	'Logs' => array('controller' => 'monitorlogs', 'action' => ''),
-    	#'Maintenance' => array('controller' => 'monitormaintenance', 'action' => ''),
-    	'Status' => array('controller' => 'monitorstatus', 'action' => '')
+      'Reporting' => array('controller' => 'monitorreporting', 'action' => ''),
+      'Logs' => array('controller' => 'monitorlogs', 'action' => ''),
+      #'Maintenance' => array('controller' => 'monitormaintenance', 'action' => ''),
+      'Status' => array('controller' => 'monitorstatus', 'action' => '')
     );
     foreach ($monitor_menus_defs as $mk => $m) {
       if (!$this->_acl->isAllowed($this->_role, $m['controller'])) {
         continue;
       }
-    	$page = new Zend_Navigation_Page_Mvc(array('label' => $t->_($mk), 'id' => "submonitor_$mk", 'action' => '', 'controller' => $m['controller'], 'class' => 'submenubutton'));
+      $page = new Zend_Navigation_Page_Mvc(array('label' => $t->_($mk), 'id' => "submonitor_$mk", 'action' => '', 'controller' => $m['controller'], 'class' => 'submenubutton'));
       $nav->addPage($page);
     }
   }

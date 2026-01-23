@@ -45,13 +45,13 @@ __INCLUDE__(header.tmpl)
 <div id="pagecontent">
 __BEGIN_FILTER_FORM__
 <div id="addressselectpanel">
-	<p>__LANG_SELECTEDADDRESS__: </p>
-	__ADDRESS_SELECTOR__
+  <p>__LANG_SELECTEDADDRESS__: </p>
+  __ADDRESS_SELECTOR__
 </div>
 
  <div id="filterpanel">
     <p>__LANG_SEARCHPERIOD__: </p>
- 	__INPUT_PERIODRADIO__ __INPUT_PERIODSELECT__ __LANG_LASTDAYS__
+   __INPUT_PERIODRADIO__ __INPUT_PERIODSELECT__ __LANG_LASTDAYS__
     __INPUT_DATERADIO__ __LANG_DATESTART__ __FORMAT_DATE(__INPUT_STARTDAY__, __INPUT_STARTMONTH__, __INPUT_STARTYEAR__, )__
                         __LANG_DATESTOP__ __FORMAT_DATE(__INPUT_STOPDAY__, __INPUT_STOPMONTH__, __INPUT_STOPYEAR__, )__
     __REFRESH_BUTTON__

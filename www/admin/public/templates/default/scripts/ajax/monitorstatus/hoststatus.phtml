@@ -39,8 +39,8 @@
           <?php
             echo $this->t->_($cname);
             if ($cname == 'stats') {
-          	  echo " &ndash; ".$this->t->_($this->stats_type."_title");
-          	}?>
+              echo " &ndash; ".$this->t->_($this->stats_type."_title");
+            }?>
       </td>
    <?php }?>
       <td class="c_status c_title">
@@ -112,7 +112,7 @@
                       if ($memusage <= 60) {
                          echo 'clean.png'; }
                          elseif ($memusage <= 90) {
-                         	echo 'spam.png';
+                           echo 'spam.png';
                          } else { echo 'virus.png'; }?>)">
              </span>
        </span>

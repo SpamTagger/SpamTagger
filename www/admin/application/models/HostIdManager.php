@@ -11,13 +11,14 @@
 class Default_Model_HostIdManager {
   private $_data = array('host_id' => '');
 
-	public function load() {
-		//TODO: implement
-	}
+  public function load() {
+    //TODO: implement
+  }
 
   public function setData($what, $value) {
     $this->_data[$what] = $value;
   }
+
   public function getData($what) {
     if (isset($this->_data[$what])) {
       return $this->_data[$what];

@@ -6,21 +6,21 @@
  */
 
 function generatePKI(type, length) {
-	url = baseurl+"/pki/createkey/t/"+type+"/l/"+length;
-	request = $.ajax({
-	  	  type: "GET",
-	  	  url: url,
-	  	  dataType: "html",
-		  async: false,
-	  	  success: function(msg){
-            setupFields(msg);
-	      },
-	      error: function() {
-	      }
-	  });
+  url = baseurl+"/pki/createkey/t/"+type+"/l/"+length;
+  request = $.ajax({
+    type: "GET",
+    url: url,
+    dataType: "html",
+    async: false,
+    success: function(msg){
+      setupFields(msg);
+    },
+    error: function() {
+    }
+  });
 }
 
 function setupFields(msg) {
-	obj = jQuery.parseJSON(msg);
-	$(".pki_privatekey").val(obj.privateKey);
+  obj = jQuery.parseJSON(msg);
+  $(".pki_privatekey").val(obj.privateKey);
 }

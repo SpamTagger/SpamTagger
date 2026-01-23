@@ -22,7 +22,7 @@
   padding: 0;
   line-height: 37px;
   background-image:none;
-	background-color: #000000;
+  background-color: #000000;
   background-repeat: repeat-x;
   color: #FFFFFF;
   text-indent: 0.5em;
@@ -52,21 +52,21 @@
   height: 32px;
   text-align: center;
   display: inline;
-	font-size: 1.05em;
-	padding: 3px;
+  font-size: 1.05em;
+  padding: 3px;
 }
 #buttonmenu li .menuselected {
   display: inline;
   float: left;
   background-image: none;
-	background-color: #E93A00;
+  background-color: #E93A00;
   width: 100px;
   line-height: 33px;
   height: 37px;
   text-align: center;
   display: inline;
-	font-size: 1.05em;
-	padding: 3px;
+  font-size: 1.05em;
+  padding: 3px;
 }
 
 #navigation a {
@@ -108,11 +108,11 @@
   list-style: none;
   margin: 0;
   padding: 0;
-	padding-top: 10px;
+  padding-top: 10px;
   height: 100%;
   line-height: 20px;
   background-image: none;
-	background-color: #E0E0E0;
+  background-color: #E0E0E0;
 }
 
 #subnavigation ul {

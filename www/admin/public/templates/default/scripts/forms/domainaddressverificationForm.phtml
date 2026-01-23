@@ -10,7 +10,7 @@
 <?php
    $connector = $this->domain->getCalloutConnector();
    if ($this->request->isPost() && $this->request->getParam('connector') && $this->form->getMessages()) {
-   	  $connector = $this->request->getParam('connector');
+       $connector = $this->request->getParam('connector');
    }
 ?>
 <fieldset>

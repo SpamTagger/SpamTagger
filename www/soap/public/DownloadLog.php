@@ -12,16 +12,16 @@ ini_set('display_errors', 1);
 $fileparam = $_REQUEST['file'];
 
 if (!isset($fileparam)) {
-    header("HTTP/1.0 404 Not Found");
-    echo "Bad parameters";
-    exit();
+  header("HTTP/1.0 404 Not Found");
+  echo "Bad parameters";
+  exit();
 }
 
 if (preg_match('/(\.\.|[\/\{\}$\*\?\[\]])/', $fileparam, $illegal)) {
-    header("HTTP/1.0 404 Not Found");
-    echo "Illegal pattern $illegal[1]";
-    flush();
-    exit();
+  header("HTTP/1.0 404 Not Found");
+  echo "Illegal pattern $illegal[1]";
+  flush();
+  exit();
 }
 
 require_once($_SERVER['DOCUMENT_ROOT'].'/../../guis/admin/application/library/SpamTagger/Config.php');
@@ -31,9 +31,9 @@ $file = preg_replace('/\-/', '/', $fileparam);
 
 $file = $stconfig->getOption('VARDIR')."/log/".$file;
 if (!file_exists($file)) {
-    header("HTTP/1.0 404 Not Found");
-    echo "File not found ($file)";
-    exit();
+  header("HTTP/1.0 404 Not Found");
+  echo "File not found ($file)";
+  exit();
 }
 
 $handle = fopen($file, "r");
@@ -45,10 +45,10 @@ header("filename=\"".$fileparam."\"; ");
 flush();
 
 while(!feof($handle)) {
-	$data = fread($handle, 8192);
+  $data = fread($handle, 8192);
 
-	echo $data;
-	flush();
+  echo $data;
+  flush();
 }
 fclose($handle);
 ?>

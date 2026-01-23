@@ -8,53 +8,49 @@
  * Dangerous content mapper
  */
 
-class Default_Model_DangerousContentMapper
-{
+class Default_Model_DangerousContentMapper {
 
-    protected $_dbTable;
+  protected $_dbTable;
 
-    public function setDbTable($dbTable)
-    {
-        if (is_string($dbTable)) {
-            $dbTable = new $dbTable();
-        }
-        if (!$dbTable instanceof Zend_Db_Table_Abstract) {
-            throw new Exception('Invalid table data gateway provided');
-        }
-        $this->_dbTable = $dbTable;
-        return $this;
+  public function setDbTable($dbTable) {
+    if (is_string($dbTable)) {
+      $dbTable = new $dbTable();
     }
-
-    public function getDbTable()
-    {
-        if (null === $this->_dbTable) {
-            $this->setDbTable('Default_Model_DbTable_DangerousContent');
-        }
-        return $this->_dbTable;
+    if (!$dbTable instanceof Zend_Db_Table_Abstract) {
+      throw new Exception('Invalid table data gateway provided');
     }
+    $this->_dbTable = $dbTable;
+    return $this;
+  }
 
-    public function find($id, Default_Model_DangerousContent $av)
-    {
-        $result = $this->getDbTable()->find($id);
-        if (0 == count($result)) {
-            return;
-        }
-        $row = $result->current();
-        $av->setId($id);
-        foreach ($av->getParamArray() as $key => $value) {
-        	$av->setParam($key, $row[$key]);
-        }
+  public function getDbTable() {
+    if (null === $this->_dbTable) {
+      $this->setDbTable('Default_Model_DbTable_DangerousContent');
     }
+    return $this->_dbTable;
+  }
 
-    public function save(Default_Model_DangerousContent $av) {
-       $data = $av->getParamArray();
-       $res = '';
-       if (null === ($id = $av->getId())) {
-            unset($data['id']);
-            $res = $this->getDbTable()->insert($data);
-        } else {
-            $res = $this->getDbTable()->update($data, array('set_id = ?' => $id));
-        }
-        return $res;
+  public function find($id, Default_Model_DangerousContent $av) {
+    $result = $this->getDbTable()->find($id);
+    if (0 == count($result)) {
+      return;
     }
+    $row = $result->current();
+    $av->setId($id);
+    foreach ($av->getParamArray() as $key => $value) {
+      $av->setParam($key, $row[$key]);
+    }
+  }
+
+  public function save(Default_Model_DangerousContent $av) {
+    $data = $av->getParamArray();
+    $res = '';
+    if (null === ($id = $av->getId())) {
+      unset($data['id']);
+      $res = $this->getDbTable()->insert($data);
+    } else {
+      $res = $this->getDbTable()->update($data, array('set_id = ?' => $id));
+    }
+    return $res;
+  }
 }

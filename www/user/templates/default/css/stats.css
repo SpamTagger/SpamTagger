@@ -23,10 +23,10 @@ img {
 }
 
 #addressselectpanel p {
-   margin: 2px;
-   padding: 0px;
-   color: #000000;
-   margin-bottom: 8px !important;
+  margin: 2px;
+  padding: 0px;
+  color: #000000;
+  margin-bottom: 8px !important;
 }
 
 /* search and filter panel */
@@ -39,10 +39,10 @@ img {
 }
 
 #filterpanel p {
-   margin: 2px;
-   padding: 0px;
-   color: #000000;
-   margin-bottom: 8px !important;
+  margin: 2px;
+  padding: 0px;
+  color: #000000;
+  margin-bottom: 8px !important;
 }
 
 .stattable {
@@ -65,7 +65,7 @@ img {
   height: 48px;
   line-height: 48px;
   background-image:none;
-	background-color: #F5F5F5;
+  background-color: #F5F5F5;
   overflow: hidden;
   white-space: nowrap;
   text-align: left;
@@ -73,7 +73,7 @@ img {
   padding: 0px;
   color: #000000;
   font-size: 12px;
-	border-top: solid 1px #D4D3D2 !important;
+  border-top: solid 1px #D4D3D2 !important;
 }
 
 .stattablehead td {
@@ -98,7 +98,7 @@ img {
   height: 48px;
   line-height: 48px;
   background-image:none;
-	background-color: #F5F5F5;
+  background-color: #F5F5F5;
   white-space: nowrap;
   text-align: left;
   font-weight: bold;
@@ -129,30 +129,30 @@ img {
 }
 
 .bar {
-   margin-left: auto;
-   margin-right: auto;
-   width: 300px;
-   height: 11px;
-   min-height: 11px;
-   border: 1px solid  #D4D3D2;
+  margin-left: auto;
+  margin-right: auto;
+  width: 300px;
+  height: 11px;
+  min-height: 11px;
+  border: 1px solid  #D4D3D2;
 }
 
 .virus {
-   float: left;
-   height: 11px;
-   background-image:url(../images/virus.png);
+  float: left;
+  height: 11px;
+  background-image:url(../images/virus.png);
 }
 
 .spam {
-   float: left;
-   height: 11px;
-   background-image:url(../images/spam.png);
+  float: left;
+  height: 11px;
+  background-image:url(../images/spam.png);
 }
 
 .clean {
-   float: left;
-   height: 11px;
-   background-image:url(../images/clean.png);
+  float: left;
+  height: 11px;
+  background-image:url(../images/clean.png);
 }
 
 .countlegend {
@@ -166,7 +166,7 @@ img {
 }
 
 .countvalue {
-   width: 134px;
+  width: 134px;
  }
 
 .countvalue img {

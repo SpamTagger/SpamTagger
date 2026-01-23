@@ -40,27 +40,27 @@ function getProcessesStatus($sid) {
 
   $ret = getStatus($sid, "-s");
   if (!preg_match('/^(\|[012]){16}$/', $ret)) {
-     return "ERRORFETCHINGPROCESSESSTATUS";
-   }
-   $processes = split('\|', $ret);
-   $ret = new SoapProcesses();
-   $ret->mtaincoming = $processes[1];
-   $ret->mtafiltering = $processes[2];
-   $ret->mtaoutgoing = $processes[3];
-   $ret->httpd = $processes[4];
-   $ret->engine = $processes[5];
-   $ret->sourcedb = $processes[6];
-   $ret->replicadb = $processes[7];
-   $ret->snmpd = $processes[8];
-   $ret->greylistd = $processes[9];
-   $ret->cron = $processes[10];
-   $ret->prefdaemon = $processes[11];
-   $ret->spamd = $processes[12];
-   $ret->clamd = $processes[13];
-   $ret->clamspamd = $processes[14];
-   $ret->spamhandler = $processes[15];
-   $ret->firewall = $processes[16];
-   return $ret;
+    return "ERRORFETCHINGPROCESSESSTATUS";
+  }
+  $processes = split('\|', $ret);
+  $ret = new SoapProcesses();
+  $ret->mtaincoming = $processes[1];
+  $ret->mtafiltering = $processes[2];
+  $ret->mtaoutgoing = $processes[3];
+  $ret->httpd = $processes[4];
+  $ret->engine = $processes[5];
+  $ret->sourcedb = $processes[6];
+  $ret->replicadb = $processes[7];
+  $ret->snmpd = $processes[8];
+  $ret->greylistd = $processes[9];
+  $ret->cron = $processes[10];
+  $ret->prefdaemon = $processes[11];
+  $ret->spamd = $processes[12];
+  $ret->clamd = $processes[13];
+  $ret->clamspamd = $processes[14];
+  $ret->spamhandler = $processes[15];
+  $ret->firewall = $processes[16];
+  return $ret;
 }
 
 /**
@@ -82,7 +82,7 @@ function stopService($sid, $service) {
 
   $sudocmd = "/usr/sudo/bin/sudo";
   if (! file_exists($sudocmd) ) {
-  	$sudocmd = "/usr/bin/sudo";
+    $sudocmd = "/usr/bin/sudo";
   }
   $cmd = "$sudocmd ".$sysconf_->SRCDIR_."/scripts/starters/".$services_[$service]['stopper'];
   $res = `$cmd`;
@@ -167,53 +167,53 @@ function restartService($sid, $service) {
  * @param  $params  string   command line parameters
  * @return          string   OK on success, error string on failure
  */
- function dumpConfiguration($config, $params) {
-    $sysconf_ = SystemConfig::getInstance();
+function dumpConfiguration($config, $params) {
+  $sysconf_ = SystemConfig::getInstance();
 
-    if (!preg_match('/^(domains|wwlist|exim)$/', $config)) {
-        $config = "";
-    }
-    `echo "conf: $config" > /tmp/out.log`;
-    switch ($config) {
-    	case 'domains':
-           $cmd = $sysconf_->SRCDIR_."/bin/dump_domains.pl";
-           if ($params != "") {
-             $cmd .= " ".escapeshellcmd($params);
-           }
-           break;
+  if (!preg_match('/^(domains|wwlist|exim)$/', $config)) {
+    $config = "";
+  }
+  `echo "conf: $config" > /tmp/out.log`;
+  switch ($config) {
+    case 'domains':
+      $cmd = $sysconf_->SRCDIR_."/bin/dump_domains.pl";
+      if ($params != "") {
+        $cmd .= " ".escapeshellcmd($params);
+      }
+      break;
 
-        case 'wwlist':
-           $cmd = $sysconf_->SRCDIR_."/bin/dump_wwlist.pl";
-           if ($params != "") {
-             $cmd .= " ".escapeshellcmd($params);
-           }
-           break;
-        case 'exim':
-          $cmd = $sysconf_->SRCDIR_."/bin/dump_exim_config.pl";
-          if ($params != "") {
-             $cmd .= " ".escapeshellcmd($params);
-           }
-           break;
-    }
+    case 'wwlist':
+      $cmd = $sysconf_->SRCDIR_."/bin/dump_wwlist.pl";
+      if ($params != "") {
+        $cmd .= " ".escapeshellcmd($params);
+      }
+      break;
+    case 'exim':
+      $cmd = $sysconf_->SRCDIR_."/bin/dump_exim_config.pl";
+      if ($params != "") {
+        $cmd .= " ".escapeshellcmd($params);
+      }
+      break;
+  }
 
-    # execute
-    $res = `$cmd`;
-    $res = trim($res);
+  # execute
+  $res = `$cmd`;
+  $res = trim($res);
 
 
-    # postpone the job to let the mariadb sync finish the propagation
-    # but first find out previous already pending jobs
-    $atcheck = `atq | cut -f1`;
-    $atjobs = preg_split('/\n/', $atcheck);
-    $already_pending = 0;
-    foreach ($atjobs as $atjob) {
-       if (! is_numeric($atjob)) { continue; }
-       $atcheck = "at -c $atjob | grep '$cmd'";
-       $atcheckv = `$atcheck`;
-       $atcheckv = trim($atcheckv);
-       if ($atcheckv == $cmd) {
-          $already_pending = 1;
-       }
+  # postpone the job to let the mariadb sync finish the propagation
+  # but first find out previous already pending jobs
+  $atcheck = `atq | cut -f1`;
+  $atjobs = preg_split('/\n/', $atcheck);
+  $already_pending = 0;
+  foreach ($atjobs as $atjob) {
+    if (! is_numeric($atjob)) { continue; }
+      $atcheck = "at -c $atjob | grep '$cmd'";
+      $atcheckv = `$atcheck`;
+      $atcheckv = trim($atcheckv);
+      if ($atcheckv == $cmd) {
+        $already_pending = 1;
+      }
     }
 
     if (! $already_pending) {
@@ -235,16 +235,16 @@ function restartService($sid, $service) {
  * @param $process string   process to ask for
  * @return         integer  1 process needs a restart, 0 otherwise
  */
- function processNeedsRestart($process) {
-    global $services_;
- 	$sysconf_ = SystemConfig::getInstance();
+function processNeedsRestart($process) {
+  global $services_;
+  $sysconf_ = SystemConfig::getInstance();
 
-    $restart_file = $sysconf_->VARDIR_."/run/".$services_[$process]['restartfile'];
-    if (file_exists($restart_file)) {
-    	return 1;
-    }
-    return 0;
- }
+  $restart_file = $sysconf_->VARDIR_."/run/".$services_[$process]['restartfile'];
+  if (file_exists($restart_file)) {
+    return 1;
+  }
+  return 0;
+}
 
 /**
  * set the status of a process to be restarted or not
@@ -252,17 +252,17 @@ function restartService($sid, $service) {
  * @param  $status   integer status to set (1=need restart, 0=no restart needed)
  * @return           boolean true on success, false on failure
  */
- function setRestartStatus($process, $status) {
- 	global $services_;
-    $sysconf_ = SystemConfig::getInstance();
+function setRestartStatus($process, $status) {
+  global $services_;
+  $sysconf_ = SystemConfig::getInstance();
 
-    if ($status < 1) {
-    	return true;
-    }
-    $restart_file = $sysconf_->VARDIR_."/run/".$services_[$process]['restartfile'];
-    if (!file_exists($restart_file)) {
-    	return touch($restart_file);
-    }
+  if ($status < 1) {
     return true;
- }
+  }
+  $restart_file = $sysconf_->VARDIR_."/run/".$services_[$process]['restartfile'];
+  if (!file_exists($restart_file)) {
+    return touch($restart_file);
+  }
+  return true;
+}
 ?>

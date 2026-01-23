@@ -1,23 +1,23 @@
 <?php
 /*========================================================================
 
-	PHP client for Tequila, v. 2.0.4 (Tue Nov 14 10:47:18 CET 2006)
-	(C) 2004, Lionel Clavien [lionel dot clavien AT epfl dot ch]
-	This code is released under the GNU GPL v2 terms (see LICENCE file).
+  PHP client for Tequila, v. 2.0.4 (Tue Nov 14 10:47:18 CET 2006)
+  (C) 2004, Lionel Clavien [lionel dot clavien AT epfl dot ch]
+  This code is released under the GNU GPL v2 terms (see LICENCE file).
 
-	Changelog:
-		0.1.0, 2004-06-27: Creation
-		0.1.1, 2004-08-29: Changed RSA authentication method to use the new
-			           server certificate in lieu of the server public key
-				   [openssl bug ?]
-		0.1.2, 2004-09-04: Configuration options put in tequila_config.inc.php
+  Changelog:
+    0.1.0, 2004-06-27: Creation
+    0.1.1, 2004-08-29: Changed RSA authentication method to use the new
+                 server certificate in lieu of the server public key
+           [openssl bug ?]
+    0.1.2, 2004-09-04: Configuration options put in tequila_config.inc.php
                 ......
 
-		2.0.3 : I forgot.
-		2.0.4 : Fix problem with cookie. Now it is a session cookie.
+    2.0.3 : I forgot.
+    2.0.4 : Fix problem with cookie. Now it is a session cookie.
 
-	TODO:
-		- implement more documented features (allows, ?)
+  TODO:
+    - implement more documented features (allows, ?)
 
 ========================================================================*/
 
@@ -88,85 +88,85 @@ define('COOKIE_NAME', 'TequilaPHP');
 class TequilaClient {
     var $aLanguages = array (
         LNG_ENGLISH => 'english',
-	LNG_FRENCH => 'francais'
+  LNG_FRENCH => 'francais'
     );
     var $aErrors = array(
-	ERROR_UNKNOWN_ERROR => array(
-       	    LNG_ENGLISH => 'An unknown error has occurred.',
-       	    LNG_FRENCH => 'Une erreur inconnue est survenue.',
-       	),
-       	ERROR_SESSION_DIR_NOT_WRITEABLE => array(
+  ERROR_UNKNOWN_ERROR => array(
+             LNG_ENGLISH => 'An unknown error has occurred.',
+             LNG_FRENCH => 'Une erreur inconnue est survenue.',
+         ),
+         ERROR_SESSION_DIR_NOT_WRITEABLE => array(
             LNG_ENGLISH => 'Error: the given sessions directory is not writable.',
-       	    LNG_FRENCH => 'Erreur: le répertoire à sessions indiqué ne peut pas être écrit.',
-       	),
-       	ERROR_SESSION_FILE_FORMAT => array(
-       	    LNG_ENGLISH => 'Error: invalid session file format.',
-       	    LNG_FRENCH => 'Erreur: format de fichier de session non valide.',
-       	),
-       	ERROR_CREATE_SESSION_FILE => array(
-       	    LNG_ENGLISH => 'Error: session file creation failed.',
+             LNG_FRENCH => 'Erreur: le répertoire à sessions indiqué ne peut pas être écrit.',
+         ),
+         ERROR_SESSION_FILE_FORMAT => array(
+             LNG_ENGLISH => 'Error: invalid session file format.',
+             LNG_FRENCH => 'Erreur: format de fichier de session non valide.',
+         ),
+         ERROR_CREATE_SESSION_FILE => array(
+             LNG_ENGLISH => 'Error: session file creation failed.',
             LNG_FRENCH => 'Erreur: échec lors de la création du fichier de session.',
-       	),
-       	ERROR_NO_DATA => array(
-       	    LNG_ENGLISH => 'Error: no session data.',
+         ),
+         ERROR_NO_DATA => array(
+             LNG_ENGLISH => 'Error: no session data.',
             LNG_FRENCH => 'Erreur: aucune donnée de session.',
-       	),
-       	ERROR_NO_SESSION_DIR => array(
-       	    LNG_ENGLISH => 'Error: nonexistant or unspecified sessions directory.',
+         ),
+         ERROR_NO_SESSION_DIR => array(
+             LNG_ENGLISH => 'Error: nonexistant or unspecified sessions directory.',
             LNG_FRENCH => 'Erreur: dossier à sessions inexistant ou non spécifié.',
-       	),
-       	ERROR_NO_SERVER_DEFINED => array(
-       	    LNG_ENGLISH => 'Error: no authentication server available.',
+         ),
+         ERROR_NO_SERVER_DEFINED => array(
+             LNG_ENGLISH => 'Error: no authentication server available.',
             LNG_FRENCH => 'Erreur: aucun serveur d\'authentification disponible.',
-       	),
-       	ERROR_UNSUPPORTED_METHOD => array(
-       	    LNG_ENGLISH => 'Error: unsupported request method.',
+         ),
+         ERROR_UNSUPPORTED_METHOD => array(
+             LNG_ENGLISH => 'Error: unsupported request method.',
             LNG_FRENCH => 'Erreur: méthode de transmission inconnue.',
-       	),
-       	ERROR_NOT_READABLE => array(
-       	    LNG_ENGLISH => 'Error: unable to read session file.',
+         ),
+         ERROR_NOT_READABLE => array(
+             LNG_ENGLISH => 'Error: unable to read session file.',
             LNG_FRENCH => 'Erreur: fichier de session non lisible.',
-       	),
-       	ERROR_CREATE_FILE => array(
-       	    LNG_ENGLISH => 'Error: unable to create session file.',
+         ),
+         ERROR_CREATE_FILE => array(
+             LNG_ENGLISH => 'Error: unable to create session file.',
             LNG_FRENCH => 'Erreur: impossible de créer le fichier de sessions.',
-       	),
-       	ERROR_SESSION_TIMEOUT => array(
-       	    LNG_ENGLISH => 'Error: session timed out.',
+         ),
+         ERROR_SESSION_TIMEOUT => array(
+             LNG_ENGLISH => 'Error: session timed out.',
             LNG_FRENCH => 'Erreur: la session a expiré.',
-       	),
-       	ERROR_CREATE_SESSION_DIR => array(
-       	    LNG_ENGLISH => 'Error: unable to create sessions directory.',
+         ),
+         ERROR_CREATE_SESSION_DIR => array(
+             LNG_ENGLISH => 'Error: unable to create sessions directory.',
             LNG_FRENCH => 'Erreur: impossible de créer le dossier à sessions défini.',
-       	),
-       	ERROR_NO_MESSAGE => array(
-       		LNG_ENGLISH => 'Error: no message to authenticate.',
-       		 LNG_FRENCH => 'Erreur: pas de message à vérifier.',
-       	),
-       	ERROR_NO_SERVER_KEY => array(
-       		LNG_ENGLISH => 'Error: no public key defined.',
-		 LNG_FRENCH => 'Erreur: la clé publique du serveur d\'authentification n\'est pas définie ou disponible.',
-		),
-       	ERROR_NO_VALID_PUBLIC_KEY => array(
-       		LNG_ENGLISH => 'Error: invalid public key.',
-       		 LNG_FRENCH => 'Erreur: la clé publique fournie n\'est pas valide.',
-       	),
-       	ERROR_NO_SIGNATURE => array(
-       		LNG_ENGLISH => 'Error: no signature for message authentication.',
-       		 LNG_FRENCH => 'Erreur: pas de signature pour la vérification du mesage.',
-       	),
-       	ERROR_NO_KEY => array (
-       		LNG_ENGLISH => 'Error: no session key.',
-       		 LNG_FRENCH => 'Erreur: pas de clé de session.',
-       	),
-       	ERROR_SESSION_FILE_EXISTS => array (
-       		LNG_ENGLISH => 'Error: session already created.',
-       		 LNG_FRENCH => 'Erreur: session déjà créée.',
-	),
-       	ERROR_CURL_NOT_LOADED => array (
-       		LNG_ENGLISH => 'Error: CURL Extension is not loaded.',
-       		 LNG_FRENCH => 'Erreur: L\'extension CURL n\'est pas présente.',
-       	),
+         ),
+         ERROR_NO_MESSAGE => array(
+           LNG_ENGLISH => 'Error: no message to authenticate.',
+            LNG_FRENCH => 'Erreur: pas de message à vérifier.',
+         ),
+         ERROR_NO_SERVER_KEY => array(
+           LNG_ENGLISH => 'Error: no public key defined.',
+     LNG_FRENCH => 'Erreur: la clé publique du serveur d\'authentification n\'est pas définie ou disponible.',
+    ),
+         ERROR_NO_VALID_PUBLIC_KEY => array(
+           LNG_ENGLISH => 'Error: invalid public key.',
+            LNG_FRENCH => 'Erreur: la clé publique fournie n\'est pas valide.',
+         ),
+         ERROR_NO_SIGNATURE => array(
+           LNG_ENGLISH => 'Error: no signature for message authentication.',
+            LNG_FRENCH => 'Erreur: pas de signature pour la vérification du mesage.',
+         ),
+         ERROR_NO_KEY => array (
+           LNG_ENGLISH => 'Error: no session key.',
+            LNG_FRENCH => 'Erreur: pas de clé de session.',
+         ),
+         ERROR_SESSION_FILE_EXISTS => array (
+           LNG_ENGLISH => 'Error: session already created.',
+            LNG_FRENCH => 'Erreur: session déjà créée.',
+  ),
+         ERROR_CURL_NOT_LOADED => array (
+           LNG_ENGLISH => 'Error: CURL Extension is not loaded.',
+            LNG_FRENCH => 'Erreur: L\'extension CURL n\'est pas présente.',
+         ),
   );
   var      $aWantedRights = array ();
   var       $aWantedRoles = array ();
@@ -216,7 +216,7 @@ class TequilaClient {
        $sSessionsDirectory = session_save_path();
      if (empty ($sSessionsDirectory))
        $sSessionsDirectory = dirname($_SERVER['SCRIPT_FILENAME']) .
-	 DIRECTORY_SEPARATOR . 'sessions';
+   DIRECTORY_SEPARATOR . 'sessions';
     }
     $aEtcConfig = $this->LoadEtcConfig ();
 
@@ -246,12 +246,12 @@ class TequilaClient {
       $iCurrentLanguage = LNG_FRENCH;
     if (array_key_exists ($iError, $this->aErrors))
       echo "\n<br /><font color='red' size='5'>" .
-	$this->aErrors[$iError][$iCurrentLanguage] .
-	"</font><br />\n";
+  $this->aErrors[$iError][$iCurrentLanguage] .
+  "</font><br />\n";
     else
       echo "\n<br /><font color='red' size='5'>" .
-	$this->aErrors [ERROR_UNKNOWN_ERROR][$iCurrentLanguage] .
-	"</font><br />\n";
+  $this->aErrors [ERROR_UNKNOWN_ERROR][$iCurrentLanguage] .
+  "</font><br />\n";
     return ($iError);
   }
 
@@ -273,13 +273,13 @@ class TequilaClient {
     $aLine = explode ("\n", $sConfig);
     foreach ($aLine as $sLine) {
       if (preg_match  ('/^TequilaServer:\s*(.*)$/i', $sLine, $match))
-	$aConfig ['sServer'] = $match [1];
+  $aConfig ['sServer'] = $match [1];
 
       if (preg_match  ('/^TequilaServerUrl:\s*(.*)$/i', $sLine, $match))
-	$aConfig ['sServerUrl'] = $match [1];
+  $aConfig ['sServerUrl'] = $match [1];
 
       if (preg_match  ('/^SessionsDir:\s*(.*)$/i', $sLine, $match))
-	$aConfig ['sSessionsDirectory'] = $match [1];
+  $aConfig ['sSessionsDirectory'] = $match [1];
 
     }
     return $aConfig;
@@ -314,7 +314,7 @@ class TequilaClient {
   function RemoveWantedRights ($aWantedRights) {
     foreach ($this->aWantedRights as $sWantedRight)
       if (in_array($sWantedRight, $aWantedRights))
-	unset($this->aWantedRights[array_search($sWantedRight, $this->aWantedRights)]);
+  unset($this->aWantedRights[array_search($sWantedRight, $this->aWantedRights)]);
   }
 
   function GetWantedRights () {
@@ -333,7 +333,7 @@ class TequilaClient {
   function RemoveWantedRoles ($aWantedRoles) {
     foreach ($this->aWantedRoles as $sWantedRole)
       if (in_array ($sWantedRole, $aWantedRoles))
-	unset ($this->aWantedRoles [array_search ($sWantedRole, $this->aWantedRoles)]);
+  unset ($this->aWantedRoles [array_search ($sWantedRole, $this->aWantedRoles)]);
   }
 
   function GetWantedRoles () {
@@ -347,14 +347,14 @@ class TequilaClient {
 
   function AddWantedAttributes ($aWantedAttributes) {
     $this->aWantedAttributes = array_merge ($this->aWantedAttributes,
-					    $aWantedAttributes);
+              $aWantedAttributes);
   }
 
   function RemoveWantedAttributes ($aWantedAttributes) {
     foreach ($this->aWantedAttributes as $sWantedAttribute)
       if (in_array($sWantedAttribute, $aWantedAttributes))
-	unset ($this->aWantedAttributes [array_search($sWantedAttribute,
-						      $this->aWantedAttributes)]);
+  unset ($this->aWantedAttributes [array_search($sWantedAttribute,
+                  $this->aWantedAttributes)]);
   }
 
   function GetWantedAttributes () {
@@ -368,14 +368,14 @@ class TequilaClient {
 
   function AddWishedAttributes ($aWishedAttributes) {
     $this->aWishedAttributes = array_merge ($this->aWishedAttributes,
-					    $aWishedAttributes);
+              $aWishedAttributes);
   }
 
   function RemoveWishedAttributes ($aWishedAttributes) {
     foreach ($this->aWishedAttributes as $aWishedAttribute)
       if (in_array($aWishedAttribute, $aWishedAttributes))
-	unset ($this->aWishedAttributes[array_search($aWishedAttribute,
-						     $this->aWishedAttributes)]);
+  unset ($this->aWishedAttributes[array_search($aWishedAttribute,
+                 $this->aWishedAttributes)]);
   }
 
   function GetWishedAttributes () {
@@ -394,8 +394,8 @@ class TequilaClient {
   function RemoveWantedGroups ($aWantedGroups) {
     foreach ($this->aWantedGroups as $aWantedGroup)
       if (in_array($aWantedGroup, $aWantedGroups))
-	unset($this->aWantedGroups[array_search($aWantedGroup,
-						$this->aWantedGroups)]);
+  unset($this->aWantedGroups[array_search($aWantedGroup,
+            $this->aWantedGroups)]);
   }
 
   function GetWantedGroups () {
@@ -516,13 +516,13 @@ class TequilaClient {
       DIRECTORY_SEPARATOR . 'sessions';
     if (!is_writeable ($sSessionsDirectory)) {
       if (!@mkdir ($sSessionsDirectory, 0700)) {
-	if (is_dir ($sDefaultDirectory)) {
-	  $this->sSessionsDirectory = $sDefaultDirectory;
-	} else {
-	  if (!@mkdir ($sDefaultDirectory, 0700))
-	    print "<li>sDefaultDirectory=$sDefaultDirectory<br>";
-	    return ($this->Error (ERROR_CREATE_SESSION_DIR) );
-	}
+  if (is_dir ($sDefaultDirectory)) {
+    $this->sSessionsDirectory = $sDefaultDirectory;
+  } else {
+    if (!@mkdir ($sDefaultDirectory, 0700))
+      print "<li>sDefaultDirectory=$sDefaultDirectory<br>";
+      return ($this->Error (ERROR_CREATE_SESSION_DIR) );
+  }
       }
     }
     $this->sSessionsDirectory = $sSessionsDirectory;
@@ -580,7 +580,7 @@ class TequilaClient {
     $aTemp = explode ("\n", $sAttributes);
     foreach ($aTemp as $sTemp) {
       if (strpos ($sTemp, '=') === FALSE)
-	return ($this->Error (ERROR_SESSION_FILE));
+  return ($this->Error (ERROR_SESSION_FILE));
       list ($sAttribute, $sValue) = explode ('=', $sTemp);
       if ($sAttribute == 'host') continue;
       $this->aAttributes [$sAttribute] = $sValue;
@@ -616,19 +616,19 @@ class TequilaClient {
   }
 
   //====================== User attributes
-  //	@out	Array containing attributes names as indexes and attributes values as values
+  //  @out  Array containing attributes names as indexes and attributes values as values
   function GetAttributes() {
     return ($this->aAttributes);
   }
 
-  // @in	Array containing wanted attributes as keys
-  // @out	The same array with TRUE or FALSE as value for the corresponding attribute
+  // @in  Array containing wanted attributes as keys
+  // @out  The same array with TRUE or FALSE as value for the corresponding attribute
   function HasAttributes (&$aAttributes) {
     foreach ($aAttributes as $sAttribute => $sHasIt)
       if (array_key_exists($sAttribute, $this->aAttributes))
-	$aAttributes [$sAttribute] = TRUE;
+  $aAttributes [$sAttribute] = TRUE;
       else
-	$aAttributes [$sAttribute] = FALSE;
+  $aAttributes [$sAttribute] = FALSE;
   }
 
   function Authenticate () {
@@ -641,9 +641,9 @@ class TequilaClient {
       $this->SetKey ($_COOKIE [$this->sCookieName]);
     } else {
       $this->createRequest ();
- 	// ic - set cookie -
- 	  setcookie($this->sCookieName, $this->sKey);
- 	//-------------------------------------
+   // ic - set cookie -
+     setcookie($this->sCookieName, $this->sKey);
+   //-------------------------------------
       $url = $this->getAuthenticationUrl ();
       header ('Location: ' . $url);
       exit;
@@ -663,7 +663,7 @@ class TequilaClient {
     $urlaccess = $this->sApplicationURL;
     if (empty ($urlaccess))
       $urlaccess = ((isset($_SERVER['HTTPS']) && ($_SERVER['HTTPS'] == 'on')) ? 'https://' : 'http://') .
-	$_SERVER['SERVER_NAME'] . ":" . $_SERVER['SERVER_PORT'] . $_SERVER['PHP_SELF'];
+  $_SERVER['SERVER_NAME'] . ":" . $_SERVER['SERVER_PORT'] . $_SERVER['PHP_SELF'];
 
     $this->requestInfos ['urlaccess'] = $urlaccess;
     if (!empty ($this->sApplicationName))
@@ -737,8 +737,8 @@ class TequilaClient {
    */
   function getAuthenticationUrl () {
     return sprintf('%s/requestauth?requestkey=%s',
-		   $this->sServerUrl,
-		   $this->sKey);
+       $this->sServerUrl,
+       $this->sKey);
   }
 
   function getLogoutUrl ($redirectUrl = '') {
@@ -776,7 +776,7 @@ class TequilaClient {
 
   function KillSessionCookie() {
     // Delete cookie by setting expiration time in the past
- 	  setcookie($this->sCookieName, "", time()-3600);
+     setcookie($this->sCookieName, "", time()-3600);
   }
 
   function KillSession() {
@@ -811,29 +811,29 @@ class TequilaClient {
     $url = $this->sServerUrl;
     switch ($type) {
       case 'createrequest':
-	$url .= '/createrequest';
-	break;
+  $url .= '/createrequest';
+  break;
 
       case 'fetchattributes':
-	$url .= '/fetchattributes';
-	break;
+  $url .= '/fetchattributes';
+  break;
 
       case 'config':
-	$url .= '/getconfig';
-	break;
+  $url .= '/getconfig';
+  break;
 
       case 'logout':
-	$url .= '/logout';
-	break;
+  $url .= '/logout';
+  break;
 
       default:
-	return;
+  return;
     }
     curl_setopt ($ch, CURLOPT_URL, $url);
     if (is_array ($fields) && count ($fields)) {
       $pFields = array ();
       foreach ($fields as $key => $val) {
-	$pFields[] = sprintf('%s=%s', $key, $val);
+  $pFields[] = sprintf('%s=%s', $key, $val);
       }
       $query = implode("\n", $pFields) . "\n";
       curl_setopt ($ch, CURLOPT_POSTFIELDS, $query);

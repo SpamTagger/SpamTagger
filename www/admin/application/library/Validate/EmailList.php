@@ -8,36 +8,35 @@
  * Validate a list of email addresses
  */
 
-class Validate_EmailList extends Zend_Validate_Abstract
-{
-    const MSG_EMAILLIST = 'invalidEmaillist';
-    const MSG_BADEMAIL = 'invalidEMail';
+class Validate_EmailList extends Zend_Validate_Abstract {
 
-    public $email = '';
+  const MSG_EMAILLIST = 'invalidEmaillist';
+  const MSG_BADEMAIL = 'invalidEMail';
 
-    protected $_messageTemplates = array(
-        self::MSG_EMAILLIST => "'%value%' is not a valid email address list",
-        self::MSG_BADEMAIL => "'%mail%' is not a valid email address"
-    );
+  public $email = '';
 
-    protected $_messageVariables = array(
-        'mail' => 'email'
-    );
+  protected $_messageTemplates = array(
+    self::MSG_EMAILLIST => "'%value%' is not a valid email address list",
+    self::MSG_BADEMAIL => "'%mail%' is not a valid email address"
+  );
 
-    public function isValid($value)
-    {
-        $this->_setValue($value);
+  protected $_messageVariables = array(
+    'mail' => 'email'
+  );
 
-        $validator = new Zend_Validate_EmailAddress(Zend_Validate_Hostname::ALLOW_LOCAL);
+  public function isValid($value) {
+    $this->_setValue($value);
 
-        $addresses = preg_split('/[,:\s]+/', $value);
-        foreach ($addresses as $address) {
-          if (! $validator->isValid($address)) {
-          	  $this->email = $address;
-          	  $this->_error(self::MSG_BADEMAIL);
-              return false;
-          }
-        }
-        return true;
+    $validator = new Zend_Validate_EmailAddress(Zend_Validate_Hostname::ALLOW_LOCAL);
+
+    $addresses = preg_split('/[,:\s]+/', $value);
+    foreach ($addresses as $address) {
+      if (! $validator->isValid($address)) {
+        $this->email = $address;
+        $this->_error(self::MSG_BADEMAIL);
+        return false;
+      }
     }
+    return true;
+  }
 }

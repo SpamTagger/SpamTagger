@@ -10,57 +10,59 @@
 
 class Default_Form_AntiSpam_MessageSniffer extends Default_Form_AntiSpam_Default
 {
-	protected $_viewscript = 'forms/antispam/MessageSnifferForm.phtml';
-	public $_rbl_checks = array();
+  protected $_viewscript = 'forms/antispam/MessageSnifferForm.phtml';
+  public $_rbl_checks = array();
 
-	public function getViewScriptFile() {
-		return $this->_viewscript;
-	}
+  public function getViewScriptFile() {
+    return $this->_viewscript;
+  }
 
-	public function __construct($module) {
-		parent::__construct($module);
-	}
+  public function __construct($module) {
+    parent::__construct($module);
+  }
 
-	public function init() {
-		parent::init();
+  public function init() {
+    parent::init();
 
-		$as = new Default_Model_Antispam_MessageSniffer();
-		$as->find(1);
+    $as = new Default_Model_Antispam_MessageSniffer();
+    $as->find(1);
 
-                $t = Zend_Registry::get('translate');
+    $t = Zend_Registry::get('translate');
 
-                $licenseid = new  Zend_Form_Element_Text('licenseid', array(
-                            'label'   => $t->_('Licence ID')." :",
-                            'required' => false,
-                            'size' => 10,
-                            'filters'    => array('StringTrim')));
-                $licenseid->setValue($as->getParam('licenseid'));
-                $this->addElement($licenseid);
+    $licenseid = new  Zend_Form_Element_Text('licenseid', array(
+      'label'   => $t->_('Licence ID')." :",
+      'required' => false,
+      'size' => 10,
+      'filters'    => array('StringTrim'))
+    );
+    $licenseid->setValue($as->getParam('licenseid'));
+    $this->addElement($licenseid);
 
-                $authentication = new  Zend_Form_Element_Text('authentication', array(
-                            'label'   => $t->_('Authentication')." :",
-                            'required' => false,
-                            'size' => 20,
-                            'filters'    => array('StringTrim')));
-                $authentication->setValue($as->getParam('authentication'));
-                $this->addElement($authentication);
+    $authentication = new  Zend_Form_Element_Text('authentication', array(
+      'label'   => $t->_('Authentication')." :",
+      'required' => false,
+      'size' => 20,
+      'filters'    => array('StringTrim'))
+    );
+    $authentication->setValue($as->getParam('authentication'));
+    $this->addElement($authentication);
 
-		$t = Zend_Registry::get('translate');
-		$layout = Zend_Layout::getMvcInstance();
-    	        $view=$layout->getView();
+    $t = Zend_Registry::get('translate');
+    $layout = Zend_Layout::getMvcInstance();
+    $view=$layout->getView();
 
-	}
+  }
 
-	public function setParams($request, $module) {
-		parent::setParams($request, $module);
+  public function setParams($request, $module) {
+    parent::setParams($request, $module);
 
-		$as = new Default_Model_Antispam_MessageSniffer();
-		$as->find(1);
+    $as = new Default_Model_Antispam_MessageSniffer();
+    $as->find(1);
 
-                $as->setparam('licenseid', $request->getParam('licenseid'));
-                $as->setparam('authentication', $request->getParam('authentication'));
+    $as->setparam('licenseid', $request->getParam('licenseid'));
+    $as->setparam('authentication', $request->getParam('authentication'));
 
-		$as->save();
-	}
+    $as->save();
+  }
 
 }

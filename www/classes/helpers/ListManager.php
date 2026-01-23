@@ -42,7 +42,7 @@ class ListManager {
 
 
   public function clearList() {
-  	unset($this->elements_);
+    unset($this->elements_);
     $this->elements_ = array();
   }
   /**
@@ -61,7 +61,7 @@ class ListManager {
    */
   protected function hasElement($element) {
     if (isset($this->elements_[$element])) {
-        return true;
+      return true;
     }
     return false;
   }
@@ -81,7 +81,7 @@ class ListManager {
    */
   public function setNbElementsPerPage($nb) {
     if (!is_numeric($nb)) {
-       return false;
+      return false;
     }
     $this->per_page_ = $nb;
     return true;
@@ -112,41 +112,41 @@ class ListManager {
    * return the actual page
    * @return  numeric  actual page
    */
-   public function getPage() {
-     return $this->page_;
-   }
+  public function getPage() {
+    return $this->page_;
+  }
 
-   /**
-    * set the actual page to be displayed
-    * @param  $page  numeric  page number
-    * @return        bool     true on success, false on failure
-    */
-    public function setPage($page) {
-      if (!is_numeric($page) && $page<$this->getNumberOfPage()) {
-        return false;
-      }
-      $this->page_ = $page;
-      return true;
+  /**
+   * set the actual page to be displayed
+   * @param  $page  numeric  page number
+   * @return        bool     true on success, false on failure
+   */
+  public function setPage($page) {
+    if (!is_numeric($page) && $page<$this->getNumberOfPage()) {
+      return false;
     }
+    $this->page_ = $page;
+    return true;
+  }
 
-    /**
-     * Set the form name.
-     * This will also check for eventual posted values
-     * @param  $form  string  form name
-     * @return        bool    true on success, false on failure
-     */
-     public function setForm($form) {
-       if (!is_string($form)) {
-         return false;
-       }
-       $this->form_name_ = $form;
+  /**
+   * Set the form name.
+   * This will also check for eventual posted values
+   * @param  $form  string  form name
+   * @return        bool    true on success, false on failure
+   */
+  public function setForm($form) {
+    if (!is_string($form)) {
+      return false;
+    }
+    $this->form_name_ = $form;
 
-       // set if a page number is given
-       if (isset($_REQUEST[$this->form_name_.'_page']) && is_numeric($_REQUEST[$this->form_name_.'_page'])) {
-         $this->setPage($_REQUEST[$this->form_name_.'_page']);
-       }
-       return true;
-     }
+    // set if a page number is given
+    if (isset($_REQUEST[$this->form_name_.'_page']) && is_numeric($_REQUEST[$this->form_name_.'_page'])) {
+      $this->setPage($_REQUEST[$this->form_name_.'_page']);
+    }
+    return true;
+  }
 
   /**
    * return the filled template of the page
@@ -196,7 +196,7 @@ class ListManager {
   }
 
   public function getElements() {
-  	 return $this->elements_;
+    return $this->elements_;
   }
 
   /**
@@ -205,13 +205,13 @@ class ListManager {
    * @return      string  separator character or string id needed
    */
   public function getPageSeparator($sep) {
-   if(!is_string($sep)) {
+    if(!is_string($sep)) {
+      return "";
+    }
+    if ($this->getPage() > 1 && $this->getPage()<$this->getNumberOfPages()) {
+      return $sep;
+    }
     return "";
-   }
-   if ($this->getPage() > 1 && $this->getPage()<$this->getNumberOfPages()) {
-     return $sep;
-   }
-   return "";
   }
 
   /**
@@ -248,10 +248,10 @@ class ListManager {
     $ret .= "  window.document.forms['".$this->form_name_."'].".$this->form_name_."_page.value=p;";
     $ret .= "   window.document.forms['".$this->form_name_."'].submit(); ";
     $ret .= "}";
-  return $ret;
-}
+    return $ret;
+  }
 
-public function encodeVarName($var) {
+  public function encodeVarName($var) {
     $var = str_replace('@', '_AAA_', $var);
     $var = str_replace('.', '_PPP_', $var);
     $var = str_replace(' ', '_SSS_', $var);
@@ -269,9 +269,9 @@ public function encodeVarName($var) {
     $var = str_replace('+', '_ppp_', $var);
     $var = str_replace('=', '_EEE_', $var);
     return $var;
-}
+  }
 
-public function decodeVarName($var) {
+  public function decodeVarName($var) {
     $var = str_replace('_AAA_', '@', $var);
     $var = str_replace('_PPP_', '.', $var);
     $var = str_replace('_SSS_', ' ', $var);
@@ -289,7 +289,7 @@ public function decodeVarName($var) {
     $var = str_replace('_ppp_', '+', $var);
     $var = str_replace('_EEE_', '=', $var);
     return $var;
-}
+  }
 
 }
 ?>

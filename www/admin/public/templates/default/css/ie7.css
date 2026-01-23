@@ -22,7 +22,7 @@
   margin-left: 257px;
 }
 #statuslist {
-	margin-top: 5px;
+  margin-top: 5px;
 }
 #statuslist li {
   line-height: 8px !important;
@@ -78,11 +78,11 @@
 }
 
 #contentfilename_form #flashmessage {
-    margin-left: -272px;
-    margin-top: -131px;
+  margin-left: -272px;
+  margin-top: -131px;
 }
 #contentfiletype_form #flashmessage {
-    margin-left: -272px;
+  margin-left: -272px;
 }
 
 .domainconfigselect {
@@ -94,9 +94,9 @@
 }
 
 button {
-	line-height: 11px;
-	font-size: 11px;
-	height: 21px;
+  line-height: 11px;
+  font-size: 11px;
+  height: 21px;
 }
 
 .callouttesttable {
@@ -108,7 +108,7 @@ button {
 }
 
 .adminformcontent {
-	padding: 15px;
+  padding: 15px;
 }
 
 .subh3_2,.subh3_2_2 {
@@ -155,7 +155,7 @@ button {
 }
 
 #quarantinebanner img {
-	vertical-align: middle;
+  vertical-align: middle;
 }
 
 #cacncelsearch {
@@ -200,17 +200,17 @@ button {
 }
 
 #tasksconfigpanel {
-        margin-top: 525px;
+  margin-top: 525px;
 }
 
 .h2nextpreviouslinks {
-        margin-top: -43px;
+  margin-top: -43px;
 }
 #domaincontentpanel {
   margin-top: 30px;
 }
 #domaincontentpaneltitle {
-        width: 612px;
+  width: 612px;
 }
 #pagindomainlist {
   position: absolute;

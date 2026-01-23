@@ -14,8 +14,8 @@
  */
 
 #domainnavigpanel {
-	float: left;
-	width: 171px;
+  float: left;
+  width: 171px;
 }
 
 /* options panel */
@@ -46,7 +46,7 @@
 }
 
 #domainnavoptions li span {
-	float: left;
+  float: left;
 }
 #domainnavoptions li a {
   color: #000000;
@@ -62,8 +62,8 @@
 }
 
 .domainoptiontop:hover {
-    cursor: pointer;
-    font-weight: bold;
+  cursor: pointer;
+  font-weight: bold;
 }
 .globalsettingsselected:hover {
   cursor: pointer;
@@ -83,15 +83,15 @@
 }
 
 .newdomaintop {
-	margin-top: 25px !important;
+  margin-top: 25px !important;
 }
 
 .newdomain:hover {
-    font-weight: bold;
+  font-weight: bold;
 }
 
 #mdomainname {
-	margin-bottom: -5px;
+  margin-bottom: -5px;
 }
 
 /* search panel */
@@ -111,10 +111,10 @@
 }
 
 #searchform p {
-	margin: 0px;
-	padding: 0px;
-	padding-top: 14px;
-	padding-bottom: 8px;
+  margin: 0px;
+  padding: 0px;
+  padding-top: 14px;
+  padding-bottom: 8px;
 }
 
 #searchform input {
@@ -122,7 +122,7 @@
 }
 
 .searchempty {
-	color: #666666;
+  color: #666666;
 }
 
 /* result panel */
@@ -166,9 +166,9 @@
   width: 100%;
   line-height: 18px;
   overflow: hidden;
-	background-image: none;
-	background-color:#FFFFFF;
-	border-right: solid 1px #d4d3d2;
+  background-image: none;
+  background-color:#FFFFFF;
+  border-right: solid 1px #d4d3d2;
 }
 
 #domainnavlist li {
@@ -178,16 +178,16 @@
   line-height: 24px;
   padding-left: 13px;
   background-image: none;
-	background-color: #FFFFFF;
+  background-color: #FFFFFF;
   width: 172px;
   overflow: hidden;
-	border-bottom: 1px solid #D4D3D1;
+  border-bottom: 1px solid #D4D3D1;
 }
 
 .domainnavlistselected {
   font-weight: bold;
   background-image:none !important;
-	background-color: #F5F5F5 !important;
+  background-color: #F5F5F5 !important;
   width: 200px !important;
 }
 
@@ -213,20 +213,20 @@
 }
 
 #pagindomainlist img {
-	display: inline;
-    height: 16px;
-    width: 16px;
-    margin: 0px;
-    padding: 0px;
-    vertical-align:middle;
+  display: inline;
+  height: 16px;
+  width: 16px;
+  margin: 0px;
+  padding: 0px;
+  vertical-align:middle;
 }
 
 .pagepreviousimg {
-	margin-right: 5px !important;
+  margin-right: 5px !important;
 }
 
 .pagepnextimg {
-	margin-left: 5px !important;
+  margin-left: 5px !important;
 }
 
 /**
@@ -257,7 +257,7 @@
   line-height: 47px;
   border: 1px solid #D4D3D2;
   background-image:none;
-	background-color: #F5F5F5;
+  background-color: #F5F5F5;
   font-size: 14px;
   font-weight: bolder;
   color: #000000;
@@ -271,7 +271,7 @@
 }
 
 #generalsettingspaneltitle {
-	margin-bottom: 26px !important;
+  margin-bottom: 26px !important;
 }
 
 .importantimg {
@@ -333,7 +333,7 @@
   font-size: 12px;
   font-weight: normal;
   background-image:none;
-	background-color: #F5F5F5;
+  background-color: #F5F5F5;
   width: 613px;
 }
 
@@ -341,9 +341,9 @@
 }
 
 .domainconfigselect select {
-	margin: 0px;
-	padding: 0px;
-	display: span;
+  margin: 0px;
+  padding: 0px;
+  display: span;
 }
 
 .h2nextpreviouslinks {
@@ -383,19 +383,19 @@
 }
 
 #domainalertcontent .removedomain {
-	position: static;
-	margin-top: 15px;
-	text-decoration: none;
+  position: static;
+  margin-top: 15px;
+  text-decoration: none;
 }
 
 #domainalertcontent .removedomain a {
-	text-decoration: none;
+  text-decoration: none;
 }
 
 #settingstest {
-	display: none;
-	text-align: center;
-	border: 1px solid red;
+  display: none;
+  text-align: center;
+  border: 1px solid red;
 }
 
 #testingtable {
@@ -462,10 +462,10 @@
 }
 
 #domainaddtable .flabel {
-	width: 40%;
+  width: 40%;
 }
 #domainaddtable .fvalue {
-	width: 60%;
+  width: 60%;
 }
 #domainaddtable .fsubmit {
    text-align: center;
@@ -482,8 +482,8 @@
    vertical-align: top;
 }
 .adddomaincontentpaneltitle textarea {
-	margin-top: 10px;
-	height: 80px;
+  margin-top: 10px;
+  height: 80px;
 }
 
 .adddomaincontentpaneltitlearea {
@@ -491,7 +491,7 @@
 }
 
 #mdomainname {
-	display: none;
+  display: none;
 }
 
 .adddomaincontentpaneltitle a {
@@ -504,13 +504,13 @@
 }
 
 #domainformcontent {
-	margin-bottom: 20px;
+  margin-bottom: 20px;
 }
 
 #domainnavlist {
-    background-image:none;
-    overflow: hidden;
-    height: 1000px;
+  background-image:none;
+  overflow: hidden;
+  height: 1000px;
 }
 .adminformcontent {
   border: 1px solid #CAB4BE;
@@ -531,23 +531,23 @@ label {
 }
 
 #testdestinationSMTP,#testcallout,#testuserauth {
-	height: 24px;
-	line-height: 16px;
+  height: 24px;
+  line-height: 16px;
 }
 
 ul#domainnavlist {
-	width:184px;
+  width:184px;
 }
 
 /* management > users > sidebar */
 #domainnavigpanel > .addbutton {
-    width: 266px;
+  width: 266px;
 }
 
 #domainnavigpanel div.addbutton:first-of-type + div #resultcount{
-	width: 266px;
+  width: 266px;
 }
 
 #domainnavigpanel div.addbutton:first-of-type + div #domainnavlist{
-	width: 279px;
+  width: 279px;
 }

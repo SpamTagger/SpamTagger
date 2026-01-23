@@ -10,20 +10,20 @@
 <?php echo $this->partial('layouts/message.phtml', array('message' => $this->message, 't' => $this->t)); ?>
  <fieldset id="localesettings">
        <table class="ftable">
-	  <tr><td colspan="2"><p style="font-size:14px"><strong>Register for Community Edition:</strong></p></td></tr>
-	  <tr><td colspan="2">You can get a free trial of our Enterprise Edition at any time. Don’t hesitate, visit us at: <a href="https://spamtagger.org/antispam/test.html?own=Yes&premise=premises&trialvirtap=Yes" target="_blank">www.spamtagger.org</a></td></tr>
-	  <tr><td colspan="2">By registering your SpamTagger you can:</td></tr>
-	  <tr><td colspan="2"><ul style="margin-left: 4%; list-style-type: disc;">
-		<li>Subscribe to our general newsletter</li>
-		<li>Subscribe to our technical newsletter (updates and releases)</li>
-		<li>Receive monthly snapshot of the bayesian training database</li>
-	  </ul></td></tr>
-	  <tr><td colspan="2"><strong>Your data will be treated as strictly confidential and not be used commercially or redistributed.</strong></td></tr>
+    <tr><td colspan="2"><p style="font-size:14px"><strong>Register for Community Edition:</strong></p></td></tr>
+    <tr><td colspan="2">You can get a free trial of our Enterprise Edition at any time. Don’t hesitate, visit us at: <a href="https://spamtagger.org/antispam/test.html?own=Yes&premise=premises&trialvirtap=Yes" target="_blank">www.spamtagger.org</a></td></tr>
+    <tr><td colspan="2">By registering your SpamTagger you can:</td></tr>
+    <tr><td colspan="2"><ul style="margin-left: 4%; list-style-type: disc;">
+    <li>Subscribe to our general newsletter</li>
+    <li>Subscribe to our technical newsletter (updates and releases)</li>
+    <li>Receive monthly snapshot of the bayesian training database</li>
+    </ul></td></tr>
+    <tr><td colspan="2"><strong>Your data will be treated as strictly confidential and not be used commercially or redistributed.</strong></td></tr>
           <?php echo $this->InputRow($this->form->getElement('first_name'));?>
           <?php echo $this->InputRow($this->form->getElement('last_name'));?>
           <?php echo $this->InputRow($this->form->getElement('email'));?>
-	  <?php echo $this->InputRow($this->form->getElement('company_name'));?>
-	  <?php echo $this->InputRow($this->form->getElement('address'));?>
+    <?php echo $this->InputRow($this->form->getElement('company_name'));?>
+    <?php echo $this->InputRow($this->form->getElement('address'));?>
           <?php echo $this->InputRow($this->form->getElement('postal_code'));?>
           <?php echo $this->InputRow($this->form->getElement('city'));?>
           <?php echo $this->InputRow($this->form->getElement('country'));?>

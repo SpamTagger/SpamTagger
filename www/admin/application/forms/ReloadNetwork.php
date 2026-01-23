@@ -8,25 +8,24 @@
  * Network reload form
  */
 
-class Default_Form_ReloadNetwork extends Zend_Form
-{
+class Default_Form_ReloadNetwork extends Zend_Form {
 
-	public function init()
-	{
-		$this->setMethod('post');
+  public function init() {
+    $this->setMethod('post');
 
-		$t = Zend_Registry::get('translate');
-		$this->setAttrib('id', 'reloadnetworkform');
+    $t = Zend_Registry::get('translate');
+    $this->setAttrib('id', 'reloadnetworkform');
 
-		$submit = new Zend_Form_Element_Submit('submit', array(
-		     'label'    => $t->_('Reload network now'),
-		     'id'       => 'reloadnetbutton'));
-		$this->addElement($submit);
-                $restrictions = Zend_Registry::get('restrictions');
-                if ($restrictions->isRestricted('NetworkInterface', 'reloadnetnow')) {
-			$submit->setAttrib('disabled', 'disabled');
-		}
+    $submit = new Zend_Form_Element_Submit('submit', array(
+      'label'    => $t->_('Reload network now'),
+      'id'       => 'reloadnetbutton'
+    ));
+    $this->addElement($submit);
+    $restrictions = Zend_Registry::get('restrictions');
+    if ($restrictions->isRestricted('NetworkInterface', 'reloadnetnow')) {
+      $submit->setAttrib('disabled', 'disabled');
+    }
 
-	}
+  }
 
 }

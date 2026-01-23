@@ -17,10 +17,10 @@ class IndexController extends Zend_Controller_Action {
     $view->headLink()->appendStylesheet($view->css_path.'/navigation.css');
     $view->headScript()->appendFile($view->scripts_path.'/index.js', 'text/javascript');
 
-  #  	$main_menus = Zend_Registry::get('main_menu')->findOneBy('id', 'Management')->class = 'menuselected';
-  #  	$view->selectedMenu = 'Management';
-  #  	$main_menus = Zend_Registry::get('main_menu')->findOneBy('id', 'submanage_Users')->class = 'submenuelselected';
-  #  	$view->selectedSubMenu = 'Domains';
+    #$main_menus = Zend_Registry::get('main_menu')->findOneBy('id', 'Management')->class = 'menuselected';
+    #$view->selectedMenu = 'Management';
+    #$main_menus = Zend_Registry::get('main_menu')->findOneBy('id', 'submanage_Users')->class = 'submenuelselected';
+    #$view->selectedSubMenu = 'Domains';
   }
 
   public function indexAction() {
@@ -40,7 +40,7 @@ class IndexController extends Zend_Controller_Action {
     }
     $reporting = new Default_Model_ReportingStats();
     $what = array();
-		$what['stats'] = $reporting->getTodayStatElements($stats_type);
+    $what['stats'] = $reporting->getTodayStatElements($stats_type);
     $data = $reporting->getTodayValues($what, 0, $stats_type);
 
     $view->graphlink = $view->baseurl.'/index/todaypie/c/1';
@@ -105,31 +105,31 @@ class IndexController extends Zend_Controller_Action {
     $view->status = $res;
 
     $config = new SpamTagger_Config();
-	}
+  }
 
-	public function todaypieAction() {
-		$this->_helper->viewRenderer->setNoRender();
-		$this->_helper->layout->disableLayout();
-		$layout = Zend_Layout::getMvcInstance();
-		$view=$layout->getView();
+  public function todaypieAction() {
+    $this->_helper->viewRenderer->setNoRender();
+    $this->_helper->layout->disableLayout();
+    $layout = Zend_Layout::getMvcInstance();
+    $view=$layout->getView();
 
-		$request = $this->getRequest();
+    $request = $this->getRequest();
 
-		$usecache = false;
-		if (preg_match('/^[A-Za-z0-9]+$/', $request->getParam('c'))) {
-			$usecache = $request->getParam('c');
-		}
-		$type = $request->getParam('t');
-		if (isset($type) && !preg_match('/^(accepted|refused|global|delayed|relayed|sessions)$/', $type)) {
-			echo "invalid selection: $type";
-			exit();
-		}
+    $usecache = false;
+    if (preg_match('/^[A-Za-z0-9]+$/', $request->getParam('c'))) {
+      $usecache = $request->getParam('c');
+    }
+    $type = $request->getParam('t');
+    if (isset($type) && !preg_match('/^(accepted|refused|global|delayed|relayed|sessions)$/', $type)) {
+      echo "invalid selection: $type";
+      exit();
+    }
 
-		$reporting = new Default_Model_ReportingStats();
-		$what = array();
-		$what['stats'] = $reporting->getTodayStatElements();
-		return $reporting->getTodayPie($what, 0, $usecache, $request->getParam('t'));
-	}
+    $reporting = new Default_Model_ReportingStats();
+    $what = array();
+    $what['stats'] = $reporting->getTodayStatElements();
+    return $reporting->getTodayPie($what, 0, $usecache, $request->getParam('t'));
+  }
 
 }
 

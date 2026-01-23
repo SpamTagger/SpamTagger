@@ -13,9 +13,9 @@ img {
 }
 
 #dataloading {
-    text-align: center;
-    width: 100%;
-    margin-top: 100px;
+  text-align: center;
+  width: 100%;
+  margin-top: 100px;
 }
 
 #filter {
@@ -27,11 +27,11 @@ img {
 
 
 .searchfields {
-    max-width: 330px;
+  max-width: 330px;
 }
 
 #domain {
-    max-width: 250px;
+  max-width: 250px;
 }
 .stattable {
   white-space: nowrap;
@@ -44,19 +44,19 @@ img {
   background-color: #FFFFFF;
   border-spacing: 0px;
   border-collapse: collapse;
-	border-top: solid 1px #D4D3D2 !important;
+  border-top: solid 1px #D4D3D2 !important;
   border-bottom: 1px solid  #C6ADC6;
   border-right: 1px solid  #C6ADC6;
   color: #000000;
-	background-image: none;
-	background-color: #F5F5F5;
+  background-image: none;
+  background-color: #F5F5F5;
 }
 
 .stattablehead {
   height: 48px;
   line-height: 48px;
   background-image:none;
-		background-color:#F5F5F5;
+  background-color:#F5F5F5;
   overflow: hidden;
   white-space: nowrap;
   text-align: left;
@@ -194,7 +194,7 @@ img {
    text-align: center !important;
 }
 .logrow td {
-    border: 0px;
+  border: 0px;
 }
 .loghostfield {
    line-height: 20px;
@@ -226,5 +226,5 @@ img {
 }
 
 #dataloading {
-	margin-top: 20px;
+  margin-top: 20px;
 }
