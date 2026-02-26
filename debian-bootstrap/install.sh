@@ -111,14 +111,15 @@ setterm --foreground blue
 echo "# Checking/Installing APT dependencies..."
 setterm --foreground default
 
-if [[ -e /usr/spamtagger/debian-bootstrap/required.apt ]]; then
-  cp /usr/spamtagger/debian-bootstrap/required.apt /tmp/required.apt
+source /etc/os-release
+if [[ -e /usr/spamtagger/debian-bootstrap/${VERSION_CODENAME}.apt ]]; then
+  cp /usr/spamtagger/debian-bootstrap/${VERSION_CODENAME}.apt /tmp/${VERSION_CODENAME}.apt
 else
-  curl https://raw.githubusercontent.com/SpamTagger/SpamTagger-Plus/refs/heads/main/debian-bootstrap/required.apt 2>/dev/null >/tmp/required.apt
+  curl https://raw.githubusercontent.com/SpamTagger/SpamTagger-Plus/refs/heads/main/debian-bootstrap/${VERSION_CODENAME}.apt 2>/dev/null >/tmp/${VERSION_CODENAME}.apt
 fi
 
 FAILED=""
-for i in $(cat /tmp/required.apt); do
+for i in $(cat /tmp/${VERSION_CODENAME}.apt); do
   if grep -qP "^ii  $i" <<<$DPKG; then
     echo -e "  Checking $i *  "
   else
