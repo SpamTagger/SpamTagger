@@ -79,29 +79,15 @@ if ! grep -qP "^ii gpg" <<<$DPKG; then
 fi
 
 # SpamTagger repository
-#if [ ! -e /etc/apt/keyrings/spamtagger.gpg ]; then
-  #cp /usr/spamtagger/etc/spamtagger/spamtagger.asc /etc/apt/trusted.gpg.d/spamtagger.asc
-  #cat /etc/apt/trusted.gpg.d/spamtagger.asc | gpg --yes --dearmor -o /etc/apt/keyrings/spamtagger.gpg
-  #curl https://spamtaggerdl.alinto.net/downloads/spamtagger.gpg 2>/dev/null >/etc/apt/keyrings/spamtagger.gpg
-  #cat > /etc/apt/source.list.d/spamtagger.sources <<EOF
-#Types: deb
-#URIs: http://cdnmcpool.spamtagger.net/
-#Suites: trixie
-#Components: main
-#Signed-By: /etc/apt/keyrings/spamtagger.gpg
-#EOF
-#fi
-
-# Docker repository
-if [ ! -e /etc/apt/keyrings/docker.gpg ]; then
-  curl https://download.docker.com/linux/debian/gpg 2>/dev/null >/etc/apt/trusted.gpg.d/docker.asc
-  cat /etc/apt/trusted.gpg.d/docker.asc | gpg --yes --dearmor -o /etc/apt/keyrings/docker.gpg
-  cat >/etc/apt/sources.list.d/docker.sources <<EOF
+if [ ! -e /etc/apt/keyrings/spamtagger.gpg ]; then
+  curl https://raw.githubusercontent.com/SpamTagger/debs/refs/heads/main/spamtagger.key 2>/dev/null >/etc/apt/trusted.gpg.d/spamtagger.asc
+  cat /etc/apt/trusted.gpg.d/spamtagger.asc | gpg --yes --dearmor -o /etc/apt/keyrings/spamtagger.gpg
+  cat > /etc/apt/source.list.d/spamtagger.sources <<EOF
 Types: deb
-URIs: https://download.docker.com/linux/debian
+URIs: https://debs.spamtagger.org/
 Suites: trixie
-Components: stable
-Signed-By: /etc/apt/keyrings/docker.gpg
+Components: main
+Signed-By: /etc/apt/keyrings/spamtagger.gpg
 EOF
 fi
 
