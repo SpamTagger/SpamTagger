@@ -13,9 +13,6 @@ GITREPO="SpamTagger"
 # Current checksum of this script, to compare after `git pull`
 CURRENT=$(md5sum $0)
 
-# Errors which must be resolved before success, but don't justify killing the script in action
-ERRORS=''
-
 setterm --foreground blue
 echo -n "# Modernizing APT Sources..."
 setterm --foreground default
@@ -26,7 +23,7 @@ if [[ "$(find /etc/apt -name '*.list')" != "" ]]; then
   apt modernize-sources -y &>/dev/null
   if [[ $? -ne 0 ]]; then
     echo -e "\b\b\b x "
-    exit
+    exit 1
   fi
 fi
 echo -e "\b\b\b * "
@@ -193,9 +190,7 @@ setterm --foreground default
 
 apt-get autoremove --assume-yes &>/dev/null
 if [[ $? -ne 0 ]]; then
-  echo -e "\b\b\b x "
-  ERRORS="${ERRORS}
-x Failed \`apt-get autoremove\`"
+  echo -e "\b\b\b x Failed \`apt-get autoremove\`"
 else
   echo -e "\b\b\b * "
 fi
@@ -206,9 +201,8 @@ setterm --foreground default
 
 apt-get clean --assume-yes 2>/dev/null >/dev/null
 if [[ $? -ne 0 ]]; then
-  echo -e "\b\b\b x "
-  ERRORS="${ERRORS}
-x Failed \`apt-get clean\`"
+  echo -e "\b\b\b x Failed \`apt-get clean\`"
+  exit 1
 else
   echo -e "\b\b\b * "
 fi
@@ -219,15 +213,8 @@ setterm --foreground default
 
 /usr/spamtagger/install/install.sh
 if [ $! ]; then
-  echo -e "\b\b\b x "
-  ERRORS="${ERRORS}
-x Failed running /usr/spamtagger/install/install.sh"
-fi
-
-if [[ $ERRORS != "" ]]; then
-  echo "Finished with errors:"
-  echo $ERRORS
-  echo "Please try to remedy these errors, report them as needed, then run this script again to verify that there are no remaining errors with the installation."
+  echo -e "\b\b\b x Failed running /usr/spamtagger/install/install.sh"
+  exit 1
 fi
 
 echo "Creating bare spamtagger configuration file..."
