@@ -8,15 +8,7 @@ GITHOST="https://github.com"
 # Git User
 GITUSER="SpamTagger"
 # Repo Name
-GITREPO="SpamTagger-Plus"
-
-# Repo name, to be changed upon Stable release
-GHREPO="SpamTagger"
-#GHREPO="SpamTagger"
-
-# Git/HTTP protocol, to be changed upon repo going public
-#GHHOST="git@github.com:"
-GHHOST="https://github.com"
+GITREPO="SpamTagger"
 
 # Current checksum of this script, to compare after `git pull`
 CURRENT=$(md5sum $0)
