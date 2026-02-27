@@ -162,7 +162,7 @@ setterm --foreground default
 # Check for existing repo
 if [[ -d /usr/spamtagger ]]; then
   if [[ -z $CI ]]; then
-    if [[ ! -e /usr/spamtagger/.git/config ]] && ; then
+    if [[ ! -e /usr/spamtagger/.git/config ]]; then
       echo -e "\b\b\b x \nFound '/usr/spamtagger' which is not a git repo. Please (re)move it and run the script again"
       exit 1
     fi
