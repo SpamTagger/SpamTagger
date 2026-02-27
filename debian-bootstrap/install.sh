@@ -160,8 +160,8 @@ echo -n "# Checking SpamTagger repository..."
 setterm --foreground default
 
 # Check for existing repo
-if [ -d /usr/spamtagger ]; then
-  if [ ! -e /usr/spamtagger/.git/config ]; then
+if [[ -d /usr/spamtagger ]]; then
+  if [[ ! -e /usr/spamtagger/.git/config ]] && [[ ! -z $CI ]]; then
     echo -e "\b\b\b x \nFound '/usr/spamtagger' which is not a git repo. Please (re)move it and run the script again"
     exit 1
   fi
@@ -184,15 +184,17 @@ setterm --foreground default
 
 # Update repo
 cd /usr/spamtagger
-git pull --rebase origin main 2>/dev/null >/dev/null
-if [[ $? -ne 0 ]]; then
-  echo -e "\b\b\b x Error pulling latest commits"
-  exit 1
-else
-  echo -e "\b\b\b * "
-  if [[ ! -z $CURRENT ]] && [[ $CURRENT != $(md5sum $0) ]]; then
-    echo "$0 has changed. Please run the command again to ensure that you have the latest installation procedures"
+if [[ ! -z $CI ]]; then
+  git pull --rebase origin main 2>/dev/null >/dev/null
+  if [[ $? -ne 0 ]]; then
+    echo -e "\b\b\b x Error pulling latest commits"
     exit 1
+  else
+    echo -e "\b\b\b * "
+    if [[ ! -z $CURRENT ]] && [[ $CURRENT != $(md5sum $0) ]]; then
+      echo "$0 has changed. Please run the command again to ensure that you have the latest installation procedures"
+      exit 1
+    fi
   fi
 fi
 
