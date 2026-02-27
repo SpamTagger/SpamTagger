@@ -161,13 +161,15 @@ setterm --foreground default
 
 # Check for existing repo
 if [[ -d /usr/spamtagger ]]; then
-  if [[ ! -e /usr/spamtagger/.git/config ]] && [[ -z $CI ]]; then
-    echo -e "\b\b\b x \nFound '/usr/spamtagger' which is not a git repo. Please (re)move it and run the script again"
-    exit 1
-  fi
-  if ! grep -q "${GITREPO}" <<<$(cat /usr/spamtagger/.git/config); then
-    echo -e "\b\b\b x \nFound '/usr/spamtagger' which is not a ${GITREPO} repository. Please change target and run the script again"
-    exit 1
+  if [[ -z $CI ]]; then
+    if [[ ! -e /usr/spamtagger/.git/config ]] && ; then
+      echo -e "\b\b\b x \nFound '/usr/spamtagger' which is not a git repo. Please (re)move it and run the script again"
+      exit 1
+    fi
+    if ! grep -q "${GITREPO}" <<<$(cat /usr/spamtagger/.git/config); then
+      echo -e "\b\b\b x \nFound '/usr/spamtagger' which is not a ${GITREPO} repository. Please change target and run the script again"
+      exit 1
+    fi
   fi
 # Clone instead
 else
