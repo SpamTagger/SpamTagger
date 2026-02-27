@@ -317,7 +317,8 @@ sub apply_configuration($this) {
   }
   $this->{'install_variables'}->{'WEBADMINPWD'} = $this->{'config_variables'}->{'MYSPAMTAGGERPWD'} if ($this->{'install_variables'} eq 'SAME AS DATABASE PASSWORD');
   print("Running $this->{'config_variables'}->{'SRCDIR'}/install/install.sh. This will take some time. Installation logs will be saved to /tmp/spamtagger-installer.log\n");
-  `LOGFILE="/tmp/spamtagger-installer.log" FORCEDBREINSTALL=1 $this->{'config_variables'}->{'SRCDIR'}/install/install.sh`;
+  `LOGFILE="/tmp/spamtagger-installer.log" FORCEDBREINSTALL=1 $this->{'config_variables'}->{'SRCDIR'}/install/ST_prepare_dbs.sh`;
+  `systemctl restart spamtagger.target`;
 
   my $dlg = $this->{'dfact'}->simple();
   $dlg->clear();
