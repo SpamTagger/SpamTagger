@@ -188,6 +188,7 @@ snmp
 snmp-mibs-downloader
 snmpd
 spamd
+st-exim
 telnet
 tesseract-ocr
 ufw
