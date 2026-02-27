@@ -15,6 +15,14 @@
 #
 #   You should have received a copy of the GNU General Public License
 #   along with this program. If not, see <http://www.gnu.org/licenses/>.
+#
+# SpamTagger Appliance Initialization
+#
+# This script should be run automatically upon manual installation or first boot
+# of a pre-packaged appliance.
+#
+# It should include all unique configuration steps to make the appliance
+# function and reflect the admin's basic preferences.
 
 use v5.40;
 use warnings;

@@ -1,5 +1,16 @@
 #!/usr/bin/env bash
 # vim: set ts=2 sw=2 expandtab :
+#
+# Debian Bootstrap Script
+#
+# This script should be run during the build of SpamTagger-Bootc as well as for
+# unofficial installations on a generic Debian system.
+#
+# It should contain all installation steps common to a Debian-based appliance,
+# but not any application configuration steps which would need to done on a
+# different base (if someone eventually tries to port SpamTagger to another OS).
+# The latter should be included in install/install.sh which is run automatically
+# at the end of this file.
 
 ## Define the SpamTagger repository: ${GITHOST}/${GITUSER}/${GITREPO}
 # Git repo with HTTP(S) or Git protocol
@@ -216,10 +227,4 @@ setterm --foreground default
 if [ $! ]; then
   echo -e "\b\b\b x Failed running /usr/spamtagger/install/install.sh"
   exit 1
-fi
-
-echo "Creating bare spamtagger configuration file..."
-touch /etc/spamtagger.conf
-if [ -z $SKIP_CONFIGURATION ]; then
-  /usr/spamtagger/scripts/installer/installer.pl
 fi

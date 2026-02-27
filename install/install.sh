@@ -1,5 +1,17 @@
 #!/usr/bin/env bash
 # vim: set ts=2 sw=2 expandtab :
+#
+# SpamTagger Application Configuration
+#
+# This script should be run after all necessary packages are installed on any OS
+# base.
+#
+# It should include all application configuration which can be done before the
+# final packaging of an appliance image. Any steps which should be done upon
+# first-boot of an appliance (eg. generation of unique certificate/keys/user
+# configurations) should be included in scripts/installer/installer.pl which is
+# run automatically at the end of this script if not run from CI, or upon first
+# boot of an appliance.
 
 setterm --foreground blue
 echo -n "# Creating bare spamtagger configuration file..."
