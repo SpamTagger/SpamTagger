@@ -82,7 +82,7 @@ fi
 if [ ! -e /etc/apt/keyrings/spamtagger.gpg ]; then
   curl https://raw.githubusercontent.com/SpamTagger/debs/refs/heads/main/spamtagger.key 2>/dev/null >/etc/apt/trusted.gpg.d/spamtagger.asc
   cat /etc/apt/trusted.gpg.d/spamtagger.asc | gpg --yes --dearmor -o /etc/apt/keyrings/spamtagger.gpg
-  cat > /etc/apt/source.list.d/spamtagger.sources <<EOF
+  cat > /etc/apt/sources.list.d/spamtagger.sources <<EOF
 Types: deb
 URIs: https://debs.spamtagger.org/
 Suites: trixie
