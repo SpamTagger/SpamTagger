@@ -51,7 +51,6 @@ libdevel-size-perl
 libdigest-hmac-perl
 libencode-detect-perl
 libevent-2.1-7
-libextutils-cbuilder-perl
 libffi-dev
 libfile-touch-perl
 libfilesys-df-perl
@@ -157,7 +156,6 @@ php-bcmath
 php-bz2
 php-common
 php-curl
-php-dba
 php-dev
 php-gd
 php-gmp
