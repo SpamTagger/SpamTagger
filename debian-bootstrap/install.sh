@@ -161,7 +161,7 @@ setterm --foreground default
 
 # Check for existing repo
 if [[ -d /usr/spamtagger ]]; then
-  if [[ ! -e /usr/spamtagger/.git/config ]] && [[ ! -z $CI ]]; then
+  if [[ ! -e /usr/spamtagger/.git/config ]] && [[ -z $CI ]]; then
     echo -e "\b\b\b x \nFound '/usr/spamtagger' which is not a git repo. Please (re)move it and run the script again"
     exit 1
   fi
@@ -184,7 +184,7 @@ setterm --foreground default
 
 # Update repo
 cd /usr/spamtagger
-if [[ ! -z $CI ]]; then
+if [[ -z $CI ]]; then
   git pull --rebase origin main 2>/dev/null >/dev/null
   if [[ $? -ne 0 ]]; then
     echo -e "\b\b\b x Error pulling latest commits"
@@ -220,6 +220,51 @@ if [[ $? -ne 0 ]]; then
 else
   echo -e "\b\b\b * "
 fi
+
+setterm --foreground blue
+echo -n "# Creating spamtagger group and user..."
+setterm --foreground default
+
+if [ "$(grep 'spamtagger' /etc/passwd)" == "" ]; then
+  groupadd spamtagger &>/dev/null
+  if [[ $? -ne 0 ]]; then
+    echo -e "\b\b\b x "
+    exit 1
+  fi
+  useradd -d /var/spamtagger -s /bin/bash -g spamtagger spamtagger &>/dev/null
+  if [[ $? -ne 0 ]]; then
+    echo -e "\b\b\b x "
+    exit 1
+  fi
+fi
+echo -e "\b\b\b * "
+
+setterm --foreground blue
+echo -n "# Add other users to spamtagger group..."
+setterm --foreground default
+
+usermod -aG spamtagger clamav &>/dev/null
+if [[ $? -ne 0 ]]; then
+  echo -e "\b\b\b Failed to add clamav to spamtagger groupx "
+  exit 1
+fi
+usermod -aG spamtagger Debian-exim &>/dev/null
+if [[ $? -ne 0 ]]; then
+  echo -e "\b\b\b x Failed to add Debian-exim to spamtagger group"
+  exit 1
+fi
+usermod -aG spamtagger Debian-snmp &>/dev/null
+if [[ $? -ne 0 ]]; then
+  echo -e "\b\b\b x Failed to add Debian-snmp to spamtagger group"
+  exit 1
+fi
+# TODO: Enable the following line when mailscanner is ready
+#usermod -aG spamtagger mailscanner &>/dev/null
+#if [[ $? -ne 0 ]]; then
+  #echo -e "\b\b\b x Failed to add mailscanner to spamtagger group"
+  #exit 1
+#fi
+echo -e "\b\b\b * "
 
 setterm --foreground blue
 echo -n "# Configuring SpamTagger..."
