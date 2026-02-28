@@ -65,7 +65,7 @@ class Default_Model_QuarantinedContent {
     if ($param == 'size' && is_numeric($data)) {
       if ($data > 1000000000000) {
         $data = ($data / 1000000000000)." ".$t->_('Tb');
-      if ($data > 1000000000) {
+      } else if ($data > 1000000000) {
         $data = ($data / 1000000000)." ".$t->_('Gb');
       } else if ($data > 1000000) {
         $data = ($data / 1000000)." ".$t->_('Mb');

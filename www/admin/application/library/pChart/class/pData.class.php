@@ -529,7 +529,7 @@ class pData {
         foreach ($this->Palette as $Key => $Value) {
           if ($Value["R"] == $OldR && $Value["G"] == $OldG && $Value["B"] == $OldB) {
             $this->Palette[$Key]["R"] = $R; $this->Palette[$Key]["G"] = $G;
-            $this->Palette[$Key]["B"] = $B; $this->Palette[$Key]["Alpha"] = $Alpha
+            $this->Palette[$Key]["B"] = $B; $this->Palette[$Key]["Alpha"] = $Alpha;
           }
         }
       }

@@ -23,7 +23,7 @@ class Default_Model_Email {
   protected $_domain;
   protected $_domainobject;
 
-  protected $_configpanels = array
+  protected $_configpanels = array(
     0 => 'addresssettings',
     1 => 'warnlist',
     2 => 'wantlist',
