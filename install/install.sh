@@ -50,11 +50,11 @@ setterm --foreground default
 
 
 for i in $(find /usr/spamtagger/scripts/systemd); do
-  basename=$(echo $i | sed 's/\/usr/\/spamtagger\/scripts\/systemd//')
+  basename=$(echo $i | sed -r 's#/usr/spamtagger/scripts/systemd##')
   if [[ -d $i ]]; then
     [[ -e /usr/lib/systemd/system/$basename ]] || mkdir -p /usr/lib/systemd/system/$basename
   else
-    ls -s $i /usr/lib/systemd/system/$basename
+    ln -s $i /usr/lib/systemd/system/$basename
   fi
 done
 fangfrisch -c /usr/spamtagger/etc/fangfrisch.conf initdb
