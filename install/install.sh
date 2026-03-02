@@ -48,12 +48,13 @@ setterm --foreground blue
 echo -n "# Initialize and enable SpamTagger services..."
 setterm --foreground default
 
-cd /usr/spamtagger/scripts/systemd
-for i in $(find ./); do
+
+for i in $(find /usr/spamtagger/scripts/systemd); do
+  basename=$(echo $i | sed 's/\/usr/\/spamtagger\/scripts\/systemd//')
   if [[ -d $i ]]; then
-    [[ -e /usr/lib/systemd/system/$i ]] || mkdir -p /usr/lib/systemd/system/$i
+    [[ -e /usr/lib/systemd/system/$basename ]] || mkdir -p /usr/lib/systemd/system/$basename
   else
-    ls -s /usr/spamtagger/scripts/systemd/$i /usr/lib/systemd/system/$i
+    ls -s $i /usr/lib/systemd/system/$basename
   fi
 done
 fangfrisch -c /usr/spamtagger/etc/fangfrisch.conf initdb
@@ -83,14 +84,14 @@ echo "0-59/5 * * * * /usr/spamtagger/bin/collect_rrd_stats.pl > /dev/null" >>/et
 # prevent syslog from rotating mailscanner log files
 #perl -pi -e 's/`syslogd-listfiles`/`syslogd-listfiles -s mailscanner`/' /etc/cron.daily/sysklogd 2>&1 >>$LOGFILE
 #perl -pi -e 's/`syslogd-listfiles --weekly`/`syslogd-listfiles --weekly -s mailscanner`/' /etc/cron.weekly/sysklogd 2>&1 >>$LOGFILE
-systemctl restart cron 2>&1 >>$LOGFILE
+systemctl restart cron 2>&1 /dev/null
 echo -e "\b\b\b * "
 
 setterm --foreground blue
 echo -n "# Updating .bashrc..."
 setterm --foreground default
 
-mkdir /var/spamtagger/state
+mkdir -p /var/spamtagger/state
 chown spamtagger:spamtagger /var/spamtagger/state
 echo 'source /usr/spamtagger/.bashrc' >> /root/.bashrc
 echo -e "\b\b\b * "
