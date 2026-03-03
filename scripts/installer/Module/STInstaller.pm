@@ -317,14 +317,14 @@ sub apply_configuration($this) {
   }
   $this->{'install_variables'}->{'WEBADMINPWD'} = $this->{'config_variables'}->{'MYSPAMTAGGERPWD'} if ($this->{'install_variables'} eq 'SAME AS DATABASE PASSWORD');
   print("Running $this->{'config_variables'}->{'SRCDIR'}/install/install.sh. This will take some time. Installation logs will be saved to /tmp/spamtagger-installer.log\n");
-  `LOGFILE="/tmp/spamtagger-installer.log" FORCEDBREINSTALL=1 $this->{'config_variables'}->{'SRCDIR'}/install/ST_prepare_dbs.sh`;
+  `FORCEDBREINSTALL=1 $this->{'config_variables'}->{'SRCDIR'}/install/ST_prepare_dbs.sh | tee LOGFILE="/tmp/spamtagger-installer.log`;
   `systemctl restart spamtagger.target`;
 
   my $dlg = $this->{'dfact'}->simple();
   $dlg->clear();
 
   if (! -e '/var/spamtagger/state/first-run-wizard') {
-    touch('/var/spamtagger/first-run-wizard');
+    touch('/var/spamtagger/state/first-run-wizard');
   }
   return 0;
 }
