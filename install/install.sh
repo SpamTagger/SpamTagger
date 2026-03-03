@@ -57,7 +57,6 @@ for i in $(find /usr/spamtagger/scripts/systemd); do
     ln -s $i /usr/lib/systemd/system/$basename
   fi
 done
-fangfrisch -c /usr/spamtagger/etc/fangfrisch.conf initdb
 
 for service in rsyslog; do
   RET="$(systemctl is-active service >/dev/null)"
@@ -95,6 +94,14 @@ mkdir -p /var/spamtagger/state
 chown spamtagger:spamtagger /var/spamtagger/state
 echo 'source /usr/spamtagger/.bashrc' >> /etc/bash.bashrc
 echo -e "\b\b\b * "
+
+setterm --foreground blue
+echo -n "# Initializing fangfrisch..."
+setterm --foreground default
+
+cp /usr/spamtagger/etc/clamav/fangfrisch.conf_template /var/spamtagger/etc/fangfrisch.conf
+chown clamav:clamav /var/spamtagger/etc/fangfrisch.conf
+fangfrisch -c /var/spamtagger/etc/fangfrisch.conf initdb
 
 if [ -z $CI ]; then
   setterm --foreground blue
