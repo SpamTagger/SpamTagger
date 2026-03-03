@@ -49,7 +49,6 @@ my $gid = getgrnam( 'spamtagger' );
 
 # Create necessary dirs/files if they don't exist
 foreach my $dir (
-  "/etc/clamav",
   "/usr/spamtagger/etc/clamav",
   "/var/spamtagger/log/clamav",
   "/var/spamtagger/run/clamav",
@@ -60,7 +59,6 @@ foreach my $dir (
 }
 
 foreach my $file (
-  glob("/usr/spamtagger/etc/clamav/*"),
   glob("/var/spamtagger/log/clamav/*"),
   glob("/var/spamtagger/run/clamav/*"),
   glob("/var/spamtagger/spool/clamav/*"),
@@ -79,14 +77,6 @@ Cmnd_Alias  CLAMBIN = /usr/sbin/clamd
 CLAMAV    * = (ROOT) NOPASSWD: CLAMBIN
 ";
 }
-
-symlink('/usr/spamtagger/etc/apparmor', '/etc/apparmor.d/clamav') unless (-e '/etc/apparmor.d/clamav');
-
-# Reload AppArmor rules
-`apparmor_parser -r /usr/spamtagger/etc/apparmor.d/clamav` if ( -d '/sys/kernel/security/apparmor' );
-
-# SystemD auth causes timeouts
-`sed -iP '/^session.*pam_systemd.so/d' /etc/pam.d/common-session`;
 
 # Dump configuration
 dump_file("clamd.conf");
@@ -127,7 +117,7 @@ sub dump_file($file)
   close $TEMPLATE;
 
   # Additional user options
-  foreach my $options ( 'clamd', 'clamspamd', 'freshclam' ) {
+  foreach my $options ( 'clamd', 'freshclam' ) {
     if ($file eq "${options}.conf" && -e "/etc/spamtagger/clamav/${options}.options") {
       confess "Cannot open /etc/spamtagger/clamav/${options}.options" unless ( $TEMPLATE = ${open_as("/etc/spamtagger/clamav/${options}.options",'<')} );
       while(my $line = <$TEMPLATE>) {

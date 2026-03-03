@@ -16,11 +16,11 @@
 #   You should have received a copy of the GNU General Public License
 #   along with this program. If not, see <http://www.gnu.org/licenses/>.
 #
-#   This script will dump the clamspamd configuration file with the configuration
+#   This script will dump the clamav configuration file with the configuration
 #   settings found in the database.
 #
 #   Usage:
-#           dump_clamspamd_config.pl
+#       dump_clamspam_config.pl
 
 use v5.40;
 use strict;
@@ -28,93 +28,102 @@ use warnings;
 use utf8;
 use Carp qw( confess );
 
-our ($SRCDIR, $VARDIR);
+our ($HTTPPROXY);
 BEGIN {
-    if ($0 =~ m/(\S*)\/\S+.pl$/) {
-        my $path = $1."/../lib";
-        unshift (@INC, $path);
-    }
-    require ReadConfig;
-    my $conf = ReadConfig::get_instance();
-    $SRCDIR = $conf->get_option('SRCDIR');
-    $VARDIR = $conf->get_option('VARDIR');
-    unshift(@INC, $SRCDIR."/lib");
+  if ($0 =~ m/(\S*)\/\S+.pl$/) {
+    my $path = $1."/../lib";
+    unshift (@INC, $path);
+  }
+  require ReadConfig;
+  my $conf = ReadConfig::get_instance();
+  $HTTPPROXY = $conf->get_option('HTTPPROXY');
+  unshift(@INC, "/usr/spamtagger/lib");
 }
 
-use STUtils qw( open_as );
+use STUtils qw( open_as rmrf );
 
 my $lasterror;
 
-# Dump configuration
-dump_file("clamspamd.conf");
-
 my $uid = getpwnam( 'clamav' );
 my $gid = getgrnam( 'spamtagger' );
-my $conf = '/etc/clamav';
-
-if (-e $conf && ! -s $conf) {
-	unlink(glob("$conf/*"), $conf);
-}
-symlink($SRCDIR."/".$conf, $conf) unless (-l $conf);
 
 # Create necessary dirs/files if they don't exist
 foreach my $dir (
-    $VARDIR."/log/clamspamd",
-    $VARDIR."/run/clamspamd",
-    $VARDIR."/spool/clamspam",
+  "/var/spamtagger/log/clamspamd",
+  "/var/spamtagger/run/clamspamd",
+  "/var/spamtagger/spool/clamspamd",
 ) {
-    mkdir($dir) unless (-d $dir);
-    chown($uid, $gid, $dir);
+  mkdir($dir) unless (-d $dir);
+  chown($uid, $gid, $dir);
 }
 
 foreach my $file (
-    $SRCDIR."/etc/clamav/clamspamd.conf",
-    glob($VARDIR."/log/clamspamd/*"),
-    glob($VARDIR."/run/clamspamd/*"),
-    glob($VARDIR."/spool/clamspam/*"),
+  glob("/var/spamtagger/log/clamspamd/*"),
+  glob("/var/spamtagger/run/clamspamd/*"),
+  glob("/var/spamtagger/spool/clamspamd/*"),
 ) {
-    chown($uid, $gid, $file);
+  print("Taking ownership of $file\n");
+  chown($uid, $gid, $file);
 }
 
 # Configure sudoer permissions if they are not already
 mkdir '/etc/sudoers.d' unless (-d '/etc/sudoers.d');
 if (open(my $fh, '>', '/etc/sudoers.d/clamav')) {
-    print $fh "
-User_Alias  CLAMAV = spamtagger
+  print $fh "
+User_Alias  CLAMAV = clamav
 Cmnd_Alias  CLAMBIN = /usr/sbin/clamd
 
-CLAMAV      * = (ROOT) NOPASSWD: CLAMBIN
+CLAMAV    * = (ROOT) NOPASSWD: CLAMBIN
 ";
 }
 
-symlink($SRCDIR.'/etc/apparmor', '/etc/apparmor.d/spamtagger') unless (-e '/etc/apparmor.d/spamtagger');
-
-# Reload AppArmor rules
-`apparmor_parser -r ${SRCDIR}/etc/apparmor.d/clamav` if ( -d '/sys/kernel/security/apparmor' );
-
-# SystemD auth causes timeouts
-`sed -iP '/^session.*pam_systemd.so/d' /etc/pam.d/common-session`;
+# Dump configuration
+dump_file("clamspamd.conf");
 
 #############################
 sub dump_file($file)
 {
-    my $template_file = $SRCDIR."/etc/clamav/".$file."_template";
-    my $target_file = $SRCDIR."/etc/clamav/".$file;
+  my $template_file = "/usr/spamtagger/etc/clamav/${file}";
+  my $target_file = "/var/spamtagger/etc/clamav/${file}";
+  my $custom = 0;
+  if (-e "/etc/spamtagger/etc/clamav/${file}") {
+    ($custom, $template_file) = (1, "/etc/spamtagger/etc/clamav/${file}");
+  }
 
-    my ($TEMPLATE, $TARGET);
-    confess "Cannot open $template_file" unless ( $TEMPLATE = ${open_as($template_file,'<',0o664,'clamav:clamav')} );
-    confess "Cannot open $template_file" unless ( $TARGET = ${open_as($target_file,'>',0o664,'clamav:clamav')} );
+  my ($TEMPLATE, $TARGET);
+  confess "Cannot open $template_file" unless ( $TEMPLATE = ${open_as($template_file,'<',0o664,'clamav:clamav')} );
+  confess "Cannot open $template_file" unless ( $TARGET = ${open_as($target_file,'>',0o664,'clamav:clamav')} );
 
-    while(<$TEMPLATE>) {
-        my $line = $_;
+  my $proxy_server = "";
+  my $proxy_port = "";
+  if ($HTTPPROXY) {
+    if ($HTTPPROXY =~ m/http\:\/\/(\S+)\:(\d+)/) {
+      $proxy_server = $1;
+      $proxy_port = $2;
+    }
+  }
 
-        $line =~ s/__VARDIR__/${VARDIR}/g;
-
-        print $TARGET $line;
+  while(my $line = <$TEMPLATE>) {
+    if ($proxy_server =~ m/\S+/) {
+      $line =~ s/\#HTTPProxyServer __HTTPPROXY__/HTTPProxyServer $proxy_server/g;
+      $line =~ s/\#HTTPProxyPort __HTTPPROXYPORT__/HTTPProxyPort $proxy_port/g;
     }
 
-    close $TEMPLATE;
-    close $TARGET;
+    print $TARGET $line;
+  }
+  close $TEMPLATE;
 
-    return 1;
+  # Additional user options
+  foreach my $options ( 'clamspamd' ) {
+    if ($file eq "${options}.conf" && -e "/etc/spamtagger/clamav/${options}.options") {
+      confess "Cannot open /etc/spamtagger/clamav/${options}.options" unless ( $TEMPLATE = ${open_as("/etc/spamtagger/clamav/${options}.options",'<')} );
+      while(my $line = <$TEMPLATE>) {
+        print $TARGET $line;
+      }
+    }
+  }
+
+  close $TARGET;
+
+  return 1;
 }
