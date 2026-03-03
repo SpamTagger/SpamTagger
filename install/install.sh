@@ -93,7 +93,7 @@ setterm --foreground default
 
 mkdir -p /var/spamtagger/state
 chown spamtagger:spamtagger /var/spamtagger/state
-echo 'source /usr/spamtagger/.bashrc' >> /root/.bashrc
+echo 'source /usr/spamtagger/.bashrc' >> /etc/bash.bashrc
 echo -e "\b\b\b * "
 
 if [ -z $CI ]; then
