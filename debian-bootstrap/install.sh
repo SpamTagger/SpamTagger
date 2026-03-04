@@ -228,7 +228,9 @@ echo -n "# Creating spamtagger group and user..."
 setterm --foreground default
 
 if [ "$(grep 'spamtagger' /etc/passwd)" == "" ]; then
-  groupadd spamtagger &>/dev/null
+  if [ "$(grep 'spamtagger' /etc/group)" == "" ]; then
+    groupadd spamtagger &>/dev/null
+  fi
   if [[ $? -ne 0 ]]; then
     echo -e "\b\b\b x "
     exit 1
