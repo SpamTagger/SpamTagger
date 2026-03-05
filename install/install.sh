@@ -36,7 +36,7 @@ setterm --foreground blue
 echo -n "# Disabling default services..."
 setterm --foreground default
 
-for service in exim rsyslog; do
+for service in apache-htcacheclean dccifd exim mariadb rsyslog; do
   RET="$(systemctl is-active service >/dev/null)"
   if [[ $RET == 0 ]]; then
     systemctl disable --now $service >/dev/null

@@ -162,8 +162,8 @@ sub do_menu($this, $basemenu, $currentstep, $error) {
       } elsif ($ret == 253) {
         $$error = "Debian bootstrap command ($this->{'config_variables'}->{'SRCDIR'}/debian_bootstrap/install.sh) did not complete successfully.\n";
       } else {
-        $$error = "Missing necessary variable. Please follow all earlier steps before applying.\n";
-        $$currentstep = $ret;
+        $$error = "Missing necessary variable '$ret'. Please follow all earlier steps before applying.\n";
+        $$currentstep = 6;
       } 
     }
     return $ret;
@@ -270,13 +270,13 @@ sub support_email($this) {
 }
 
 sub check_variables($this) {
-  return 1 unless (defined($this->{'config_variables'}->{'HOSTID'}) && validate('host_id', $this->{'config_variables'}->{'HOSTID'}));
-  return 2 unless (defined($this->{'install_variables'}->{'HOSTNAME'}) && validate('fqdn', $this->{'install_variables'}->{'HOSTNAME'}));
-  return 3 unless (defined($this->{'install_variables'}->{'WEBADMINPWD'}) && $this->{'install_variables'}->{'WEBADMINPWD'} ne '' && $this->{'install_variables'}->{'WEBADMINPWD'} ne 'STPassw0rd');
-  return 4 unless (defined($this->{'config_variables'}->{'MYSPAMTAGGERPWD'}) && $this->{'config_variables'}->{'MYSPAMTAGGERPWD'} ne '' && $this->{'config_variables'}->{'MYSPAMTAGGERPWD'} ne 'STPassw0rd');
-  return 4 unless (defined($this->{'config_variables'}->{'SOURCEPWD'}) && $this->{'config_variables'}->{'SOURCEPWD'} ne 'STPassw0rd');
-  return 5 unless (defined($this->{'install_variables'}->{'ORGANIZATION'}) && $this->{'install_variables'}->{'ORGANIZATION'} ne '');
-  return 6 unless (defined($this->{'install_variables'}->{'CLIENTTECHMAIL'}) && $this->{'install_variables'}->{'CLIENTTECHMAIL'} ne '');
+  return 'HOSTID' unless (defined($this->{'config_variables'}->{'HOSTID'}) && validate('host_id', $this->{'config_variables'}->{'HOSTID'}));
+  return 'HOSTNAME' unless (defined($this->{'install_variables'}->{'HOSTNAME'}) && validate('fqdn', $this->{'install_variables'}->{'HOSTNAME'}));
+  return 'WEBADMINPWD' unless (defined($this->{'install_variables'}->{'WEBADMINPWD'}) && $this->{'install_variables'}->{'WEBADMINPWD'} ne '' && $this->{'install_variables'}->{'WEBADMINPWD'} ne 'STPassw0rd');
+  return 'MYSPAMTAGGERPWD' unless (defined($this->{'config_variables'}->{'MYSPAMTAGGERPWD'}) && $this->{'config_variables'}->{'MYSPAMTAGGERPWD'} ne '' && $this->{'config_variables'}->{'MYSPAMTAGGERPWD'} ne 'STPassw0rd');
+  return 'SOURCEPWD' unless (defined($this->{'config_variables'}->{'SOURCEPWD'}) && $this->{'config_variables'}->{'SOURCEPWD'} ne 'STPassw0rd');
+  return 'ORGANIZATION' unless (defined($this->{'install_variables'}->{'ORGANIZATION'}) && $this->{'install_variables'}->{'ORGANIZATION'} ne '');
+  return 'CLIENTTECHMAIL' unless (defined($this->{'install_variables'}->{'CLIENTTECHMAIL'}) && $this->{'install_variables'}->{'CLIENTTECHMAIL'} ne '');
   return 0;
 }
 
@@ -304,11 +304,6 @@ sub apply_configuration($this) {
   return 254 unless ($yndlg->display());
   return 255 unless ($this->write_config());
 
-  unless ($this->is_bootstrapped) {
-    print "Configuring Debian...\n";
-    #`cd $this->{'config_variables'}->{'SRCDIR'}; debian-bootstrap/install.sh`;
-    #return 253 unless ($this->is_bootstrapped);
-  }
   foreach (keys(%{$this->{'config_variables'}})) {
     $ENV{$_} = $this->{'config_variables'}->{$_}; ## no critic
   }
@@ -317,7 +312,7 @@ sub apply_configuration($this) {
   }
   $this->{'install_variables'}->{'WEBADMINPWD'} = $this->{'config_variables'}->{'MYSPAMTAGGERPWD'} if ($this->{'install_variables'} eq 'SAME AS DATABASE PASSWORD');
   print("Running $this->{'config_variables'}->{'SRCDIR'}/install/install.sh. This will take some time. Installation logs will be saved to /tmp/spamtagger-installer.log\n");
-  `FORCEDBREINSTALL=1 $this->{'config_variables'}->{'SRCDIR'}/install/ST_prepare_dbs.sh | tee LOGFILE="/tmp/spamtagger-installer.log`;
+  `FORCEDBREINSTALL=1 $this->{'config_variables'}->{'SRCDIR'}/install/ST_prepare_dbs.sh | tee /tmp/spamtagger-installer.log`;
   `systemctl restart spamtagger.target`;
 
   my $dlg = $this->{'dfact'}->simple();
