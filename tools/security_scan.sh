@@ -21,11 +21,4 @@ fi
 
 SUITE=$(grep 'VERSION_CODENAME=' /etc/os-release | cut -d '=' -f 2)
 
-debsecan --suite $SUITE --format detail --only-fixed > /tmp/vulns
-
-# In CI the vulnerability information will automatically be included in a GitHub Issue.
-# Otherwise, just print the results and remove the tmpfile.
-if [ ! -z $CI ]; then
-  cat /tmp/vulns
-  rm /tmp/vulns
-fi
+debsecan --suite $SUITE --format detail --only-fixed
