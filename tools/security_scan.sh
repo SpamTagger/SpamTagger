@@ -15,7 +15,6 @@ if [ -e /usr/bin/bootc ] && [ -z $CI ]; then
 fi
 
 if [ ! "$(dpkg -l | grep debsecan)" -eq "" ]; then
-  echo "Installing Debian Security Analyzer..."
   apt-get update 2>&1 >/dev/null && apt-get install debsecan 2>&1 >/dev/null
 fi
 
