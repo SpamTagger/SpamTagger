@@ -27,8 +27,8 @@ my $script_name                     = basename($0);
 $script_name                        =~ s/\.[^.]*$//;
 my $mode                            = $ARGV[0] || '';
 
-our $WATCHDOG_BIN           = '/usr/spamtagger/bin/watchdog/';
-our $WATCHDOG_CFG           = '/usr/spamtagger/etc/watchdog/';
+our $WATCHDOG_BIN           = '/opt/spamtagger/bin/watchdog/';
+our $WATCHDOG_CFG           = '/opt/spamtagger/etc/watchdog/';
 # TODO: Verify custom watchdog modules and disabling of build-in via this directory
 our $WATCHDOG_CUSTOM        = '/etc/spamtagger/watchdogs/';
 our $WATCHDOG_TMP           = '/var/spamtagger/spool/watchdog/';

@@ -1,16 +1,10 @@
 #!/bin/bash
 
 BACK=$(pwd)
-if [ "$SRCDIR" = "" ]; then
-  SRCDIR=$(grep 'SRCDIR' /etc/spamtagger.conf | cut -d ' ' -f3)
-  if [ "SRCDIR" = "" ]; then
-    SRCDIR=/var/spamtagger
-  fi
-fi
 
 exit 0
 
-cd $SRCDIR/install/src
+cd /opt/spamtagger/install/src
 
 tar -xvjf pyzor.tar.bz2
 cd pyzor-0.4.0
@@ -19,6 +13,6 @@ python setup.py install 2>&1
 #su spamtagger -c "pyzor discover" 2>&1
 
 cd $BACK
-rm -rf $SRCDIR/install/src/pyzor-0.4.0
+rm -rf /opt/spamtagger/install/src/pyzor-0.4.0
 
 chmod a+rx /usr/bin/pyzor

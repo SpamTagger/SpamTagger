@@ -6,6 +6,7 @@
  * @copyright (C) 2004-2014 Olivier Diserens <olivier@diserens.ch>
  *                2015-2017 Mentor Reka <reka.mentor@gmail.com>
  *                2015-2017 Florian Billebault <florian.billebault@gmail.com>
+ *                2017-2026 John Mertz <git@john.me.tz>
  */
 class STSoap_Config
 {
@@ -83,7 +84,7 @@ class STSoap_Config
 
     require_once('SpamTagger/Config.php');
     $sysconf = SpamTagger_Config::getInstance();
-    $cmd = $sysconf->getOption('SRCDIR')."/etc/init.d/firewall restart";
+    $cmd = "/opt/spamtagger/etc/init.d/firewall restart";
     `$cmd >/dev/null 2>&1`;
     return $status;
   }
@@ -151,7 +152,7 @@ class STSoap_Config
     unlink($localtimefile);
     `ln -s $fullfile $localtimefile`;
     putenv("TZ=".$zone);
-    # `/usr/spamtagger/etc/init.d/apache restart`;
+    # `/opt/spamtagger/etc/init.d/apache restart`;
     return 'OK saved';
   }
 
@@ -294,7 +295,7 @@ class STSoap_Config
       return "NOK You have to specify an integer for host_id";
     }
 
-    $cmd = $sysconf->getOption('SRCDIR')."/bin/change_hostid.sh ".$data['host_id']." -f";
+    $cmd = "/opt/spamtagger/bin/change_hostid.sh ".$data['host_id']." -f";
     $res = `$cmd`;
     if (preg_match('/SUCCESS/', $res)) {
       return 'OK registered '.$res;

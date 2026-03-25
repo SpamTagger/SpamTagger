@@ -34,7 +34,7 @@ function forceContent($sid, $path) {
   }
   $sysconf_ = SystemConfig::getInstance();
   $path = escapeshellarg($path);
-  $cmd = $sysconf_->SRCDIR_."/bin/force_quarantined.pl ".$path;
+  $cmd = "/opt/spamtagger/bin/force_quarantined.pl ".$path;
   $res_a = array();
   exec($cmd, $res_a);
 
@@ -60,7 +60,7 @@ function forceSpam($id, $dest) {
   $sysconf_ = SystemConfig::getInstance();
   $id = escapeshellarg($id);
   $dest = escapeshellarg($dest);
-  $cmd = $sysconf_->SRCDIR_."/bin/force_message.pl $id $dest";
+  $cmd = "/opt/spamtagger/bin/force_message.pl $id $dest";
   $res_a = array();
   exec($cmd, $res_a);
 
@@ -83,7 +83,7 @@ function addToNewslist($dest, $sender) {
   $sysconf_ = SystemConfig::getInstance();
   $dest = escapeshellarg($dest);
   $sender = escapeshellarg($sender);
-  $cmd = $sysconf_->SRCDIR_."/bin/add_to_newslist.pl $dest $sender";
+  $cmd = "/opt/spamtagger/bin/add_to_newslist.pl $dest $sender";
   $res_a = array();
   exec($cmd, $res_a);
 
@@ -106,7 +106,7 @@ function addToWantlist($dest, $sender) {
   $sysconf_ = SystemConfig::getInstance();
   $dest = escapeshellarg($dest);
   $sender = escapeshellarg($sender);
-  $cmd = $sysconf_->SRCDIR_."/bin/add_to_wantlist.pl $dest $sender";
+  $cmd = "/opt/spamtagger/bin/add_to_wantlist.pl $dest $sender";
   $res_a = array();
   exec($cmd, $res_a);
 
@@ -129,7 +129,7 @@ function addToBlocklist($dest, $sender) {
   $sysconf_ = SystemConfig::getInstance();
   $dest = escapeshellarg($dest);
   $sender = escapeshellarg($sender);
-  $cmd = $sysconf_->SRCDIR_."/bin/add_to_blocklist.pl $dest $sender";
+  $cmd = "/opt/spamtagger/bin/add_to_blocklist.pl $dest $sender";
   $res_a = array();
   exec($cmd, $res_a);
 
@@ -156,7 +156,7 @@ function getHeaders($id, $dest) {
     return "BADDOMAIN";
   }
 
-  $filepath = $sysconf_->VARDIR_."/spam/$domain/$dest/$id";
+  $filepath = "/var/spamtagger/spam/$domain/$dest/$id";
   if (!file_exists($filepath)) {
     return "MESSAGEFILENOTAVAILABLE $filepath";
   }
@@ -191,7 +191,7 @@ function getMIMEPart($id, $dest, $part) {
     return "BADDOMAIN";
   }
 
-  $filepath = $sysconf_->VARDIR_."/spam/$domain/$dest/$id";
+  $filepath = "/var/spamtagger/spam/$domain/$dest/$id";
   if (!file_exists($filepath)) {
     return "MESSAGEFILENOTAVAILABLE $filepath";
   }
@@ -243,7 +243,7 @@ function getBody($id, $dest, $nblines) {
     return "BADDOMAIN";
   }
 
-  $filepath = $sysconf_->VARDIR_."/spam/$domain/$dest/$id";
+  $filepath = "/var/spamtagger/spam/$domain/$dest/$id";
   if (!file_exists($filepath)) {
     return "MESSAGEFILENOTAVAILABLE $filepath";
   }
@@ -300,7 +300,7 @@ function getReasons($id, $dest, $lang) {
   $dest = escapeshellarg($dest);
   $lang = escapeshellarg($lang);
 
-  $cmd = $sysconf_->SRCDIR_."/bin/get_reasons.pl $id $dest $lang";
+  $cmd = "/opt/spamtagger/bin/get_reasons.pl $id $dest $lang";
   $res = "";
   exec($cmd, $res);
   $ret = array();
@@ -332,7 +332,7 @@ function sendToAnalyse($id, $dest) {
   $id = escapeshellarg($id);
   $dest = escapeshellarg($dest);
 
-  $cmd = $sysconf_->SRCDIR_."/bin/send_to_analyse.pl $id $dest";
+  $cmd = "/opt/spamtagger/bin/send_to_analyse.pl $id $dest";
   $res_a = array();
   exec($cmd, $res_a);
   return $res_a[0];

@@ -28,8 +28,7 @@ our $VERSION   = 1.0;
 
 use threads();
 use threads::shared();
-use lib "/usr/spamtagger/lib";
-use ReadConfig();
+use lib "/opt/spamtagger/lib";
 use File::Path qw(mkpath);
 use Fcntl qw(:flock SEEK_END);
 
@@ -37,13 +36,11 @@ my $_need_day_change : shared = 0;
 my $_changing_day : shared = 0;
 
 sub new ($class, $daemon) {
-  my $conf = ReadConfig::get_instance();
-
   my $this = {
     'class' => $class,
     'daemon' => $daemon,
     'data' => undef,
-    'basepath' => $conf->get_option('VARDIR') . '/spool/spamtagger/stats',
+    'basepath' => '/var/spamtagger/spool/spamtagger/stats',
     'today_filename' => '_today',
     'history_filename' => '_history'
   };

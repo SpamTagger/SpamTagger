@@ -27,22 +27,11 @@ use warnings;
 use utf8;
 use Carp qw( confess );
 
-my ($SRCDIR, $VARDIR);
-BEGIN {
-    if ($0 =~ m/(\S*)\/\S+.pl$/) {
-        my $path = $1."/../lib";
-        unshift (@INC, $path);
-    }
-    require ReadConfig;
-    my $conf = ReadConfig::get_instance();
-    $SRCDIR = $conf->get_option('SRCDIR') || '/usr/spamtagger';
-    $VARDIR = $conf->get_option('VARDIR') || '/var/spamtagger';
-}
-
+use lib "/opt/spamtagger/lib";
 use STUtils qw(open_as);
 require DB;
 
-my $file = "${VARDIR}/spool/tmp/mailscanner/whitelist_HTML";
+my $file = "/var/spamtagger/spool/tmp/mailscanner/whitelist_HTML";
 unlink($file);
 
 my $dbh =  DB->db_connect('replica', 'st_config');

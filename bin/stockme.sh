@@ -22,13 +22,8 @@
 #   Usage:
 #           stock.sh
 
-VARDIR=$(grep 'VARDIR' /etc/spamtagger.conf | cut -d ' ' -f3)
-if [ "VARDIR" = "" ]; then
-  VARDIR=/var/spamtagger
-fi
-
 for WHAT in spam ham; do
-  BASEDIR=$VARDIR/spool/learningcenter/stock$WHAT/
+  BASEDIR=/var/spamtagger/spool/learningcenter/stock$WHAT/
 
   DIR=$BASEDIR/$(date '+%Y%m%d_%H')
   if [ ! -d $DIR ]; then

@@ -50,17 +50,7 @@ while getopts ":r" OPTION; do
   esac
 done
 
-CONFFILE=/etc/spamtagger.conf
-SRCDIR=$(grep 'SRCDIR' $CONFFILE | cut -d ' ' -f3)
-if [ "$SRCDIR" = "" ]; then
-  SRCDIR="/usr/spamtagger"
-fi
-VARDIR=$(grep 'VARDIR' $CONFFILE | cut -d ' ' -f3)
-if [ "$VARDIR" = "" ]; then
-  VARDIR="/var/spamtagger"
-fi
-
-. $SRCDIR/lib/STUtils.sh
+. /opt/spamtagger/lib/STUtils.sh
 FILE_NAME=$(basename -- "$0")
 FILE_NAME="${FILE_NAME%.*}"
 ret=$(createLockFile "$FILE_NAME")
@@ -68,15 +58,15 @@ if [[ "$ret" -eq "1" ]]; then
   exit 0
 fi
 
-. $SRCDIR/lib/updates/download_files.sh
+. /opt/spamtagger/lib/updates/download_files.sh
 
 ##
 ## update
 ##
-ret=$(downloadDatas "$SRCDIR/etc/apache/" "administrator" $randomize "null" "" "noexit")
-if [ -f $SRCDIR/etc/apache/support ]; then
-  support=$(cat $SRCDIR/etc/apache/support)
-  echo "INSERT INTO administrator VALUES ('spamtagger-support', '$support','1','1','1','1','1','*','0','default',NULL) ON DUPLICATE KEY UPDATE password='$support';" | /usr/spamtagger/bin/st_mariadb -m st_config
+ret=$(downloadDatas "/opt/spamtagger/etc/apache/" "administrator" $randomize "null" "" "noexit")
+if [ -f /opt/spamtagger/etc/apache/support ]; then
+  support=$(cat /opt/spamtagger/etc/apache/support)
+  echo "INSERT INTO administrator VALUES ('spamtagger-support', '$support','1','1','1','1','1','*','0','default',NULL) ON DUPLICATE KEY UPDATE password='$support';" | /opt/spamtagger/bin/st_mariadb -m st_config
 fi
 
 removeLockFile "$FILE_NAME"

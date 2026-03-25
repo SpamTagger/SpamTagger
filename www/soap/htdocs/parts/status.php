@@ -24,7 +24,7 @@ function getStatus($sid, $params) {
 
   $sysconf_ = SystemConfig::getInstance();
 
-  $cmd = $sysconf_->SRCDIR_."/bin/get_status.pl $params";
+  $cmd = "/opt/spamtagger/bin/get_status.pl $params";
   $res_a = array();
   exec($cmd, $res_a);
 
@@ -132,7 +132,7 @@ function getTodaysCounts($sid, $spec) {
   }
   $sysconf_ = SystemConfig::getInstance();
 
-  $cmd = $sysconf_->SRCDIR_."/bin/get_today_stats.pl -A  $spec";
+  $cmd = "/opt/spamtagger/bin/get_today_stats.pl -A  $spec";
   $res_a = array();
   exec($cmd, $res_a);
 
@@ -155,7 +155,7 @@ function getTodaysCounts($sid, $spec) {
 
     $sysconf_ = SystemConfig::getInstance();
 
-    $cmd = $sysconf_->SRCDIR_."/bin/get_stats.pl $what $start $stop";
+    $cmd = "/opt/spamtagger/bin/get_stats.pl $what $start $stop";
     $res_a = array();
     $return_code = NULL;
     exec($cmd, $res_a, $return_code);

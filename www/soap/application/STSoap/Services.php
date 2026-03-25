@@ -32,7 +32,7 @@ class STSoap_Services {
     if (preg_match('/syslogd.$/', $res, $matches)) {
       $status = $matches[1];
     }
-    $restart_file = $config->getOption('VARDIR')."/run/syslog.rn";
+    $restart_file = "/var/spamtagger/run/syslog.rn";
     if (file_exists($restart_file)) {
       unlink($restart_file);
     }
@@ -65,7 +65,7 @@ class STSoap_Services {
     foreach ($stages as $stage) {
       if (preg_match('/^[124]$/', $stage)) {
         if (preg_match('/^(start|stop|restart)$/', $command)) {
-          $cmd = $config->getOption('SRCDIR').'/etc/init.d/exim_stage'.$stage." ".$command.$outcmd;
+          $cmd = "/opt/spamtagger/etc/init.d/exim_stage$stage ".$command.$outcmd;
           $res = `$cmd`;
           $res = preg_replace('/\n/', '', $res);
           if (preg_match('/(started|stopped).$/', $res, $matches)) {
@@ -95,7 +95,7 @@ class STSoap_Services {
     require_once('SpamTagger/Config.php');
     $config = new SpamTagger_Config();
     $service = preg_replace('/\//', '', $service);
-    $filepath = $config->getOption('SRCDIR').'/www/soap/application/STSoap/commands/'.urlencode($service).".php";
+    $filepath = '/opt/spamtagger/www/soap/application/STSoap/commands/'.urlencode($service).".php";
     if (file_exists($filepath)) {
       include_once($filepath);
     }
@@ -125,7 +125,7 @@ class STSoap_Services {
     $config = new SpamTagger_Config();
 
     foreach ($services as $service) {
-      $restart_file = $config->getOption('VARDIR')."/run/".$service.".rn";
+      $restart_file = "/var/spamtagger/run/".$service.".rn";
       if (!file_exists($restart_file)) {
         if ( ! touch($restart_file) ) {
           return 'NOK service to restart, $service';
@@ -155,7 +155,7 @@ class STSoap_Services {
     require_once('SpamTagger/Config.php');
     $config = new SpamTagger_Config();
     $service = preg_replace('/[^a-zA-Z0-9_]/', '', $service);
-    $starter = $config->getOption('SRCDIR')."/etc/init.d/".$service;
+    $starter = "/opt/spamtagger/etc/init.d/".$service;
     if (!file_exists($starter)) {
       $ret['error'] = 'no such process starter';
       $ret['message'] = $starter;
@@ -194,12 +194,12 @@ class STSoap_Services {
     $config = new SpamTagger_Config();
     if ($params['what'] == 'domains') {
       if (isset($params['domain']) && $params['domain'] != "") {
-        $cmd = $config->getOption('SRCDIR')."/bin/dump_domains.pl ".escapeshellcmd($params['domain']);
+        $cmd = "/opt/spamtagger/bin/dump_domains.pl ".escapeshellcmd($params['domain']);
       } else {
-        $cmd = $config->getOption('SRCDIR')."/bin/dump_domains.pl";
+        $cmd = "/opt/spamtagger/bin/dump_domains.pl";
       }
     } elseif ($params['what'] == 'archiving') {
-      $cmd = $config->getOption('SRCDIR')."/bin/dump_archiving.pl";
+      $cmd = "/opt/spamtagger/bin/dump_archiving.pl";
     }
 
     if ($cmd != '') {
@@ -225,7 +225,7 @@ class STSoap_Services {
 
     require_once('SpamTagger/Config.php');
     $config = new SpamTagger_Config();
-    $dir = $config->getOption('VARDIR')."/spool/exim_stage1/db";
+    $dir = "/var/spamtagger/spool/exim_stage1/db";
     $files = array($dir.'/callout', $dir.'/callout.lockfile');
 
     foreach ($files as $file) {
@@ -257,7 +257,7 @@ class STSoap_Services {
       $ret['domain'] = $params['domain'];
       return $ret;
     }
-    $file = $config->getOption('VARDIR')."/spool/tmp/exim_stage1/auth_cache/".escapeshellcmd($params['domain']).'.db';
+    $file = "/var/spamtagger/spool/tmp/exim_stage1/auth_cache/".escapeshellcmd($params['domain']).'.db';
     $ret['file'] = $file;
     if (!file_exists($file)) {
       $ret['message'] = 'No cache present';

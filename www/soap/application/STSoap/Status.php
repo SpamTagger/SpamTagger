@@ -14,7 +14,7 @@ class STSoap_Status {
     require_once('SpamTagger/Config.php');
 
     $config = new SpamTagger_Config();
-    $statusfile = $config->getOption('VARDIR').'/run/spamtagger.status';
+    $statusfile = '/var/spamtagger/run/spamtagger.status';
 
     if (! file_exists($statusfile)) {
       return $ret;
@@ -84,7 +84,7 @@ class STSoap_Status {
 
     if ($element == 'spools') {
       $data = array();
-      $cmd = $config->getOption('SRCDIR')."/bin/check_spools.sh";
+      $cmd = "/opt/spamtagger/bin/check_spools.sh";
       $cmdres = `$cmd`;
       foreach (preg_split("/\n/", $cmdres) as $line ) {
         if (preg_match('/^Stage\ (\d):\s+(\d+)/', $line, $matches)) {
@@ -96,7 +96,7 @@ class STSoap_Status {
 
     if ($element == 'processes') {
       $data = array();
-      $cmd = $config->getOption('SRCDIR')."/bin/get_status.pl -s";
+      $cmd = "/opt/spamtagger/bin/get_status.pl -s";
       $order = array(
         'exim_stage1', 'exim_stage2', 'exim_stage4', 'apache', 'mailscanner', 'mariadb_source', 'mariadb_replica', 'snmpd',
         'greylistd', 'cron', 'preftdaemon', 'spamd', 'clamd', 'clamspamd', 'spamhandler', 'newsld', 'firewall'
@@ -180,7 +180,7 @@ class STSoap_Status {
     require_once('SpamTagger/Config.php');
 
     $config = new SpamTagger_Config();
-    $cmd = $config->getOption('SRCDIR')."/bin/get_today_stats.pl -A";
+    $cmd = "/opt/spamtagger/bin/get_today_stats.pl -A";
     $cmdres = `$cmd`;
     $res['cmd'] = $cmd;
     if (preg_match('/^(\d+)\|(\d+)\|(\d+)\|([0-9.]+)\|(\d+)\|([0-9.]+)\|(\d+)\|([0-9.]+)\|(\d+)\|(\d+)\|([0-9.]+)/', $cmdres, $matches)) {
@@ -210,7 +210,7 @@ class STSoap_Status {
     if (isset($params['spool']) && in_array($params['spool'], $available_spools)) {
       $spool = $params['spool'];
     }
-    $cmd = "/opt/exim4/bin/exipick --spool ".$config->getOption('VARDIR')."/spool/exim_stage".$spool." -flatq --show-vars deliver_freeze,dont_deliver,first_delivery,warning_count,shown_message_size,message_age";
+    $cmd = "/opt/exim4/bin/exipick --spool /var/spamtagger/spool/exim_stage$spool -flatq --show-vars deliver_freeze,dont_deliver,first_delivery,warning_count,shown_message_size,message_age";
     $cmd_res = `$cmd`;
 
     $limit = 200;
@@ -275,7 +275,7 @@ class STSoap_Status {
         }
 
         ## got msglogs
-        $msglogpath = $config->getOption('VARDIR')."/spool/exim_stage".$spool."/msglog";
+        $msglogpath = "/var/spamtagger/spool/exim_stage$spool/msglog";
         $msglogfile = '';
 
         $msglog = array('Message log file not found.', 'Message is probably being sent at the moment.');
@@ -341,7 +341,7 @@ class STSoap_Status {
     $msgvalidator = new Validate_MessageID();
     foreach ($msgs as $msg) {
       if ($msgvalidator->isValid($msg)) {
-        $cmd = "/opt/exim4/bin/exim -C ".$config->getOption('SRCDIR')."/etc/exim/exim_stage".$spool.".conf -Mrm ".$msg. " &";
+        $cmd = "/opt/exim4/bin/exim -C /opt/spamtagger/etc/exim/exim_stage".$spool.".conf -Mrm ".$msg. " &";
         $cmd_res = `$cmd`;
         $ret['msgsdeleted'][] = $msg;
         $ret['lastcmd'] = $cmd;
@@ -380,7 +380,7 @@ class STSoap_Status {
     $msgvalidator = new Validate_MessageID();
     foreach ($msgs as $msg) {
       if ($msgvalidator->isValid($msg)) {
-        $cmd = "/opt/exim4/bin/exim -C ".$config->getOption('SRCDIR')."/etc/exim/exim_stage".$spool.".conf -M ".$msg. " &";
+        $cmd = "/opt/exim4/bin/exim -C /opt/spamtagger/etc/exim/exim_stage".$spool.".conf -M ".$msg. " &";
         $cmd_res = `$cmd`;
         $ret['msgstried'][] = $msg;
         $ret['lastcmd'] = $cmd;

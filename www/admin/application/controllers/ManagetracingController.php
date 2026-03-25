@@ -292,7 +292,7 @@ class ManagetracingController extends Zend_Controller_Action {
       }
     }
     $stconfig = SpamTagger_Config::getInstance();
-    $tmpdir = $stconfig->getOption('VARDIR').'/run/spamtagger/log_search/';
+    $tmpdir = "/var/spamtagger/run/spamtagger/log_search/';
     $tmpfile = tempnam($tmpdir, 'download_');
     if (!$handle = fopen($tmpfile, 'w')) {
       return;

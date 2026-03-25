@@ -56,21 +56,12 @@ for OPTION in "$@"; do
   esac
 done
 
-SRCDIR=$(grep 'SRCDIR' /etc/spamtagger.conf | cut -d ' ' -f3)
-if [ "SRCDIR" = "" ]; then
-  SRCDIR=/usr/spamtagger
-fi
-VARDIR=$(grep 'VARDIR' /etc/spamtagger.conf | cut -d ' ' -f3)
-if [ "VARDIR" = "" ]; then
-  VARDIR=/var/spamtagger
-fi
-
-DOMAINFILE=$VARDIR/spool/tmp/spamtagger/domains.list
+DOMAINFILE=/var/spamtagger/spool/tmp/spamtagger/domains.list
 STATFILE=/var/tmp/stats_to_push
 MAXSLEEPTIME=300
 MINSLEEPTIME=120
 
-. $SRCDIR/lib/STUtils.sh
+. /opt/spamtagger/lib/STUtils.sh
 FILE_NAME=$(basename -- "$0")
 FILE_NAME="${FILE_NAME%.*}"
 ret=$(createLockFile "$FILE_NAME")
@@ -84,10 +75,10 @@ if $randomize; then
 fi
 
 END=$(($days - 1))
-echo "_global:"$($SRCDIR/bin/get_stats.pl '*' -$days +$END | grep '_global' | cut -d':' -f2) >$STATFILE
+echo "_global:"$(/opt/spamtagger/bin/get_stats.pl '*' -$days +$END | grep '_global' | cut -d':' -f2) >$STATFILE
 for dom in $(grep -v '*' $DOMAINFILE | cut -d':' -f1); do
   echo -n $dom":" >>$STATFILE
-  echo $($SRCDIR/bin/get_stats.pl $dom -$days +$END) >>$STATFILE
+  echo $(/opt/spamtagger/bin/get_stats.pl $dom -$days +$END) >>$STATFILE
 done
 
 CLIENTID=$(grep 'CLIENTID' /etc/spamtagger.conf | cut -d ' ' -f3)

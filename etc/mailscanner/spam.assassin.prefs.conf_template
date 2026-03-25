@@ -4,7 +4,7 @@ ok_locales    all
 
 ifplugin Mail::SpamAssassin::Plugin::Bayes
 use_bayes __USE_BAYES__
-bayes_path __VARDIR__/spool/spamassassin/bayes
+bayes_path /var/spamtagger/spool/spamassassin/bayes
 bayes_file_mode 0660
 
 bayes_learn_during_report 0
@@ -66,7 +66,7 @@ endif
 
 ifplugin Mail::SpamAssassin::Plugin::DCC
 dcc_path /usr/bin/dccproc
-dcc_dccifd_path __VARDIR__/run/dcc/dcc.sock
+dcc_dccifd_path /var/spamtagger/run/dcc/dcc.sock
 dcc_timeout __DCC_TIMEOUT__
 endif
 

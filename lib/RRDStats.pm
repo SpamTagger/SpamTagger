@@ -28,16 +28,13 @@ use Exporter 'import';
 our @EXPORT_OK = ();
 our $VERSION   = 1.0;
 
-use lib "/usr/spamtagger/lib/";
-use ReadConfig();
 use DBI();
 use Net::SNMP();
 
 sub new ($hostname) {
 
-  my $conf = ReadConfig::get_instance();
-  my $spooldir = $conf->get_option('VARDIR')."/spool/rrdtools/".$hostname;
-  my $pictdir = $conf->get_option('VARDIR')."/www/mrtg/".$hostname;
+  my $spooldir = "/var/spamtagger/spool/rrdtools/".$hostname;
+  my $pictdir = "/var/spamtagger/www/mrtg/".$hostname;
   my %stats = ();
 
   my $replica_db = DB->db_connect('replica', 'st_config');

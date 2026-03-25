@@ -27,15 +27,7 @@
 echo "Options are not yet supported by SpamTagger."
 exit
 
-VARDIR=$(grep 'VARDIR' /etc/spamtagger.conf | cut -d ' ' -f3)
-if [ "VARDIR" = "" ]; then
-  VARDIR=/var/spamtagger
-fi
-SRCDIR=$(grep 'SRCDIR' /etc/spamtagger.conf | cut -d ' ' -f3)
-if [ "SRCDIR" = "" ]; then
-  SRCDIR=/var/spamtagger
-fi
-STVERSION=$(cat /usr/spamtagger/etc/spamtagger/version.def | cut -c1-4)
+STVERSION=$(cat /opt/spamtagger/etc/spamtagger/version.def | cut -c1-4)
 LOGFILE=/tmp/st_install_options.log
 # TODO: No more server!
 DOWNLOADSERVER="spamtagger.org"
@@ -81,15 +73,15 @@ function messagesniffer() {
     apt-get update &>>$LOGFILE
     env PATH=$PATH:/usr/sbin:/sbin apt-get install --yes --force-yes st-messagesniffer &>>$LOGFILE
     printf "Installing MessageSniffer ... \n"
-    echo "UPDATE prefilter SET position=position+1 WHERE position > 1;" | ${SRCDIR}/bin/st_mariadb -m st_config &>>$LOGFILE
-    echo "INSERT INTO prefilter VALUES(NULL, 1, 'MessageSniffer', 1, 2, 0, 1, 'pos_decisive', 10, 2000000, 'X-MessageSniffer', 1, 1, 1);" | ${SRCDIR}/bin/st_mariadb -m st_config &>>$LOGFILE
-    echo "UPDATE MessageSniffer set licenseid='${license_id}', authentication='${auth_code}';" | ${SRCDIR}/bin/st_mariadb -m st_config &>>$LOGFILE
+    echo "UPDATE prefilter SET position=position+1 WHERE position > 1;" | /opt/spamtagger/bin/st_mariadb -m st_config &>>$LOGFILE
+    echo "INSERT INTO prefilter VALUES(NULL, 1, 'MessageSniffer', 1, 2, 0, 1, 'pos_decisive', 10, 2000000, 'X-MessageSniffer', 1, 1, 1);" | /opt/spamtagger/bin/st_mariadb -m st_config &>>$LOGFILE
+    echo "UPDATE MessageSniffer set licenseid='${license_id}', authentication='${auth_code}';" | /opt/spamtagger/bin/st_mariadb -m st_config &>>$LOGFILE
     printf "Restarting MailScanner ... \n"
 
     printf "MessageSniffer has been correctly installed \n"
     printf "${FONT_BOLD}${FONT_RED}IMPORTANT: ${FONT_RESET}"
     printf "In order to enable MessageSniffer, please restart the filtering engine: \n"
-    printf "\t ${SRCDIR}/etc/init.d/mailscanner restart \n"
+    printf "\t /opt/spamtagger/etc/init.d/mailscanner restart \n"
   fi
 
 }
@@ -122,12 +114,12 @@ function spamhaus() {
 
   ### ZEN package
   if [[ "$shpackage" -eq "1" || "$shpackage" -eq "3" ]]; then
-    if [ -e "${SRCDIR}/etc/rbls/SPAMHAUSSBL.cf" ]; then
-      rm -f "${SRCDIR}/etc/rbls/SPAMHAUSSBL.cf"
+    if [ -e "/opt/spamtagger/etc/rbls/SPAMHAUSSBL.cf" ]; then
+      rm -f "/opt/spamtagger/etc/rbls/SPAMHAUSSBL.cf"
     fi
 
-    if [ -e "${SRCDIR}/etc/rbls/SPAMHAUSDQS.cf" ]; then
-      rm -f "${SRCDIR}/etc/rbls/SPAMHAUSDQS.cf"
+    if [ -e "/opt/spamtagger/etc/rbls/SPAMHAUSDQS.cf" ]; then
+      rm -f "/opt/spamtagger/etc/rbls/SPAMHAUSDQS.cf"
     fi
 
     # Create the RBL configuration file
@@ -138,7 +130,7 @@ dnsname=${token}.zen.dq.spamhaus.net
 sublist=127.0.0.\d+,SPAMHAUS,spamhaus.org list
 EOF
 
-    echo "${RBL_CONTENT}" >${SRCDIR}/etc/rbls/SPAMHAUSZEN.cf
+    echo "${RBL_CONTENT}" >/opt/spamtagger/etc/rbls/SPAMHAUSZEN.cf
   fi
 
   ### Content package
@@ -153,7 +145,7 @@ callonip=0
 ishbl=0
 EOF
 
-    echo "${RBL_CONTENT}" >${SRCDIR}/etc/rbls/SPAMHAUSDBL.cf
+    echo "${RBL_CONTENT}" >/opt/spamtagger/etc/rbls/SPAMHAUSDBL.cf
 
     # Create the RBL configuration file
     read -d '' RBL_CONTENT <<EOF
@@ -165,7 +157,7 @@ callonip=0
 ishbl=1
 EOF
 
-    echo "${RBL_CONTENT}" >${SRCDIR}/etc/rbls/SPAMHAUSHBL.cf
+    echo "${RBL_CONTENT}" >/opt/spamtagger/etc/rbls/SPAMHAUSHBL.cf
 
     # Create the RBL configuration file
     read -d '' RBL_CONTENT <<EOF
@@ -175,14 +167,14 @@ dnsname=${token}.zrd.dq.spamhaus.net
 sublist=127.0.0.\d+,SPAMHAUSZRD,Spamhaus Zero Reputation list
 EOF
 
-    echo "${RBL_CONTENT}" >${SRCDIR}/etc/rbls/SPAMHAUSZRD.cf
+    echo "${RBL_CONTENT}" >/opt/spamtagger/etc/rbls/SPAMHAUSZRD.cf
   fi
 
   # Override SpamAssassin default rules
   if [[ "$shpackage" -eq "1" || "$shpackage" -eq "2" || "$shpackage" -eq "3" ]]; then
     ### All packages
-    if [ -e "${SRCDIR}/share/spamassassin/60_spamhaus_override.cf" ]; then
-      rm -f "${SRCDIR}/share/spamassassin/60_spamhaus_override.cf"
+    if [ -e "/opt/spamtagger/share/spamassassin/60_spamhaus_override.cf" ]; then
+      rm -f "/opt/spamtagger/share/spamassassin/60_spamhaus_override.cf"
     fi
   fi
 
@@ -206,7 +198,7 @@ ifplugin Mail::SpamAssassin::Plugin::URIDNSBL
 endif # Mail::SpamAssassin::Plugin::URIDNSBL
 EOF
 
-    echo "${RBL_SPAMC_OVERRIDE}" >>${SRCDIR}/share/spamassassin/60_spamhaus_override.cf
+    echo "${RBL_SPAMC_OVERRIDE}" >>/opt/spamtagger/share/spamassassin/60_spamhaus_override.cf
   fi
 
   ### Content package
@@ -247,25 +239,25 @@ ifplugin Mail::SpamAssassin::Plugin::URIDNSBL
 endif # Mail::SpamAssassin::Plugin::URIDNSBL
 EOF
 
-    echo "${RBL_SPAMC_OVERRIDE}" >>${SRCDIR}/share/spamassassin/60_spamhaus_override.cf
+    echo "${RBL_SPAMC_OVERRIDE}" >>/opt/spamtagger/share/spamassassin/60_spamhaus_override.cf
   fi
 
   # Enable SpamHaus at PreRBLs level
   ### ZEN
   if [[ "$shpackage" -eq "1" || "$shpackage" -eq "3" ]]; then
-    echo 'UPDATE PreRBLs set lists=concat(lists, " SPAMHAUSZEN");' | ${SRCDIR}/bin/st_mariadb -m st_config &>>$LOGFILE
-    echo 'UPDATE antispam set sa_rbls=concat(sa_rbls, " SPAMHAUSZEN");' | ${SRCDIR}/bin/st_mariadb -m st_config &>>$LOGFILE
+    echo 'UPDATE PreRBLs set lists=concat(lists, " SPAMHAUSZEN");' | /opt/spamtagger/bin/st_mariadb -m st_config &>>$LOGFILE
+    echo 'UPDATE antispam set sa_rbls=concat(sa_rbls, " SPAMHAUSZEN");' | /opt/spamtagger/bin/st_mariadb -m st_config &>>$LOGFILE
   fi
   ### Content
   if [[ "$shpackage" -eq "1" || "$shpackage" -eq "3" ]]; then
-    echo 'UPDATE UriRBLs set rbls=concat(lists, " SPAMHAUSDBL SPAMHAUSHBL SPAMHAUSZRD");' | ${SRCDIR}/bin/st_mariadb -m st_config &>>$LOGFILE
-    echo 'UPDATE antispam set sa_rblsconcat(sa_rbls, " SPAMHAUSDBL SPAMHAUSHBL SPAMHAUSZRD");' | ${SRCDIR}/bin/st_mariadb -m st_config &>>$LOGFILE
+    echo 'UPDATE UriRBLs set rbls=concat(lists, " SPAMHAUSDBL SPAMHAUSHBL SPAMHAUSZRD");' | /opt/spamtagger/bin/st_mariadb -m st_config &>>$LOGFILE
+    echo 'UPDATE antispam set sa_rblsconcat(sa_rbls, " SPAMHAUSDBL SPAMHAUSHBL SPAMHAUSZRD");' | /opt/spamtagger/bin/st_mariadb -m st_config &>>$LOGFILE
   fi
 
   printf "SpamHaus installed. \n"
   printf "${FONT_BOLD}${FONT_RED}IMPORTANT: ${FONT_RESET}"
   printf "In order to enable SpamHaus, please restart the filtering engine: \n"
-  printf "\t ${SRCDIR}/etc/init.d/mailscanner restart \n"
+  printf "\t /opt/spamtagger/etc/init.d/mailscanner restart \n"
   exit 0
 }
 
@@ -299,7 +291,7 @@ function eset() {
 
   echo "Resolving dependencies..."
   cd /tmp
-  tar -Jxf /usr/spamtagger/install/src/eset-dependencies.tar.xz
+  tar -Jxf /opt/spamtagger/install/src/eset-dependencies.tar.xz
   cd /tmp/eset-dependencies/
   if [ ! -e /usr/bin/localectl ]; then
     mv localectl /usr/bin/
@@ -352,7 +344,7 @@ function eset() {
     printf "Cleaning up ... \n"
     rm efs.deb
   fi
-  /usr/spamtagger/etc/init.d/firewall restart 2>/dev/null
+  /opt/spamtagger/etc/init.d/firewall restart 2>/dev/null
 
   printf "Enabling ESET ... \n"
   /opt/eset/efs/sbin/lic -u $user -p $key
@@ -363,9 +355,9 @@ function eset() {
     exit 1
   fi
 
-  echo "UPDATE scanner set active = 1 WHERE name = 'esetsefs';" | /usr/spamtagger/bin/st_mariadb -m st_config
+  echo "UPDATE scanner set active = 1 WHERE name = 'esetsefs';" | /opt/spamtagger/bin/st_mariadb -m st_config
   printf "Restarting services ... \n"
-  /usr/spamtagger/etc/init.d/mailscanner restart 2>/dev/null
+  /opt/spamtagger/etc/init.d/mailscanner restart 2>/dev/null
 
   echo ${FONT_BOLD}${FONT_GREEN}ESET enabled Successfully${FONT_RESET}
 

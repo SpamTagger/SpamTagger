@@ -1,10 +1,10 @@
-socketpath=__VARDIR__/run/spamd.sock
+socketpath=/var/spamtagger/run/spamd.sock
 max-children=__NBSAPROCESSES__
-pidfile=__VARDIR__/run/spamd.pid
-syslog=__VARDIR__/log/mailscanner/spamd.log
+pidfile=/var/spamtagger/run/spamd.pid
+syslog=/var/spamtagger/log/mailscanner/spamd.log
 username=spamtagger
 groupname=spamtagger
-siteconfigpath=__SRCDIR__/share/spamassassin
+siteconfigpath=/opt/spamtagger/share/spamassassin
 nouser-config=yes
 debug=no
 daemonize=yes

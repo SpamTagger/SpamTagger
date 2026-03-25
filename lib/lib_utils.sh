@@ -19,16 +19,7 @@
 #   This lib permits to use useful function such as the LockFile process handling.
 
 CONFFILE=/etc/spamtagger.conf
-SRCDIR=$(grep 'SRCDIR' $CONFFILE | cut -d ' ' -f3)
-if [ "$SRCDIR" = "" ]; then
-  SRCDIR="/usr/spamtagger"
-fi
-VARDIR=$(grep 'VARDIR' $CONFFILE | cut -d ' ' -f3)
-if [ "$VARDIR" = "" ]; then
-  VARDIR="/var/spamtagger"
-fi
-
-LOCKFILEDIRECTORY=${VARDIR}/spool/tmp/
+LOCKFILEDIRECTORY=/var/spamtagger/spool/tmp/
 
 function createLockFile() {
   find ${LOCKFILEDIRECTORY} -type f -name "${1}" -mtime +1 -exec rm {} \;
@@ -48,7 +39,7 @@ function removeLockFile() {
 }
 
 function replicaSynchronized() {
-  replica_status=$(echo "SHOW REPLICA STATUS\G" | ${SRCDIR}/bin/st_mariadb -s)
+  replica_status=$(echo "SHOW REPLICA STATUS\G" | /opt/spamtagger/bin/st_mariadb -s)
   Last_IO_Errno=$(echo "${replica_status}" | awk '/Last_IO_Errno/{print $NF}')
   Last_SQL_Errno=$(echo "${replica_status}" | awk '/Last_SQL_Errno/{print $NF}')
   if [[ $Last_IO_Errno == "0" && $Last_SQL_Errno == "0" ]]; then

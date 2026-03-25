@@ -25,7 +25,7 @@ use v5.40;
 use warnings;
 use utf8;
 
-use lib '/usr/spamtagger/lib/';
+use lib '/opt/spamtagger/lib/';
 use ReadConfig();
 use DB();
 use RRDStats();
@@ -38,11 +38,9 @@ $m = 'daily' if (defined($mode) && $mode eq 'daily');
 my $conf = ReadConfig::get_instance();
 exit 0 unless ($conf->get_option('ISSOURCE') =~ /^[Yy]$/);
 
-unless (-d $conf->get_option('VARDIR')."/spool/rrdtools") {
-  mkdir $conf->get_option('VARDIR')."/spool/rrdtools";
+unless (-d "/var/spamtagger/spool/rrdtools") {
+  mkdir "/var/spamtagger/spool/rrdtools";
 }
-
-$conf->get_option('SRCDIR');
 
 # get stats to plot
 my @stats = ('cpu', 'load', 'network', 'memory', 'disks', 'messages', 'spools');

@@ -1,28 +1,23 @@
 #!/usr/bin/env sh
 
 usage () {
-	echo "usage: $0 [start|stop|restart|status]"
-	exit
+  echo "usage: $0 [start|stop|restart|status]"
+  exit
 }
 
-SRCDIR=$(grep 'SRCDIR' /etc/spamtagger.conf | cut -d ' ' -f3)
-if [ "$SRCDIR" = "" ]; then
-	SRCDIR="/usr/spamtagger"
-fi
-
 if [ -z $1 ]; then
-	usage
+  usage
 fi
 
 if [ $1 = 'start' ]; then
-	systemctl start spamtagger.target
+  systemctl start spamtagger.target
 elif [ $1 = 'stop' ]; then
-	systemctl start spamtagger-stopped.target
+  systemctl start spamtagger-stopped.target
 elif [ $1 = 'restart' ]; then
-	$0 stop
-	$0 start
+  $0 stop
+  $0 start
 elif [ $1 = 'status' ]; then
-	$SRCDIR/bin/get_status.pl -s -v
+  /opt/spamtagger/bin/get_status.pl -s -v
 else
-	usage
+  usage
 fi

@@ -24,7 +24,7 @@ use v5.40;
 use warnings;
 use utf8;
 
-use lib '/usr/spamtagger/lib/';
+use lib '/opt/spamtagger/lib/';
 use ReadConfig();
 use Date::Calc qw(:all);
 
@@ -40,7 +40,7 @@ my $fakeids = 1;
 my $batchwithlog = 0;
 my $batchid = 0;
 my $config = ReadConfig::new();
-my $tmpdir = $conf->get_option('VARDIR').'/run/spamtagger/log_search/';
+my $tmpdir = '/var/spamtagger/run/spamtagger/log_search/';
 
 my $MAXRESULTS = 10000000;
 
@@ -91,7 +91,7 @@ my %stopo = ( 'year' => $1, 'month' => $2, 'day' => $3 );
 print "PID ".$$."\n" if $batch;
 print "STARTTIME ".time()."\n" if $batch;
 
-chdir($conf->get_option('VARDIR')."/log") or die("cannot move to log directory: ".$conf->get_option('VARDIR')."/log\n");
+chdir("/var/spamtagger/log") or die("cannot move to log directory: /var/spamtagger/log\n");
 
 my $today = `date +%Y%m%d`;
 my $today_str = `date +%Y%m%d`;
@@ -99,7 +99,7 @@ if ($today_str !~ m/^(\d\d\d\d)(\d\d)(\d\d)$/) {
   print "Error, bad today string: $today_str\n";
 }
 my %today = ( 'year' => $1, 'month' => $2, 'day' => $3 );
-my $LOGDIR=$conf->get_option('VARDIR')."/log";
+my $LOGDIR="/var/spamtagger/log";
 if ($start > $today_str && $stop > $today_str) {
   $starto{'year'}--;
   $start = sprintf('%04d%02d%02d', $starto{'year'}, $starto{'month'}, $starto{'day'});
@@ -261,10 +261,10 @@ sub loop_through_logs ($filename, $type, $what, $store) {
 
 sub populate_ids ($file, $what, $store) {
 
-  my $cmd = "/opt/exim4/bin/exigrep '$what' ".$conf->get_option('VARDIR')."/log/$file";
+  my $cmd = "/opt/exim4/bin/exigrep '$what' /var/spamtagger/log/$file";
   print " -> searching $file... \n" if !$batch;
   my $result = '';
-  if  ( -f $conf->get_option('VARDIR')."/log/$file") {
+  if  ( -f "/var/spamtagger/log/$file") {
      $result = `$cmd`;
   }
   my @lines = split /\n/, $result, $MAXRESULTS;

@@ -28,18 +28,7 @@ use warnings;
 use utf8;
 use Carp qw( confess );
 
-my ($conf, $SRCDIR, $VARDIR);
-BEGIN {
-    if ($0 =~ m/(\S*)\/\S+.pl$/) {
-        my $path = $1."/../lib";
-        unshift (@INC, $path);
-    }
-    require ReadConfig;
-    $conf = ReadConfig::get_instance();
-    $SRCDIR = $conf->get_option('SRCDIR') || '/usr/spamtagger';
-    $VARDIR = $conf->get_option('VARDIR') || '/var/spamtagger';
-}
-
+use lib "/opt/spamtagger/lib";
 use STUtils qw(open_as);
 
 require ConfigTemplate;
@@ -61,15 +50,15 @@ dump_saplugins_conf();
 
 # Set proper permissions
 mkdir $_ foreach (
-    $VARDIR.'/run/spamd',
-    $VARDIR.'/spool/newsld',
+    '/var/spamtagger/run/spamd',
+    '/var/spamtagger/spool/newsld',
 );
 chown($uid, $gid,
-    $VARDIR.'/run/spamd',
-    $VARDIR.'/spool/newsld',
-    glob($VARDIR.'/spool/newsld/*'),
-    glob($SRCDIR.'/share/newsld/*'),
-    glob($VARDIR.'/log/mailscanner/newsld*'),
+    '/var/spamtagger/run/spamd',
+    '/var/spamtagger/spool/newsld',
+    glob('/var/spamtagger/spool/newsld/*'),
+    glob('/opt/spamtagger/share/newsld/*'),
+    glob('/var/spamtagger/log/mailscanner/newsld*'),
 );
 
 # Configure sudoer permissions if they are not already
@@ -86,7 +75,7 @@ SPAMD       * = (ROOT) NOPASSWD: BIN
 # SystemD auth causes timeouts
 `sed -iP '/^session.*pam_systemd.so/d' /etc/pam.d/common-session`;
 
-symlink($SRCDIR.'/etc/apparmor', '/etc/apparmor.d/spamtagger') unless (-e '/etc/apparmor.d/spamtagger');
+symlink('/opt/spamtagger/etc/apparmor', '/etc/apparmor.d/spamtagger') unless (-e '/etc/apparmor.d/spamtagger');
 
 #############################
 sub get_sa_config()

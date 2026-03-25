@@ -1,16 +1,7 @@
-#! /bin/sh
-# /etc/init.d/kaspersky: start Kaspersky daemon.
+#!/bin/sh
+#/etc/init.d/kaspersky: start Kaspersky daemon.
 
 export PATH=$PATH:/sbin:/usr/sbin
-
-SRCDIR=$(grep 'SRCDIR' /etc/spamtagger.conf | cut -d ' ' -f3)
-if [ "SRCDIR" = "" ]; then
-  SRCDIR=/usr/spamtagger
-fi
-VARDIR=$(grep 'VARDIR' /etc/spamtagger.conf | cut -d ' ' -f3)
-if [ "VARDIR" = "" ]; then
-  VARDIR=/var/spamtagger
-fi
 
 KASPERSKYDIR=/opt/kaspersky/bin
 
@@ -21,14 +12,14 @@ DAEMON='./kavehost.sh'
 KASPERSKYDOPTS=" -c /opt/kaspersky/bin/kavehost.xml"
 
 prepare() {
-  $SRCDIR/bin/dump_mailscanner_config.pl >/dev/null 2>&1
+  /opt/spamtagger/bin/dump_mailscanner_config.pl >/dev/null 2>&1
 }
 
-chown -R spamtagger:spamtagger $VARDIR/log/kaspersky
+chown -R spamtagger:spamtagger /var/spamtagger/log/kaspersky
 
 case "$1" in
 start)
-  touch $VARDIR/run/kaspersky.start.rs
+  touch /var/spamtagger/run/kaspersky.start.rs
   echo -n "  Starting Kaspersky daemon: "
   prepare
   # We need to run Kaspersky from the kaspersky directory
@@ -37,14 +28,14 @@ start)
   $DAEMON $KASPERSKYDOPTS >/dev/null 2>&1
   cd $CURRDIR
   echo "started."
-  if [ -f $VARDIR/run/kaspersky.rn ]; then
-    rm $VARDIR/run/kaspersky.rn
+  if [ -f /var/spamtagger/run/kaspersky.rn ]; then
+    rm /var/spamtagger/run/kaspersky.rn
   fi
-  rm $VARDIR/run/kaspersky.stopped >/dev/null 2>&1
-  rm $VARDIR/run/kaspersky.*.rs >/dev/null 2>&1
+  rm /var/spamtagger/run/kaspersky.stopped >/dev/null 2>&1
+  rm /var/spamtagger/run/kaspersky.*.rs >/dev/null 2>&1
   ;;
 stop)
-  touch $VARDIR/run/kaspersky.stop.rs
+  touch /var/spamtagger/run/kaspersky.stop.rs
   echo -n "  Stopping Kaspersky daemon: "
   kasperskyPID=$(pgrep -f kavehost.xml)
   if [ ! "$kasperskyPID" = "" ]; then
@@ -57,11 +48,11 @@ stop)
     sleep 3
   fi
   echo "stopped."
-  touch $VARDIR/run/kaspersky.stopped
-  rm $VARDIR/run/kaspersky.stop.rs >/dev/null 2>&1
+  touch /var/spamtagger/run/kaspersky.stopped
+  rm /var/spamtagger/run/kaspersky.stop.rs >/dev/null 2>&1
   ;;
 restart)
-  touch $VARDIR/run/kaspersky.restart.rs
+  touch /var/spamtagger/run/kaspersky.restart.rs
   $0 stop
   sleep 1
   $0 start

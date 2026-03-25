@@ -26,8 +26,8 @@ use Exporter 'import';
 our @EXPORT_OK = ();
 our $VERSION   = 1.0;
 
-use lib "/usr/spamtagger/lib/";
-use lib "/usr/spamtagger/scripts/installer/";
+use lib "/opt/spamtagger/lib/";
+use lib "/opt/spamtagger/scripts/installer/";
 use ReadConfig();
 use Exporter();
 use DialogFactory();
@@ -38,9 +38,8 @@ sub new($class) {
 }
 
 sub run($this) {
-  my ($SRCDIR, $MYSPAMTAGGERPWD);
+  my ($MYSPAMTAGGERPWD);
   my $conf = ReadConfig::get_instance();
-  $SRCDIR = $conf->get_option('SRCDIR');
   $MYSPAMTAGGERPWD = $conf->get_option('MYSPAMTAGGERPWD') || undef;
   unless (defined($MYSPAMTAGGERPWD)) {
     print "Database password is not configured in `/etc/spamtagger.conf`. Please run previous step. [Enter]\n";
@@ -48,7 +47,7 @@ sub run($this) {
     my $null = <STDIN>;
     return 0;
   }
-  `$SRCDIR/scripts/configuration/replicas.pl --setsource`;
+  `/opt/spamtagger/scripts/configuration/replicas.pl --setsource`;
   return;
 }
 

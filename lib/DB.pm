@@ -28,10 +28,11 @@ use Exporter 'import';
 our @EXPORT_OK = ();
 our $VERSION   = 1.0;
 
-use lib "/usr/spamtagger/lib/";
-use ReadConfig();
+use lib "/opt/spamtagger/lib/";
+use ReadConfig;
 use DBI();
 
+our $conf = ReadConfig::get_instance();
 sub db_connect ($class, $type='replica', $db='st_config', $critical_p= 0) {
   my $critical = 1;
   $critical = 0 if ($critical_p < 1);
@@ -45,13 +46,12 @@ sub db_connect ($class, $type='replica', $db='st_config', $critical_p= 0) {
   }
 
   # determine socket to use
-  my $conf = ReadConfig::get_instance();
-  my $socket = $conf->get_option('VARDIR')."/run/mariadb_source/mariadbd.sock";
-  $socket = $conf->get_option('VARDIR')."/run/mariadb_replica/mariadbd.sock" if ($type =~ /replica/);
+  my $socket = "/var/spamtagger/run/mariadb_source/mariadbd.sock";
+  $socket = "/var/spamtagger/run/mariadb_replica/mariadbd.sock" if ($type =~ /replica/);
 
   my $dbh;
   my $realsource = 0;
-  my $sourcefile = $conf->get_option('VARDIR')."/spool/spamtagger/source.conf";
+  my $sourcefile = "/var/spamtagger/spool/spamtagger/source.conf";
   if ( ($type =~ /realsource/ && -f $sourcefile) || $type =~ /custom/) {
   	my $host;
   	my $port;

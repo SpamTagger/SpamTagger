@@ -21,11 +21,6 @@
 #   Usage:
 #           is_spam.sh [-D] message_file
 
-SRCDIR=$(grep 'SRCDIR' /etc/spamtagger.conf | cut -d ' ' -f3)
-if [ "SRCDIR" = "" ]; then
-  SRCDIR=/var/spamtagger
-fi
-
 DEBUG=""
 if [ "$1" = "-D" ]; then
   echo "debugging...."
@@ -46,6 +41,6 @@ if [ ! -f $FILE ]; then
   exit 1
 fi
 
-/usr/local/bin/spamassassin $DEBUG -t -p $SRCDIR/etc/mailscanner/spam.assassin.prefs.conf --siteconfigpath=$SRCDIR/share/spamassassin <$FILE
+/usr/local/bin/spamassassin $DEBUG -t -p /opt/spamtagger/etc/mailscanner/spam.assassin.prefs.conf --siteconfigpath=/opt/spamtagger/share/spamassassin <$FILE
 
 exit 0

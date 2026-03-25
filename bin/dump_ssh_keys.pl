@@ -27,23 +27,12 @@ use warnings;
 use utf8;
 use Carp qw( confess );
 
-our ($SRCDIR, $VARDIR);
-BEGIN {
-    if ($0 =~ m/(\S*)\/\S+.pl$/) {
-        my $path = $1."/../lib";
-        unshift (@INC, $path);
-    }
-    require ReadConfig;
-    my $conf = ReadConfig::get_instance();
-    $SRCDIR = $conf->get_option('SRCDIR') || '/usr/spamtagger';
-    $VARDIR = $conf->get_option('VARDIR') || '/var/spamtagger';
-}
-
+use lib "/opt/spamtagger/lib";
 use STUtils qw(open_as);
 require DB;
 
-my $known_hosts_file = ${VARDIR}."/.ssh/known_hosts";
-my $authorized_file = ${VARDIR}."/.ssh/authorized_keys";
+my $known_hosts_file = "/var/spamtagger/.ssh/known_hosts";
+my $authorized_file = "/var/spamtagger/.ssh/authorized_keys";
 
 unlink($known_hosts_file);
 unlink($authorized_file);

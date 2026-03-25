@@ -26,7 +26,7 @@ my_own_exit() {
 
 #### MAIN
 #### Lorsque le module a trouvé une erreur, il est censé sortir avec my_own_exit "#ERREUR" (avec #ERREUR : chiffre : retour de la commande)
-GIT_STATUS=$(cd /usr/spamtagger/ && git status | grep 'Your branch is' | sed -e 's/Your branch is //' | sed -e 's/ .*//')
+GIT_STATUS=$(cd /opt/spamtagger/ && git status | grep 'Your branch is' | sed -e 's/Your branch is //' | sed -e 's/ .*//')
 if [[ $GIT_STATUS == "up-to-date" ]]; then
   my_own_exit "0"
 elif [[ $GIT_STATUS == "behind" ]]; then
@@ -36,7 +36,7 @@ elif [[ $(grep ' is corrupt' /var/spamtagger/log/spamtagger/updater4mc.log | wc 
   echo "Git encountered a corruption error" >$OUT_FILE
   my_own_exit "2"
 elif [[ -z $GIT_STATUS ]]; then
-  GIT_STATUS=$(cd /usr/spamtagger/ && git status | grep 'Your branch' | grep 'have diverged')
+  GIT_STATUS=$(cd /opt/spamtagger/ && git status | grep 'Your branch' | grep 'have diverged')
   if [[ -z $GIT_STATUS ]]; then
     echo "Git tree has diverged" >$OUT_FILE
     my_own_exit "3"

@@ -20,13 +20,12 @@ use v5.40;
 use warnings;
 use utf8;
 
-use lib '/usr/spamtagger/lib';
+use lib '/opt/spamtagger/lib';
 use DB();
 use Term::ReadKey qw(ReadKey ReadMode);
 use ReadConfig();
 
 my $config = ReadConfig::get_instance();
-our $SRCDIR = $config->get_option('SRCDIR');
 our $HOSTID = $config->get_option('HOSTID');
 
 my $source_dbh = DB->db_connect('source', 'st_config');
@@ -76,20 +75,20 @@ $source_dbh->db_disconnect();
 
 printf "\n\n";
 printf "dumping configuration...\n";
-my $cmd = $SRCDIR."/bin/dump_snmpd_config.pl";
+my $cmd = "/opt/spamtagger/bin/dump_snmpd_config.pl";
 print "  snmp: ".`$cmd`."\n";
-$cmd = $SRCDIR."/bin/dump_firewall.pl";
+$cmd = "/opt/spamtagger/bin/dump_firewall.pl";
 print "  firewall: ".`$cmd`."\n";
-$cmd = $SRCDIR."/bin/dump_apache_config.pl";
+$cmd = "/opt/spamtagger/bin/dump_apache_config.pl";
 print "  httpd: ".`$cmd`."\n";
 printf "restarting services...";
 print "  stopping snmp: ".`killall -TERM snmpd`;
-print "  starting snmp: ".`$SRCDIR/etc/init.d/snmpd start`;
-print "  stopping firewall: ".`$SRCDIR/etc/init.d/firewall stop`;
-print "  starting firewall: ".`$SRCDIR/etc/init.d/firewall start`;
-print "  stopping httpd: ".`$SRCDIR/etc/init.d/apache stop`;
+print "  starting snmp: ".`/opt/spamtagger/etc/init.d/snmpd start`;
+print "  stopping firewall: ".`/opt/spamtagger/etc/init.d/firewall stop`;
+print "  starting firewall: ".`/opt/spamtagger/etc/init.d/firewall start`;
+print "  stopping httpd: ".`/opt/spamtagger/etc/init.d/apache stop`;
 sleep 5;
-print "  starting httpd: ".`$SRCDIR/etc/init.d/apache start`;
+print "  starting httpd: ".`/opt/spamtagger/etc/init.d/apache start`;
 system("clear");
 
 exit 0;
@@ -207,7 +206,7 @@ sub set_as_replica {
   print "Syncing to source host (this may take a few minutes)... ";
   my $logfile = '/tmp/syncerror.log';
   unlink($logfile);
-  my $resync = `$SRCDIR/bin/resync_db.sh -F $source $password 1>/dev/null 2>/tmp/syncerror.log`;
+  my $resync = `/opt/spamtagger/bin/resync_db.sh -F $source $password 1>/dev/null 2>/tmp/syncerror.log`;
   if ( -s $logfile) {
     print "\n  ** ERROR ** ";
     my $ERRORLOG;

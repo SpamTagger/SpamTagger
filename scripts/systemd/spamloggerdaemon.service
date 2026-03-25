@@ -9,7 +9,7 @@ User=mailscanner
 Group=spamtagger
 PrivateTmp=false
 Type=forking
-ExecStart=/usr/spamtagger/bin/spamloggerdaemon.pl /usr/spamtagger/etc/spamlogger/spamlogger.conf
+ExecStart=/opt/spamtagger/bin/spamloggerdaemon.pl /opt/spamtagger/etc/spamlogger/spamlogger.conf
 
 [Install]
 WantedBy=spamtagger.target

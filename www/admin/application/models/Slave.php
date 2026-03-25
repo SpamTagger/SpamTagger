@@ -248,7 +248,7 @@ class Default_Model_Slave {
 
     if (!$this->_mib_loaded) {
       $config = new SpamTagger_Config();
-      $mibfile = $config->getOption('SRCDIR')."/www/admin/public/downloads/SPAMTAGGER-MIB.txt";
+      $mibfile = "/opt/spamtagger/www/admin/public/downloads/SPAMTAGGER-MIB.txt";
       if (snmp_read_mib($mibfile)) {
         $this->_mib_loaded = true;
       }

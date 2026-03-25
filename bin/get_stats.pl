@@ -25,7 +25,7 @@ use v5.40;
 use warnings;
 use utf8;
 
-use lib '/usr/spamtagger/lib/';
+use lib '/opt/spamtagger/lib/';
 use ReadConfig();
 use Stats();
 
@@ -74,13 +74,13 @@ print "PID ".$$."\n" if $batchmode;
 print "STARTTIME ".time()."\n" if $batchmode;
 
 my $conf = ReadConfig::get_instance();
-my $basedir = $conf->get_option('VARDIR')."/spool/spamtagger/counts";
+my $basedir = "/var/spamtagger/spool/spamtagger/counts";
 my @dirs;
 my $dir = '';
 my %whats;
 
 my %domains;
-my $domainsfile = $conf->get_option('VARDIR')."/spool/tmp/spamtagger/domains.list";
+my $domainsfile = "/var/spamtagger/spool/tmp/spamtagger/domains.list";
 my $DOMAINFILE;
 if (open($DOMAINFILE, '<', $domainsfile)) {
   while (<$DOMAINFILE>) {

@@ -28,8 +28,7 @@ use Exporter 'import';
 our @EXPORT_OK = ();
 our $VERSION   = 1.0;
 
-use lib "/usr/spamtagger/lib/";
-use ReadConfig();
+use lib "/opt/spamtagger/lib/";
 use Net::SNMP();
 use RRDTool::OO();
 use File::Path();
@@ -39,8 +38,6 @@ my $rrdstep = 300;
 my %host_failed = ();
 
 sub new ($id, $name, $type, $hosts_status) {
-  my $conf = ReadConfig::get_instance();
-
   my @elements;
   my @hosts;
   my @databases;
@@ -54,7 +51,7 @@ sub new ($id, $name, $type, $hosts_status) {
   my %community = $replica_db->get_hash_row("SELECT community FROM snmpd_config");
   my $community = $community{'community'};
 
-  my $spooldir = $conf->get_option('VARDIR')."/spool/newrrds/".$name."_".$type;
+  my $spooldir = "/var/spamtagger/spool/newrrds/".$name."_".$type;
   mkpath($spooldir) unless ( -d $spooldir );
 
   my $this = {

@@ -25,11 +25,9 @@ use warnings;
 use utf8;
 use Carp qw( confess );
 
-use lib "/usr/spamtagger/lib";
+use lib "/opt/spamtagger/lib";
 use ReadConfig;
 my $conf = ReadConfig::get_instance();
-my $SRCDIR = $conf->get_option('SRCDIR') || '/usr/spamtagger';
-my $VARDIR = $conf->get_option('VARDIR') || '/var/spamtagger';
 my $MYSPAMTAGGERPWD = $conf->get_option('MYSPAMTAGGERPWD') || confess "Could not get DB password";
 
 # Process codes:
@@ -91,7 +89,7 @@ if (! $mode_given) {
     usage();
 }
 if ($mode_given =~ /s/) {
-    my $restartdir = $VARDIR."/run/";
+    my $restartdir = "/var/spamtagger/run/";
     my @output;
     my $i = 0;
     foreach my $service (@order) {
@@ -144,15 +142,15 @@ if ($mode_given =~ /s/) {
 	my $cmd;
 	my $res;
         if ($key eq 'exim_stage2') {
-            my $subcmd = "grep -e '^MTA\\s*=\\s*eximms' ".${SRCDIR}."/etc/mailscanner/MailScanner.conf";
+            my $subcmd = "grep -e '^MTA\\s*=\\s*eximms' /opt/spamtagger/etc/mailscanner/MailScanner.conf";
             my $type = `$subcmd`;
             if ($type eq '') {
-                $cmd = "runuser -u Debian-exim -- /opt/exim4/bin/exim -C ${VARDIR}/spool/tmp/exim/${key}.conf -bpc 2>/dev/null";
+                $cmd = "runuser -u Debian-exim -- /opt/exim4/bin/exim -C /var/spamtagger/spool/tmp/exim/${key}.conf -bpc 2>/dev/null";
             } else {
-                $cmd = "ls ${VARDIR}/spool/exim_stage2/input/*.env 2>&1 | grep -v 'No such' | wc -l";
+                $cmd = "ls /var/spamtagger/spool/exim_stage2/input/*.env 2>&1 | grep -v 'No such' | wc -l";
             }
         } else {
-            $cmd = "runuser -u Debian-exim -- /opt/exim4/bin/exim -C ${VARDIR}/spool/tmp/exim/${key}.conf -bpc 2>/dev/null";
+            $cmd = "runuser -u Debian-exim -- /opt/exim4/bin/exim -C /var/spamtagger/spool/tmp/exim/${key}.conf -bpc 2>/dev/null";
         }
         $res = `$cmd`;
         chomp($res);
@@ -205,7 +203,7 @@ if ($mode_given =~ /s/) {
     }
     print "\n" unless ($verbose);
 } elsif ($mode_given =~ /t/) {
-    my $cmd = "/opt/exim4/bin/exim -C ${VARDIR}/spool/tmp/exim/exim/exim_stage2.conf -bp | head -1 | cut -d' ' -f2";
+    my $cmd = "/opt/exim4/bin/exim -C /var/spamtagger/spool/tmp/exim/exim/exim_stage2.conf -bp | head -1 | cut -d' ' -f2";
     my $res = `$cmd`;
     chomp($res);
     if ($verbose) {
@@ -214,7 +212,7 @@ if ($mode_given =~ /s/) {
         print($res."\n");
     }
 } elsif ($mode_given =~ /u/) {
-    my $cmd = "echo \"use st_config; select id, date from update_patch order by id desc limit 1;\" | /opt/mysql5/bin/mysql --skip-column-names -S ${VARDIR}/run/mysql_slave/mysqld.sock -uspamtagger -p${MYSPAMTAGGERPWD}";
+    my $cmd = "echo \"use st_config; select id, date from update_patch order by id desc limit 1;\" | /opt/mysql5/bin/mysql --skip-column-names -S /var/spamtagger/run/mysql_slave/mysqld.sock -uspamtagger -p${MYSPAMTAGGERPWD}";
     my $res = `$cmd`;
     my $patch = "";
     if ($res =~ /^(\d+)\s+(\S+)$/) {
@@ -265,7 +263,7 @@ sub usage
 
 # TODO: This is unused. Add an option to output this, I guess...
 sub get_number_of_greylist_domains {
-    my $cmd = "wc -l $VARDIR/spool/spamtagger/domains_to_greylist.list  | cut -d' ' -f1";
+    my $cmd = "wc -l /var/spamtagger/spool/spamtagger/domains_to_greylist.list  | cut -d' ' -f1";
     my $res = `$cmd`;
     if ($res =~ m/(\d+)\s+/) {
         return $1;

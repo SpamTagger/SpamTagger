@@ -20,7 +20,7 @@ $STLOGLEVEL = PEAR_LOG_WARNING;  // normal is: PEAR_LOG_WARNING or PEAR_LOG_INFO
 require_once('helpers/DataManager.php');
 require_once('system/SystemConfig.php');
 $conf_ = DataManager::getFileConfig(SystemConfig::$CONFIGFILE_);
-$log_ = Log::singleton('file', $conf_['VARDIR']."/log/spamtagger/webgui.log", 'none', null, $STLOGLEVEL);
+$log_ = Log::singleton('file', "/var/spamtagger/log/spamtagger/webgui.log", 'none', null, $STLOGLEVEL);
 global $log_;
 
 ## set the timezone

@@ -27,13 +27,12 @@ use v5.40;
 use warnings;
 use utf8;
 
-use lib '/usr/spamtagger/lib/';
+use lib '/opt/spamtagger/lib/';
 use Net::SMTP;
 use DB();
 use ReadConfig;
 
 our $config = ReadConfig::get_instance();
-our $SRCDIR = $config->get_option('SRCDIR');
 
 my $debug = 0;
 my $opt = shift;

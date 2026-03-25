@@ -20,7 +20,7 @@ use v5.40;
 use warnings;
 use utf8;
 
-use lib '/usr/spamtagger/lib/';
+use lib '/opt/spamtagger/lib/';
 use Term::ReadKey;
 use DBI;
 use ReadConfig;
@@ -28,7 +28,7 @@ use ReadConfig;
 our $config = ReadConfig::get_instance();
 
 my $replica_dbh = DBI->connect(
-  "DBI:mariadb:database=st_config;mariadb_socket=".$config->get_option('VARDIR')."/run/mariadb_replica/mariadbd.sock",
+  "DBI:mariadb:database=st_config;mariadb_socket=/var/spamtagger/run/mariadb_replica/mariadbd.sock",
   "spamtagger", $config->get_option('MYSPAMTAGGERPWD'), {RaiseError => 0, PrintError => 0}
 );
 

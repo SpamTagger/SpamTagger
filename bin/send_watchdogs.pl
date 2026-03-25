@@ -22,7 +22,7 @@ use v5.40;
 use warnings;
 use utf8;
 
-use lib '/usr/spamtagger/lib/';
+use lib '/opt/spamtagger/lib/';
 use ReadConfig();
 use DB();
 use Email();
@@ -36,9 +36,8 @@ if ($conf->get_option('ISSOURCE') !~ /^[y|Y]$/) {
   exit 0;
 }
 
-my $vardir = $conf->get_option('VARDIR');
-if (-e "$vardir/spool/spamtagger/disable-watchdog-emails") {
-  print "Email reporting disabled with '$vardir/spool/spamtagger/disable-watchdog-emails'\n";
+if (-e "/var/spamtagger/spool/spamtagger/disable-watchdog-emails") {
+  print "Email reporting disabled with '/var/spamtagger/spool/spamtagger/disable-watchdog-emails'\n";
   exit 0;
 }
 
@@ -46,11 +45,11 @@ if (-e "$vardir/spool/spamtagger/disable-watchdog-emails") {
 my $sysconf = SystemPref::get_instance();
 my $lang = $sysconf->get_pref('default_language') || 'en';
 
-## report templates (ie. SRCDIR/templates/reports/*) are not yet exposed
+## report templates (ie. /opt/spamtagger/templates/reports/*) are not yet exposed
 my $temp_id = 'default';
 
 my $recipient;
-my $custom_recipient = "$vardir/spool/spamtagger/watchdog-recipient";
+my $custom_recipient = "/var/spamtagger/spool/spamtagger/watchdog-recipient";
 my $fh;
 if (-e $custom_recipient && open($fh, '<', $custom_recipient)) {
   $recipient .= $_ while (<$fh>);

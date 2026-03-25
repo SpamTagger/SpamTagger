@@ -123,8 +123,8 @@ echo "# Checking/Installing APT dependencies..."
 setterm --foreground default
 
 source /etc/os-release
-if [[ -e /usr/spamtagger/debian-bootstrap/${VERSION_CODENAME}.apt ]]; then
-  cp /usr/spamtagger/debian-bootstrap/${VERSION_CODENAME}.apt /tmp/${VERSION_CODENAME}.apt
+if [[ -e /opt/spamtagger/debian-bootstrap/${VERSION_CODENAME}.apt ]]; then
+  cp /opt/spamtagger/debian-bootstrap/${VERSION_CODENAME}.apt /tmp/${VERSION_CODENAME}.apt
 else
   curl https://raw.githubusercontent.com/SpamTagger/SpamTagger-Plus/refs/heads/main/debian-bootstrap/${VERSION_CODENAME}.apt 2>/dev/null >/tmp/${VERSION_CODENAME}.apt
 fi
@@ -160,22 +160,22 @@ echo -n "# Checking SpamTagger repository..."
 setterm --foreground default
 
 # Check for existing repo
-if [[ -d /usr/spamtagger ]]; then
+if [[ -d /opt/spamtagger ]]; then
   if [[ -z $CI ]]; then
-    if [[ ! -e /usr/spamtagger/.git/config ]]; then
-      echo -e "\b\b\b x \nFound '/usr/spamtagger' which is not a git repo. Please (re)move it and run the script again"
+    if [[ ! -e /opt/spamtagger/.git/config ]]; then
+      echo -e "\b\b\b x \nFound '/opt/spamtagger' which is not a git repo. Please (re)move it and run the script again"
       exit 1
     fi
-    if ! grep -q "${GITREPO}" <<<$(cat /usr/spamtagger/.git/config); then
-      echo -e "\b\b\b x \nFound '/usr/spamtagger' which is not a ${GITREPO} repository. Please change target and run the script again"
+    if ! grep -q "${GITREPO}" <<<$(cat /opt/spamtagger/.git/config); then
+      echo -e "\b\b\b x \nFound '/opt/spamtagger' which is not a ${GITREPO} repository. Please change target and run the script again"
       exit 1
     fi
   fi
 # Clone instead
 else
-  git clone --depth 1 ${GITHOST}/${GITUSER}/${GITREPO}.git /usr/spamtagger 2>&1 >/dev/null
-  if [ ! -d /usr/spamtagger ]; then
-    echo -e "\b\b\b x \nFailed to clone '/usr/spamtagger' or to clone from ${GITHOST}/${GITUSER}/${GITREPO}.git"
+  git clone --depth 1 ${GITHOST}/${GITUSER}/${GITREPO}.git /opt/spamtagger 2>&1 >/dev/null
+  if [ ! -d /opt/spamtagger ]; then
+    echo -e "\b\b\b x \nFailed to clone '/opt/spamtagger' or to clone from ${GITHOST}/${GITUSER}/${GITREPO}.git"
     exit 1
   fi
 fi
@@ -185,7 +185,7 @@ echo -n "# Updating SpamTagger repository..."
 setterm --foreground default
 
 # Update repo
-cd /usr/spamtagger
+cd /opt/spamtagger
 if [[ -z $CI ]]; then
   git pull --rebase origin main 2>/dev/null >/dev/null
   if [[ $? -ne 0 ]]; then
@@ -274,8 +274,8 @@ setterm --foreground blue
 echo -n "# Configuring SpamTagger..."
 setterm --foreground default
 
-/usr/spamtagger/install/install.sh
+/opt/spamtagger/install/install.sh
 if [ $! ]; then
-  echo -e "\b\b\b x Failed running /usr/spamtagger/install/install.sh"
+  echo -e "\b\b\b x Failed running /opt/spamtagger/install/install.sh"
   exit 1
 fi

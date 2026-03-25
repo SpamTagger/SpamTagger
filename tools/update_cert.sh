@@ -6,8 +6,6 @@ usage() {
   exit
 }
 
-SRCDIR=$(grep 'SRCDIR' /etc/spamtagger.conf | cut -d ' ' -f3)
-
 RESTART=1
 if [ ! $1 ] || [ ! $2 ]; then
   echo "Missing argument"
@@ -39,30 +37,30 @@ else
   CHAIN=''
 fi
 
-cat <<EOF | ${SRCDIR}/bin/st_mariadb -m st_config
+cat <<EOF | /opt/spamtagger/bin/st_mariadb -m st_config
 UPDATE mta_config set tls_certificate_data = '$(cat $1)';
 EOF
 
-cat <<EOF | ${SRCDIR}/bin/st_mariadb -m st_config
+cat <<EOF | /opt/spamtagger/bin/st_mariadb -m st_config
 UPDATE mta_config set tls_certificate_key = '$(cat $2)';
 EOF
 
 if [[ $RESTART == 1 ]]; then
-  for i in 4 2 1; do ${SRCDIR}/etc/init.d/exim_stage$i restart; done
+  for i in 4 2 1; do /opt/spamtagger/etc/init.d/exim_stage$i restart; done
 fi
 
-cat <<EOF | ${SRCDIR}/bin/st_mariadb -m st_config
+cat <<EOF | /opt/spamtagger/bin/st_mariadb -m st_config
 UPDATE httpd_config set tls_certificate_data = '$(echo -e "$CERT")';
 EOF
 
-cat <<EOF | ${SRCDIR}/bin/st_mariadb -m st_config
+cat <<EOF | /opt/spamtagger/bin/st_mariadb -m st_config
 UPDATE httpd_config set tls_certificate_chain = '$(echo -e "$CHAIN")';
 EOF
 
-cat <<EOF | ${SRCDIR}/bin/st_mariadb -m st_config
+cat <<EOF | /opt/spamtagger/bin/st_mariadb -m st_config
 UPDATE httpd_config set tls_certificate_key = '$(cat $2)';
 EOF
 
 if [[ $RESTART == 1 ]]; then
-  ${SRCDIR}/etc/init.d/apache restart
+  /opt/spamtagger/etc/init.d/apache restart
 fi

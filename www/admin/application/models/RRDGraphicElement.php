@@ -159,7 +159,7 @@ class Default_Model_RRDGraphicElement {
 
   private function getRRDArchiveFile() {
     $config = SpamTagger_Config::getInstance();
-    $file = $config->getOption('VARDIR').'/spool/newrrds/'.$this->_graphic->getName().'_'.$this->_graphic->getType().'/'.$this->_graphic->getHost().'.rrd';
+    $file = '/var/spamtagger/spool/newrrds/'.$this->_graphic->getName().'_'.$this->_graphic->getType().'/'.$this->_graphic->getHost().'.rrd';
     return $file;
   }
 

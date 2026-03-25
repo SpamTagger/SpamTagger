@@ -1,10 +1,10 @@
 Listen __HTTPPORT__
 
-DocumentRoot "__SRCDIR__/www/user"
-Alias /admin __SRCDIR__/www/admin/public
-Alias /mrtg  __VARDIR__/www/mrtg
-Alias /stats  __VARDIR__/www/stats
-Alias /api __SRCDIR__/www/api/public
+DocumentRoot "/opt/spamtagger/www/user"
+Alias /admin /opt/spamtagger/www/admin/public
+Alias /mrtg  /var/spamtagger/www/mrtg
+Alias /stats  /var/spamtagger/www/stats
+Alias /api /opt/spamtagger/www/api/public
 
 __IFSSL__
 Listen __HTTPSPORT__
@@ -19,7 +19,7 @@ Listen __HTTPSPORT__
     RewriteRule .* - [F]
 </VirtualHost>
 
-SSLSessionCache shmcb:__VARDIR/run/apache2/ssl.cache(512000)
+SSLSessionCache shmcb:/var/spamtagger/run/apache2/ssl.cache(512000)
 SSLSessionCacheTimeout 300
 SSLCompression off
 <VirtualHost *:__HTTPSPORT__>
@@ -34,9 +34,9 @@ SSLCompression off
     SSLCompression off
     SSLSessionTickets off
 
-    SSLCACertificatePath __SRCDIR__/etc/apache/certs
-    SSLCertificateFile __SRCDIR__/etc/apache/certs/certificate.pem
-__IFSSLCHAIN__  SSLCertificateChainFile  __SRCDIR__/etc/apache/certs/certificate-chain.pem
+    SSLCACertificatePath /opt/spamtagger/etc/apache/certs
+    SSLCertificateFile /opt/spamtagger/etc/apache/certs/certificate.pem
+__IFSSLCHAIN__  SSLCertificateChainFile  /opt/spamtagger/etc/apache/certs/certificate-chain.pem
     SetEnvIf User-Agent ".*MSIE.*" nokeepalive ssl-unclean-shutdown downgrade-1.0 force-response-1.0
 
 

@@ -21,23 +21,14 @@
 
 DAYSTOKEEP=366
 
-SRCDIR=$(grep 'SRCDIR' /etc/spamtagger.conf | cut -d ' ' -f3)
-if [ "SRCDIR" = "" ]; then
-  SRCDIR=/usr/spamtagger
-fi
-VARDIR=$(grep 'VARDIR' /etc/spamtagger.conf | cut -d ' ' -f3)
-if [ "VARDIR" = "" ]; then
-  VARDIR=/var/spamtagger
-fi
-
 MYSPAMTAGGERPWD=$(grep 'MYSPAMTAGGERPWD' /etc/spamtagger.conf | cut -d ' ' -f3)
 
 #########################
 ## Dumper log rotating ##
 #########################
 # Rotate first so that the remaining services will dump to the new log when done
-if [ -s $VARDIR/log/spamtagger/dumper.log ]; then
-  savelog -p -c $DAYSTOKEEP -C $VARDIR/log/spamtagger/dumper.log >/dev/null
+if [ -s /var/spamtagger/log/spamtagger/dumper.log ]; then
+  savelog -p -c $DAYSTOKEEP -C /var/spamtagger/log/spamtagger/dumper.log >/dev/null
 fi
 
 #########################
@@ -45,63 +36,63 @@ fi
 #########################
 
 # Apache
-$SRCDIR/etc/init.d/apache stop
+/opt/spamtagger/etc/init.d/apache stop
 if [ -x /usr/bin/savelog ]; then
   for i in access.log error.log ssl.log st_auth.log access_soap.log error_soap.log; do
-    if [ -e $VARDIR/log/apache/$i ]; then
-      savelog -p -c $DAYSTOKEEP -C $VARDIR/log/apache/$i >/dev/null
+    if [ -e /var/spamtagger/log/apache/$i ]; then
+      savelog -p -c $DAYSTOKEEP -C /var/spamtagger/log/apache/$i >/dev/null
     fi
   done
 fi
-touch $VARDIR/log/apache/st_auth.log
-chown spamtagger:spamtagger $VARDIR/log/apache/st_auth.log
+touch /var/spamtagger/log/apache/st_auth.log
+chown spamtagger:spamtagger /var/spamtagger/log/apache/st_auth.log
 
 # Exim Stages 1 and 2
 for stage in 1 2; do
-  $SRCDIR/etc/init.d/exim_stage$stage stop
+  /opt/spamtagger/etc/init.d/exim_stage$stage stop
   if [ -x /usr/bin/savelog ]; then
     for i in mainlog rejectlog paniclog; do
-      if [ -s $VARDIR/log/exim_stage$stage/$i ]; then
-        savelog -p -c $DAYSTOKEEP -C $VARDIR/log/exim_stage$stage/$i >/dev/null
+      if [ -s /var/spamtagger/log/exim_stage$stage/$i ]; then
+        savelog -p -c $DAYSTOKEEP -C /var/spamtagger/log/exim_stage$stage/$i >/dev/null
       fi
     done
   fi
   if [ -x /opt/exim4/bin/exim_tidydb ]; then
-    /opt/exim4/bin/exim_tidydb $VARDIR/spool/exim_stage$stage retry >/dev/null
-    /opt/exim4/bin/exim_tidydb $VARDIR/spool/exim_stage$stage wait-local_smtp >/dev/null
+    /opt/exim4/bin/exim_tidydb /var/spamtagger/spool/exim_stage$stage retry >/dev/null
+    /opt/exim4/bin/exim_tidydb /var/spamtagger/spool/exim_stage$stage wait-local_smtp >/dev/null
   fi
 done
 
 # MailScanner
-$SRCDIR/etc/init.d/mailscanner stop
+/opt/spamtagger/etc/init.d/mailscanner stop
 if [ -x /usr/bin/savelog ]; then
   for i in mainlog errorlog infolog warnlog spamd.log newsld.log; do
-    if [ -s $VARDIR/log/mailscanner/$i ]; then
-      savelog -p -c $DAYSTOKEEP -C $VARDIR/log/mailscanner/$i >/dev/null
+    if [ -s /var/spamtagger/log/mailscanner/$i ]; then
+      savelog -p -c $DAYSTOKEEP -C /var/spamtagger/log/mailscanner/$i >/dev/null
     fi
   done
 fi
-chown -R spamtagger:spamtagger $VARDIR/log/mailscanner/
+chown -R spamtagger:spamtagger /var/spamtagger/log/mailscanner/
 
 # Exim Stage 4
-$SRCDIR/etc/init.d/exim_stage4 stop
+/opt/spamtagger/etc/init.d/exim_stage4 stop
 if [ -x /usr/bin/savelog ]; then
   for i in mainlog rejectlog paniclog; do
-    if [ -s $VARDIR/log/exim_stage4/$i ]; then
-      savelog -p -c $DAYSTOKEEP -C $VARDIR/log/exim_stage4/$i >/dev/null
+    if [ -s /var/spamtagger/log/exim_stage4/$i ]; then
+      savelog -p -c $DAYSTOKEEP -C /var/spamtagger/log/exim_stage4/$i >/dev/null
     fi
   done
 fi
 if [ -x /opt/exim4/bin/exim_tidydb ]; then
-  /opt/exim4/bin/exim_tidydb $VARDIR/spool/exim_stage4 retry >/dev/null
-  /opt/exim4/bin/exim_tidydb $VARDIR/spool/exim_stage4 wait-local_smtp >/dev/null
+  /opt/exim4/bin/exim_tidydb /var/spamtagger/spool/exim_stage4 retry >/dev/null
+  /opt/exim4/bin/exim_tidydb /var/spamtagger/spool/exim_stage4 wait-local_smtp >/dev/null
 fi
 
 # clamav rotating
 if [ -x /usr/bin/savelog ]; then
   for i in clamav.log freshclam.log clamd.log clamspamd.log; do
-    if [ -e $VARDIR/log/clamav/$i ]; then
-      savelog -u clamav -g clamav -c $DAYSTOKEEP -C $VARDIR/log/clamav/$i >/dev/null
+    if [ -e /var/spamtagger/log/clamav/$i ]; then
+      savelog -u clamav -g clamav -c $DAYSTOKEEP -C /var/spamtagger/log/clamav/$i >/dev/null
     fi
   done
 fi
@@ -109,8 +100,8 @@ fi
 # Razor
 if [ -x /usr/bin/savelog ]; then
   for i in razor-agent.log; do
-    if [ -s $VARDIR/.razor/$i ]; then
-      savelog -p -c $DAYSTOKEEP -C $VARDIR/.razor/$i >/dev/null
+    if [ -s /var/spamtagger/.razor/$i ]; then
+      savelog -p -c $DAYSTOKEEP -C /var/spamtagger/.razor/$i >/dev/null
     fi
   done
 fi
@@ -118,39 +109,39 @@ fi
 # kaspersky rotating
 if [ -x /usr/bin/savelog ]; then
   for i in kaspersky_updater.log kaspersky_stats.log; do
-    if [ -e $VARDIR/log/kaspersky/$i ]; then
-      savelog -p -c $DAYSTOKEEP -C $VARDIR/log/kaspersky/$i >/dev/null
+    if [ -e /var/spamtagger/log/kaspersky/$i ]; then
+      savelog -p -c $DAYSTOKEEP -C /var/spamtagger/log/kaspersky/$i >/dev/null
     fi
   done
 fi
 
 # StatsDaemon
-$SRCDIR/etc/init.d/statsdaemon stop
+/opt/spamtagger/etc/init.d/statsdaemon stop
 if [ -x /usr/bin/savelog ]; then
-  savelog -p -c $DAYSTOKEEP -C $VARDIR/log/spamtagger/StatsDaemon.log >/dev/null
+  savelog -p -c $DAYSTOKEEP -C /var/spamtagger/log/spamtagger/StatsDaemon.log >/dev/null
 fi
 
 # PrefTDaemon
-$SRCDIR/etc/init.d/preftdaemon stop
+/opt/spamtagger/etc/init.d/preftdaemon stop
 if [ -x /usr/bin/savelog ]; then
-  if [ -s $VARDIR/log/spamtagger/PrefTDaemon.log ]; then
-    savelog -p -c $DAYSTOKEEP -C $VARDIR/log/spamtagger/PrefTDaemon.log >/dev/null
+  if [ -s /var/spamtagger/log/spamtagger/PrefTDaemon.log ]; then
+    savelog -p -c $DAYSTOKEEP -C /var/spamtagger/log/spamtagger/PrefTDaemon.log >/dev/null
   fi
 fi
 
 # SpamHandler
-$SRCDIR/etc/init.d/spamhandler stop
+/opt/spamtagger/etc/init.d/spamhandler stop
 for i in SpamHandler.log; do
-  if [ -s $VARDIR/log/spamtagger/$i ]; then
-    savelog -p -c $DAYSTOKEEP -C $VARDIR/log/spamtagger/$i >/dev/null
+  if [ -s /var/spamtagger/log/spamtagger/$i ]; then
+    savelog -p -c $DAYSTOKEEP -C /var/spamtagger/log/spamtagger/$i >/dev/null
   fi
 done
 
 # SpamTagger
 if [ -x /usr/bin/savelog ]; then
   for i in update.log update2.log autolearn.log rules.log spam_sync.log st_counts-cleaner.log downloadDatas.log summaries.log updater4mc.log; do
-    if [ -e $VARDIR/log/spamtagger/$i ]; then
-      savelog -p -c $DAYSTOKEEP -C $VARDIR/log/spamtagger/$i >/dev/null
+    if [ -e /var/spamtagger/log/spamtagger/$i ]; then
+      savelog -p -c $DAYSTOKEEP -C /var/spamtagger/log/spamtagger/$i >/dev/null
     fi
   done
 fi
@@ -167,46 +158,46 @@ fi
 ## MySQL Slave ##
 #################
 if [ -x /usr/bin/savelog ]; then
-  if [ -s $VARDIR/log/mariadb_replica/mariadb.log ]; then
-    savelog -p -c $DAYSTOKEEP -C $VARDIR/log/mariadb_replica/mariadb.log >/dev/null
+  if [ -s /var/spamtagger/log/mariadb_replica/mariadb.log ]; then
+    savelog -p -c $DAYSTOKEEP -C /var/spamtagger/log/mariadb_replica/mariadb.log >/dev/null
   fi
 fi
 
-/usr/bin/mariadb-admin -S $VARDIR/run/mariadb_replica/mariadbd.sock -uspamtagger -p$MYSPAMTAGGERPWD flush-logs
-$SRCDIR/etc/init.d/mariadb_replica restart
+/usr/bin/mariadb-admin -S /var/spamtagger/run/mariadb_replica/mariadbd.sock -uspamtagger -p$MYSPAMTAGGERPWD flush-logs
+/opt/spamtagger/etc/init.d/mariadb_replica restart
 
 ##################
 ## MySQL Master ##
 ##################
 if [ -x /usr/bin/savelog ]; then
-  if [ -s $VARDIR/log/mariadb_source/mariadb.log ]; then
-    savelog -p -c $DAYSTOKEEP -C $VARDIR/log/mariadb_source/mariadb.log >/dev/null
+  if [ -s /var/spamtagger/log/mariadb_source/mariadb.log ]; then
+    savelog -p -c $DAYSTOKEEP -C /var/spamtagger/log/mariadb_source/mariadb.log >/dev/null
   fi
 fi
 
-/usr/bin/mariadb-admin -S $VARDIR/run/mariadb_source/mariadbd.sock -uspamtagger -p$MYSPAMTAGGERPWD flush-logs
-$SRCDIR/etc/init.d/mariadb_source restart
+/usr/bin/mariadb-admin -S /var/spamtagger/run/mariadb_source/mariadbd.sock -uspamtagger -p$MYSPAMTAGGERPWD flush-logs
+/opt/spamtagger/etc/init.d/mariadb_source restart
 
 ###################
 ## Resync checks ##
 ###################
-if [ -s $VARDIR/log/spamtagger/resync/resync.log ]; then
-  savelog -p -c $DAYSTOKEEP -C $VARDIR/log/spamtagger/resync/resync.log >/dev/null
+if [ -s /var/spamtagger/log/spamtagger/resync/resync.log ]; then
+  savelog -p -c $DAYSTOKEEP -C /var/spamtagger/log/spamtagger/resync/resync.log >/dev/null
 fi
 
 #################
 ## Restart all ##
 #################
 
-$SRCDIR/etc/init.d/spamhandler start
-$SRCDIR/etc/init.d/preftdaemon start
-$SRCDIR/etc/init.d/statsdaemon start
-$SRCDIR/etc/init.d/exim_stage4 start
-$SRCDIR/etc/init.d/mailscanner start
+/opt/spamtagger/etc/init.d/spamhandler start
+/opt/spamtagger/etc/init.d/preftdaemon start
+/opt/spamtagger/etc/init.d/statsdaemon start
+/opt/spamtagger/etc/init.d/exim_stage4 start
+/opt/spamtagger/etc/init.d/mailscanner start
 sleep 2
-$SRCDIR/etc/init.d/exim_stage2 start
-$SRCDIR/etc/init.d/exim_stage1 start
-$SRCDIR/etc/init.d/apache start
+/opt/spamtagger/etc/init.d/exim_stage2 start
+/opt/spamtagger/etc/init.d/exim_stage1 start
+/opt/spamtagger/etc/init.d/apache start
 
 #############
 ## Cleanup ##
@@ -216,19 +207,19 @@ $SRCDIR/etc/init.d/apache start
 for i in $(seq 1 10); do
   rm -rf /tmp/.spamassassin$1* >/dev/null 2>&1
 done
-if [ -d $VARDIR/spool/tmp ]; then
+if [ -d /var/spamtagger/spool/tmp ]; then
   for i in $(seq 1 10); do
-    rm -rf $VARDIR/spool/tmp/.spamassassin$1* >/dev/null 2>&1
+    rm -rf /var/spamtagger/spool/tmp/.spamassassin$1* >/dev/null 2>&1
   done
 fi
 
 # MessageSniffer
-if [ -d $VARDIR/log/messagesniffer ]; then
-  find $VARDIR/log/messagesniffer/*[0-9].log.xml -mtime +7 -exec rm {} \;
+if [ -d /var/spamtagger/log/messagesniffer ]; then
+  find /var/spamtagger/log/messagesniffer/*[0-9].log.xml -mtime +7 -exec rm {} \;
 fi
 
 # statistics graphs
-rm $VARDIR/www/stats/* >/dev/null 2>&1
+rm /var/spamtagger/www/stats/* >/dev/null 2>&1
 
 ################0#########
 ## third parties tools ##

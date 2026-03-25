@@ -30,7 +30,7 @@ use Exporter 'import';
 our @EXPORT_OK = ();
 our $VERSION   = 1.0;
 
-use lib "/usr/spamtagger/lib/";
+use lib "/opt/spamtagger/lib/";
 use threads();
 use threads::shared();
 use Time::HiRes qw(gettimeofday tv_interval);

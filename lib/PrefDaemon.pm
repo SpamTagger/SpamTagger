@@ -28,7 +28,7 @@ use Exporter 'import';
 our @EXPORT_OK = ();
 our $VERSION   = 1.0;
 
-use lib "/usr/spamtagger/lib/";
+use lib "/opt/spamtagger/lib/";
 use ReadConfig();
 use DB();
 use POSIX qw( SIGINT SIG_BLOCK SIG_UNBLOCK );
@@ -42,12 +42,12 @@ our $LOGGERLOG;
 
 sub new ($class) {
   my $conf = ReadConfig::get_instance();
-  my $configfile = $conf->get_option('SRCDIR')."/etc/exim/prefDaemon.conf";
+  my $configfile = "/opt/spamtagger/etc/exim/prefDaemon.conf";
 
   ## default values
-  my $pidfile = $conf->get_option('VARDIR')."/run/prefdaemon.pid";
+  my $pidfile = "/var/spamtagger/run/prefdaemon.pid";
   my $port = 4352;
-  my $logfile = $conf->get_option('VARDIR')."/log/spamtagger/prefdaemom.log";
+  my $logfile = "/var/spamtagger/log/spamtagger/prefdaemom.log";
   my $daemontimeout = 1200;
   my $client_timeout = 5;
   my $sockettimeout = 120;

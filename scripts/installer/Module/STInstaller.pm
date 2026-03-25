@@ -26,8 +26,8 @@ use Exporter 'import';
 our @EXPORT_OK = ();
 our $VERSION   = 1.0;
 
-use lib '/usr/spamtagger/lib/';
-use lib "/usr/spamtagger/scripts/installer/";
+use lib '/opt/spamtagger/lib/';
+use lib "/opt/spamtagger/scripts/installer/";
 use DialogFactory();
 use ReadConfig();
 use InputValidator qw( validate );
@@ -42,8 +42,6 @@ sub new($class) {
     logfile => '/tmp/spamtagger_install.log',
     conffile => '/etc/spamtagger.conf',
     config_variables => {
-      'SRCDIR' => '/usr/spamtagger',
-      'VARDIR' => '/var/spamtagger',
       'HOSTID' => undef,
       'DEFAULTDOMAIN' => '',
       'ISSOURCE' => 'Y',
@@ -160,7 +158,7 @@ sub do_menu($this, $basemenu, $currentstep, $error) {
       } elsif ($ret == 254) {
         $$error = "Installation abandoned\n";
       } elsif ($ret == 253) {
-        $$error = "Debian bootstrap command ($this->{'config_variables'}->{'SRCDIR'}/debian_bootstrap/install.sh) did not complete successfully.\n";
+        $$error = "Debian bootstrap command (/opt/spamtagger/debian_bootstrap/install.sh) did not complete successfully.\n";
       } else {
         $$error = "Missing necessary variable '$ret'. Please follow all earlier steps before applying.\n";
         $$currentstep = 6;
@@ -311,8 +309,8 @@ sub apply_configuration($this) {
     $ENV{$_} = $this->{'install_variables'}->{$_}; ## no critic
   }
   $this->{'install_variables'}->{'WEBADMINPWD'} = $this->{'config_variables'}->{'MYSPAMTAGGERPWD'} if ($this->{'install_variables'} eq 'SAME AS DATABASE PASSWORD');
-  print("Running $this->{'config_variables'}->{'SRCDIR'}/install/install.sh. This will take some time. Installation logs will be saved to /tmp/spamtagger-installer.log\n");
-  `FORCEDBREINSTALL=1 $this->{'config_variables'}->{'SRCDIR'}/install/ST_prepare_dbs.sh | tee /tmp/spamtagger-installer.log`;
+  print("Running /opt/spamtagger/install/install.sh. This will take some time. Installation logs will be saved to /tmp/spamtagger-installer.log\n");
+  `FORCEDBREINSTALL=1 /opt/spamtagger/install/ST_prepare_dbs.sh | tee /tmp/spamtagger-installer.log`;
   `systemctl restart spamtagger.target`;
 
   my $dlg = $this->{'dfact'}->simple();

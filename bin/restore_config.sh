@@ -20,15 +20,6 @@
 #   Usage:
 #           restore_config.sh
 
-VARDIR=$(grep 'VARDIR' /etc/spamtagger.conf | cut -d ' ' -f3)
-if [ "VARDIR" = "" ]; then
-  VARDIR=/var/spamtagger
-fi
-SRCDIR=$(grep 'SRCDIR' /etc/spamtagger.conf | cut -d ' ' -f3)
-if [ "SRCDIR" = "" ]; then
-  SRCDIR=/var/spamtagger
-fi
-
 MYSPAMTAGGERPWD=$(grep 'MYSPAMTAGGERPWD' /etc/spamtagger.conf | cut -d ' ' -f3)
 
 BACKUPFILE=$1
@@ -41,10 +32,10 @@ if [ ! -f $BACKUPFILE ]; then
   exit 1
 fi
 
-/usr/bin/mariadb -u spamtagger -p$MYSPAMTAGGERPWD -S $VARDIR/run/mariadb_source/mariadbd.sock st_config <$BACKUPFILE
+/usr/bin/mariadb -u spamtagger -p$MYSPAMTAGGERPWD -S /var/spamtagger/run/mariadb_source/mariadbd.sock st_config <$BACKUPFILE
 
 for p in dump_apache_config.pl dump_clamav_config.pl dump_exim_config.pl dump_firewall.pl dump_mailscanner_config.pl dump_mariadb_config.pl dump_snmpd_config.pl; do
-  RES=$($SRCDIR/bin/$p 2>&1)
+  RES=$(/opt/spamtagger/bin/$p 2>&1)
   if [ "$RES" != "DUMPSUCCESSFUL" ]; then
     echo "ERROR dumping: $p"
   fi

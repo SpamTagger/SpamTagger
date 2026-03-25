@@ -28,16 +28,14 @@ use warnings;
 use utf8;
 use Carp qw( confess );
 
-use lib "/usr/spamtagger/lib";
+use lib "/opt/spamtagger/lib";
 use STUtils qw(open_as);
 use File::Path qw(make_path);
 use DB;
 
 use ReadConfig;
 my $conf = ReadConfig::get_instance();
-my $SRCDIR = $conf->get_option('SRCDIR') || '/usr/spamtagger';
-my $VARDIR = $conf->get_option('VARDIR') || '/var/spamtagger';
-my $HOSTID = $conf->get_option('HOSTID') || die("Cannot find required HOSTID variable from config file.\s");;
+my $HOSTID = $conf->get_option('HOSTID') || die("Cannot find required HOSTID variable from config file.\n");
 
 our $DEBUG = 1;
 our $uid = getpwnam( 'spamtagger' );
@@ -50,8 +48,8 @@ $config{'__SOURCEID__'} = (${HOSTID} * 2) - 1 + 10;
 $config{'__REPLICAID__'} = ${HOSTID} * 2 + 10;
 
 ## Avoid having unsychronized database when starting a new VA
-my $FIRSTUPDATE_FLAG_RAN="${VARDIR}/run/configurator/updater4st-ran";
-if (-e $FIRSTUPDATE_FLAG_RAN){
+my $FIRSTUPDATE_FLAG_RAN = "/var/spamtagger/state/first-run-wizard";
+if (-e $FIRSTUPDATE_FLAG_RAN) {
     $config{'__BINARY_LOG_KEEP__'} = 21;
 } else {
     $config{'__BINARY_LOG_KEEP__'} = 0;
@@ -75,8 +73,8 @@ foreach my $stage (@stages) {
 #############################
 sub dump_mariadb_file($stage,%config)
 {
-    my $template_file = "${SRCDIR}/etc/mariadb/my_${stage}.cnf_template";
-    my $target_file = "${SRCDIR}/etc/mariadb/my_${stage}.cnf";
+    my $template_file = "/opt/spamtagger/etc/mariadb/my_${stage}.cnf_template";
+    my $target_file = "/var/spamtagger/tmp/configs/mariadb/my_${stage}.cnf";
 
     my ($TEMPLATE, $TARGET);
     confess "Cannot open $template_file: $!" unless ($TEMPLATE = ${open_as($template_file, '<', 0o664, 'spamtagger:spamtagger')});
@@ -84,9 +82,6 @@ sub dump_mariadb_file($stage,%config)
 
     while(<$TEMPLATE>) {
         my $line = $_;
-
-        $line =~ s/__VARDIR__/${VARDIR}/g;
-        $line =~ s/__SRCDIR__/${SRCDIR}/g;
 
         foreach my $key (keys %config) {
             $line =~ s/$key/$config{$key}/g;
@@ -106,21 +101,21 @@ sub ownership($stage)
     use File::Touch qw( touch );
 
     unless ( -e "/usr/lib/systemd/system/mariadb\@.service.d" ) {
-	symlink("${SRCDIR}/scripts/systemd/mariadb\@.service.d", "/usr/lib/systemd/system/mariadb\@.service.d");
+	symlink("/opt/spamtagger/scripts/systemd/mariadb\@.service.d", "/usr/lib/systemd/system/mariadb\@.service.d");
 	`systemctl daemon-reload`;
     }
     unless ( -e "/usr/lib/systemd/system/mariadb\@${stage}.service.d" ) {
-	symlink("${SRCDIR}/scripts/systemd/mariadb\@${stage}.service.d", "/usr/lib/systemd/system/mariadb\@${stage}.service.d");
+	symlink("/opt/spamtagger/scripts/systemd/mariadb\@${stage}.service.d", "/usr/lib/systemd/system/mariadb\@${stage}.service.d");
 	`systemctl daemon-reload`;
     }
     unless ( -e "/usr/lib/systemd/system/mariadb\@${stage}-nopass.service.d" ) {
-	symlink("${SRCDIR}/scripts/systemd/mariadb\@${stage}-nopass.service.d", "/usr/lib/systemd/system/mariadb\@${stage}-nopass.service.d");
+	symlink("/opt/spamtagger/scripts/systemd/mariadb\@${stage}-nopass.service.d", "/usr/lib/systemd/system/mariadb\@${stage}-nopass.service.d");
 	`systemctl daemon-reload`;
     }
-    symlink($SRCDIR.'/etc/apparmor', '/etc/apparmor.d/spamtagger') unless (-e '/etc/apparmor.d/spamtagger');
+    symlink('/opt/spamtagger/etc/apparmor', '/etc/apparmor.d/spamtagger') unless (-e '/etc/apparmor.d/spamtagger');
 
     # Reload AppArmor rules
-    `apparmor_parser -r ${SRCDIR}/etc/apparmor.d/mariadb` if ( -d '/sys/kernel/security/apparmor' );
+    `apparmor_parser -r /opt/spamtagger/etc/apparmor.d/mariadb` if ( -d '/sys/kernel/security/apparmor' );
 
     mkdir('/etc/sudoers.d') unless (-d '/etc/sudoers.d/');
     if (open(my $fh, '>', '/etc/sudoers.d/mariadb')) {
@@ -136,10 +131,10 @@ M%SQL       * = (ROOT) NOPASSWD: UPGRADE
 ";
     }
     my @dirs = (
-        "${VARDIR}/run/mariadb_${stage}",
-        "${VARDIR}/log/mariadb_${stage}",
-        "${VARDIR}/spool/mariadb_${stage}",
-        "${VARDIR}/spool/mariadb_${stage}",
+        "/var/spamtagger/run/mariadb_${stage}",
+        "/var/spamtagger/log/mariadb_${stage}",
+        "/var/spamtagger/spool/mariadb_${stage}",
+        "/var/spamtagger/spool/mariadb_${stage}",
     );
     foreach my $dir (@dirs) {
 	my ($path) = $dir =~ m#(.*)/[^/]+$#;
@@ -151,10 +146,10 @@ M%SQL       * = (ROOT) NOPASSWD: UPGRADE
     }
 
     my @files = (
-	glob("${VARDIR}/log/mariadb_${stage}/*"),
-	glob("${VARDIR}/spool/mariadb_${stage}/*"),
+	glob("/var/spamtagger/log/mariadb_${stage}/*"),
+	glob("/var/spamtagger/spool/mariadb_${stage}/*"),
     );
-    foreach (glob("${VARDIR}/spool/mariadb_${stage}/*")) {
+    foreach (glob("/var/spamtagger/spool/mariadb_${stage}/*")) {
         push(@files, glob("$_/*"));
     }
     foreach my $file (@files) {

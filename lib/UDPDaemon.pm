@@ -26,8 +26,7 @@ use Exporter 'import';
 our @EXPORT_OK = ();
 our $VERSION   = 1.0;
 
-use lib "/usr/spamtagger/lib/";
-use ReadConfig();
+use lib "/opt/spamtagger/lib/";
 use POSIX qw( SIGINT SIG_BLOCK SIG_UNBLOCK );
 use Sys::Hostname();
 use Socket();
@@ -38,13 +37,12 @@ use Mail::SpamAssassin::Timeout();
 our $LOGGERLOG;
 
 sub new ($class, $daemonname, $conffilepath) {
-  my $conf = ReadConfig::get_instance();
-  my $configfile = $conf->get_option('SRCDIR')."/".$conffilepath;
+  my $configfile = "/opt/spamtagger/".$conffilepath;
 
   ## default values
-  my $pidfile = $conf->get_option('VARDIR')."/run/$daemonname.pid";
+  my $pidfile = "/var/spamtagger/run/$daemonname.pid";
   my $port = 10000;
-  my $logfile = $conf->get_option('VARDIR')."/log/spamtagger/$daemonname.log";
+  my $logfile = "/var/spamtagger/log/spamtagger/$daemonname.log";
   my $daemontimeout = 86400;
   my $clienttimeout = 5;
   my $sockettimeout = 120;

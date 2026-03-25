@@ -28,12 +28,6 @@
 # Net::CIDR
 
 BACK=$(pwd)
-if [ "$SRCDIR" = "" ]; then
-  SRCDIR=$(grep 'SRCDIR' /etc/spamtagger.conf | cut -d ' ' -f3)
-  if [ "SRCDIR" = "" ]; then
-    SRCDIR=/var/spamtagger
-  fi
-fi
 
 ## export some environment variables
 export DB_FILE_INCLUDE=/usr/db/include
@@ -45,7 +39,7 @@ export PERL5LIB=$PERL5LIB:/usr/rrdtools/lib/perl/
 
 ldconfig 2>&1 >/dev/null
 
-cd $SRCDIR/install/src/perl
+cd /opt/spamtagger/install/src/perl
 
 for line in $(cat $VERSIONFILE); do
   module=$(echo $line | cut -d'=' -f1)
@@ -54,7 +48,7 @@ for line in $(cat $VERSIONFILE); do
   echo "********"
   echo "will build and install module $module, version $version"
   echo "********" 2>&1
-  cd $SRCDIR/install/src/perl
+  cd /opt/spamtagger/install/src/perl
   tar -xvzf $module.tar.gz 2>&1
   cd $module-$version 2>&1
 
@@ -79,7 +73,7 @@ done
 for i in 5.8.4 5.8.8 5.10.0 5.10.1 5.20.2; do
   if [ -d /usr/local/share/perl/$i/RRDTool ]; then
     cd /usr/local/share/perl/$i/RRDTool
-    cp $SRCDIR/install/src/perl/OO.pm.patch .
+    cp /opt/spamtagger/install/src/perl/OO.pm.patch .
     patch -N -p0 <OO.pm.patch
   fi
 done

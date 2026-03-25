@@ -2,17 +2,15 @@
 #                    MAIN CONFIGURATION SETTINGS                     #
 ######################################################################
 
-VARDIR = __VARDIR__
-
 smtp_active_hostname = __HELO_NAME__
 qualify_recipient = __QUALIFY_RECIPIENT__
 
 message_logs = false
 exim_user = spamtagger
 exim_group = spamtagger
-log_file_path = VARDIR/log/exim_stage2/%slog
-pid_file_path = VARDIR/run/exim_stage2.pid
-spool_directory = VARDIR/spool/exim_stage2
+log_file_path = /var/spamtagger/log/exim_stage2/%slog
+pid_file_path = /var/spamtagger/run/exim_stage2.pid
+spool_directory = /var/spamtagger/spool/exim_stage2
 never_users = root
 
 local_interfaces = 127.0.0.1
@@ -21,8 +19,8 @@ smtp_accept_max = 0
 
 __IF__ USETLS
 tls_advertise_hosts = *
-tls_certificate = __VARDIR__/spool/tmp/exim/certificate
-tls_privatekey = __VARDIR__/spool/tmp/exim/privatekey
+tls_certificate = /var/spamtagger/spool/tmp/exim/certificate
+tls_privatekey = /var/spamtagger/spool/tmp/exim/privatekey
 tls_require_ciphers = __CIPHERS__
 openssl_options = +no_sslv2 +no_sslv3
 __ELSE__ USETLS

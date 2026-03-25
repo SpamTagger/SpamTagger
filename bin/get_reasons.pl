@@ -28,7 +28,7 @@ use v5.40;
 use warnings;
 use utf8;
 
-use lib '/usr/spamtagger/lib/';
+use lib '/opt/spamtagger/lib/';
 use ReadConfig;
 
 my $config = ReadConfig::get_instance();
@@ -55,7 +55,7 @@ if ( (!$for) || !($for =~ /^(\S+)\@(\S+)$/)) {
 my $for_local = $1;
 my $for_domain = $2;
 
-my $msg_file = $config->get_option('VARDIR')."/spam/".$for_domain."/".$for."/".$msg_id;
+my $msg_file = "/var/spamtagger/spam/".$for_domain."/".$for."/".$msg_id;
 
 print $msg_file."\n";
 

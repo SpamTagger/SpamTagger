@@ -1,20 +1,11 @@
-#! /bin/sh
-# /etc/init.d/commtouch: start Commtouch daemons.
+#!/bin/sh
+#/etc/init.d/commtouch: start Commtouch daemons.
 
 export PATH=$PATH:/sbin:/usr/sbin
 
 COMMTOUCH_BASEDIR=/opt/commtouch
 CTASD_STARTER=$COMMTOUCH_BASEDIR/etc/init.d/ctasd_initd
 CTIPD_STARTER=$COMMTOUCH_BASEDIR/etc/init.d/ctipd.init_d
-
-SRCDIR=$(grep 'SRCDIR' /etc/spamtagger.conf | cut -d ' ' -f3)
-if [ "SRCDIR" = "" ]; then
-  SRCDIR=/usr/spamtagger
-fi
-VARDIR=$(grep 'VARDIR' /etc/spamtagger.conf | cut -d ' ' -f3)
-if [ "VARDIR" = "" ]; then
-  VARDIR=/var/spamtagger
-fi
 
 if [ ! -f $CTASD_STARTER ]; then
   echo "ctasd daemon not installed."
@@ -26,7 +17,7 @@ if [ ! -f $CTIPD_STARTER ]; then
 fi
 
 prepare() {
-  PREFILTER_CT=$(grep 'Pre Filters' $SRCDIR/etc/mailscanner/MailScanner.conf | grep 'Commtouch')
+  PREFILTER_CT=$(grep 'Pre Filters' /var/spamtagger/tmp/configs/mailscanner/MailScanner.conf | grep 'Commtouch')
   if [ "$PREFILTER_CT" = "" ]; then
     echo "Commtouch module not enabled"
     exit 0
@@ -35,7 +26,7 @@ prepare() {
 
 case "$1" in
 start)
-  touch $VARDIR/run/commtouch.start.rs
+  touch /var/spamtagger/run/commtouch.start.rs
   echo "  Starting Commtouch daemons: "
   prepare
   echo -n "    Ctasd daemon..."
@@ -45,14 +36,14 @@ start)
   $CTIPD_STARTER start >/dev/null
   echo " started."
 
-  if [ -f $VARDIR/run/commtouch.rn ]; then
-    rm $VARDIR/run/commtouch.rn
+  if [ -f /var/spamtagger/run/commtouch.rn ]; then
+    rm /var/spamtagger/run/commtouch.rn
   fi
-  rm $VARDIR/run/commtouch.stopped >/dev/null 2>&1
-  rm $VARDIR/run/commtouch.*.rs >/dev/null 2>&1
+  rm /var/spamtagger/run/commtouch.stopped >/dev/null 2>&1
+  rm /var/spamtagger/run/commtouch.*.rs >/dev/null 2>&1
   ;;
 stop)
-  touch $VARDIR/run/commtouch.stop.rs
+  touch /var/spamtagger/run/commtouch.stop.rs
   echo "  Stopping Commtouch daemons: "
   echo -n "    Ctasd daemon..."
   $CTASD_STARTER stop >/dev/null
@@ -65,11 +56,11 @@ stop)
   killall -q -KILL ctasd.bin
   killall -q -KILL ctipd.bin
 
-  touch $VARDIR/run/commtouch.stopped
-  rm $VARDIR/run/commtouch.stop.rs >/dev/null 2>&1
+  touch /var/spamtagger/run/commtouch.stopped
+  rm /var/spamtagger/run/commtouch.stop.rs >/dev/null 2>&1
   ;;
 restart | reload | force-reload)
-  touch $VARDIR/run/commtouch.restart.rs
+  touch /var/spamtagger/run/commtouch.restart.rs
   $0 stop
   sleep 3
   $0 start

@@ -30,7 +30,7 @@ echo -n "# Check or create spool dirs..."
 setterm --foreground default
 
 # TODO: merge this script here
-/usr/spamtagger/bin/ST_create_vars.sh &>/dev/null
+/opt/spamtagger/bin/ST_create_vars.sh &>/dev/null
 
 setterm --foreground blue
 echo -n "# Disabling default services..."
@@ -49,8 +49,8 @@ echo -n "# Initialize and enable SpamTagger services..."
 setterm --foreground default
 
 
-for i in $(find /usr/spamtagger/scripts/systemd); do
-  basename=$(echo $i | sed -r 's#/usr/spamtagger/scripts/systemd##')
+for i in $(find /opt/spamtagger/scripts/systemd); do
+  basename=$(echo $i | sed -r 's#/opt/spamtagger/scripts/systemd##')
   if [[ -d $i ]]; then
     [[ -e /usr/lib/systemd/system/$basename ]] || mkdir -p /usr/lib/systemd/system/$basename
   else
@@ -78,8 +78,8 @@ echo -n "# Configuring Cron..."
 setterm --foreground default
 
 echo -n " - Installing scheduled jobs...                        "
-echo "0,15,30,45 * * * *  /usr/spamtagger/scripts/cron/spamtagger_cron.pl > /dev/null" >/etc/cron.d/spamtagger
-echo "0-59/5 * * * * /usr/spamtagger/bin/collect_rrd_stats.pl > /dev/null" >>/etc/cron.d/spamtagger
+echo "0,15,30,45 * * * *  /opt/spamtagger/scripts/cron/spamtagger_cron.pl > /dev/null" >/etc/cron.d/spamtagger
+echo "0-59/5 * * * * /opt/spamtagger/bin/collect_rrd_stats.pl > /dev/null" >>/etc/cron.d/spamtagger
 # prevent syslog from rotating mailscanner log files
 #perl -pi -e 's/`syslogd-listfiles`/`syslogd-listfiles -s mailscanner`/' /etc/cron.daily/sysklogd 2>&1 >>$LOGFILE
 #perl -pi -e 's/`syslogd-listfiles --weekly`/`syslogd-listfiles --weekly -s mailscanner`/' /etc/cron.weekly/sysklogd 2>&1 >>$LOGFILE
@@ -92,14 +92,14 @@ setterm --foreground default
 
 mkdir -p /var/spamtagger/state
 chown spamtagger:spamtagger /var/spamtagger/state
-echo 'source /usr/spamtagger/.bashrc' >> /etc/bash.bashrc
+echo 'source /opt/spamtagger/.bashrc' >> /etc/bash.bashrc
 echo -e "\b\b\b * "
 
 setterm --foreground blue
 echo -n "# Initializing fangfrisch..."
 setterm --foreground default
 
-cp /usr/spamtagger/etc/clamav/fangfrisch.conf_template /var/spamtagger/etc/fangfrisch.conf
+cp /opt/spamtagger/etc/clamav/fangfrisch.conf_template /var/spamtagger/etc/fangfrisch.conf
 chown clamav:clamav /var/spamtagger/etc/fangfrisch.conf
 fangfrisch -c /var/spamtagger/etc/fangfrisch.conf initdb
 
@@ -108,5 +108,5 @@ if [ -z $CI ]; then
   echo -n "# Detected manual installation, automatically installing.bashrc..."
   setterm --foreground default
 
-  /usr/spamtagger/scripts/installer/installer.pl
+  /opt/spamtagger/scripts/installer/installer.pl
 fi

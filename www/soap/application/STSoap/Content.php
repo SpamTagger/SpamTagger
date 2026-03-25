@@ -29,7 +29,7 @@ class STSoap_Content {
     require_once('Zend/Db/Adapter/Pdo/Mysql.php');
     $contentDb = new Zend_Db_Adapter_Pdo_Mysql(array(
       'host' => 'localhost',
-      'unix_socket' => $stconfig->getOption('VARDIR')."/run/mariadb_replica/mariadbd.sock",
+      'unix_socket' => "/var/spamtagger/run/mariadb_replica/mariadbd.sock",
       'username' => 'spamtagger',
       'password' => $stconfig->getOption('MYSPAMTAGGERPWD'),
       'dbname' => 'st_stats'
@@ -124,7 +124,7 @@ class STSoap_Content {
     require_once('Zend/Db/Adapter/Pdo/Mysql.php');
     $contentDb = new Zend_Db_Adapter_Pdo_Mysql(array(
       'host' => 'localhost',
-      'unix_socket' => $stconfig->getOption('VARDIR')."/run/mariadb_replica/mariadbd.sock",
+      'unix_socket' => "/var/spamtagger/run/mariadb_replica/mariadbd.sock",
       'username' => 'spamtagger',
       'password' => $stconfig->getOption('MYSPAMTAGGERPWD'),
       'dbname' => 'st_stats'
@@ -160,7 +160,7 @@ class STSoap_Content {
 
     require_once('SpamTagger/Config.php');
     $stconfig = SpamTagger_Config::getInstance();
-    $cmd = $stconfig->getOption('SRCDIR')."/bin/force_quarantined.pl ".$id;
+    $cmd = "/opt/spamtagger/bin/force_quarantined.pl ".$id;
     $res = `$cmd`;
     #$res = 'FORCED';
     $status = 0;

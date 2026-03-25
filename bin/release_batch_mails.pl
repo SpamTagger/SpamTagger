@@ -130,18 +130,10 @@ unless (defined $args{from_domain} || defined $args{to_domain} || (defined $args
   usage();
 }
 
-my $VARDIR=`grep 'VARDIR' /etc/spamtagger.conf | cut -d ' ' -f3`;
-chomp $VARDIR;
-$VARDIR="/var/spamtagger" if ( $VARDIR eq '');
-
-my $SRCDIR=`grep 'SRCDIR' /etc/spamtagger.conf | cut -d ' ' -f3`;
-chomp $SRCDIR;
-$SRCDIR="/usr/spamtagger" if ( $SRCDIR eq '' );
-
 my $MYSPAMTAGGERPWD=`grep '^MYSPAMTAGGERPWD' /etc/spamtagger.conf | cut -d ' ' -f3`;
 chomp $MYSPAMTAGGERPWD;
 
-my $SOCKET="$VARDIR/run/mariadb_replica/mariadbd.sock";
+my $SOCKET="/var/spamtagger/run/mariadb_replica/mariadbd.sock";
 my $COMMAND="/usr/bin/mariadb";
 
 my $QUERY="SELECT exim_id, to_user, to_domain, sender, M_score, is_newsletter, M_subject FROM spam WHERE";
@@ -226,8 +218,8 @@ ReadMode('normal');
 
 foreach (@messages) {
   my $UPDATE="UPDATE spam SET forced = '1' WHERE exim_id = '$_->{exim_id}';";
-  print "\n$SRCDIR/bin/force_message.pl $_->{exim_id} $_->{to_user}";
-  `$SRCDIR/bin/force_message.pl $_->{exim_id} $_->{to_user}`;
+  print "\n/opt/spamtagger/bin/force_message.pl $_->{exim_id} $_->{to_user}";
+  `/opt/spamtagger/bin/force_message.pl $_->{exim_id} $_->{to_user}`;
   `echo \"$UPDATE\" | $COMMAND -S $SOCKET -uspamtagger -p$MYSPAMTAGGERPWD -N st_spool`;
 }
 printf "\nFinished\n";

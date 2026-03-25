@@ -29,7 +29,7 @@ class STSoap_Quarantine {
     require_once('SpamTagger/Config.php');
     $stconfig = SpamTagger_Config::getInstance();
 
-    $file = $stconfig->getOption('VARDIR').'/spam/'.$matches[2].'/'.$params['recipient'].'/'.$id;
+    $file = '/var/spamtagger/spam/'.$matches[2].'/'.$params['recipient'].'/'.$id;
 
     $ret['file'] = $file;
     $ret['status'] = 1;

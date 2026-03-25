@@ -20,7 +20,7 @@ use v5.40;
 use warnings;
 use utf8;
 
-use lib '/usr/spamtagger/lib';
+use lib '/opt/spamtagger/lib';
 use Date::Calc qw ( Today Delta_Days Localtime Time_to_Date );
 use String::ShellQuote qw( shell_quote );
 use File::stat();
@@ -28,7 +28,6 @@ use DB();
 use ReadConfig();
 
 my $config = ReadConfig::get_instance();
-my $VARDIR = $config->get_option('VARDIR');
 
 my $days_to_keep = shift;
 
@@ -60,7 +59,7 @@ if ( !$days_to_keep ) {
   }
 }
 
-my $quarantine_dir = "$VARDIR/spam";
+my $quarantine_dir = "/var/spamtagger/spam";
 
 # Standardise the format of the directory name
 die 'Path for quarantine_dir must be absolute' unless $quarantine_dir =~ /^\//;

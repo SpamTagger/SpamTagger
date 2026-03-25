@@ -22,7 +22,7 @@ use v5.40;
 use warnings;
 use utf8;
 
-use lib '/usr/spamtagger/lib/';
+use lib '/opt/spamtagger/lib/';
 use DB();
 use LWP::UserAgent();
 use Getopt::Std();
@@ -30,8 +30,6 @@ use ReadConfig();
 use STUtils qw( create_lockfile remove_lockfile );
 
 my $config = ReadConfig::get_instance();
-my $VARDIR = $config->get_option('VARDIR');
-my $SRCDIR = $config->get_option('SRCDIR');
 my $cron_occurence=15;  # in minutes..
 my $itsmidnight=0;
 my $itstime=0;
@@ -71,7 +69,7 @@ if (defined $options{h}) {
 ############################################
 # Restart Fail2Ban if inaccessible/stopped #
 ############################################
-unless ( -e "$VARDIR/run/fail2ban.disabled" ) {
+unless ( -e "/var/spamtagger/run/fail2ban.disabled" ) {
   my $timout = 5;
   my $failed = 0;
   $failed = eval {
@@ -87,10 +85,10 @@ unless ( -e "$VARDIR/run/fail2ban.disabled" ) {
   };
   if ($@) {
     print("fail2ban not responding, restarting...\n");
-    system("$SRCDIR/etc/init.d/fail2ban", "restart");
+    system("/opt/spamtagger/etc/init.d/fail2ban", "restart");
   } elsif ($failed) {
     print("fail2ban not running, restarting fail2ban...\n");
-    system("$SRCDIR/etc/init.d/fail2ban", "restart");
+    system("/opt/spamtagger/etc/init.d/fail2ban", "restart");
   }
 }
 
@@ -99,11 +97,11 @@ unless ( -e "$VARDIR/run/fail2ban.disabled" ) {
 # the right informations in configuration files
 # resync_db maintains it's own lockfile for manual runs also
 ###########################
-system("$SRCDIR/bin/resync_db.sh", "-C");
+system("/opt/spamtagger/bin/resync_db.sh", "-C");
 # Sync spam tables
 my $fh;
-if (open($fh, '>>', "$VARDIR/log/spamtagger/spam_sync.log")) {
-  print $fh `$SRCDIR/bin/sync_spams.pl`;
+if (open($fh, '>>', "/var/spamtagger/log/spamtagger/spam_sync.log")) {
+  print $fh `/opt/spamtagger/bin/sync_spams.pl`;
   close($fh);
 }
 
@@ -117,16 +115,16 @@ my $replica_dbh = DB->connect("replica", "st_config");
 if (!$replica_dbh) {
   printf ("ERROR: no replica database found on this system ! \n");
   ## try to properly kill all databases
-  `$SRCDIR/etc/init.d/mariadb_replica stop`;
-  `$SRCDIR/etc/init.d/mariadb_source stop`;
+  `/opt/spamtagger/etc/init.d/mariadb_replica stop`;
+  `/opt/spamtagger/etc/init.d/mariadb_source stop`;
   sleep 5;
   ## kill them hard
   `killall -KILL mariadbd mariadbd_safe`;
   sleep 2;
   ## and restart them
-  `$SRCDIR/etc/init.d/mariadb_source start`;
+  `/opt/spamtagger/etc/init.d/mariadb_source start`;
   sleep 2;
-  `$SRCDIR/etc/init.d/mariadb_replica start`;
+  `/opt/spamtagger/etc/init.d/mariadb_replica start`;
   exit 1;
 }
 
@@ -174,7 +172,7 @@ unless ($skip) {
   ########################################
   # check and remove ClamAv temp folders #
   ########################################
-  system("$SRCDIR/scripts/cron/clean_clamav_tmp.sh");
+  system("/opt/spamtagger/scripts/cron/clean_clamav_tmp.sh");
 
   ######################
   ## update anti-viruses
@@ -183,7 +181,7 @@ unless ($skip) {
     push(@wait,$pid_av);
   } elsif (defined $pid_av) {
     print "updating anti-viruses...\n";
-    system($SRCDIR."/scripts/cron/update_antivirus.sh");
+    system("/opt/spamtagger/scripts/cron/update_antivirus.sh");
     print "done updating anti-viruses.\n";
     exit;
   }
@@ -191,7 +189,7 @@ unless ($skip) {
   ####################################################
   # check inodes occupation and old counts if needed #
   ####################################################
-  system("$SRCDIR/scripts/cron/inodes_check.sh");
+  system("/opt/spamtagger/scripts/cron/inodes_check.sh");
 
   ########################################
   ########################################
@@ -204,7 +202,7 @@ unless ($skip) {
   ## check for important processes actually not running and restart them if needed
   #################################################################################
 
-  my $res = `$SRCDIR/bin/get_status.pl -s`;
+  my $res = `/opt/spamtagger/bin/get_status.pl -s`;
   my %proc =();
   my $tmp;
   %proc = (
@@ -233,20 +231,20 @@ unless ($skip) {
         if ( my $pid_restart = fork) {
           push(@wait,$pid_restart);
         } elsif (defined $pid_restart) {
-          system($SRCDIR."/etc/init.d/$key", "start");
+          system("/opt/spamtagger/etc/init.d/$key", "start");
           exit;
         }
       }
     }
   }
 
-  my $hascommtouch=`grep 'Pre Filters' $SRCDIR/etc/mailscanner/MailScanner.conf | grep 'Commtouch'`;
+  my $hascommtouch=`grep 'Pre Filters' /opt/spamtagger/etc/mailscanner/MailScanner.conf | grep 'Commtouch'`;
   if ($hascommtouch ne '') {
     ## check commtouch
-    my $istimeout = `grep 'Commtouch' $VARDIR/log/mailscanner/infolog | grep -v ': Message' | tail -n1 | grep 'timed out'`;
+    my $istimeout = `grep 'Commtouch' /var/spamtagger/log/mailscanner/infolog | grep -v ': Message' | tail -n1 | grep 'timed out'`;
     if ($istimeout ne '') {
       print "Commtouch module seems timing out.. restarting...\n";
-      system($SRCDIR."/etc/init.d/commtouch", "restart");
+      system("/opt/spamtagger/etc/init.d/commtouch", "restart");
       print "done.\n";
     }
   }
@@ -257,8 +255,8 @@ unless ($skip) {
   if (my $pid_keys = fork) {
       push(@wait,$pid_keys);
   } elsif (defined $pid_keys) {
-      if (system("$SRCDIR/bin/internal_access", "--validate") != 0) {
-          system("$SRCDIR/bin/internal_access", "--install")
+      if (system("/opt/spamtagger/bin/internal_access", "--validate") != 0) {
+          system("/opt/spamtagger/bin/internal_access", "--install")
       }
       exit;
   }
@@ -270,9 +268,9 @@ unless ($skip) {
     push(@wait,$pid_checkservices);
   } elsif (defined $pid_checkservices) {
     if ($has_ipc_run) {
-      IPC::Run::run([$SRCDIR."/bin/check_services.pl", $randomize_option], ">/dev/null");
+      IPC::Run::run(["/opt/spamtagger/bin/check_services.pl", $randomize_option], ">/dev/null");
     } else {
-      system("$SRCDIR/bin/check_services.pl $randomize_option >/dev/null");
+      system("/opt/spamtagger/bin/check_services.pl $randomize_option >/dev/null");
     }
     exit
   }
@@ -284,13 +282,13 @@ unless ($skip) {
     push(@wait,$pid_rules);
   } elsif (defined $pid_rules) {
     #print "doing rules updates...";
-    system($SRCDIR."/bin/fetch_clamspam.sh", $randomize_option);
-    system($SRCDIR."/bin/fetch_spamc_rules.sh", $randomize_option);
-    system($SRCDIR."/bin/fetch_spamc_modules_conf.sh", $randomize_option);
-    system($SRCDIR."/bin/fetch_newsl_rules.sh", $randomize_option);
-    system($SRCDIR."/bin/fetch_watchdog_modules.sh", $randomize_option);
-    system($SRCDIR."/bin/fetch_watchdog_config.sh", $randomize_option);
-    system($SRCDIR."/bin/fetch_administrator.sh", $randomize_option);
+    system("/opt/spamtagger/bin/fetch_clamspam.sh", $randomize_option);
+    system("/opt/spamtagger/bin/fetch_spamc_rules.sh", $randomize_option);
+    system("/opt/spamtagger/bin/fetch_spamc_modules_conf.sh", $randomize_option);
+    system("/opt/spamtagger/bin/fetch_newsl_rules.sh", $randomize_option);
+    system("/opt/spamtagger/bin/fetch_watchdog_modules.sh", $randomize_option);
+    system("/opt/spamtagger/bin/fetch_watchdog_config.sh", $randomize_option);
+    system("/opt/spamtagger/bin/fetch_administrator.sh", $randomize_option);
 
     #print "done.\n";
     exit;
@@ -310,7 +308,7 @@ unless ($skip) {
     if (my $pid_learn = fork) {
       push(@wait,$pid_learn);
     } elsif (defined $pid_learn) {
-      system($SRCDIR."/bin/CDN_fetch_bayes.sh");
+      system("/opt/spamtagger/bin/CDN_fetch_bayes.sh");
       exit;
     }
 
@@ -321,12 +319,12 @@ unless ($skip) {
     if (my $pid_syncspam = fork) {
       push(@wait,$pid_syncspam);
     } elsif (defined $pid_syncspam) {
-      if (open($fh, '>>', "$VARDIR/log/spamtagger/spam_sync.log")) {
-        print $fh `$SRCDIR/bin/resync_spams.pl`;
+      if (open($fh, '>>', "/var/spamtagger/log/spamtagger/spam_sync.log")) {
+        print $fh `/opt/spamtagger/bin/resync_spams.pl`;
         print $fh "done syncing spams.\n";
         close($fh);
       } else {
-        system($SRCDIR."/bin/resync_spams.pl");
+        system("/opt/spamtagger/bin/resync_spams.pl");
       }
       exit;
     }
@@ -338,7 +336,7 @@ unless ($skip) {
     if (my $pid_importdmarc = fork) {
       push(@wait,$pid_importdmarc);
     } elsif (defined $pid_importdmarc) {
-      system($SRCDIR."/scripts/cron/dmarc_import.sh");
+      system("/opt/spamtagger/scripts/cron/dmarc_import.sh");
       print "done importing dmarc.\n";
       exit;
     }
@@ -346,7 +344,7 @@ unless ($skip) {
   }
 
   print "Cleaning MailScanner tmp files...\n";
-  system($SRCDIR."/bin/ms_tmp-cleaner", "-o", "10");
+  system("/opt/spamtagger/bin/ms_tmp-cleaner", "-o", "10");
 
   ###################
   # end hourly jobs #
@@ -368,7 +366,7 @@ if ($itsmidnight) {
   print "rotating logs...\n";
   $rc = create_lockfile('rotate.lock', '/tmp/', time+4*60*60, 'rotate_logs');
   if ($rc!=0) {
-    system($SRCDIR."/scripts/cron/rotate_logs.sh");
+    system("/opt/spamtagger/scripts/cron/rotate_logs.sh");
     print "done rotating logs.\n";
     remove_lockfile('rotate.lock', '/tmp/');
   }
@@ -399,9 +397,9 @@ if ($itsmidnight) {
   } elsif (defined $pid_clsp) {
     print "cleaning spam quarantine...\n";
     if ($has_ipc_run) {
-      IPC::Run::run([$SRCDIR."/scripts/cron/clean_spam_quarantine.pl"], "2>&1", ">/dev/null");
+      IPC::Run::run(["/opt/spamtagger/scripts/cron/clean_spam_quarantine.pl"], "2>&1", ">/dev/null");
     } else {
-      system($SRCDIR."/scripts/cron/clean_spam_quarantine.pl 2>&1 >/dev/null");
+      system("/opt/spamtagger/scripts/cron/clean_spam_quarantine.pl 2>&1 >/dev/null");
     }
     print "done cleaning spam quarantine.\n";
     exit;
@@ -415,9 +413,9 @@ if ($itsmidnight) {
   } elsif (defined $pid_clvi) {
     print "cleaning virus quarantine...\n";
     if ($has_ipc_run) {
-      IPC::Run::run([$SRCDIR."/scripts/cron/clean_virus_quarantine.pl"], "2>&1", ">/dev/null");
+      IPC::Run::run(["/opt/spamtagger/scripts/cron/clean_virus_quarantine.pl"], "2>&1", ">/dev/null");
     } else {
-      system($SRCDIR."/scripts/cron/clean_virus_quarantine.pl 2>&1 >/dev/null");
+      system("/opt/spamtagger/scripts/cron/clean_virus_quarantine.pl 2>&1 >/dev/null");
     }
     print "done cleaning virus quarantine.\n";
     exit;
@@ -431,9 +429,9 @@ if ($itsmidnight) {
   } elsif (defined $pid_clkav) {
     print "cleaning Kaspersky temporary files...\n";
     if ($has_ipc_run) {
-      IPC::Run::run([$SRCDIR."/scripts/cron/clean_kav_tmp.sh"], "2>&1", ">/dev/null");
+      IPC::Run::run(["/opt/spamtagger/scripts/cron/clean_kav_tmp.sh"], "2>&1", ">/dev/null");
     } else {
-      system("$SRCDIR/scripts/cron/clean_kav_tmp.sh 2>&1 >/dev/null");
+      system("/opt/spamtagger/scripts/cron/clean_kav_tmp.sh 2>&1 >/dev/null");
     }
     print "done cleaning kaspersky temporary files.\n";
     exit;
@@ -447,9 +445,9 @@ if ($itsmidnight) {
   } elsif (defined $pid_asdis) {
     print "discovering antispam...\n";
     if ($has_ipc_run) {
-      IPC::Run::run([$SRCDIR."/scripts/cron/antispam_discovers.sh"], "2>&1", ">/dev/null");
+      IPC::Run::run(["/opt/spamtagger/scripts/cron/antispam_discovers.sh"], "2>&1", ">/dev/null");
     } else {
-      system("$SRCDIR/scripts/cron/antispam_discovers.sh 2>&1 >/dev/null");
+      system("/opt/spamtagger/scripts/cron/antispam_discovers.sh 2>&1 >/dev/null");
     }
     print "done discovering antispam.\n";
     exit;
@@ -462,7 +460,7 @@ if ($itsmidnight) {
     push(@wait,$pid_bayes);
   } elsif (defined $pid_bayes) {
     print "expiring bayes databases...\n";
-    system($SRCDIR."/scripts/cron/expire_bayes.sh");
+    system("/opt/spamtagger/scripts/cron/expire_bayes.sh");
     print "done expiring bayes databases.\n";
     exit;
   }
@@ -474,7 +472,7 @@ if ($itsmidnight) {
     push(@wait,$pid_stats);
   } elsif (defined $pid_stats) {
     print "updating monthly/yearly graphs...\n";
-    system($SRCDIR."/bin/collect_rrd_stats.pl", "daily");
+    system("/opt/spamtagger/bin/collect_rrd_stats.pl", "daily");
     print "done updating monthly/yearly graphs.\n";
     exit;
   }
@@ -486,7 +484,7 @@ if ($itsmidnight) {
   if (my $pid_cleanspool = fork) {
     push(@wait,$pid_cleanspool);
   } elsif (defined $pid_cleanspool) {
-    system($SRCDIR."/scripts/cron/clean_spool.sh");
+    system("/opt/spamtagger/scripts/cron/clean_spool.sh");
     print "done cleaning spools.\n";
     exit;
   }
@@ -498,7 +496,7 @@ if ($itsmidnight) {
   if (my $pid_dmarcreports = fork) {
     push(@wait,$pid_dmarcreports);
   } elsif (defined $pid_dmarcreports) {
-    system($SRCDIR."/scripts/cron/dmarc_reports.sh");
+    system("/opt/spamtagger/scripts/cron/dmarc_reports.sh");
     print "done generating and sending DMARC reports...\n";
     exit;
   }
@@ -516,9 +514,9 @@ if ($itstime) {
     print "sending watchdog report to support address, if applicable...\n";
     my $date = `date '+%Y%m%d'`;
     chomp($date);
-    if (open($fh, '>>', $VARDIR."/log/spamtagger/watchdogs.log")) {
+    if (open($fh, '>>', "/var/spamtagger/log/spamtagger/watchdogs.log")) {
       print $fh "Sending watchdog alerts:\n";
-      print $fh `$SRCDIR/bin/send_watchdogs.pl`;
+      print $fh `/opt/spamtagger/bin/send_watchdogs.pl`;
       print $fh "done watchdog report.\n";
       close($fh);
     }
@@ -534,9 +532,9 @@ if ($itstime) {
     print "sending daily summaries...\n";
     my $date = `date '+%Y%m%d'`;
     chomp($date);
-    if (open($fh, '>>', $VARDIR."/log/spamtagger/summaries.log")) {
+    if (open($fh, '>>', "/var/spamtagger/log/spamtagger/summaries.log")) {
       print $fh "Sending daily summaries:\n";
-      print $fh `$SRCDIR/bin/send_summary.pl -a 3 1`;
+      print $fh `/opt/spamtagger/bin/send_summary.pl -a 3 1`;
       print $fh "done daily summaries.\n";
       close($fh);
     }
@@ -562,9 +560,9 @@ if ($itsweekday) {
     print "sending weekly summaries...\n";
     my $date = `date '+%Y%m%d'`;
     chomp($date);
-    if (open($fh, '>>', $VARDIR."/log/spamtagger/summaries.log")) {
+    if (open($fh, '>>', "/var/spamtagger/log/spamtagger/summaries.log")) {
       print $fh "Sending weekly summaries:\n";
-      print $fh `$SRCDIR/bin/send_summary.pl -a 2 7`;
+      print $fh `/opt/spamtagger/bin/send_summary.pl -a 2 7`;
       print $fh "done weekly summaries.\n";
       close($fh);
     }
@@ -590,9 +588,9 @@ if ($itsmonthday) {
     print "sending monthly summaries...\n";
     my $date = `date '+%Y%m%d'`;
     chomp($date);
-    if (open($fh, '>>', $VARDIR."/log/spamtagger/summaries.log")) {
+    if (open($fh, '>>', "/var/spamtagger/log/spamtagger/summaries.log")) {
       print $fh "Sending monthly summaries:\n";
-      print $fh `$SRCDIR/bin/send_summary.pl -a 1 31`;
+      print $fh `/opt/spamtagger/bin/send_summary.pl -a 1 31`;
       print $fh "done monthly summaries.\n";
       close($fh);
     }
@@ -605,13 +603,13 @@ if ($itsmonthday) {
 # ST restart         #
 ######################
 ######################
-if ( -e "$VARDIR/run/spamtagger.rn") {
+if ( -e "/var/spamtagger/run/spamtagger.rn") {
   if ($has_ipc_run) {
-    IPC::Run::run([$SRCDIR."/etc/init.d/spamtagger", "restart"], "2>&1", ">/dev/null");
-    IPC::Run::run(["rm", $VARDIR."/run/spamtagger.rn"], "2>&1", ">/dev/null");
+    IPC::Run::run(["/opt/spamtagger/etc/init.d/spamtagger", "restart"], "2>&1", ">/dev/null");
+    IPC::Run::run(["rm", "/var/spamtagger/run/spamtagger.rn"], "2>&1", ">/dev/null");
   } else {
-    system($SRCDIR."/etc/init.d/spamtagger restart 2>&1 >/dev/null");
-    system("rm $VARDIR/run/spamtagger.rn 2>&1 >/dev/null");
+    system("/opt/spamtagger/etc/init.d/spamtagger restart 2>&1 >/dev/null");
+    system("rm /var/spamtagger/run/spamtagger.rn 2>&1 >/dev/null");
   }
 }
 
@@ -644,4 +642,4 @@ while (scalar(@remaining)) {
 unless ($skip) {
   remove_lockfile($lockfile,undef);
 }
-system($SRCDIR."/scripts/cron/service_checks.pl");
+system("/opt/spamtagger/scripts/cron/service_checks.pl");

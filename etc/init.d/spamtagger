@@ -16,14 +16,6 @@ if [ ! -z $2 ]; then
   fi
 fi
 
-SRCDIR=`grep 'SRCDIR' /etc/spamtagger.conf | cut -d ' ' -f3`
-if [ "$SRCDIR" = "" ]; then
-  SRCDIR=/usr/spamtagger
-fi
-VARDIR=`grep 'VARDIR' /etc/spamtagger.conf | cut -d ' ' -f3`
-if [ "$VARDIR" = "" ]; then
-  VARDIR=/var/spamtagger
-fi
 ISSOURCE=`grep 'ISSOURCE' /etc/spamtagger.conf | cut -d ' ' -f3`
 
 NAME=spamtagger
@@ -42,7 +34,7 @@ PREFTDAEMON=preftdaemon
 SPAMLOGGER=spamloggerdaemon
 STATSDAEMON=statsdaemon
 
-INITDIR=$SRCDIR/etc/init.d
+INITDIR=/opt/spamtagger/etc/init.d
 
 test -x $DAEMON || exit 0
 
@@ -50,15 +42,15 @@ case "$1" in
   start)
     echo "Starting $NAME: "
 
-    EDITION=`cat $SRCDIR/etc/edition.def`
-    VERSION=`cat $SRCDIR/etc/spamtagger/version.def`
+    EDITION=`cat /opt/spamtagger/etc/edition.def`
+    VERSION=`cat /opt/spamtagger/etc/spamtagger/version.def`
     echo "SpamTagger $EDITION $VERSION (kernel \\\r on \\\m, \\\l)\n" > /etc/issue
 
     ## checking for tmpfs dir
     DF=`df | grep '/spool/tmp'`
     if [ "$DF" = "" ]; then
       echo -n "  Creating tmpfs partition... "
-      mount -t tmpfs tmpfs $VARDIR/spool/tmp >/dev/null 2>&1
+      mount -t tmpfs tmpfs /var/spamtagger/spool/tmp >/dev/null 2>&1
       echo "done"
     fi
 
@@ -90,8 +82,8 @@ case "$1" in
       $INITDIR/$APACHE start
     fi
 
-    FIRSTUPDATE_LOG="${VARDIR}/log/spamtagger/first-start.log"
-    FIRSTUPDATE_FLAG_DIR="${VARDIR}/run/configurator"
+    FIRSTUPDATE_LOG="/var/spamtagger/log/spamtagger/first-start.log"
+    FIRSTUPDATE_FLAG_DIR="/var/spamtagger/run/configurator"
     FIRSTUPDATE_FLAG_RAN="${FIRSTUPDATE_FLAG_DIR}/updater4st-ran"
     FIRSTUPDATE_FLAG_RUNNING="${FIRSTUPDATE_FLAG_DIR}/updater4st-running"
 
@@ -105,7 +97,7 @@ case "$1" in
           echo "Updating..." >> ${FIRSTUPDATE_LOG}
           mkdir -p ${FIRSTUPDATE_FLAG_DIR}
           /root/Updater4ST/updater4mc.sh || rm -f ${FIRSTUPDATE_FLAG_RUNNING}  # If error during upgrade, it will try again every time
-          ${SRCDIR}/bin/internal_access --generate --propagate --install &>> ${FIRSTUPDATE_LOG}
+          /opt/spamtagger/bin/internal_access --generate --propagate --install &>> ${FIRSTUPDATE_LOG}
           touch ${FIRSTUPDATE_FLAG_RAN}
           echo "Finished update" >> ${FIRSTUPDATE_LOG}
           rm -f ${FIRSTUPDATE_FLAG_RUNNING}
@@ -119,8 +111,8 @@ case "$1" in
     wait
     ;;
   stop)
-    if [ ! -z "$(find $VARDIR/run/ -name *.rs)" ]; then
-      rm $VARDIR/run/*.rs
+    if [ ! -z "$(find /var/spamtagger/run/ -name *.rs)" ]; then
+      rm /var/spamtagger/run/*.rs
     fi
     echo "Stopping $NAME: "
     if [ $APACHE_RESTART -eq 1 ]; then

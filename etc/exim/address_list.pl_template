@@ -7,7 +7,7 @@ use utf8;
 ## pushed format must be
 ## address(,user)
 
-use lib "__SRCDIR__/lib";
+use lib "/opt/spamtagger/lib";
 use Net::SMTP();
 use ReadConfig();
 use DB();
@@ -19,7 +19,7 @@ my $recipient = shift;
 
 my $conf = ReadConfig::get_instance();
 
-my $afile = $conf->get_option('VARDIR')."/spool/spamtagger/addresses/".$domain.".addresslist";
+my $afile = "/var/spamtagger/spool/spamtagger/addresses/${domain}.addresslist";
 
 my $AFILE;
 open($AFILE, ">", $afile) or die "Cannot open destination file: $afile";

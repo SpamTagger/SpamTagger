@@ -28,13 +28,6 @@ use Exporter 'import';
 our @EXPORT_OK = ();
 our $VERSION   = 1.0;
 
-use lib '/usr/spamtagger/lib';
-use ReadConfig();
-
-my $conf = ReadConfig::get_instance();
-my $SRCDIR=$conf->get_option('SRCDIR');
-my $VARDIR=$conf->get_option('VARDIR');
-
 ###
 # create the dumper
 # @param  $template    string  base template file
@@ -42,15 +35,11 @@ my $VARDIR=$conf->get_option('VARDIR');
 # @return              this
 ###
 sub new ($class, $templatefile, $targetfile) {
-  $templatefile =~ s/__SRCDIR__/$SRCDIR/g;
-  $templatefile =~ s/__VARDIR__/$VARDIR/g;
   if ($templatefile =~ m/^[^\/]/) {
-    $templatefile = $conf->get_option('SRCDIR')."/".$templatefile;
+    $templatefile = "/opt/spamtagger/".$templatefile;
   }
-  $targetfile =~ s/__SRCDIR__/$SRCDIR/g;
-  $targetfile =~ s/__VARDIR__/$VARDIR/g;
   if ($targetfile =~ m/^[^\/]/) {
-    $targetfile = $conf->get_option('SRCDIR')."/".$targetfile;
+    $targetfile = "/opt/spamtagger/".$targetfile;
   }
 
   my $this = {
@@ -192,12 +181,10 @@ sub dump_file ($this) {
       my $path_file;
       $inc_file =~ s/_template$//;
       # Version using .include_if_exists
-      if ( -f "$SRCDIR/etc/exim/custom/$inc_file" ) {
-        $path_file = "$SRCDIR/etc/exim/custom/$inc_file";
-        #$ret .= ".include_if_exists __SRCDIR__/etc/exim/custom/$inc_file\n";
-      } elsif ( -f "$SRCDIR/etc/exim/$inc_file" ) {
-        $path_file = "$SRCDIR/etc/exim/$inc_file";
-        #$ret .= ".include_if_exists __SRCDIR__/etc/exim/$inc_file\n";
+      if ( -f "/opt/spamtagger/etc/exim/custom/$inc_file" ) {
+        $path_file = "/opt/spamtagger/etc/exim/custom/$inc_file";
+      } elsif ( -f "/opt/spamtagger/etc/exim/$inc_file" ) {
+        $path_file = "/opt/spamtagger/etc/exim/$inc_file";
       } else {
 	next;
       }
@@ -229,8 +216,6 @@ sub dump_file ($this) {
 
   ## replace well known tags
   my %wellknown = (
-    '__SRCDIR__' => $conf->get_option('SRCDIR'),
-    '__VARDIR__' => $conf->get_option('VARDIR'),
   );
 
   ## replace given tags

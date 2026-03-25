@@ -28,9 +28,8 @@ use Exporter 'import';
 our @EXPORT_OK = ();
 our $VERSION   = 1.0;
 
-use lib "/usr/spamtagger/lib/";
+use lib "/opt/spamtagger/lib/";
 use Exporter();
-use ReadConfig();
 use SystemPref();
 use Domain();
 use PrefClient();
@@ -132,8 +131,7 @@ sub has_in_want_warn_list ($this, $type, $sender) {
     $filename = 'block.list';
   }
 
-  my $conf = ReadConfig::get_instance();
-  my $basedir = $conf->get_option('VARDIR')."/spool/spamtagger/prefs";
+  my $basedir = "/opt/spamtagger/spool/spamtagger/prefs";
   my $wwfile = $basedir."/_global/".$filename;
 
   my $prefclient = PrefClient->new();

@@ -26,9 +26,8 @@ use Exporter 'import';
 our @EXPORT_OK = ();
 our $VERSION   = 1.0;
 
-use lib "/usr/spamtagger/lib/";
+use lib "/opt/spamtagger/lib/";
 use Time::HiRes qw(gettimeofday tv_interval);
-use ReadConfig();
 use DB();
 use Digest::MD5 qw(md5_hex);
 use threads();
@@ -59,13 +58,12 @@ my %stats_ : shared = (
 );
 
 sub new ($class, $params) {
-  my $conf = ReadConfig::get_instance();
 
   my $spec_this = {
     name              => 'PrefTDaemon',
-    socketpath        => $conf->get_option('VARDIR') . "/run/prefdaemon.sock",
-    configfile        => $conf->get_option('SRCDIR') . "/etc/spamtagger/prefdaemon.conf",
-    pidfile           => $conf->get_option('VARDIR') . "/run/prefdaemon.pid",
+    socketpath        => "/var/spamtagger/run/prefdaemon.sock",
+    configfile        => "/opt/spamtagger/etc/spamtagger/prefdaemon.conf",
+    pidfile           => "/var/spamtagger/run/prefdaemon.pid",
     profile           => 0,
     prefork           => 5,
     clean_thread_exit => 1,

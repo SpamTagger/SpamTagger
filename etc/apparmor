@@ -1,1 +1,1 @@
-#Include /usr/spamtagger/etc/apparmor.d
+#Include /opt/spamtagger/etc/apparmor.d

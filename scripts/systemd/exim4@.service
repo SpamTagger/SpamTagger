@@ -9,4 +9,4 @@ User=spamtagger
 Group=spamtagger
 PrivateTmp=false
 EnvironmentFile=-/etc/sysconfig/exim
-ExecStartPre=+/usr/spamtagger/bin/dump_exim_config.pl %I
+ExecStartPre=+/opt/spamtagger/bin/dump_exim_config.pl %I

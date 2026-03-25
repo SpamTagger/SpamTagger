@@ -50,17 +50,7 @@ while getopts ":r" OPTION; do
   esac
 done
 
-CONFFILE=/etc/spamtagger.conf
-SRCDIR=$(grep 'SRCDIR' $CONFFILE | cut -d ' ' -f3)
-if [ "$SRCDIR" = "" ]; then
-  SRCDIR="/usr/spamtagger"
-fi
-VARDIR=$(grep 'VARDIR' $CONFFILE | cut -d ' ' -f3)
-if [ "$VARDIR" = "" ]; then
-  VARDIR="/var/spamtagger"
-fi
-
-. $SRCDIR/lib/STUtils.sh
+. /opt/spamtagger/lib/STUtils.sh
 FILE_NAME=$(basename -- "$0")
 FILE_NAME="${FILE_NAME%.*}"
 ret=$(createLockFile "$FILE_NAME")
@@ -68,12 +58,12 @@ if [[ "$ret" -eq "1" ]]; then
   exit 0
 fi
 
-. $SRCDIR/lib/updates/download_files.sh
+. /opt/spamtagger/lib/updates/download_files.sh
 
-ret=$(downloadDatas "$VARDIR/spool/clamspam/" "clamspam3" $randomize "clamav" "\|local_wantlist.ign2" "noexit")
+ret=$(downloadDatas "/var/spamtagger/spool/clamspam/" "clamspam3" $randomize "clamav" "\|local_wantlist.ign2" "noexit")
 
-if [ ! -d "$VARDIR/spool/tmp/clamspam" ]; then
-  mkdir "$VARDIR/spool/tmp/clamspam"
+if [ ! -d "/var/spamtagger/spool/tmp/clamspam" ]; then
+  mkdir "/var/spamtagger/spool/tmp/clamspam"
 fi
 
 # Creating a test file, the content doesnt matter
@@ -89,13 +79,13 @@ for file in $(ls | grep -v "dbs.md5"); do
 
   # Check if we should re run test on this file
   PERFORM_VERIFICATION=1
-  if [ -e "$VARDIR/spool/tmp/clamspam/$file" ]; then
+  if [ -e "/var/spamtagger/spool/tmp/clamspam/$file" ]; then
     CURRENT_MD5SUM=$(md5sum $file | sed -e 's/ .*//')
-    LAST_MD5SUM=$(cat "$VARDIR/spool/tmp/clamspam/$file")
+    LAST_MD5SUM=$(cat "/var/spamtagger/spool/tmp/clamspam/$file")
     if [ "$CURRENT_MD5SUM" = "$LAST_MD5SUM" ]; then
       PERFORM_VERIFICATION=0
     else
-      rm "$VARDIR/spool/tmp/clamspam/$file"
+      rm "/var/spamtagger/spool/tmp/clamspam/$file"
     fi
   fi
 
@@ -109,7 +99,7 @@ for file in $(ls | grep -v "dbs.md5"); do
       echo "["$(date "+%Y/%m/%d %H:%M:%S")"] Malformed Database $MALFORMEDFILE removed" >>/var/spamtagger/log/spamtagger/downloadDatas.log
       MALFORMEDFILE=''
     else
-      echo $CURRENT_MD5SUM >"$VARDIR/spool/tmp/clamspam/$file"
+      echo $CURRENT_MD5SUM >"/var/spamtagger/spool/tmp/clamspam/$file"
     fi
   fi
 done
@@ -117,7 +107,7 @@ cd -
 
 ## restart clamspam daemon
 if [[ "$ret" -eq "1" ]]; then
-  kill -USR2 $(cat $VARDIR/run/clamav/clamspamd.pid 2>/dev/null) >/dev/null 2>&1
+  kill -USR2 $(cat /var/spamtagger/run/clamav/clamspamd.pid 2>/dev/null) >/dev/null 2>&1
   log "Clamspam - Database reloaded"
 fi
 

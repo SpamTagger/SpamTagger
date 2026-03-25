@@ -15,9 +15,9 @@ myisam_sort_buffer_size = 64M
 thread_cache_size = 8
 query_cache_size = 32M
 
-innodb_data_home_dir = __VARDIR__/spool/mariadb_source/
+innodb_data_home_dir = /var/spamtagger/spool/mariadb_source/
 innodb_file_per_table
-innodb_log_group_home_dir = __VARDIR__/spool/mariadb_source/
+innodb_log_group_home_dir = /var/spamtagger/spool/mariadb_source/
 innodb_log_file_size = 100M
 innodb_log_buffer_size = 8M
 innodb_flush_log_at_trx_commit = 1

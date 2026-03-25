@@ -16,15 +16,6 @@
 #   You should have received a copy of the GNU General Public License
 #   along with this program. If not, see <http://www.gnu.org/licenses/>.
 
-SRCDIR=$(grep 'SRCDIR' /etc/spamtagger.conf | cut -d ' ' -f3)
-if [ "SRCDIR" = "" ]; then
-  SRCDIR=/var/spamtagger
-fi
-VARDIR=$(grep 'VARDIR' /etc/spamtagger.conf | cut -d ' ' -f3)
-if [ "VARDIR" = "" ]; then
-  VARDIR=/var/spamtagger
-fi
-
 search=$1
 stage=$2
 
@@ -37,10 +28,10 @@ if [ "$search" = "" ]; then
   exit 1
 fi
 
-SPOOLDIR=$VARDIR"/spool/exim_stage$stage/input"
-MSGLOGDIR=$VARDIR"/spool/exim_stage$stage/msglog"
-BACKUPDIR=$VARDIR"/spool/exim_stage$stage/input_disabled"
-BACKUPMSGLOGDIR=$VARDIR"/spool/exim_stage$stage/msglog_disabled"
+SPOOLDIR="/var/spamtagger/spool/exim_stage$stage/input"
+MSGLOGDIR="/var/spamtagger/spool/exim_stage$stage/msglog"
+BACKUPDIR="/var/spamtagger/spool/exim_stage$stage/input_disabled"
+BACKUPMSGLOGDIR="/var/spamtagger/spool/exim_stage$stage/msglog_disabled"
 
 if [ ! -d $BACKUPDIR/$search ]; then
   mkdir -p $BACKUPDIR/$search

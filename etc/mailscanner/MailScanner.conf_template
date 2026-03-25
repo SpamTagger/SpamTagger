@@ -1,7 +1,7 @@
-%report-dir% = __SRCDIR__/templates/reports/default/en
-%etc-dir% = __SRCDIR__/etc/mailscanner
-%rules-dir% = __SRCDIR__/etc/mailscanner/rules
-%mcp-dir% = __SRCDIR__/etc/mailscanner/mcp
+%report-dir% = /opt/spamtagger/templates/reports/default/en
+%etc-dir% = /opt/spamtagger/etc/mailscanner
+%rules-dir% = /opt/spamtagger/etc/mailscanner/rules
+%mcp-dir% = /opt/spamtagger/etc/mailscanner/mcp
 
 %org-name% = __ORGNAME__
 %org-long-name% = __ORGNAME__
@@ -15,28 +15,28 @@ Max Children = __NBPROCESSES__
 Run As User = spamtagger
 Run As Group = spamtagger
 
-Additional Library Paths = __SRCDIR__/lib
+Additional Library Paths = /opt/spamtagger/lib
 
 Queue Scan Interval = 5
 Restart Every = 14400
 
 __EXIM_COMMAND__
-Incoming Queue Dir = __VARDIR__/spool/exim_stage2/input
-Outgoing Queue Dir = __VARDIR__/spool/exim_stage4/input
-Incoming Work Dir = __VARDIR__/spool/tmp/mailscanner/incoming
+Incoming Queue Dir = /var/spamtagger/spool/exim_stage2/input
+Outgoing Queue Dir = /var/spamtagger/spool/exim_stage4/input
+Incoming Work Dir = /var/spamtagger/spool/tmp/mailscanner/incoming
 Incoming Work User =
 Incoming Work Group =
 Incoming Work Permissions = 0666
-Quarantine Dir = __VARDIR__/spool/mailscanner/quarantine
+Quarantine Dir = /var/spamtagger/spool/mailscanner/quarantine
 Quarantine User =
 Quarantine Group =
 Quarantine Permissions = 0664
 
-PID file = __VARDIR__/run/mailscanner.pid
+PID file = /var/spamtagger/run/mailscanner.pid
 
 MTA = exim
-Sendmail = /opt/exim4/bin/exim -C __VARDIR__/spool/tmp/exim/exim_stage4.conf
-Sendmail2 = /opt/exim4/bin/exim -C __VARDIR__/spool/tmp/exim/exim_stage4.conf
+Sendmail = /opt/exim4/bin/exim -C /var/spamtagger/spool/tmp/exim/exim_stage4.conf
+Sendmail2 = /opt/exim4/bin/exim -C /var/spamtagger/spool/tmp/exim/exim_stage4.conf
 
 ####################################
 ## system optimisation
@@ -109,14 +109,14 @@ Sophos IDE Dir = /usr/local/Sophos/ide
 Sophos Lib Dir = /usr/local/Sophos/lib
 Monitors For Sophos Updates = /usr/local/Sophos/ide/*ides.zip
 
-Monitors for ClamAV Updates = __VARDIR__/spool/clamav/daily.inc/ __VARDIR__/spool/clamav/*.cvd
+Monitors for ClamAV Updates = /var/spamtagger/spool/clamav/daily.inc/ /var/spamtagger/spool/clamav/*.cvd
 ClamAVmodule Maximum Recursion Level = 8
 ClamAVmodule Maximum Files = 1000
 ClamAVmodule Maximum File Size = 10000000 # (10 Mbytes)
 ClamAVmodule Maximum Compression Ratio = 250
 
 Clamd Port = 3310
-Clamd Socket = __VARDIR__/run/clamav/clamd.sock
+Clamd Socket = /var/spamtagger/run/clamav/clamd.sock
 Clamd Lock File = # /var/lock/subsys/clamd
 Clamd Use Threads = yes
 ClamAV Full Message Scan = no
@@ -276,7 +276,7 @@ Pre Filter Timeout = 100
 Pre Filter Configurations = %etc-dir%/prefilters/
 
 Use Spam Cache = yes
-Spam Cache Database File = __VARDIR__/spool/tmp/mailscanner/spam.cache.db
+Spam Cache Database File = /var/spamtagger/spool/tmp/mailscanner/spam.cache.db
 Spam Cache Timings = 300,600
 
 Spam List Definitions = %etc-dir%/dnsblocklists.conf
@@ -314,7 +314,7 @@ Custom Spam Scanner Timeout History = 20
 Scan Messages = yes
 Reject Message = no
 Maximum Processing Attempts = 0
-Processing Attempts Database = __VARDIR__/spool/tmp/mailscanner/incoming/Processing.db
+Processing Attempts Database = /var/spamtagger/spool/tmp/mailscanner/incoming/Processing.db
 Max Custom Spam Scanner Size = 20k
 Max SpamAssassin Size = 500k
 Required SpamAssassin Score = 5
@@ -327,7 +327,7 @@ Check SpamAssassin If On Spam List = no
 Include Binary Attachments In SpamAssassin = no
 Spam Score = yes
 Cache SpamAssassin Results = yes
-SpamAssassin Cache Database File = __VARDIR__/spool/tmp/mailscanner/incoming/SpamAssassin.cache.db
+SpamAssassin Cache Database File = /var/spamtagger/spool/tmp/mailscanner/incoming/SpamAssassin.cache.db
 Rebuild Bayes Every = 86400
 Wait During Bayes Rebuild = no
 Spam Actions = deliver
@@ -387,11 +387,11 @@ Log Silent Viruses = yes
 Log Dangerous HTML Tags = yes
 Log SpamAssassin Rule Actions = no
 
-SpamAssassin Temporary Dir = __VARDIR__/spool/tmp/mailscanner/spamassassin
-SpamAssassin User State Dir =  __VARDIR__/mailscanner/users
+SpamAssassin Temporary Dir = /var/spamtagger/spool/tmp/mailscanner/spamassassin
+SpamAssassin User State Dir =  /var/spamtagger/mailscanner/users
 SpamAssassin Install Prefix =
 SpamAssassin Site Rules Dir = /etc/mail/spamassassin
-SpamAssassin Local Rules Dir = __SRCDIR__/share/spamassassin
+SpamAssassin Local Rules Dir = /opt/spamtagger/share/spamassassin
 SpamAssassin Local State Dir =
 SpamAssassin Default Rules Dir =  /usr/local/share/spamassassin
 
@@ -419,7 +419,7 @@ Always Looked Up Last After Batch = no
 Deliver In Background = yes
 Delivery Method = batch
 Split Exim Spool = no
-Lockfile Dir = __VARDIR__/spool/tmp/mailscanner/incoming/Locks
+Lockfile Dir = /var/spamtagger/spool/tmp/mailscanner/incoming/Locks
 Custom Functions Dir = /opt/MailScanner/lib/MailScanner/CustomFunctions
 Lock Type =
 Minimum Code Status = supported

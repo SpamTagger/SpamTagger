@@ -1,17 +1,7 @@
 #!/bin/bash
 # Allows for the management of internal access between machines
 
-CONFFILE=/etc/spamtagger.conf
-SRCDIR=$(grep 'SRCDIR' $CONFFILE | cut -d ' ' -f3)
-if [ "$SRCDIR" = "" ]; then
-  SRCDIR="/usr/spamtagger"
-fi
-VARDIR=$(grep 'VARDIR' $CONFFILE | cut -d ' ' -f3)
-if [ "$VARDIR" = "" ]; then
-  VARDIR="/var/spamtagger"
-fi
-
-source ${SRCDIR}/lib/STUtils.sh
+source /opt/spamtagger/lib/STUtils.sh
 
 if [ $(replicaSynchronized) == "false" ]; then
   echo "The replica database is not synchronized, quitting..."
@@ -44,7 +34,7 @@ function get_last_internal_key {
     exit 1
   fi
   key=$(
-    cat <<EOF | ${SRCDIR}/bin/st_mariadb -s st_config | grep -e "BEGIN RSA PRIVATE KEY" -e "ssh-rsa"
+    cat <<EOF | /opt/spamtagger/bin/st_mariadb -s st_config | grep -e "BEGIN RSA PRIVATE KEY" -e "ssh-rsa"
 SELECT ${kind}
 FROM internal_access
 ORDER BY id DESC
@@ -86,7 +76,7 @@ function install {
 function propagate {
   PRIVATE_KEY=$(cat "${PRIVATE_KEY_FILE}")
   PUBLIC_KEY=$(cat "${PRIVATE_KEY_FILE}.pub")
-  cat <<EOF | ${SRCDIR}/bin/st_mariadb -m st_config
+  cat <<EOF | /opt/spamtagger/bin/st_mariadb -m st_config
 INSERT INTO internal_access
 (private_key, public_key)
 VALUES

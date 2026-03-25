@@ -29,7 +29,7 @@ $stconfig = SpamTagger_Config::getInstance();
 
 $file = preg_replace('/\-/', '/', $fileparam);
 
-$file = $stconfig->getOption('VARDIR')."/log/".$file;
+$file = "/var/spamtagger/log/".$file;
 if (!file_exists($file)) {
   header("HTTP/1.0 404 Not Found");
   echo "File not found ($file)";

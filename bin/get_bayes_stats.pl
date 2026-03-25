@@ -21,7 +21,7 @@ use warnings;
 use utf8;
 use Carp qw( confess );
 
-use lib '/usr/spamtagger/lib/';
+use lib '/opt/spamtagger/lib/';
 use ReadConfig();
 
 my $conf = ReadConfig::get_instance();
@@ -35,7 +35,7 @@ if (defined($givenmode) && $givenmode =~ /^(-v|-h)$/) {
   }
 }
 
-my $MSLOGFILE=$conf->get_option('VARDIR')."/log/mailscanner/infolog";
+my $MSLOGFILE="/var/spamtagger/log/mailscanner/infolog";
 
 my $LOGFILE;
 open($LOGFILE, '<', $MSLOGFILE) or die("cannot open log file: $MSLOGFILE\n");

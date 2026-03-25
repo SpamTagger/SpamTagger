@@ -22,17 +22,9 @@
 #   Usage:
 #   release_batch_emails.sh <sender>
 
-VARDIR=$(grep 'VARDIR' /etc/spamtagger.conf | cut -d ' ' -f3)
-if [ "VARDIR" = "" ]; then
-  VARDIR=/var/spamtagger
-fi
-SRCDIR=$(grep 'SRCDIR' /etc/spamtagger.conf | cut -d ' ' -f3)
-if [ "SRCDIR" = "" ]; then
-  SRCDIR=/usr/spamtagger
-fi
 MYSPAMTAGGERPWD=$(grep '^MYSPAMTAGGERPWD' /etc/spamtagger.conf | cut -d ' ' -f3)
 
-SOCKET=$VARDIR/run/mariadb_replica/mariadbd.sock
+SOCKET=/var/spamtagger/run/mariadb_replica/mariadbd.sock
 COMMAND=/usr/bin/mariadb
 
 if [[ -z $1 ]]; then
@@ -46,5 +38,5 @@ for ((i = 0; i < ${#results[@]}; i = i + 3)); do
   id="${results[i]}"
   to="${results[$((i + 1))]}@${results[$((i + 2))]}"
   echo -n "$id $to -> "
-  $SRCDIR/bin/force_message.pl $id $to
+  /opt/spamtagger/bin/force_message.pl $id $to
 done

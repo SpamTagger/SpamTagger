@@ -44,7 +44,7 @@ use POSIX qw(setuid setgid);
 use Sys::Syslog();
 use Proc::ProcessTable();
 use Time::HiRes qw(gettimeofday tv_interval);
-use lib '/usr/spamtagger/lib';
+use lib '/opt/spamtagger/lib';
 use ReadConfig();
 use ConfigTemplate();
 
@@ -58,7 +58,6 @@ our $LOGGERLOG;
 sub new ($class, $daemonname, $conffilepath, $spec_this = {}) {
   $daemoncounts_->{'starttime'} = time();
 
-  my $conf = ReadConfig->get_instance();
   if ( !$daemonname ) {
     $daemonname = 'defautThreadedDaemon';
   }
@@ -66,11 +65,11 @@ sub new ($class, $daemonname, $conffilepath, $spec_this = {}) {
     $conffilepath = 'etc/spamtagger/' . $daemonname . ".cf";
   }
   my $configfile;
-  $configfile = $conf->get_option('SRCDIR') . "/" . $conffilepath unless ($conffilepath =~ /^\//);
+  $configfile = "/opt/spamtagger/" . $conffilepath unless ($conffilepath =~ /^\//);
 
   ## default values
-  my $pidfile = $conf->get_option('VARDIR') . "/run/$daemonname.pid";
-  my $logfile = $conf->get_option('VARDIR') . "/log/spamtagger/$daemonname.log";
+  my $pidfile = "/var/spamtagger/run/$daemonname.pid";
+  my $logfile = "/var/spamtagger/log/spamtagger/$daemonname.log";
   my $prefork = 5;
   my $debug   = 0;
   my $leaving = 0;

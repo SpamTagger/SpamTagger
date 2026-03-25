@@ -2,20 +2,18 @@
 #                    MAIN CONFIGURATION SETTINGS                     #
 ######################################################################
 
-VARDIR = __VARDIR__
-SRCDIR = __SRCDIR__
-BYPASSDIR = VARDIR/spool/tmp/exim/stage1/bypass
-ARCHIVERDIR = VARDIR/spool/tmp/exim/stage1/archiver
-COPYTODIR = VARDIR/spool/tmp/exim/stage1/copyto
-SENDERBLOCKLIST = VARDIR/spool/tmp/exim/blocklists/senders
-RECIPIENTBLOCKLIST = VARDIR/spool/tmp/exim/blocklists/recipients
-USERBLOCKLIST = VARDIR/spool/tmp/exim/blocklists/users
-HOSTBLOCKLIST = VARDIR/spool/tmp/exim/blocklists/hosts
-NORBLHOSTS = VARDIR/spool/tmp/exim/rbl_ignore_hosts
-NOSPFDMARCHOSTS = VARDIR/spool/tmp/exim/spf_and_dmarc_ignore_hosts
-ADDRESSESDIR = VARDIR/spool/spamtagger/addresses
-DKIMFILE = VARDIR/spool/tmp/spamtagger/domains_to_dkim.list
-FROZENSENDERS = VARDIR/spool/tmp/exim/frozen_senders
+BYPASSDIR = /var/spamtagger/spool/tmp/exim/stage1/bypass
+ARCHIVERDIR = /var/spamtagger/spool/tmp/exim/stage1/archiver
+COPYTODIR = /var/spamtagger/spool/tmp/exim/stage1/copyto
+SENDERBLOCKLIST = /var/spamtagger/spool/tmp/exim/blocklists/senders
+RECIPIENTBLOCKLIST = /var/spamtagger/spool/tmp/exim/blocklists/recipients
+USERBLOCKLIST = /var/spamtagger/spool/tmp/exim/blocklists/users
+HOSTBLOCKLIST = /var/spamtagger/spool/tmp/exim/blocklists/hosts
+NORBLHOSTS = /var/spamtagger/spool/tmp/exim/rbl_ignore_hosts
+NOSPFDMARCHOSTS = /var/spamtagger/spool/tmp/exim/spf_and_dmarc_ignore_hosts
+ADDRESSESDIR = /var/spamtagger/spool/spamtagger/addresses
+DKIMFILE = /var/spamtagger/spool/tmp/spamtagger/domains_to_dkim.list
+FROZENSENDERS = /var/spamtagger/spool/tmp/exim/frozen_senders
 
 __INCLUDE__ /var/spamtagger/spool/tmp/exim/stage1/ldap
 
@@ -35,8 +33,8 @@ __FI__
 __IF__ USETLS
 tls_advertise_hosts = *
 tls_try_verify_hosts = *
-tls_certificate = __VARDIR__/spool/tmp/exim/certificate
-tls_privatekey = __VARDIR__/spool/tmp/exim/privatekey
+tls_certificate = /var/spamtagger/spool/tmp/exim/certificate
+tls_privatekey = /var/spamtagger/spool/tmp/exim/privatekey
 tls_require_ciphers = __CIPHERS__
 tls_verify_certificates = /etc/ssl/certs/ca-certificates.crt
 openssl_options = +no_sslv2 +no_sslv3
@@ -64,9 +62,9 @@ __INCLUDE__ /var/spamtagger/spool/tmp/exim/stage1/log_selector
 message_logs = true
 exim_user = spamtagger
 exim_group = spamtagger
-log_file_path = __IF_USE_SYSLOGENABLED__ VARDIR/log/exim_stage1/%slog
-pid_file_path = VARDIR/run/exim_stage1.pid
-spool_directory = VARDIR/spool/exim_stage1
+log_file_path = __IF_USE_SYSLOGENABLED__ /var/spamtagger/log/exim_stage1/%slog
+pid_file_path = /var/spamtagger/run/exim_stage1.pid
+spool_directory = /var/spamtagger/spool/exim_stage1
 never_users = root
 helo_allow_chars = _
 __IF_USE_SYSLOG__
@@ -138,29 +136,29 @@ __FI__
          id ${message_id} ${if def:received_for {\n\tfor <$received_for>}} ${if def:sender_address {\n\tfrom <$sender_address>}}"
 
 domainlist local_domains =
-domainlist relay_to_domains = wildlsearch,ret=key;VARDIR/spool/tmp/spamtagger/domains.list
-domainlist domains_to_callout = VARDIR/spool/tmp/spamtagger/domains_to_callout.list
-domainlist domains_to_extcallout = VARDIR/spool/tmp/spamtagger/domains_to_extcallout.list
-domainlist domains_to_altcallout = lsearch,ret=key;VARDIR/spool/tmp/spamtagger/domains_to_altcallout.list
-domainlist domains_to_addlistcallout = VARDIR/spool/tmp/spamtagger/domains_to_addlistcallout.list
-domainlist domains_to_adcheck = VARDIR/spool/tmp/spamtagger/domains_to_adcheck.list
-domainlist domains_to_greylist = VARDIR/spool/tmp/spamtagger/domains_to_greylist.list
-domainlist domains_to_avoid_greylist = VARDIR/spool/tmp/spamtagger/domains_to_avoid_greylist.list
-domainlist domains_to_check_batv = lsearch;VARDIR/spool/tmp/spamtagger/domains_to_check_batv.list
-domainlist domains_to_preventspoof = VARDIR/spool/tmp/spamtagger/domains_to_prevent_spoof.list
-domainlist domains_require_tls_to = VARDIR/spool/tmp/spamtagger/domains_require_tls_to.list
-domainlist domains_require_tls_from = VARDIR/spool/tmp/spamtagger/domains_require_tls_from.list
-domainlist local_domains_require_incoming_tls = VARDIR/spool/tmp/spamtagger/local_domains_require_incoming_tls.list
-domainlist local_domains_require_outgoing_tls = VARDIR/spool/tmp/spamtagger/local_domains_require_outgoing_tls.list
-domainlist no_caps_domains = VARDIR/spool/tmp/spamtagger/no_caps_domains.list
+domainlist relay_to_domains = wildlsearch,ret=key;/var/spamtagger/spool/tmp/spamtagger/domains.list
+domainlist domains_to_callout = /var/spamtagger/spool/tmp/spamtagger/domains_to_callout.list
+domainlist domains_to_extcallout = /var/spamtagger/spool/tmp/spamtagger/domains_to_extcallout.list
+domainlist domains_to_altcallout = lsearch,ret=key;/var/spamtagger/spool/tmp/spamtagger/domains_to_altcallout.list
+domainlist domains_to_addlistcallout = /var/spamtagger/spool/tmp/spamtagger/domains_to_addlistcallout.list
+domainlist domains_to_adcheck = /var/spamtagger/spool/tmp/spamtagger/domains_to_adcheck.list
+domainlist domains_to_greylist = /var/spamtagger/spool/tmp/spamtagger/domains_to_greylist.list
+domainlist domains_to_avoid_greylist = /var/spamtagger/spool/tmp/spamtagger/domains_to_avoid_greylist.list
+domainlist domains_to_check_batv = lsearch;/var/spamtagger/spool/tmp/spamtagger/domains_to_check_batv.list
+domainlist domains_to_preventspoof = /var/spamtagger/spool/tmp/spamtagger/domains_to_prevent_spoof.list
+domainlist domains_require_tls_to = /var/spamtagger/spool/tmp/spamtagger/domains_require_tls_to.list
+domainlist domains_require_tls_from = /var/spamtagger/spool/tmp/spamtagger/domains_require_tls_from.list
+domainlist local_domains_require_incoming_tls = /var/spamtagger/spool/tmp/spamtagger/local_domains_require_incoming_tls.list
+domainlist local_domains_require_outgoing_tls = /var/spamtagger/spool/tmp/spamtagger/local_domains_require_outgoing_tls.list
+domainlist no_caps_domains = /var/spamtagger/spool/tmp/spamtagger/no_caps_domains.list
 
 hostlist   relay_from_hosts = <; 127.0.0.1 ; __RELAY_FROM_HOSTS__
 hostlist   trusted_hosts = <; +relay_from_hosts ; __TRUSTED_HOSTS__
 hostlist   html_ctrl_hosts = <; __HTML_CTRL_WL_HOSTS__
 hostlist   no_ratelimit_hosts = <; __NO_RATELIMIT_HOSTS__
 hostlist   full_wantlisted_hosts = <; __FULL_WANTLIST_HOSTS__
-domainlist relayrefuseddomains = VARDIR/spool/tmp/exim/blocklists/relaytodomains
-RELAYDEST = VARDIR/spool/tmp/spamtagger/relay_accepteddest.list
+domainlist relayrefuseddomains = /var/spamtagger/spool/tmp/exim/blocklists/relaytodomains
+RELAYDEST = /var/spamtagger/spool/tmp/spamtagger/relay_accepteddest.list
 
 #FULLWANTLIST
 addresslist full_wantlisted_senders = /etc/spamtagger/full_wantlisted_senders.list
@@ -169,15 +167,15 @@ smtp_accept_reserve = __SMTP_RESERVE__
 smtp_reserve_hosts = ${if eq{$interface_port}{587}{*}{+relay_from_hosts}}
 
 __IF__ DMARCREPORTING
-dmarc_history_file = VARDIR/spool/tmp/exim/dmarc.history
+dmarc_history_file = /var/spamtagger/spool/tmp/exim/dmarc.history
 __FI__
-dmarc_tld_file = VARDIR/spool/spamtagger/rbls/effective_tlds.txt
+dmarc_tld_file = /var/spamtagger/spool/spamtagger/rbls/effective_tlds.txt
 __INCLUDE__ /var/spamtagger/spool/tmp/exim/stage1/ldap_callout
 
 STATSADD = ${readsocket{/var/spamtagger/run/statsdaemon.sock}{ADD $acl_c8 1}{2s}{\n}{ \
                ${run,preexpand{/bin/sh -c 'echo "ADD $acl_c8 1" >> /tmp/missed_stats.${tod_logfile}'}{}{command failed}} \
            }}
-perl_startup = do '__SRCDIR__/etc/exim/stage1_scripts.pl'
+perl_startup = do '/opt/spamtagger/etc/exim/stage1_scripts.pl'
 
 ######################################################################
 #                       ACL CONFIGURATION                            #
@@ -383,7 +381,7 @@ __FI__
   deny    message       = Invalid reverse path signature.
           senders       = :
           domains       = +domains_to_check_batv
-          condition     = ${prvscheck {$local_part@$domain} {${lookup {$domain} lsearch {VARDIR/spool/tmp/spamtagger/domains_to_check_batv.list}}} {1}}
+          condition     = ${prvscheck {$local_part@$domain} {${lookup {$domain} lsearch {/var/spamtagger/spool/tmp/spamtagger/domains_to_check_batv.list}}} {1}}
           !condition    = $prvscheck_result
           set acl_c8    = smtp:refused:refused_badbatv
           set acl_c9    = STATSADD
@@ -632,7 +630,7 @@ __FI__
  __FI__
 __FI__
 
-.include_if_exists  VARDIR/spool/tmp/exim/stage1/blocklists/ip-domain
+.include_if_exists  /var/spamtagger/spool/tmp/exim/stage1/blocklists/ip-domain
 
  defer
           !spf          = pass
@@ -645,12 +643,12 @@ __FI__
           condition     = ${if !def:acl_c1}
           condition     = ${if eq {$received_port}{587} {0}{1}}
           !hosts        = <; +trusted_hosts ; \
-                            ${if exists {__SRCDIR__/etc/greylistd/wantlist-hosts}\
-                               {__SRCDIR__/etc/greylistd/wantlist-hosts}{}} ; \
-                            ${if exists {__VARDIR__/spool/greylistd/wantlist-hosts}\
-                               {__VARDIR__/spool/greylistd/wantlist-hosts}{}}
+                            ${if exists {/opt/spamtagger/etc/greylistd/wantlist-hosts}\
+                               {/opt/spamtagger/etc/greylistd/wantlist-hosts}{}} ; \
+                            ${if exists {/var/spamtagger/spool/greylistd/wantlist-hosts}\
+                               {/var/spamtagger/spool/greylistd/wantlist-hosts}{}}
           !sender_domains = +domains_to_avoid_greylist
-          condition     = ${readsocket{__VARDIR__/run/greylistd/socket}\
+          condition     = ${readsocket{/var/spamtagger/run/greylistd/socket}\
                                  {--grey \
                                   $sender_host_address \
                                   $sender_address \
@@ -718,7 +716,7 @@ __IF__ USETLS
  __FI__
 __FI__
 
-.include_if_exists  VARDIR/spool/tmp/exim/stage1/custom_acl_encryption
+.include_if_exists  /var/spamtagger/spool/tmp/exim/stage1/custom_acl_encryption
 
 __INCLUDE__ /var/spamtagger/spool/tmp/exim/stage1/recipient_verification
 
@@ -882,7 +880,7 @@ __FI__
   deny  message = Detected forbidden filetype (Security reasons).
         log_message = Detected forbidden filetype (Security reasons): filename=$mime_filename, recipients=$recipients.
         condition = ${if exists{/var/spamtagger/spool/spamtagger/st-experimental-docm}{true}{false}}
-        condition = ${if ! match_domain {${domain:${address:$header_to:}}}{VARDIR/spool/tmp/spamtagger/domains_to_prevent_docm.list}}
+        condition = ${if ! match_domain {${domain:${address:$header_to:}}}{/var/spamtagger/spool/tmp/spamtagger/domains_to_prevent_docm.list}}
         condition = ${if match{$mime_filename}{\N(?i)\.(zip|rar)$\N}}
         decode = default
         condition = ${if match{${run,preexpand{/usr/bin/unzip -l \
@@ -896,7 +894,7 @@ __FI__
   deny  message = Detected forbidden filetype (Security reasons).
         log_message = Detected forbidden filetype (Security reasons): filename=$mime_filename, recipients=$recipients.
         condition = ${if exists{/var/spamtagger/spool/spamtagger/st-experimental-docm}{true}{false}}
-        condition = ${if ! match_domain {${domain:${address:$header_to:}}}{VARDIR/spool/tmp/spamtagger/domains_to_prevent_docm.list}}
+        condition = ${if ! match_domain {${domain:${address:$header_to:}}}{/var/spamtagger/spool/tmp/spamtagger/domains_to_prevent_docm.list}}
         condition = ${if match{$mime_filename}{\N(?i)\.(rar|zip)$\N}}
         decode = default
         condition = ${if match{${run,preexpand{/usr/bin/rar lb \
@@ -910,7 +908,7 @@ __FI__
   deny message = Detected forbidden filetype (Security reasons).
         log_message = Detected forbidden filetype (Security reasons): filename=$mime_filename, recipients=$recipients.
         condition = ${if exists{/var/spamtagger/spool/spamtagger/st-experimental-docm}{true}{false}}
-        condition = ${if ! match_domain {${domain:${address:$header_to:}}}{VARDIR/spool/tmp/spamtagger/domains_to_prevent_docm.list}}
+        condition = ${if ! match_domain {${domain:${address:$header_to:}}}{/var/spamtagger/spool/tmp/spamtagger/domains_to_prevent_docm.list}}
         condition = ${if match{$mime_filename}{\N(?i)\.(docm|dotm)$\N}}
         set acl_c8    = smtp:relayed:virus
         set acl_c9    = STATSADD
@@ -1106,13 +1104,13 @@ full_wantlist:
 batv_redirect:
   driver = redirect
   domains = +domains_to_check_batv
-  data = ${prvscheck {$local_part@$domain} {${lookup {$domain} lsearch {VARDIR/spool/tmp/spamtagger/domains_to_check_batv.list}}} }
+  data = ${prvscheck {$local_part@$domain} {${lookup {$domain} lsearch {/var/spamtagger/spool/tmp/spamtagger/domains_to_check_batv.list}}} }
 
 send_to_smart_host:
   driver = manualroute
   transport = remote_smtp
   domains = !+relay_to_domains
-  route_data = ${lookup{${domain:$h_from:}}wildlsearch{VARDIR/spool/tmp/spamtagger/domains_smarthost.list}}
+  route_data = ${lookup{${domain:$h_from:}}wildlsearch{/var/spamtagger/spool/tmp/spamtagger/domains_smarthost.list}}
 
 __INCLUDE__ /var/spamtagger/spool/tmp/exim/stage1/routers_cluster_settings
 
@@ -1131,7 +1129,7 @@ alternat_callout_router:
   pass_router = filter_forward
   domains = +domains_to_altcallout
   transport = callout_transport
-  route_data = ${lookup{$domain}wildlsearch{VARDIR/spool/tmp/spamtagger/domains_to_altcallout.list}}
+  route_data = ${lookup{$domain}wildlsearch{/var/spamtagger/spool/tmp/spamtagger/domains_to_altcallout.list}}
   verify_only
 
 callout_router:
@@ -1139,7 +1137,7 @@ callout_router:
   pass_router = filter_forward
   domains = !+domains_to_altcallout : +domains_to_callout
   transport = callout_transport
-  route_data = ${lookup{$domain}wildlsearch{VARDIR/spool/tmp/spamtagger/domains.list}}
+  route_data = ${lookup{$domain}wildlsearch{/var/spamtagger/spool/tmp/spamtagger/domains.list}}
   verify_only
 
 address_list_router:
@@ -1163,7 +1161,7 @@ copyto_route:
                }}\
                {exists{COPYTODIR/${sender_address_domain}}} \
               }\
-              {${lookup{$sender_address_local_part}nwildlsearch{COPYTODIR/${lookup{$sender_address_domain}nwildlsearch,ret=key{VARDIR/spool/tmp/spamtagger/domains.list}}}}} \
+              {${lookup{$sender_address_local_part}nwildlsearch{COPYTODIR/${lookup{$sender_address_domain}nwildlsearch,ret=key{/var/spamtagger/spool/tmp/spamtagger/domains.list}}}}} \
               {} }
   unseen
   repeat_use = false
@@ -1182,7 +1180,7 @@ archiver_route:
                  }}\
                  {exists{ARCHIVERDIR/${sender_address_domain}}} \
                  }\
-                 {${lookup{$sender_address_domain}nwildlsearch,ret=key{VARDIR/spool/tmp/spamtagger/domains.list}}} \
+                 {${lookup{$sender_address_domain}nwildlsearch,ret=key{/var/spamtagger/spool/tmp/spamtagger/domains.list}}} \
                  {} }
   transport = archiver_smtp_transport
   route_list = * __ARCHIVER_HOST__
@@ -1196,7 +1194,7 @@ toenginefilter_forward:
   transport = to_engine
   domains = +relay_to_domains
   headers_remove = X-SpamTagger:X-SpamTagger-Forced
-  condition = ${if exists{VARDIR/spool/tmp/spamtagger/exim_nostage2}{yes}{no}}
+  condition = ${if exists{/var/spamtagger/spool/tmp/spamtagger/exim_nostage2}{yes}{no}}
   no_verify
 
 filter_forward:
@@ -1221,9 +1219,9 @@ dnslookup_freeze:
 dnslookup_gateway:
   driver = manualroute
   domains = ! +local_domains : ! +relay_to_domains
-  condition = ${if exists{VARDIR/spool/spamtagger/smtp_proxy.conf}{yes}{no}}
+  condition = ${if exists{/var/spamtagger/spool/spamtagger/smtp_proxy.conf}{yes}{no}}
   transport = remote_smtp
-  route_list = wildlsearch;;VARDIR/spool/spamtagger/smtp_proxy.conf $value
+  route_list = wildlsearch;;/var/spamtagger/spool/spamtagger/smtp_proxy.conf $value
   ignore_target_hosts = <; 0.0.0.0 ; 127.0.0.0/8
 
 dnslookup:
@@ -1251,14 +1249,14 @@ bypass_full_wantlist:
 __IF__ ALLOW_LONG
   message_linelength_limit = __LENGTH_LIMIT__
 __IF__ FOLDING
-  transport_filter = '${if >{$max_received_linelength}{$acl_m_linelength_limit}{SRCDIR/etc/exim/stage1/folding.pl}{}}'
+  transport_filter = '${if >{$max_received_linelength}{$acl_m_linelength_limit}{/opt/spamtagger/etc/exim/stage1/folding.pl}{}}'
 __FI__
 __FI__
   dkim_domain = ${extract {1}{;} {${lookup {${lc:${domain:$h_from:}}} lsearch {DKIMFILE}}}}
   dkim_selector = ${extract {2}{;} {${lookup {${lc:${domain:$h_from:}}} lsearch {DKIMFILE}}}}
-  dkim_private_key = ${if exists {VARDIR/spool/tmp/spamtagger/dkim/${dkim_domain}.pkey} \
-                          {VARDIR/spool/tmp/spamtagger/dkim/${dkim_domain}.pkey} \
-                          {VARDIR/spool/tmp/spamtagger/dkim/default.pkey} \
+  dkim_private_key = ${if exists {/var/spamtagger/spool/tmp/spamtagger/dkim/${dkim_domain}.pkey} \
+                          {/var/spamtagger/spool/tmp/spamtagger/dkim/${dkim_domain}.pkey} \
+                          {/var/spamtagger/spool/tmp/spamtagger/dkim/default.pkey} \
                       }
 
 bypass_smtp:
@@ -1272,7 +1270,7 @@ bypass_smtp:
 __IF__ ALLOW_LONG
   message_linelength_limit = __LENGTH_LIMIT__
 __IF__ FOLDING
-  transport_filter = '${if >{$max_received_linelength}{$acl_m_linelength_limit}{SRCDIR/etc/exim/stage1/folding.pl}{}}'
+  transport_filter = '${if >{$max_received_linelength}{$acl_m_linelength_limit}{/opt/spamtagger/etc/exim/stage1/folding.pl}{}}'
 __FI__
 __FI__
   return_path = ${if and { \
@@ -1291,7 +1289,7 @@ to_engine:
   mode = 640
   mailstore_format
   create_directory = true
-  directory = VARDIR/spool/exim_stage2/input
+  directory = /var/spamtagger/spool/exim_stage2/input
   mailstore_prefix = "${message_id}\n${caller_uid} ${caller_gid}\n${sender_host_address}\n${received_time}\n${max_received_linelength}\n${body_linecount}\n"
   mailstore_suffix = "\n${message_headers_raw}"
   batch_max = 200
@@ -1301,7 +1299,7 @@ local_smtp:
 __IF__ ALLOW_LONG
   message_linelength_limit = __LENGTH_LIMIT__
 __IF__ FOLDING
-  transport_filter = '${if >{$max_received_linelength}{$acl_m_linelength_limit}{SRCDIR/etc/exim/stage1/folding.pl}{}}'
+  transport_filter = '${if >{$max_received_linelength}{$acl_m_linelength_limit}{/opt/spamtagger/etc/exim/stage1/folding.pl}{}}'
 __FI__
 __FI__
   helo_data = __HELO_NAME__
@@ -1325,9 +1323,9 @@ __FI__
                    {}\
                  }
   dkim_selector = ${extract {2}{;} {${lookup {${lc:${domain:$h_from:}}} lsearch {DKIMFILE}}}}
-  dkim_private_key = ${if exists {VARDIR/spool/tmp/spamtagger/dkim/${dkim_domain}.pkey} \
-                          {VARDIR/spool/tmp/spamtagger/dkim/${dkim_domain}.pkey} \
-                          {VARDIR/spool/tmp/spamtagger/dkim/default.pkey} \
+  dkim_private_key = ${if exists {/var/spamtagger/spool/tmp/spamtagger/dkim/${dkim_domain}.pkey} \
+                          {/var/spamtagger/spool/tmp/spamtagger/dkim/${dkim_domain}.pkey} \
+                          {/var/spamtagger/spool/tmp/spamtagger/dkim/default.pkey} \
                       }
   hosts_avoid_tls = localhost
   hosts_try_chunking =
@@ -1348,14 +1346,14 @@ __FI__
 __IF__ ALLOW_LONG
   message_linelength_limit = __LENGTH_LIMIT__
 __IF__ FOLDING
-  transport_filter = '${if >{$max_received_linelength}{$acl_m_linelength_limit}{SRCDIR/etc/exim/stage1/folding.pl}{}}'
+  transport_filter = '${if >{$max_received_linelength}{$acl_m_linelength_limit}{/opt/spamtagger/etc/exim/stage1/folding.pl}{}}'
 __FI__
 __FI__
 __IF__ USETLS
   hosts_require_tls = <; ${if match_domain{$domain}{+domains_require_tls_to:+local_domains_require_outgoing_tls} {*}{__HOSTS_REQUIRE_TLS__} }
   tls_try_verify_hosts = *
-  tls_certificate = __VARDIR__/spool/tmp/exim/certificate
-  tls_privatekey = __VARDIR__/spool/tmp/exim/privatekey
+  tls_certificate = /var/spamtagger/spool/tmp/exim/certificate
+  tls_privatekey = /var/spamtagger/spool/tmp/exim/privatekey
   tls_require_ciphers = __CIPHERS__
   tls_verify_certificates = /etc/ssl/certs/ca-certificates.crt
 __FI__
@@ -1363,14 +1361,14 @@ __FI__
                              {def:return_path} \
                              {match_domain{${domain:$return_path}}{+domains_to_check_batv}} \
                          } \
-                     {${prvs {$return_path} {${lookup {${domain:$return_path}} lsearch {VARDIR/spool/tmp/spamtagger/domains_to_check_batv.list}}}}} \
+                     {${prvs {$return_path} {${lookup {${domain:$return_path}} lsearch {/var/spamtagger/spool/tmp/spamtagger/domains_to_check_batv.list}}}}} \
                      {$return_path} \
                  }
   dkim_domain = ${extract {1}{;} {${lookup {${lc:${domain:$h_from:}}} lsearch {DKIMFILE}}}}
   dkim_selector = ${extract {2}{;} {${lookup {${lc:${domain:$h_from:}}} lsearch {DKIMFILE}}}}
-  dkim_private_key = ${if exists {VARDIR/spool/tmp/spamtagger/dkim/${dkim_domain}.pkey} \
-                          {VARDIR/spool/tmp/spamtagger/dkim/${dkim_domain}.pkey} \
-                          {VARDIR/spool/tmp/spamtagger/dkim/default.pkey} \
+  dkim_private_key = ${if exists {/var/spamtagger/spool/tmp/spamtagger/dkim/${dkim_domain}.pkey} \
+                          {/var/spamtagger/spool/tmp/spamtagger/dkim/${dkim_domain}.pkey} \
+                          {/var/spamtagger/spool/tmp/spamtagger/dkim/default.pkey} \
                       }
 
 callout_transport:
@@ -1381,7 +1379,7 @@ callout_transport:
 __IF__ ALLOW_LONG
   message_linelength_limit = __LENGTH_LIMIT__
 __IF__ FOLDING
-  transport_filter = '${if >{$max_received_linelength}{$acl_m_linelength_limit}{SRCDIR/etc/exim/stage1/folding.pl}{}}'
+  transport_filter = '${if >{$max_received_linelength}{$acl_m_linelength_limit}{/opt/spamtagger/etc/exim/stage1/folding.pl}{}}'
 __FI__
 __FI__
 
@@ -1398,13 +1396,13 @@ __FI__
 __IF__ ALLOW_LONG
   message_linelength_limit = __LENGTH_LIMIT__
 __IF__ FOLDING
-  transport_filter = '${if >{$max_received_linelength}{$acl_m_linelength_limit}{SRCDIR/etc/exim/stage1/folding.pl}{}}'
+  transport_filter = '${if >{$max_received_linelength}{$acl_m_linelength_limit}{/opt/spamtagger/etc/exim/stage1/folding.pl}{}}'
 __FI__
 __FI__
 
 address_list_transport:
   driver = pipe
-  command = SRCDIR/etc/exim/address_list.pl ${domain} ${sender_address} ${local_part}@${domain}
+  command = /opt/spamtagger/etc/exim/address_list.pl ${domain} ${sender_address} ${local_part}@${domain}
   user = spamtagger
   group = spamtagger
   timeout = 10m

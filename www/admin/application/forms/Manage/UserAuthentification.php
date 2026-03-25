@@ -122,7 +122,7 @@ class Default_Form_Manage_UserAuthentification extends Zend_Form {
       $local->setPassword($pass);
       foreach ($user->getAddresses() as $add) {
         $config = SpamTagger_Config::getInstance();
-        $cmd = $config->getOption('SRCDIR')."/bin/send_userpassword.pl '".$add."' '".$user->getParam('username')."' '".$pass."' 0";
+        $cmd = "/opt/spamtagger/bin/send_userpassword.pl '".$add."' '".$user->getParam('username')."' '".$pass."' 0";
         $res = `$cmd`;
       }
     }

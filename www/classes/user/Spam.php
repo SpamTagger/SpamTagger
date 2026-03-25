@@ -385,7 +385,7 @@ class Spam {
     }
 
     $sysconf = SystemConfig::getInstance();
-    $ST_BASE_PATH = $sysconf->SRCDIR_."/share/spamassassin";
+    $ST_BASE_PATH = "/opt/spamtagger/share/spamassassin";
     $i = 0;
     foreach ($this->ruleset_ as $rule) {
       $tag = $rule['tag'];

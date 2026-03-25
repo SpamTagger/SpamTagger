@@ -25,12 +25,12 @@ use v5.40;
 use warnings;
 use utf8;
 
-use lib '/usr/spamtagger/lib/';
+use lib '/opt/spamtagger/lib/';
 use ReadConfig();
 
 my $conf = ReadConfig::get_instance();
 
-my $logfile=$conf->get_option('VARDIR')."/log/mailscanner/infolog";
+my $logfile = "/var/spamtagger/log/mailscanner/infolog";
 
 my $LOGFILE;
 open($LOGFILE, '<', $logfile) or die "cannot open log file: $logfile\n";

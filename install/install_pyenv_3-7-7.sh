@@ -19,17 +19,16 @@
 #   This script will install pyenv, python 3.7.7 and MailCleaner library
 #
 # TODO: Re-package this library with the SpamTagger name. Host it via PyPy, or something else.
-VARDIR="/var/spamtagger"
-cd $VARDIR
+cd /var/spamtagger
 
-if [ -f $VARDIR/log/spamtagger/install_pyenv.log ]; then
-  rm $VARDIR/log/spamtagger/install_pyenv.log
+if [ -f /var/spamtagger/log/spamtagger/install_pyenv.log ]; then
+  rm /var/spamtagger/log/spamtagger/install_pyenv.log
 fi
 
 FREE_SPACE=$(df -k /var/spamtagger | tail -1 | awk '{print $4}')
 
 if [ $FREE_SPACE -lt 600000 ]; then
-  echo "[Errno 1]: Not enough disk space" >>$VARDIR/log/spamtagger/install_pyenv.log
+  echo "[Errno 1]: Not enough disk space" >>/var/spamtagger/log/spamtagger/install_pyenv.log
   exit
 fi
 
@@ -47,7 +46,7 @@ if [ -f "openssl-1.1.1g.tar.gz" ]; then
   cd openssl-1.1.1g && ./config --prefix=$HOME/lib/openssl --openssldir=$HOME/lib/openssl no-ssl2 && make && make install && cd .. && rm -rf openssl-1.1.1g openssl-1.1.1g.tar.gz
 
   git clone https://github.com/pyenv/pyenv.git .pyenv
-  export PYENV_ROOT="$VARDIR/.pyenv"
+  export PYENV_ROOT="/var/spamtagger/.pyenv"
   export PATH="$PYENV_ROOT/bin:$PATH"
   eval "$(pyenv init --path)"
   LD_LIBRARY_PATH="${HOME}/lib/openssl/lib" LDFLAGS="-L${HOME}/lib/openssl/lib -Wl,-rpath,${HOME}/lib/openssl/lib" CFLAGS="-I$HOME/lib/openssl/include" SSH="$HOME/lib/openssl" pyenv install 3.7.7 -s
@@ -57,18 +56,18 @@ if [ -f "openssl-1.1.1g.tar.gz" ]; then
 
   SSL_VERSION=$(python -c "import ssl; print(ssl.OPENSSL_VERSION)")
   if [[ "$SSL_VERSION" != "OpenSSL 1.1.1g  21 Apr 2020" ]]; then
-    echo "[Errno 3]: Can't import SSL" >>$VARDIR/log/spamtagger/install_pyenv.log
-    echo $SSL_VERSION >>$VARDIR/log/spamtagger/install_pyenv.log
+    echo "[Errno 3]: Can't import SSL" >>/var/spamtagger/log/spamtagger/install_pyenv.log
+    echo $SSL_VERSION >>/var/spamtagger/log/spamtagger/install_pyenv.log
     exit
   fi
 
   IMPORT_ST_LIB=$(python -c "import mailcleaner")
   if [ $? -eq 1 ]; then
-    echo "[Errno 4]: Can't import mailcleaner" >>$VARDIR/log/spamtagger/install_pyenv.log
+    echo "[Errno 4]: Can't import mailcleaner" >>/var/spamtagger/log/spamtagger/install_pyenv.log
     exit
   fi
 else
-  echo "[Errno 2]: Can't download openssl exiting..." >>$VARDIR/log/spamtagger/install_pyenv.log
+  echo "[Errno 2]: Can't download openssl exiting..." >>/var/spamtagger/log/spamtagger/install_pyenv.log
   exit
 fi
-echo "[Errno 0]: Everything went fine..." >>$VARDIR/log/spamtagger/install_pyenv.log
+echo "[Errno 0]: Everything went fine..." >>/var/spamtagger/log/spamtagger/install_pyenv.log

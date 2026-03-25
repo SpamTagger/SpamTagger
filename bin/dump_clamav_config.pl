@@ -37,7 +37,7 @@ BEGIN {
   require ReadConfig;
   my $conf = ReadConfig::get_instance();
   $HTTPPROXY = $conf->get_option('HTTPPROXY');
-  unshift(@INC, "/usr/spamtagger/lib");
+  unshift(@INC, "/opt/spamtagger/lib");
 }
 
 use STUtils qw( open_as rmrf );
@@ -49,7 +49,7 @@ my $gid = getgrnam( 'spamtagger' );
 
 # Create necessary dirs/files if they don't exist
 foreach my $dir (
-  "/usr/spamtagger/etc/clamav",
+  "/opt/spamtagger/etc/clamav",
   "/var/spamtagger/log/clamav",
   "/var/spamtagger/run/clamav",
   "/var/spamtagger/spool/clamav",
@@ -86,7 +86,7 @@ dump_file("fangfrisch.conf");
 #############################
 sub dump_file($file)
 {
-  my $template_file = "/usr/spamtagger/etc/clamav/${file}";
+  my $template_file = "/opt/spamtagger/etc/clamav/${file}";
   my $target_file = "/var/spamtagger/etc/clamav/${file}";
   my $custom = 0;
   if (-e "/etc/spamtagger/etc/clamav/${file}") {

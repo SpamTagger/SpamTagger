@@ -29,7 +29,7 @@ use warnings;
 die "Feature not currently supported by SpamTagger\n";
 
 =pod
-use lib '/usr/spamtagger/lib';
+use lib '/opt/spamtagger/lib';
 use DB();
 use Net::SMTP();
 use MIME::Lite();
@@ -48,7 +48,7 @@ my $for_domain = $2;
 my %system_conf = get_system_config();
 my %domain_conf = get_domain_config($for_domain);
 
-my $msg_file = $config->get_option('VARDIR')."/spam/".$for_domain."/".$for."/".$msg_id;
+my $msg_file = "/var/spamtagger/spam/".$for_domain."/".$for."/".$msg_id;
 
 if (defined($domain_conf{'falsepos_to'}) && $domain_conf{'falsepos_to'} =~ m/\S+\@\S+/) {
   $system_conf{'analyse_to'} = $domain_conf{'falsepos_to'};

@@ -1,7 +1,7 @@
 Listen 5132
 
 __IFSSL__
-SSLSessionCache shmcb:__VARDIR/run/apache2/ssl.cache(512000)
+SSLSessionCache shmcb:/var/spamtagger/run/apache2/ssl.cache(512000)
 SSLSessionCacheTimeout 300
 SSLCompression off
 __ENDIFSSL__
@@ -14,20 +14,20 @@ __IFSSL__
     SSLHonorCipherOrder on
     SSLCompression off
 
-    SSLCACertificatePath __SRCDIR__/etc/apache/certs
-    SSLCertificateFile __SRCDIR__/etc/apache/certs/certificate.pem
-__IFSSLCHAIN__  SSLCertificateChainFile  __SRCDIR__/etc/apache/certs/certificate-chain.pem
+    SSLCACertificatePath /opt/spamtagger/etc/apache/certs
+    SSLCertificateFile /opt/spamtagger/etc/apache/certs/certificate.pem
+__IFSSLCHAIN__  SSLCertificateChainFile  /opt/spamtagger/etc/apache/certs/certificate-chain.pem
 __ENDIFSSL__
 
     AssignUserId spamtagger spamtagger
 
-    DocumentRoot "__SRCDIR__/www/soap/htdocs"
-    ErrorLog __VARDIR__/log/apache/error_soap.log
-    CustomLog __VARDIR__/log/apache/access_soap.log combined
+    DocumentRoot "/opt/spamtagger/www/soap/htdocs"
+    ErrorLog /var/spamtagger/log/apache/error_soap.log
+    CustomLog /var/spamtagger/log/apache/access_soap.log combined
 
     KeepAlive Off
-    Alias /soap __SRCDIR__/www/soap/public
-    Alias /index.php __SRCDIR__/www/soap/htdocs/spamtagger.php
+    Alias /soap /opt/spamtagger/www/soap/public
+    Alias /index.php /opt/spamtagger/www/soap/htdocs/spamtagger.php
 
     RewriteEngine On
     RewriteCond %{REQUEST_METHOD} ^(TRACE|TRACK)

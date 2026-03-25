@@ -1,8 +1,8 @@
 header=X-ClamSpam
 putHamHeader=1
 putSpamHeader=1
-clamdb=__SRCDIR__/share/clamspam
-configFile=__SRCDIR__/etc/clamav/clamspamd.conf
+clamdb=/opt/spamtagger/share/clamspam
+configFile=/opt/spamtagger/etc/clamav/clamspamd.conf
 maxSize=__MAXSIZE__
 decisive_field=__DECISIVE_FIELD__
 neg_decisive=__NEG_DECISIVE__

@@ -21,18 +21,13 @@
 #   Usage:
 #           learn_ham.sh message_file/directory
 
-SRCDIR=$(grep 'SRCDIR' /etc/spamtagger.conf | cut -d ' ' -f3)
-if [ "SRCDIR" = "" ]; then
-  SRCDIR=/var/spamtagger
-fi
-
 if [ "$1" = "" ]; then
   echo "usage: ./learn_spam.sh message_file|message_dir"
   exit 1
 fi
 
 if [ -f $1 ] || [ -d $1 ]; then
-  sa-learn --ham -p $SRCDIR/etc/mailscanner/spam.assassin.prefs.conf $1
+  sa-learn --ham -p /opt/spamtagger/etc/mailscanner/spam.assassin.prefs.conf $1
 else
   echo "file/directory $1 is not useable"
   exit 1

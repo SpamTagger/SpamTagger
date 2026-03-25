@@ -26,13 +26,12 @@ use Exporter 'import';
 our @EXPORT_OK = ();
 our $VERSION   = 1.0;
 
-use lib "/usr/spamtagger/lib/";
+use lib "/opt/spamtagger/lib/";
 use threads();
 use threads::shared();
 use File::Copy();
 use DBI();
 use DBD::SQLite();
-use ReadConfig();
 use File::Path qw(mkpath);
 use Fcntl qw(:flock SEEK_END);
 
@@ -46,17 +45,15 @@ CREATE TABLE stat (
 ";
 
 sub new ($class, $daemon) {
-  my $conf = ReadConfig::get_instance();
-
   my $this = {
     'class' => $class,
     'daemon' => $daemon,
     'data' => undef,
-    'basepath' => $conf->get_option('VARDIR') . '/spool/spamtagger/stats',
+    'basepath' => '/var/spamtagger/spool/spamtagger/stats',
     'dbfilename' => 'stats.sqlite',
     'history_avoid_keys' => '',
     'history_avoid_keys_a' => [],
-    'template_database' => $conf->get_option('SRCDIR').'/lib/StatsDaemon/Backend/data/stat_template.sqlite'
+    'template_database' => '/opt/spamtagger/lib/StatsDaemon/Backend/data/stat_template.sqlite'
   };
 
   bless $this, $class;

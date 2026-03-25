@@ -1,11 +1,6 @@
 #!/bin/bash
 
-SRCDIR=$(grep 'SRCDIR' /etc/spamtagger.conf | cut -d ' ' -f3)
-if [ "SRCDIR" = "" ]; then
-  SRCDIR=/usr/spamtagger
-fi
-
-SD=$(echo $SRCDIR | perl -pi -e 's/\//\\\//g')
+SD=$(echo "/opt/spamtagger" | perl -pi -e 's/\//\\\//g')
 
 perl -p -e "s/__SRCDIR__/\"$SD\"/" setuid_wrapper.c_template >setuid_wrapper.c
 

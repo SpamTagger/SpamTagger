@@ -26,7 +26,7 @@ use Exporter 'import';
 our @EXPORT_OK = ();
 our $VERSION   = 1.0;
 
-use lib "/usr/spamtagger/lib/";
+use lib "/opt/spamtagger/lib/";
 use IO::Pipe();
 use POSIX qw(:signal_h);    # For Solaris 9 SIG bug workaround
 use Net::HTTP();

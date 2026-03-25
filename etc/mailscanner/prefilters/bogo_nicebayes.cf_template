@@ -1,4 +1,4 @@
-bogofilter_dir=__VARDIR__/spool/bogofilter/database/
+bogofilter_dir=/var/spamtagger/spool/bogofilter/database/
 db_transaction=no
 spam_header_name=X-Bogosity
 stats_in_header=Yes

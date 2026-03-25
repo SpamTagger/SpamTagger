@@ -40,14 +40,14 @@ sub config ($class) {
     'name'     => 'spamd',
     'cmndline'  => 'spamd.pid',
     'cmd'    => '/usr/local/bin/spamd',
-    'conffile'  => $class->{'conf'}->get_option('SRCDIR').'/etc/mailscanner/spamd.conf',
-    'pidfile'  => $class->{'conf'}->get_option('VARDIR').'/run/spamassassin.pid',
-    'logfile'  => $class->{'conf'}->get_option('VARDIR').'/log/mailscanner/spamd.log',
-    'socket'  => $class->{'conf'}->get_option('VARDIR').'/run/spamassassin.sock',
+    'conffile'  => '/opt/spamtagger/etc/mailscanner/spamd.conf',
+    'pidfile'  => '/var/spamtagger/run/spamassassin.pid',
+    'logfile'  => '/var/spamtagger/log/mailscanner/spamd.log',
+    'socket'  => '/var/spamtagger/run/spamassassin.sock',
     'children'  => 21,
     'user'    => 'spamtagger',
     'group'    => 'spamtagger',
-    'siteconfig'  => $class->{'conf'}->get_option('SRCDIR').'/share/spamassassin',
+    'siteconfig'  => '/opt/spamtagger/share/spamassassin',
     'daemonize'  => 'yes',
     'forks'    => 0,
     'nouserconfig'  => 'yes',
@@ -72,23 +72,23 @@ sub setup ($this, $class) {
     1;
   };
   if ($rc) {
-    $dumped = 1 if IPC::Run::run([$this->{'SRCDIR'}.'/bin/dump_custom_spamc_rules.pl'], "2>&1", ">/dev/null");
+    $dumped = 1 if IPC::Run::run(['/opt/spamtagger/bin/dump_custom_spamc_rules.pl'], "2>&1", ">/dev/null");
   } else {
-    $dumped = 1 if system($this->{'SRCDIR'}."/bin/dump_custom_spamc_rules.pl 2>&1 >/dev/null");
+    $dumped = 1 if system("/opt/spamtagger/bin/dump_custom_spamc_rules.pl 2>&1 >/dev/null");
   }
   $this->do_log('dump_custom_spamc_rules.pl failed', 'daemon') unless ($dumped);
   $dumped = 0;
   if ($rc) {
-    $dumped = 1 if IPC::Run::run([$this->{'SRCDIR'}.'/bin/dump_spamc_double_items.pl'], "2>&1", ">/dev/null");
+    $dumped = 1 if IPC::Run::run(['/opt/spamtagger/bin/dump_spamc_double_items.pl'], "2>&1", ">/dev/null");
   } else {
-    $dumped = 1 if system($this->{'SRCDIR'}."/bin/dump_spamc_double_items.pl 2>&1 >/dev/null");
+    $dumped = 1 if system("/opt/spamtagger/bin/dump_spamc_double_items.pl 2>&1 >/dev/null");
   }
   $this->do_log('dump_spamc_double_items.pl failed', 'daemon') unless ($dumped);
   $dumped = 0;
   if ($rc) {
-    $dumped = 1 if IPC::Run::run([$this->{'SRCDIR'}.'/bin/dump_mailscanner_config.pl'], "2>&1", ">/dev/null");
+    $dumped = 1 if IPC::Run::run(['/opt/spamtagger/bin/dump_mailscanner_config.pl'], "2>&1", ">/dev/null");
   } else {
-    $dumped = 1 if system($this->{'SRCDIR'}."/bin/dump_mailscanner_config.pl 2>&1 >/dev/null");
+    $dumped = 1 if system("/opt/spamtagger/bin/dump_mailscanner_config.pl 2>&1 >/dev/null");
   }
   $this->do_log('dump_mailscanner_config.pl failed', 'daemon') unless ($dumped);
   $dumped = 0;

@@ -34,11 +34,9 @@ use warnings;
 use utf8;
 use Carp qw( confess );
 
-use lib "/usr/spamtagger/lib";
+use lib "/opt/spamtagger/lib";
 use ReadConfig;
 my $conf = ReadConfig::get_instance();
-my $SRCDIR = $conf->get_option('SRCDIR') || '/usr/spamtagger';
-my $VARDIR = $conf->get_option('VARDIR') || '/var/spamtagger';
 my $MYSPAMTAGGERPWD = $conf->get_option('MYSPAMTAGGERPWD') || confess "Could not get DB password";
 my $MCHOSTNAME = $conf->get_option('MCHOSTNAME') || 'spamtagger';
 my $DEFAULTDOMAIN = $conf->get_option('DEFAULTDOMAIN') || '';
@@ -56,7 +54,7 @@ use File::Touch;
 use File::Copy;
 
 our $DEBUG = 0;
-our $SPMC = "$VARDIR/spool/spamtagger";
+our $SPMC = "/var/spamtagger/spool/spamtagger";
 our $db = DB->db_connect('replica', 'st_config');
 our $include_debug = 0;
 
@@ -80,7 +78,7 @@ if (! $eximid ) {
 }
 
 ## check for tmp dir
-my $tmpdir = ${VARDIR}."/spool/tmp/exim";
+my $tmpdir = "/var/spamtagger/spool/tmp/exim";
 if ( ! -d "$tmpdir") {
     make_path("$tmpdir", {'mode'=>0o755,'user'=>'spamtagger','group'=>'spamtagger'}) or fatal_error("COULDNOTCREATETMPDIR", "could not create temporary directory");
 }
@@ -89,7 +87,7 @@ my %sys_conf = get_system_config() or fatal_error("NOSYSTEMCONFIGURATIONFOUND", 
 
 ## dump source informations
 my %m_infos = get_source();
-dump_source_file(${VARDIR}."/spool/spamtagger/source.conf", \%m_infos);
+dump_source_file("/var/spamtagger/spool/spamtagger/source.conf", \%m_infos);
 
 ## dump the outgoing script
 dump_spam_route();
@@ -101,20 +99,20 @@ my $exim_conf_lpd = dump_lists_ip_domain();
 my $syslog_restart = 0;
 foreach my $stage (@eximids) {
     if ($stage == 1) {
-        if ( ! -d "${VARDIR}/spool/tmp/exim" ) {
-            make_path("${VARDIR}/spool/tmp/exim_stage1", {'mode'=>0o755,'user'=>'spamtagger','group'=>'spamtagger'}) or fatal_error("COULDNOTCREATETMPDIR", "could not create directory");
+        if ( ! -d "/var/spamtagger/spool/tmp/exim" ) {
+            make_path("/var/spamtagger/spool/tmp/exim_stage1", {'mode'=>0o755,'user'=>'spamtagger','group'=>'spamtagger'}) or fatal_error("COULDNOTCREATETMPDIR", "could not create directory");
         }
-        if ( ! -d "${VARDIR}/spool/tmp/exim_stage1" ) {
-            make_path("${VARDIR}/spool/tmp/exim_stage1", {'mode'=>0o755,'user'=>'spamtagger','group'=>'spamtagger'}) or fatal_error("COULDNOTCREATETMPDIR", "could not create directory");
+        if ( ! -d "/var/spamtagger/spool/tmp/exim_stage1" ) {
+            make_path("/var/spamtagger/spool/tmp/exim_stage1", {'mode'=>0o755,'user'=>'spamtagger','group'=>'spamtagger'}) or fatal_error("COULDNOTCREATETMPDIR", "could not create directory");
         }
-        if ( ! -d "${VARDIR}/spool/tmp/exim_stage1/blacklists" ) {
-            make_path("${VARDIR}/spool/tmp/exim_stage1/blacklists", {'mode'=>0o755,'user'=>'spamtagger','group'=>'spamtagger'}) or fatal_error("COULDNOTCREATETMPDIR", "could not create directory");
+        if ( ! -d "/var/spamtagger/spool/tmp/exim_stage1/blacklists" ) {
+            make_path("/var/spamtagger/spool/tmp/exim_stage1/blacklists", {'mode'=>0o755,'user'=>'spamtagger','group'=>'spamtagger'}) or fatal_error("COULDNOTCREATETMPDIR", "could not create directory");
         }
-        if ( ! -d "${VARDIR}/spool/tmp/exim_stage1/rblwhitelists" ) {
-            make_path("${VARDIR}/spool/tmp/exim_stage1/rblwhitelists", {'mode'=>0o755,'user'=>'spamtagger','group'=>'spamtagger'}) or fatal_error("COULDNOTCREATETMPDIR", "could not create directory");
+        if ( ! -d "/var/spamtagger/spool/tmp/exim_stage1/rblwhitelists" ) {
+            make_path("/var/spamtagger/spool/tmp/exim_stage1/rblwhitelists", {'mode'=>0o755,'user'=>'spamtagger','group'=>'spamtagger'}) or fatal_error("COULDNOTCREATETMPDIR", "could not create directory");
         }
-        if ( ! -d "${VARDIR}/spool/tmp/exim_stage1/spamcwhitelists" ) {
-            make_path("${VARDIR}/spool/tmp/exim_stage1/spamcwhitelists", {'mode'=>0o755,'user'=>'spamtagger','group'=>'spamtagger'}) or fatal_error("COULDNOTCREATETMPDIR", "could not create directory");
+        if ( ! -d "/var/spamtagger/spool/tmp/exim_stage1/spamcwhitelists" ) {
+            make_path("/var/spamtagger/spool/tmp/exim_stage1/spamcwhitelists", {'mode'=>0o755,'user'=>'spamtagger','group'=>'spamtagger'}) or fatal_error("COULDNOTCREATETMPDIR", "could not create directory");
         }
         ## dump the blacklists files
         dump_blacklists();
@@ -125,11 +123,11 @@ foreach my $stage (@eximids) {
     my $custom = 0;
     while ( $custom != 2) {
         my $dir;
-        my $dest_dir = "${VARDIR}/spool/tmp/exim_stage${stage}";
+        my $dest_dir = "/var/spamtagger/spool/tmp/exim_stage${stage}";
         if ($custom) {
-            $dir = "/usr/spamtagger/etc/exim/custom/stage${stage}";
+            $dir = "/opt/spamtagger/etc/exim/custom/stage${stage}";
         } else {
-            $dir = "/usr/spamtagger/etc/exim/stage${stage}";
+            $dir = "/opt/spamtagger/etc/exim/stage${stage}";
         }
         if ( -d "$dir") {
             my @conf_files = glob("$dir/*_template");
@@ -166,7 +164,7 @@ dump_certificate($stage1_conf{'tls_certificate_data'}, $stage1_conf{'tls_certifi
 dump_stockme_file();
 
 ## dump smtp proxy file
-my $proxyfile = ${VARDIR}."/spool/spamtagger/smtp_proxy.conf";
+my $proxyfile = "/var/spamtagger/spool/spamtagger/smtp_proxy.conf";
 if (-f $proxyfile) {
     unlink($proxyfile);
 }
@@ -194,7 +192,7 @@ sub dump_exim_file($stage, $include_file=undef)
     if (defined($include_file)) {
         my $dest_file = $include_file;
         $dest_file =~ s/_template$//;
-        if (-e "${SRCDIR}/etc/exim/${include_file}") {
+        if (-e "/opt/spamtagger/etc/exim/${include_file}") {
             $source = $include_file;
             $destination = $dest_file;
         } else {
@@ -202,12 +200,12 @@ sub dump_exim_file($stage, $include_file=undef)
             $destination = $dest_file;
         }
     } else {
-        if (-e "${SRCDIR}/etc/exim/exim_stage${stage}.conf_template") {
-            $source = "${SRCDIR}/etc/exim/exim_stage${stage}.conf_template";
-            $destination = "${SRCDIR}/etc/exim/exim_stage${stage}.conf";
+        if (-e "/opt/spamtagger/etc/exim/exim_stage${stage}.conf_template") {
+            $source = "/opt/spamtagger/etc/exim/exim_stage${stage}.conf_template";
+            $destination = "/opt/spamtagger/etc/exim/exim_stage${stage}.conf";
         } else {
-            $source = "${SRCDIR}/etc/exim/exim_stage${stage}.conf_template";
-            $destination = "${SRCDIR}/etc/exim/exim_stage${stage}.conf";
+            $source = "/opt/spamtagger/etc/exim/exim_stage${stage}.conf_template";
+            $destination = "/opt/spamtagger/etc/exim/exim_stage${stage}.conf";
         }
     }
     $template = ConfigTemplate->new($source, $destination);
@@ -234,12 +232,12 @@ sub dump_exim_file($stage, $include_file=undef)
 
 
     if ($stage == 4) {
-        $exim_conf{'__OUTSCRIPT__'} = ${SRCDIR}."/scripts/exim/spam_route.pl";
-        my $optimizedscript = ${SRCDIR}."/scripts/exim/spam_route.opt.pl";
+        $exim_conf{'__OUTSCRIPT__'} = "/opt/spamtagger/scripts/exim/spam_route.pl";
+        my $optimizedscript = "/opt/spamtagger/scripts/exim/spam_route.opt.pl";
         if ( -f $optimizedscript) {
             $exim_conf{'__OUTSCRIPT__'} = $optimizedscript;
         }
-        my $bytecompiledscript = ${SRCDIR}."/scripts/exim/spam_route.bbin";
+        my $bytecompiledscript = "/opt/spamtagger/scripts/exim/spam_route.bbin";
         if ( -f $bytecompiledscript) {
             $exim_conf{'__OUTSCRIPT__'} = $bytecompiledscript;
         }
@@ -375,8 +373,8 @@ sub dump_exim_file($stage, $include_file=undef)
     # Below is not needed when we are generating the files included in exim configuration
     return $ret if ( $include_file );
 
-    my $tmptarget_file = ${SRCDIR}."/etc/exim/exim_stage${stage}.conf";
-    my $target_file = ${VARDIR}."/spool/tmp/exim/exim_stage${stage}.conf";
+    my $tmptarget_file = "/opt/spamtagger/etc/exim/exim_stage${stage}.conf";
+    my $target_file = "/var/spamtagger/spool/tmp/exim/exim_stage${stage}.conf";
     move($tmptarget_file, $target_file);
     chown $uid, $gid, $target_file;
 
@@ -478,8 +476,8 @@ sub get_system_config()
     }
     $sconfig{'__SMTP_PROXY__'} = $row{'smtp_proxy'};
     $sconfig{'__SYSLOG_HOST__'} = $row{'syslog_host'};
-    if ( -f "${SRCDIR}/etc/spamtagger/syslog/force_syslog_on_this_host" ) {
-        if (open(my $FH, '<', "${SRCDIR}/etc/spamtagger/syslog/force_syslog_on_this_host") ) {
+    if ( -f "/opt/spamtagger/etc/spamtagger/syslog/force_syslog_on_this_host" ) {
+        if (open(my $FH, '<', "/opt/spamtagger/etc/spamtagger/syslog/force_syslog_on_this_host") ) {
             my $line = <$FH>;
             chomp $line;
             $sconfig{'__SYSLOG_HOST__'} = $line;
@@ -566,7 +564,7 @@ sub dump_stockme_file()
     }
     my $ret = $template->dump_file();
 
-    my $target_file = ${SRCDIR}."/etc/exim/stockme";
+    my $target_file = "/opt/spamtagger/etc/exim/stockme";
     chown $uid, $gid, $target_file;
     return $ret;
 }
@@ -609,9 +607,9 @@ sub dump_spam_route()
     $template2->dump_file();
     my $ret = $template->dump_file();
 
-    my $target_file = ${SRCDIR}."/scripts/exim/spam_route.opt.pl";
+    my $target_file = "/opt/spamtagger/scripts/exim/spam_route.opt.pl";
 
-    my $bytecompiledscript = ${SRCDIR}."/scripts/exim/spam_route.bbin";
+    my $bytecompiledscript = "/opt/spamtagger/scripts/exim/spam_route.bbin";
     if ( -f $bytecompiledscript) {
         unlink $bytecompiledscript;
     }
@@ -640,8 +638,8 @@ sub dump_spam_route()
         "etc/exim/address_list.pl"
     );
     $template5->dump_file();
-    chown $uid, $gid, ${SRCDIR}."/etc/exim/address_list.pl";
-    chmod 0o755, ${SRCDIR}."/etc/exim/address_list.pl";
+    chown $uid, $gid, "/opt/spamtagger/etc/exim/address_list.pl";
+    chmod 0o755, "/opt/spamtagger/etc/exim/address_list.pl";
     return $ret;
 
 }
@@ -664,9 +662,9 @@ sub dump_syslog_config()
     }
 
     if ( -d "/etc/rsyslog.d" ) {
-        $cmd = "echo \"local0.info     -".${VARDIR}."/log/mailscanner/infolog \
-local0.warn     -".${VARDIR}."/log/mailscanner/warnlog \
-local0.err      ".${VARDIR}."/log/mailscanner/errorlog\n\" > $file";
+        $cmd = "echo \"local0.info     -/var/spamtagger/log/mailscanner/infolog \
+local0.warn     -/var/spamtagger/log/mailscanner/warnlog \
+local0.err      /var/spamtagger/log/mailscanner/errorlog\n\" > $file";
         `$cmd`;
     }
 
@@ -779,7 +777,7 @@ sub get_exim_config($stage)
     }
 
     my $dnslists = STDnsLists->new(\&log_dns, 1);
-    $dnslists->load_rbls( ${SRCDIR}."/etc/rbls",
+    $dnslists->load_rbls( "/opt/spamtagger/etc/rbls",
         $rblsstring, 'IPRBL', '', '', '' , 'dump_exim');
 
     my $rbls = $dnslists->get_all_rbls();
@@ -794,7 +792,7 @@ sub get_exim_config($stage)
     $rbl_exim_string =~ s/^\s*:\s*//;
 
     my $bsdnslists = STDnsLists->new(\&log_dns, 1);
-    $bsdnslists->load_rbls( ${SRCDIR}."/etc/rbls",
+    $bsdnslists->load_rbls( "/opt/spamtagger/etc/rbls",
         $bsrblsstring, 'BSRBL', '', '', '' , 'dump_exim');
 
     my $bsrbls = $bsdnslists->get_all_rbls();
@@ -839,15 +837,15 @@ sub get_exim_config($stage)
     $config{'__SMTP_BANNER__'} = $row{'smtp_banner'};
     $config{'__ERRORS_REPLY_TO__'} = $row{'errors_reply_to'};
 
-    if ( -f "${SRCDIR}/etc/spamtagger/version.def" && -f "${SRCDIR}/etc/edition.def") {
+    if ( -f "/opt/spamtagger/etc/spamtagger/version.def" && -f "/opt/spamtagger/etc/edition.def") {
         my ($version, $cmd) = ('', '');
-        unless (-f "${VARDIR}/spool/spamtagger/hide_smtp_version") {
-            $cmd = "cat ${SRCDIR}/etc/spamtagger/version.def";
+        unless (-f "/var/spamtagger/spool/spamtagger/hide_smtp_version") {
+            $cmd = "cat /opt/spamtagger/etc/spamtagger/version.def";
             $version = `$cmd`;
             chomp($version);
             $version = ' '.$version;
         }
-        $cmd = "cat ".${SRCDIR}."/etc/edition.def";
+        $cmd = "cat /opt/spamtagger/etc/edition.def";
         my $edition = `$cmd`;
         chomp($edition);
         $config{'__SMTP_BANNER__'} = '$smtp_active_hostname ESMTP SpamTagger ('.$edition.$version.') $tod_full';
@@ -874,19 +872,19 @@ sub get_exim_config($stage)
     $config{'allow_relay_for_unknown_domains'} = $row{'allow_relay_for_unknown_domains'};
     $config{'__FULL_WHITELIST_HOSTS__'} = '';
     my $fh;
-    if (-e "${VARDIR}/spool/spamtagger/full_whitelisted_hosts.list") {
-        open($fh, '<', "${VARDIR}/spool/spamtagger/full_whitelisted_hosts.list") ||
-            confess "Cannot open ${VARDIR}/spool/spamtagger/full_whitelisted_hosts.list: $!";
+    if (-e "/var/spamtagger/spool/spamtagger/full_whitelisted_hosts.list") {
+        open($fh, '<', "/var/spamtagger/spool/spamtagger/full_whitelisted_hosts.list") ||
+            confess "Cannot open /var/spamtagger/spool/spamtagger/full_whitelisted_hosts.list: $!";
         while (<$fh>) {
             $config{'__FULL_WHITELIST_HOSTS__'} .= $_ . ' ';
         }
         chomp($config{'__FULL_WHITELIST_HOSTS__'});
 	close($fh);
     } else {
-        touch "${VARDIR}/spool/spamtagger/full_whitelisted_hosts.list";
+        touch "/var/spamtagger/spool/spamtagger/full_whitelisted_hosts.list";
     }
-    unless (-e "${VARDIR}/spool/spamtagger/full_whitelisted_senders.list") {
-        touch "${VARDIR}/spool/spamtagger/full_whitelisted_senders.list";
+    unless (-e "/var/spamtagger/spool/spamtagger/full_whitelisted_senders.list") {
+        touch "/var/spamtagger/spool/spamtagger/full_whitelisted_senders.list";
     }
     if ($config{'__FULL_WHITELIST_HOSTS__'} ne '') {
         $config{'__FULL_WHITELIST_HOSTS__'} = join(' ; ',expand_host_string($config{'__FULL_WHITELIST_HOSTS__'},('dumper'=>'exim/full_whitelist_hosts')));
@@ -961,9 +959,9 @@ sub dump_blacklists()
 sub dump_lists_ip_domain()
 {
     my @types = ('black-ip-dom', 'spam-ip-dom', 'white-ip-dom', 'wh-spamc-ip-dom');
-    unlink ${VARDIR} . '/spool/tmp/exim_stage1/blacklists/ip-domain';
-    unlink glob ${VARDIR} . "/spool/tmp/exim_stage1/rblwhitelists/*";
-    unlink glob ${VARDIR} . "/spool/tmp/exim_stage1/spamcwhitelists/*";
+    unlink '/var/spamtagger/spool/tmp/exim_stage1/blacklists/ip-domain';
+    unlink glob "/var/spamtagger/spool/tmp/exim_stage1/rblwhitelists/*";
+    unlink glob "/var/spamtagger/spool/tmp/exim_stage1/spamcwhitelists/*";
 
     my $request = "SELECT count(*) FROM wwlists where type in (";
     foreach my $type (@types) {
@@ -1006,7 +1004,7 @@ sub print_ip_domain_rule($sender_list, $domain, $type)
 {
     my $smtp_rule = '';
 
-    my $path = "${VARDIR}/spool/tmp/exim_stage1";
+    my $path = "/var/spamtagger/spool/tmp/exim_stage1";
     my $FH_IP_DOM;
     if ( ($type eq 'black-ip-dom') || ($type eq 'spam-ip-dom') )  {
         confess "Cannot open $path/blacklists/ip-domain: $!" unless ($FH_IP_DOM = ${open_as("$path/blacklists/ip-domain",'>>',0o664,'spamtagger:spamtagger')});
@@ -1049,7 +1047,7 @@ END
 
 sub dump_certificate($cert,$key)
 {
-    my $backup_path = ${SRCDIR}."/etc/exim/certs/";
+    my $backup_path = "/opt/spamtagger/etc/exim/certs/";
 
     my $cmd;
     my $certfile = $tmpdir."/certificate";
@@ -1080,7 +1078,7 @@ sub dump_certificate($cert,$key)
 
 sub dump_default_dkim($stage1_conf)
 {
-    my $keypath = ${VARDIR}."/spool/tmp/spamtagger/dkim";
+    my $keypath = "/var/spamtagger/spool/tmp/spamtagger/dkim";
     if (! -d $keypath) {
         make_path($keypath);
     }
@@ -1107,7 +1105,7 @@ sub dump_tls_force_files()
 {
     foreach my $f ( ('domains_require_tls_from', 'domains_require_tls_to') ) {
         my $o = '__'.uc($f).'__';
-        my $file = ${VARDIR}."/spool/tmp/spamtagger/".$f.".list";
+        my $file = "/var/spamtagger/spool/tmp/spamtagger/".$f.".list";
         my $FILE;
         confess "Cannot open $file: $!" unless ($FILE = ${open_as($file,'>',0o664,'spamtagger:spamtagger')});
         print $FILE $exim_conf{$o};
@@ -1180,25 +1178,25 @@ EXIMUSER    * = (ROOT) NOPASSWD: EXIMBIN
     }
 
     my @dirs = (
-        "${VARDIR}/log/exim_stage${stage}",
-        "${VARDIR}/spool/tmp/exim_stage${stage}",
-        "${VARDIR}/spool/exim_stage${stage}",
-        glob("${VARDIR}/spool/tmp/exim_stage${stage}/*"),
-        glob("${VARDIR}/spool/exim_stage${stage}/*"),
+        "/var/spamtagger/log/exim_stage${stage}",
+        "/var/spamtagger/spool/tmp/exim_stage${stage}",
+        "/var/spamtagger/spool/exim_stage${stage}",
+        glob("/var/spamtagger/spool/tmp/exim_stage${stage}/*"),
+        glob("/var/spamtagger/spool/exim_stage${stage}/*"),
     );
     push(@dirs,
-        "${SRCDIR}/etc/exim/certs",
-        "${VARDIR}/spool/tmp/exim",
-        "${VARDIR}/spool/tmp/exim/blacklists",
-        "${VARDIR}/spool/tmp/exim/certs",
-        "${VARDIR}/spool/exim_stage${stage}/input",
-        glob("${VARDIR}/spool/exim_stage${stage}/input/*"),
+        "/opt/spamtagger/etc/exim/certs",
+        "/var/spamtagger/spool/tmp/exim",
+        "/var/spamtagger/spool/tmp/exim/blacklists",
+        "/var/spamtagger/spool/tmp/exim/certs",
+        "/var/spamtagger/spool/exim_stage${stage}/input",
+        glob("/var/spamtagger/spool/exim_stage${stage}/input/*"),
     ) if ($stage == 1);
     push(@dirs,
-        "${VARDIR}/spool/exim_stage${stage}/paniclog",
-        "${VARDIR}/spool/exim_stage${stage}/spamstore",
-        "${VARDIR}/spool/tmp/spamtagger/dkim",
-        glob("${VARDIR}/spool/tmp/spamtagger/dkim"),
+        "/var/spamtagger/spool/exim_stage${stage}/paniclog",
+        "/var/spamtagger/spool/exim_stage${stage}/spamstore",
+        "/var/spamtagger/spool/tmp/spamtagger/dkim",
+        glob("/var/spamtagger/spool/tmp/spamtagger/dkim"),
     ) if ($stage == 4);
     foreach my $dir (@dirs) {
         mkdir ($dir) unless (-d $dir);
@@ -1206,25 +1204,25 @@ EXIMUSER    * = (ROOT) NOPASSWD: EXIMBIN
     }
 
     my @files = (
-        glob("${VARDIR}/log/exim_stage${stage}/*"),
-        glob("${VARDIR}/spool/exim_stage${stage}/db/*"),
-        glob("${VARDIR}/spool/tmp/spamtagger/*.list"),
+        glob("/var/spamtagger/log/exim_stage${stage}/*"),
+        glob("/var/spamtagger/spool/exim_stage${stage}/db/*"),
+        glob("/var/spamtagger/spool/tmp/spamtagger/*.list"),
     );
     push (@files,
-        "${SRCDIR}/etc/exim/stage1_scripts.pl",
-        "${SRCDIR}/etc/exim/out_scripts.pl",
-        "${VARDIR}/spool/tmp/exim/frozen_senders",
-        "${VARDIR}/spool/tmp/exim/dmarc.history",
-        "${VARDIR}/spool/tmp/exim/blacklists/hosts",
-        "${VARDIR}/spool/tmp/exim/blacklists/senders",
-        "${VARDIR}/spool/spamtagger/full_whitelisted_hosts.list",
-        "${VARDIR}/spool/spamtagger/full_whitelisted_senders.list",
-        glob("${SRCDIR}/etc/exim/certs/*"),
-        glob("${VARDIR}/spool/tmp/spamtagger/dkim/*"),
+        "/opt/spamtagger/etc/exim/stage1_scripts.pl",
+        "/opt/spamtagger/etc/exim/out_scripts.pl",
+        "/var/spamtagger/spool/tmp/exim/frozen_senders",
+        "/var/spamtagger/spool/tmp/exim/dmarc.history",
+        "/var/spamtagger/spool/tmp/exim/blacklists/hosts",
+        "/var/spamtagger/spool/tmp/exim/blacklists/senders",
+        "/var/spamtagger/spool/spamtagger/full_whitelisted_hosts.list",
+        "/var/spamtagger/spool/spamtagger/full_whitelisted_senders.list",
+        glob("/opt/spamtagger/etc/exim/certs/*"),
+        glob("/var/spamtagger/spool/tmp/spamtagger/dkim/*"),
     ) if ($stage == 1);
     push (@files,
-        glob("${SRCDIR}/etc/exim/certs/*"),
-        glob("${VARDIR}/spool/tmp/spamtagger/dkim/*"),
+        glob("/opt/spamtagger/etc/exim/certs/*"),
+        glob("/var/spamtagger/spool/tmp/spamtagger/dkim/*"),
     ) if ($stage == 4);
     foreach my $file (@files) {
         touch($file) unless (-e $file);
@@ -1237,23 +1235,23 @@ EXIMUSER    * = (ROOT) NOPASSWD: EXIMBIN
     }
 
     if ($stage == 1) {
-        unlink("${VARDIR}/spool/exim_stage1/db/callout") if (-e "${VARDIR}/spool/exim_stage1/db/callout");
-        foreach (glob("${VARDIR}/spool/tmp/exim/certs/*")) {
+        unlink("/var/spamtagger/spool/exim_stage1/db/callout") if (-e "/var/spamtagger/spool/exim_stage1/db/callout");
+        foreach (glob("/var/spamtagger/spool/tmp/exim/certs/*")) {
             unlink($_) unless (-l $_);
         }
-        foreach (glob("${SRCDIR}/etc/exim/certs/*")) {
+        foreach (glob("/opt/spamtagger/etc/exim/certs/*")) {
             my ($file) = $_ =~ m#.*/([^/]+)$#;
-            $file = "${VARDIR}/spool/tmp/exim/certs/${file}";
+            $file = "/var/spamtagger/spool/tmp/exim/certs/${file}";
             symlink($_, $file) unless (-e $file && readlink($file) eq $_);
         }
     }
 
-    symlink($SRCDIR.'/etc/apparmor', '/etc/apparmor.d/spamtagger') unless (-e '/etc/apparmor.d/spamtagger');
+    symlink('/opt/spamtagger/etc/apparmor', '/etc/apparmor.d/spamtagger') unless (-e '/etc/apparmor.d/spamtagger');
 
     # Reload AppArmor rules
-    `apparmor_parser -r ${SRCDIR}/etc/apparmor.d/exim` if ( -d '/sys/kernel/security/apparmor' );
+    `apparmor_parser -r /opt/spamtagger/etc/apparmor.d/exim` if ( -d '/sys/kernel/security/apparmor' );
 
-    my $dir = "${SRCDIR}/etc/exim/stage${stage}";
+    my $dir = "/opt/spamtagger/etc/exim/stage${stage}";
     if (-d $dir) {
         chown($uid, $gid, $dir);
         chown($uid, $gid, $_) foreach (glob("$dir/*"));

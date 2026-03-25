@@ -28,11 +28,12 @@ use Exporter 'import';
 our @EXPORT_OK = ();
 our $VERSION   = 1.0;
 
-use lib "/usr/spamtagger/lib/";
+use lib "/opt/spamtagger/lib/";
 use SpamHandler::Batch();
 use DB();
 use threads();
 use threads::shared();
+use ReadConfig;
 use STDnsLists();
 
 use parent qw(PreForkTDaemon);
@@ -40,29 +41,24 @@ use parent qw(PreForkTDaemon);
 my %processed_ids : shared;
 
 sub new ($class = "SpamHandler", $myspec_this = {}) {
-  my $conf     = ReadConfig::get_instance();
   my %dbs      = ();
+  my $conf     = ReadConfig::get_instance();
   my %prepared = ();
 
   my $spec_this = {
     interval => 3,
-    spamdir  => $conf->get_option('VARDIR') . '/spool/exim_stage4/spamstore',
+    spamdir  => '/var/spamtagger/spool/exim_stage4/spamstore',
     maxbatchsize         => 100,
     reportspamtodnslists => 0,
     reportrbls           => '',
-    rblsDefsPath         => $conf->get_option('SRCDIR') . "/etc/rbls/",
-    wantlistDomainsFile => $conf->get_option('SRCDIR')
-      . "/etc/rbls/wantlisted_domains.txt",
-    TLDsFiles => $conf->get_option('VARDIR')
-      . "/spool/spamtagger/rbls/two-level-tlds.txt "
-      . $conf->get_option('VARDIR')
-      . "/spool/spamtagger/rbls/tlds.txt",
-    localDomainsFile => $conf->get_option('VARDIR')
-      . "/spool/tmp/spamtagger/domains.list",
+    rblsDefsPath         => "/opt/spamtagger/etc/rbls/",
+    wantlistDomainsFile => "/opt/spamtagger/etc/rbls/wantlisted_domains.txt",
+    TLDsFiles => '/var/spamtagger/spool/spamtagger/rbls/two-level-tlds.txt '
+      . "/var/spamtagger/spool/spamtagger/rbls/tlds.txt",
+    localDomainsFile => "/var/spamtagger/spool/tmp/spamtagger/domains.list",
     maxurisreports => 10,
-    configfile     => $conf->get_option('SRCDIR')
-      . "/etc/spamtagger/spamhandler.conf",
-    pidfile    => $conf->get_option('VARDIR') . "/run/spamhandler.pid",
+    configfile     => "/opt/spamtagger/etc/spamtagger/spamhandler.conf",
+    pidfile    => "/var/spamtagger/run/spamhandler.pid",
 
     %dbs       => (),
     %prepared  => (),

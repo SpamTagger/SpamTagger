@@ -20,7 +20,7 @@ use v5.40;
 use warnings;
 use utf8;
 
-use lib "/usr/spamtagger/lib/";
+use lib "/opt/spamtagger/lib/";
 use STDnsLists();
 use MIME::QuotedPrint();
 use DB();
@@ -28,7 +28,6 @@ use ReadConfig();
 use IO::Interactive();
 
 my $conf = ReadConfig::get_instance();
-our $SRCDIR = $conf->get_option('SRCDIR');
 
 # Necessary configuration items
 my $config = {
@@ -40,7 +39,7 @@ my $config = {
 };
 
 # Get values from file
-my $configfile = "$SRCDIR/etc/mailscanner/prefilters/UriRBLs.cf";
+my $configfile = "/opt/spamtagger/etc/mailscanner/prefilters/UriRBLs.cf";
 my $CONFIG;
 if (open($CONFIG, '<', $configfile)) {
   while (<$CONFIG>) {

@@ -20,7 +20,7 @@
 #   settings found in the database.
 #
 #   Usage:
-#           dump_dcc_config.pl
+#       dump_dcc_config.pl
 
 
 use v5.40;
@@ -29,20 +29,11 @@ use warnings;
 use utf8;
 use Carp qw( confess );
 
-our ($SRCDIR, $VARDIR, $HOSTID, $MYSPAMTAGGERPWD);
-BEGIN {
-    if ($0 =~ m/(\S*)\/\S+.pl$/) {
-        my $path = $1."/../lib";
-        unshift (@INC, $path);
-    }
-    require ReadConfig;
-    my $conf = ReadConfig::get_instance();
-    $SRCDIR = $conf->get_option('SRCDIR');
-    $VARDIR = $conf->get_option('VARDIR');
-    $HOSTID = $conf->get_option('HOSTID');
-    $MYSPAMTAGGERPWD = $conf->get_option('MYSPAMTAGGERPWD');
-    unshift(@INC, $SRCDIR."/lib");
-}
+use lib "/opt/spamtagger/lib";
+use ReadConfig;
+my $conf = ReadConfig::get_instance();
+my $HOSTID = $conf->get_option('HOSTID');
+my $MYSPAMTAGGERPWD = $conf->get_option('MYSPAMTAGGERPWD');
 
 require DB;
 use STUtils qw( open_as rmrf );
@@ -56,35 +47,35 @@ my $lasterror = "";
 
 # Fix symlinks if broken
 my %links = (
-    '/var/lib/dcc/dcc_conf' => '/etc/dcc/dcc_conf',
-    '/var/lib/dcc/flod' => '/etc/dcc/flod',
-    '/var/lib/dcc/grey_flod' => '/etc/dcc/grey_flod',
-    '/var/lib/dcc/grey_whitelist' => '/etc/dcc/grey_whitelist',
-    '/var/lib/dcc/ids' => '/etc/dcc/ids',
-    '/var/lib/dcc/map.txt' => '/etc/dcc/map.txt',
-    '/var/lib/dcc/whiteclnt' => '/etc/dcc/whiteclnt',
-    '/var/lib/dcc/whitecommon' => '/etc/dcc/whitecommon',
-    '/var/lib/dcc/whitelist' => '/etc/dcc/whitelist',
+  '/var/lib/dcc/dcc_conf' => '/etc/dcc/dcc_conf',
+  '/var/lib/dcc/flod' => '/etc/dcc/flod',
+  '/var/lib/dcc/grey_flod' => '/etc/dcc/grey_flod',
+  '/var/lib/dcc/grey_whitelist' => '/etc/dcc/grey_whitelist',
+  '/var/lib/dcc/ids' => '/etc/dcc/ids',
+  '/var/lib/dcc/map.txt' => '/etc/dcc/map.txt',
+  '/var/lib/dcc/whiteclnt' => '/etc/dcc/whiteclnt',
+  '/var/lib/dcc/whitecommon' => '/etc/dcc/whitecommon',
+  '/var/lib/dcc/whitelist' => '/etc/dcc/whitelist',
 );
 foreach my $link (keys(%links)) {
-    if (-e $link) {
-        if (-l $link) {
-            next if (readlink($link) eq $links{$link});
-	    unlink($link);
-        } else {
-            rmrf($link);
-        }
+  if (-e $link) {
+    if (-l $link) {
+      next if (readlink($link) eq $links{$link});
+	  unlink($link);
+    } else {
+      rmrf($link);
     }
-    symlink($links{$link}, $link);
-    chown($uid, $gid, $link, $links{$link});
+  }
+  symlink($links{$link}, $link);
+  chown($uid, $gid, $link, $links{$link});
 }
 
 # Set proper permissions
 chown($uid, $gid,
-    '/var/lib/dcc/',
-    '/var/lib/dcc/log',
-    ${VARDIR}.'/spool/dcc',
-    ${VARDIR}.'/run/dcc',
-    glob(${VARDIR}.'/run/dcc/*'),
-    glob('/var/lib/dcc/log/*'),
+  '/var/lib/dcc/',
+  '/var/lib/dcc/log',
+  '/var/spamtagger/spool/dcc',
+  '/var/spamtagger/run/dcc',
+  glob('/var/spamtagger/run/dcc/*'),
+  glob('/var/lib/dcc/log/*'),
 );

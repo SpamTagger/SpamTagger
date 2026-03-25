@@ -11,8 +11,8 @@ our @EXPORT_OK = ();
 our $VERSION   = 1.0;
 
 #no warnings 'uninitialized';
-use lib '/usr/spamtagger/lib';
-use lib '/usr/spamtagger/lib/ManageServices';
+use lib '/opt/spamtagger/lib';
+use lib '/opt/spamtagger/lib/ManageServices';
 use threads ();
 use threads::shared();
 use Time::HiRes qw( gettimeofday tv_interval );
@@ -22,14 +22,12 @@ use ReadConfig();
 use ConfigTemplate();
 use Proc::ProcessTable();
 
-our $init_dir = '/usr/spamtagger/etc/init.d';
+our $init_dir = '/opt/spamtagger/etc/init.d';
 our $restart_dir = '/var/spamtagger/run';
 our $log_levels = { 'error' => 0, 'info' => 1, 'debug' => 2 };
 our $LOGGERLOG;
 
 our %default_configs = (
-  'VARDIR'  => '/var/spamtagger',
-  'SRCDIR'  => '/usr/spamtagger',
   'debug'    => 1,
   'uid'    => 0,
   'gid'    => 0,
@@ -417,7 +415,7 @@ sub pids ($this, $service = undef) {
 }
 
 sub create_module ($this, $defs) {
-  my $file = $defs->{'conffile'} || $this->{'conf'}->get_option('SRCDIR').'/etc/spamtagger/'.$this->{'service'}.".cf";
+  my $file = $defs->{'conffile'} || '/opt/spamtagger/etc/spamtagger/'.$this->{'service'}.".cf";
   my $module = {};
   foreach my $key (keys %default_configs) {
     $module->{$key} = $default_configs{$key}

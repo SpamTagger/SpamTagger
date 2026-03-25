@@ -4,7 +4,7 @@ use v5.40;
 use warnings;
 use utf8;
 
-use lib "__SRCDIR__/lib";
+use lib "/opt/spamtagger/lib";
 use Email();
 use Digest::MD5 qw(md5_hex);
 use ReadConfig();

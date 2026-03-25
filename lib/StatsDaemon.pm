@@ -32,8 +32,7 @@ use Time::HiRes qw(gettimeofday tv_interval);
 use Digest::MD5 qw(md5_hex);
 use Date::Calc qw(Add_Delta_Days Today);
 use Devel::Size qw(size total_size);
-use lib '/usr/spamtagger/lib';
-use ReadConfig();
+use lib '/opt/spamtagger/lib';
 use DB();
 use StatsClient();
 
@@ -65,8 +64,6 @@ my $last_stable_ : shared     = 0;
 my $set_socks_available_ : shared = 0;
 
 sub new ($class, $myspec_this) {
-  my $conf = ReadConfig::get_instance();
-
   my $spec_this = {
     name        => 'StatsDaemon',
     max_unstable_time      => 20,
@@ -74,9 +71,9 @@ sub new ($class, $myspec_this) {
     purge_limit            => 0,
     reserve_set_socks      => 1,
     backend                => undef,
-    socketpath             => $conf->get_option('VARDIR') . "/run/statsdaemon.sock",
-    pidfile                => $conf->get_option('VARDIR') . "/run/statsdaemon.pid",
-    configfile             => $conf->get_option('SRCDIR') . "/etc/spamtagger/statsdaemon.conf",
+    socketpath             => "/var/spamtagger/run/statsdaemon.sock",
+    pidfile                => "/var/spamtagger/run/statsdaemon.pid",
+    configfile             => "/opt/spamtagger/etc/spamtagger/statsdaemon.conf",
     clean_thread_exit      => 0,
     backend_type           => 'none',
     'history_avoid_keys'   => '',

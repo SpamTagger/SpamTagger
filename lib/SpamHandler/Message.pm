@@ -28,9 +28,8 @@ use Exporter 'import';
 our @EXPORT_OK = ();
 our $VERSION   = 1.0;
 
-use lib "/usr/spamtagger/lib/";
+use lib "/opt/spamtagger/lib/";
 use Email();
-use ReadConfig();
 use Net::SMTP();
 use File::Path qw(mkpath);
 use Time::HiRes qw(gettimeofday tv_interval);
@@ -888,7 +887,6 @@ sub get_raw_message ($this) {
 
 sub quarantine ($this) {
   $this->start_timer('Message quarantining');
-  my $config = ReadConfig::get_instance();
 
   ## remove the spam tag
   $this->{fullheaders} =~ s/Subject:\s+\{(ST_SPAM|ST_HIGHSPAM)\}/Subject:/i;
@@ -897,15 +895,13 @@ sub quarantine ($this) {
   } else {
     $this->{headers}{subject} = "";
   }
-  if ( !-d $config->get_option('VARDIR') . "/spam/" . $this->{env_domain} ) {
-    mkdir( $config->get_option('VARDIR') . "/spam/" . $this->{env_domain} );
+  if ( !-d "/var/spamtagger/spam/$this->{env_domain}" ) {
+    mkdir( "/var/spamtagger/spam/$this->{env_domain}" );
   }
-  if (  !-d $config->get_option('VARDIR') . "/spam/"
-    . $this->{env_domain} . "/"
-    . $this->{env_rcpt} )
+  if ( !-d "/var/spamtagger/spam/$this->{env_domain}/$this->{env_rcpt}" )
   {
     mkpath(
-      $config->get_option('VARDIR') . '/spam/'
+      '/var/spamtagger/spam/'
         . $this->{env_domain} . '/'
         . $this->{env_rcpt},
       {error => \my $err}
@@ -925,7 +921,7 @@ sub quarantine ($this) {
 
   ## save the spam file
   my $filename =
-    $config->get_option('VARDIR') . "/spam/"
+    "/var/spamtagger/spam/"
       . $this->{env_domain} . "/"
       . $this->{env_rcpt} . "/"
       . $this->{exim_id};

@@ -20,7 +20,7 @@
 #   settings found in the database.
 #
 #   Usage:
-#           dump_messagesniffer_config.pl
+#       dump_messagesniffer_config.pl
 
 
 use v5.40;
@@ -29,18 +29,10 @@ use warnings;
 use utf8;
 use Carp qw( confess );
 
-our ($SRCDIR, $VARDIR, $HTTPPROXY);
-BEGIN {
-    if ($0 =~ m/(\S*)\/\S+.pl$/) {
-        my $path = $1."/../lib";
-        unshift (@INC, $path);
-    }
-    require ReadConfig;
-    my $conf = ReadConfig::get_instance();
-    $SRCDIR = $conf->get_option('SRCDIR') || '/usr/spamtagger';
-    $VARDIR = $conf->get_option('VARDIR') || '/var/spamtagger';
-    $HTTPPROXY = $conf->get_option('HTTPPROXY') || '';
-}
+use lib "/opt/spamtagger/lib";
+use ReadConfig;
+my $conf = ReadConfig::get_instance();
+my $HTTPPROXY = $conf->get_option('HTTPPROXY') || '';
 
 use STUtils qw(open_as);
 require DB;
@@ -55,19 +47,19 @@ my %messagesniffer_conf;
 %messagesniffer_conf = get_messagesniffer_config() or fatal_error("NOMESSAGESNIFFERCONFIGURATIONFOUND", "no MessageSniffer configuration found");
 
 if (!defined($messagesniffer_conf{'__LICENSEID__'})) {
-    $messagesniffer_conf{'__LICENSEID__'} = '';
+  $messagesniffer_conf{'__LICENSEID__'} = '';
 }
 if (!defined($messagesniffer_conf{'__AUTHENTICATION__'})) {
-    $messagesniffer_conf{'__AUTHENTICATION__'} = '';
+  $messagesniffer_conf{'__AUTHENTICATION__'} = '';
 }
 
 our ($uid, $gid);
 confess "Unable to detect 'snfuser' user" unless $uid = getpwnam( 'snfuser' );
 confess "Unable to detect 'snfuser' group" unless $gid = getgrnam( 'snfuser' );
 
-our $dir = "$SRCDIR/etc/messagesniffer";
+our $dir = "/opt/spamtagger/etc/messagesniffer";
 unless ( -d $dir ) {
-    confess "Cannot create dir $dir: $!\n" unless make_path($dir, { 'mode' => 0o755, 'user' => $uid, 'group' => $gid });
+  confess "Cannot create dir $dir: $!\n" unless make_path($dir, { 'mode' => 0o755, 'user' => $uid, 'group' => $gid });
 }
 dump_file("SNFServer.xml");
 dump_file("identity.xml");
@@ -78,57 +70,55 @@ $dbh->disconnect();
 #############################
 sub dump_file($file)
 {
-    my $template_file = "${dir}/${file}_template";
-    my $target_file = "${dir}/${file}";
+  my $template_file = "${dir}/${file}_template";
+  my $target_file = "${dir}/${file}";
 
-    my ($TEMPLATE, $TARGET);
-    confess "Cannot open $template_file: $!\n" unless ($TEMPLATE = ${open_as($template_file, '<', 0o755, "snfuser:snfuser")});
-    confess "Cannot open $target_file: $!\n" unless ($TARGET = ${open_as($target_file, '>', 0o755, "snfuser:snfuser")});
+  my ($TEMPLATE, $TARGET);
+  confess "Cannot open $template_file: $!\n" unless ($TEMPLATE = ${open_as($template_file, '<', 0o755, "snfuser:snfuser")});
+  confess "Cannot open $target_file: $!\n" unless ($TARGET = ${open_as($target_file, '>', 0o755, "snfuser:snfuser")});
 
-    my $proxy_server = "";
-    my $proxy_port = "";
-    if ($HTTPPROXY =~ m/http\:\/\/(\S+)\:(\d+)/) {
-        $proxy_server = $1;
-        $proxy_port = $2;
+  my $proxy_server = "";
+  my $proxy_port = "";
+  if ($HTTPPROXY =~ m/http\:\/\/(\S+)\:(\d+)/) {
+    $proxy_server = $1;
+    $proxy_port = $2;
+  }
+
+  while(<$TEMPLATE>) {
+    my $line = $_;
+
+    if ($proxy_server =~ m/\S+/) {
+      $line =~ s/\#HTTPProxyServer __HTTPPROXY__/HTTPProxyServer $proxy_server/g;
+      $line =~ s/\#HTTPProxyPort __HTTPPROXYPORT__/HTTPProxyPort $proxy_port/g;
     }
+    $line =~ s/__LICENSEID__/$messagesniffer_conf{'__LICENSEID__'}/g;
+    $line =~ s/__AUTHENTICATION__/$messagesniffer_conf{'__AUTHENTICATION__'}/g;
 
-    while(<$TEMPLATE>) {
-        my $line = $_;
+    print $TARGET $line;
+  }
 
-        $line =~ s/__VARDIR__/${VARDIR}/g;
-        $line =~ s/__SRCDIR__/${SRCDIR}/g;
-        if ($proxy_server =~ m/\S+/) {
-            $line =~ s/\#HTTPProxyServer __HTTPPROXY__/HTTPProxyServer $proxy_server/g;
-            $line =~ s/\#HTTPProxyPort __HTTPPROXYPORT__/HTTPProxyPort $proxy_port/g;
-        }
-        $line =~ s/__LICENSEID__/$messagesniffer_conf{'__LICENSEID__'}/g;
-        $line =~ s/__AUTHENTICATION__/$messagesniffer_conf{'__AUTHENTICATION__'}/g;
+  close $TEMPLATE;
+  close $TARGET;
 
-        print $TARGET $line;
-    }
-
-    close $TEMPLATE;
-    close $TARGET;
-
-    return 1;
+  return 1;
 }
 
 #############################
 sub get_messagesniffer_config()
 {
-    my %config;
+  my %config;
 
-    my $sth = $dbh->prepare("SELECT licenseid, authentication FROM MessageSniffer");
-    $sth->execute() or fatal_error("CANNOTEXECUTEQUERY", $dbh->errstr);
+  my $sth = $dbh->prepare("SELECT licenseid, authentication FROM MessageSniffer");
+  $sth->execute() or fatal_error("CANNOTEXECUTEQUERY", $dbh->errstr);
 
-    if ($sth->rows < 1) {
-        return;
-    }
-    my $ref = $sth->fetchrow_hashref() or return;
+  if ($sth->rows < 1) {
+    return;
+  }
+  my $ref = $sth->fetchrow_hashref() or return;
 
-    $config{'__LICENSEID__'} = $ref->{'licenseid'};
-    $config{'__AUTHENTICATION__'} = $ref->{'authentication'};
+  $config{'__LICENSEID__'} = $ref->{'licenseid'};
+  $config{'__AUTHENTICATION__'} = $ref->{'authentication'};
 
-    $sth->finish();
-    return %config;
+  $sth->finish();
+  return %config;
 }

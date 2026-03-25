@@ -29,7 +29,7 @@ use utf8;
 
 use Net::SMTP;
 
-use lib '/usr/spamtagger/lib/';
+use lib '/opt/spamtagger/lib/';
 use ReadConfig;
 use DB();
 
@@ -53,7 +53,7 @@ if ( (!$for) || !($for =~ /^(\S+)\@(\S+)$/)) {
 my $for_local = $1;
 my $for_domain = $2;
 
-my $msg_file = $config->get_option('VARDIR')."/spam/".$for_domain."/".$for."/".$msg_id;
+my $msg_file = "/var/spamtagger/spam/".$for_domain."/".$for."/".$msg_id;
 
 my $MSG;
 if (open($MSG, '<', $msg_file)) {

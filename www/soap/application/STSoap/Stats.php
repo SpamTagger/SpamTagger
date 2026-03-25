@@ -30,7 +30,7 @@ class STSoap_Stats
     {
       return array('stats_id' => $stats_id);
     }
-    $cmd = $stconfig->getOption('SRCDIR')."/bin/get_stats.pl '".$params['what']."' ".$params['datefrom']." ".$params['dateto'];
+    $cmd = "/opt/spamtagger/bin/get_stats.pl '".$params['what']."' ".$params['datefrom']." ".$params['dateto'];
     $cmd .= " -b";
     if (isset($params['fulldays']) && $params['fulldays']) {
       $cmd .= " -f";
@@ -42,7 +42,7 @@ class STSoap_Stats
       $stats_id = md5(uniqid(mt_rand(), true));
     }
 
-    $cmd .= "> ".$stconfig->getOption('VARDIR')."/run/spamtagger/stats_search/".$stats_id." &";
+    $cmd .= "> /var/spamtagger/run/spamtagger/stats_search/".$stats_id." &";
     $res = `$cmd`;
     `echo '$cmd' > /tmp/test.tmp`;
     return array('search_id' => $stats_id, 'cmd' => $cmd) ;
@@ -65,7 +65,7 @@ class STSoap_Stats
     require_once('SpamTagger/Config.php');
       $stconfig = SpamTagger_Config::getInstance();
 
-    $file = $stconfig->getOption('VARDIR')."/run/spamtagger/stats_search/".$stats_id;
+    $file = "/var/spamtagger/run/spamtagger/stats_search/".$stats_id;
     if (!file_exists($file)) {
       return array('error' => 'no such results');
     }
@@ -137,7 +137,7 @@ class STSoap_Stats
     require_once('SpamTagger/Config.php');
     $stconfig = SpamTagger_Config::getInstance();
 
-    $file = $stconfig->getOption('VARDIR')."/run/spamtagger/stats_search/".$stats_id;
+    $file = "/var/spamtagger/run/spamtagger/stats_search/".$stats_id;
     if (!file_exists($file)) {
       return array('error' => 'no such results');
     }

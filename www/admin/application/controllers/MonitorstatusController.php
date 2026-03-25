@@ -40,7 +40,7 @@ class MonitorstatusController extends Zend_Controller_Action
     $view->pieLink = Zend_Controller_Action_HelperBroker::getStaticHelper('url')->simple('todaypie', 'monitorstatus', NULL, array());
     $view->columns = $this->_columns;
     $config = new SpamTagger_Config();
-    $view->quarantinedir = $config->getOption('VARDIR')."/spam";
+    $view->quarantinedir = "/var/spamtagger/spam";
     $view->initial_loading = 1;
     $request = $this->getRequest();
     if ($request->getParam('r') == '') {
@@ -268,7 +268,7 @@ class MonitorstatusController extends Zend_Controller_Action
     $view->replica = $replica;
     $view->columns = $this->_columns;
     $config = new SpamTagger_Config();
-    $view->quarantinedir = $config->getOption('VARDIR')."/spam";
+    $view->quarantinedir = "/var/spamtagger/spam";
     $view->initial_loading = 0;
 
     $reporting = new Default_Model_ReportingStats();

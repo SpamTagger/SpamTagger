@@ -20,7 +20,7 @@ use v5.40;
 use warnings;
 use utf8;
 
-use lib '/usr/spamtagger/lib/';
+use lib '/opt/spamtagger/lib/';
 use STDnsLists();
 use DB();
 use IO::Interactive();
@@ -35,7 +35,7 @@ my $config = {
 };
 
 # Get values from file
-my $configfile = "/usr/spamtagger/etc/mailscanner/prefilters/PreRBLs.cf";
+my $configfile = "/opt/spamtagger/etc/mailscanner/prefilters/PreRBLs.cf";
 my $CONFIG;
 if (open($CONFIG, '<', $configfile)) {
   while (<$CONFIG>) {

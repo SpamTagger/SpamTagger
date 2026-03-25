@@ -33,7 +33,7 @@ class STSoap_Logs {
     {
       return array('trace_id' => $trace_id);
     }
-    $cmd = $stconfig->getOption('SRCDIR')."/bin/search_log.pl ".$params['datefrom']." ".$params['dateto']." ".$params['regexp'];
+    $cmd = "/opt/spamtagger/bin/search_log.pl ".$params['datefrom']." ".$params['dateto']." ".$params['regexp'];
     if (isset($params['filter']) && $params['filter'] != '' && $params['filter'] != "''") {
       $params['filter'] = preg_replace("/^'(.*)'$/", "$1", $params['filter']);
       $params['filter'] = preg_replace("/'/", "\\'", $params['filter']);
@@ -54,7 +54,7 @@ class STSoap_Logs {
     }
     $cmd .= " -B ".$trace_id;
 
-    $cmd .= "> ".$stconfig->getOption('VARDIR')."/run/spamtagger/log_search/".$trace_id." &";
+    $cmd .= "> /var/spamtagger/run/spamtagger/log_search/".$trace_id." &";
     $res = `$cmd`;
     return array('trace_id' => $trace_id, 'cmd' => $cmd) ;
   }
@@ -75,7 +75,7 @@ class STSoap_Logs {
     require_once('SpamTagger/Config.php');
     $stconfig = SpamTagger_Config::getInstance();
 
-    $file = $stconfig->getOption('VARDIR')."/run/spamtagger/log_search/".$trace_id;
+    $file = "/var/spamtagger/run/spamtagger/log_search/".$trace_id;
     if (!file_exists($file)) {
       return array('error' => 'no such results');
     }
@@ -154,7 +154,7 @@ class STSoap_Logs {
     require_once('SpamTagger/Config.php');
     $stconfig = SpamTagger_Config::getInstance();
 
-    $file = $stconfig->getOption('VARDIR')."/run/spamtagger/log_search/".$trace_id;
+    $file = "/var/spamtagger/run/spamtagger/log_search/".$trace_id;
     if (!file_exists($file)) {
       return array('error' => 'no such results');
     }
@@ -307,7 +307,7 @@ class STSoap_Logs {
     require_once('SpamTagger/Config.php');
     $stconfig = SpamTagger_Config::getInstance();
 
-    $params['basefile'] = $stconfig->getOption('VARDIR')."/log/".$params['basefile'];
+    $params['basefile'] = "/var/spamtagger/log/".$params['basefile'];
 
     $filename = $params['basefile'].STSoap_Logs::extFromId($estimate_id);
     $filedate = STSoap_Logs::getDateFromFile($filename);
@@ -407,7 +407,7 @@ class STSoap_Logs {
     $stconfig = SpamTagger_Config::getInstance();
 
     $params['file'] = preg_replace('/-/', '/', $params['file']);
-    $file = $stconfig->getOption('VARDIR')."/log/".$params['file'];
+    $file = "/var/spamtagger/log/".$params['file'];
     if (!file_exists($file)) {
       $res['error'] = 'No such file ('.$file.')';
       return $res;
@@ -599,7 +599,7 @@ class STSoap_Logs {
     $res = array('full_log' => '');
     require_once('SpamTagger/Config.php');
     $stconfig = SpamTagger_Config::getInstance();
-    $logfile = $stconfig->getOption('VARDIR').'/run/spamtagger/log_search/';
+    $logfile = '/var/spamtagger/run/spamtagger/log_search/';
 
     if (isset($params['traceid']) && preg_match('/^[a-zA-Z0-9]+$/', $params['traceid'])) {
       $logfile .= $params['traceid'].'.full';

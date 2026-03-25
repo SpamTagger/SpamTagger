@@ -25,7 +25,7 @@ use v5.40;
 use warnings;
 use utf8;
 
-use lib '/usr/spamtagger/lib/';
+use lib '/opt/spamtagger/lib/';
 use ReadConfig();
 use DB();
 use Domain();
@@ -44,7 +44,7 @@ my $uid = getpwnam( 'spamtagger' );
 my $gid = getgrnam( 'spamtagger' );
 
 my $conf = ReadConfig::get_instance();
-my $op = $conf->get_option('SRCDIR');
+my $op = "/opt/spamtagger";
 
 my $replica_db = DB->db_connect('replica', 'st_config');
 
@@ -65,8 +65,8 @@ my %dest_hosts = parse_destinations(\@domain_list);
 $time_in{'gathering_domains_config'} = time() - $previous_time;
 $previous_time = time();
 
-my $filepath = $conf->get_option('VARDIR')."/spool/tmp/spamtagger";
-my $posterspath = $conf->get_option('VARDIR')."/spool/spamtagger/addresses";
+my $filepath = "/var/spamtagger/spool/tmp/spamtagger";
+my $posterspath = "/var/spamtagger/spool/spamtagger/addresses";
 if ( ! -d $filepath ) {
    if (! mkdir $filepath ) {
      print "NODESTINATIONFOLDERAVAILABLE $filepath\n";
@@ -120,7 +120,7 @@ print_time('dumping_domains_pref');
 $previous_time = time();
 
 ## dump archiving and copy to rules
-my $dumpcmd = $conf->get_option('SRCDIR')."/bin/dump_archiving.pl";
+my $dumpcmd = "/opt/spamtagger/bin/dump_archiving.pl";
 my $dumpret = `$dumpcmd`;
 
 $time_in{'dumping_archiving'} = time() - $previous_time;

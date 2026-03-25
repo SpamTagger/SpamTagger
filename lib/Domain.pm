@@ -28,9 +28,8 @@ use Exporter 'import';
 our @EXPORT_OK = ();
 our $VERSION   = 1.0;
 
-use lib "/usr/spamtagger/lib/";
+use lib "/opt/spamtagger/lib/";
 use DB();
-use ReadConfig();
 use PrefClient();
 use SystemPref();
 use ConfigTemplate();
@@ -67,8 +66,7 @@ sub get_pref ($this, $pref, $default) {
 }
 
 sub load_prefs ($this) {
-  my $conf = ReadConfig::get_instance();
-  my $preffile = $conf->get_option('VARDIR')."/spool/spamtagger/prefs/".$this->{name}."/prefs.list";
+  my $preffile = "/var/spamtagger/spool/spamtagger/prefs/".$this->{name}."/prefs.list";
 
   my @dlist = ($this->{name}, '*', '_joker', '_global');
 
@@ -90,7 +88,7 @@ sub load_prefs ($this) {
   ## finaly try to find a valid preferences file
   my $found = 0;
   for my $d ( @dlist ) {
-    $preffile = $conf->get_option('VARDIR')."/spool/spamtagger/prefs/".$d."/prefs.list";
+    $preffile = "/var/spamtagger/spool/spamtagger/prefs/".$d."/prefs.list";
     if ( -f $preffile) {
       $found = 1;
       last;
@@ -122,8 +120,7 @@ sub dump_prefs ($this, $replica_db) {
 sub dump_prefs_from_row ($this, $row) {
   my %res = %{$row};
   print "CANNOTFINDPREFS" unless (%res && defined($res{id}));
-  my $conf = ReadConfig::get_instance();
-  my $prefdir = $conf->get_option('VARDIR')."/spool/spamtagger/prefs/".$this->{name};
+  my $prefdir = "/var/spamtagger/spool/spamtagger/prefs/".$this->{name};
   my $preffile = $prefdir."/prefs.list";
 
   my $stuid = getpwnam('SpamTagger');
@@ -172,7 +169,7 @@ sub dump_prefs_from_row ($this, $row) {
 
     my $template = ConfigTemplate->new(
       "etc/exim/ldapcallout_template",
-      $conf->get_option('VARDIR')."/spool/spamtagger/callout/"
+      "/var/spamtagger/spool/spamtagger/callout/"
         . $this->getPref('name').".ldapcallout");
 
     my %rep;
@@ -198,13 +195,12 @@ sub dump_prefs_from_row ($this, $row) {
 
 sub dump_local_addresses ($this, $replica_db) {
   my $stuid = getpwnam('SpamTagger');
-  my $conf = ReadConfig::get_instance();
 
   $replica_db = DB->db_connect('replica', 'st_config') unless ($replica_db);
 
   my $query = "SELECT e.address FROM email e WHERE e.address LIKE '%@".$this->{name}."'";
 
-  my $file = $conf->get_option('VARDIR')."/spool/spamtagger/addresses/".$this->{name}.".addresslist";
+  my $file = "/var/spamtagger/spool/spamtagger/addresses/".$this->{name}.".addresslist";
   my $OUTFILE;
   unless (open($OUTFILE, ">", $file)) {
     unlink($file) if (-e $file); ## in case we cannot write to file, try to remove it

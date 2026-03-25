@@ -33,14 +33,6 @@ HOSTID=$(grep 'HOSTID' $CONFFILE | cut -d ' ' -f3)
 if [ "$HOSTID" = "" ]; then
   HOSTID=1
 fi
-SRCDIR=$(grep 'SRCDIR' $CONFFILE | cut -d ' ' -f3)
-if [ "$SRCDIR" = "" ]; then
-  SRCDIR="/usr/spamtagger"
-fi
-VARDIR=$(grep 'VARDIR' $CONFFILE | cut -d ' ' -f3)
-if [ "$VARDIR" = "" ]; then
-  VARDIR="/var/spamtagger"
-fi
 
 HTTPPROXY=$(grep -e '^HTTPPROXY' $CONFFILE | cut -d ' ' -f3)
 export http_proxy=$HTTPPROXY
@@ -52,7 +44,7 @@ if [ "$REGISTERED" != "2" ]; then
   exit 0
 fi
 
-. $SRCDIR/lib/STUtils.sh
+. /opt/spamtagger/lib/STUtils.sh
 FILE_NAME=$(basename -- "$0")
 FILE_NAME="${FILE_NAME%.*}"
 ret=$(createLockFile "$FILE_NAME")
@@ -61,14 +53,14 @@ if [[ "$ret" -eq "1" ]]; then
 fi
 
 # Check if customer choose to send anonymous statistics
-ACCEPT_SEND_STATISTICS=$(echo "SELECT accept_send_statistics FROM registration LIMIT 1\G" | $SRCDIR/bin/st_mariadb -m st_community | grep -v "*" | cut -d ':' -f2 | tr -d '[:space:]')
+ACCEPT_SEND_STATISTICS=$(echo "SELECT accept_send_statistics FROM registration LIMIT 1\G" | /opt/spamtagger/bin/st_mariadb -m st_community | grep -v "*" | cut -d ':' -f2 | tr -d '[:space:]')
 if [ "$ACCEPT_SEND_STATISTICS" != "1" ]; then
   exit 0
 fi
 
 # Basic URL
 URL="http://reselleradmin.spamtagger.org/community/stats.php?"
-STATS=$($SRCDIR/bin/get_stats.pl _global -1 +0)
+STATS=$(/opt/spamtagger/bin/get_stats.pl _global -1 +0)
 if [ -z "$STATS" ]; then
   # No stats for last day ..
   exit 0

@@ -48,17 +48,7 @@ while getopts ":r" OPTION; do
   esac
 done
 
-CONFFILE=/etc/spamtagger.conf
-SRCDIR=$(grep 'SRCDIR' $CONFFILE | cut -d ' ' -f3)
-if [ "$SRCDIR" = "" ]; then
-  SRCDIR="/usr/spamtagger"
-fi
-VARDIR=$(grep 'VARDIR' $CONFFILE | cut -d ' ' -f3)
-if [ "$VARDIR" = "" ]; then
-  VARDIR="/var/spamtagger"
-fi
-
-. $SRCDIR/lib/STUtils.sh
+. /opt/spamtagger/lib/STUtils.sh
 FILE_NAME=$(basename -- "$0")
 FILE_NAME="${FILE_NAME%.*}"
 ret=$(createLockFile "$FILE_NAME")
@@ -66,9 +56,9 @@ if [[ "$ret" -eq "1" ]]; then
   exit 0
 fi
 
-. $SRCDIR/lib/updates/download_files.sh
+. /opt/spamtagger/lib/updates/download_files.sh
 
-ret=$(downloadDatas "$SRCDIR/updates/" "patches" $randomize "null" "" "noexit")
+ret=$(downloadDatas "/opt/spamtagger/updates/" "patches" $randomize "null" "" "noexit")
 
 if [[ "$ret" -eq "1" ]]; then
   log "Patches update"

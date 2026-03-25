@@ -26,7 +26,7 @@ use Exporter 'import';
 our @EXPORT_OK = ();
 our $VERSION   = 1.0;
 
-use lib "/usr/spamtagger/lib/";
+use lib "/opt/spamtagger/lib/";
 use lib "/usr/rrdtools/lib/perl/";
 use NetSNMP::agent();
 use NetSNMP::OID (':all');
@@ -165,7 +165,7 @@ sub populate_domains {
   delete $mib_domains{$_} for (keys(%mib_domains));
   delete $domains{$_} for (keys(%domains));
 
-  my $file = $conf->get_option('VARDIR')."/spool/tmp/spamtagger/snmpdomains.list";
+  my $file = "/var/spamtagger/spool/tmp/spamtagger/snmpdomains.list";
 
   my $f;
   if (open($f, '<', $file)) {

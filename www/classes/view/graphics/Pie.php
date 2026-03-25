@@ -158,7 +158,7 @@ public function addValue($value, $name, $color) {
     // resample to get anti-alias effect
     $destImage = imagecreatetruecolor($this->size_['width'], $this->size_['height']);
     imagecopyresampled($destImage, $image, 0, 0, 0, 0, $this->size_['width'], $this->size_['height'], $ext_width, $ext_height);
-    imagepng($destImage, $sysconf->VARDIR_."/www/".$this->filename_);
+    imagepng($destImage, "/var/spamtagger/www/".$this->filename_);
     imagedestroy($image);
     imagedestroy($destImage);
     return true;

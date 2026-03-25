@@ -10,6 +10,6 @@ mode         = 0660
 [data]
 update       = 600
 
-statefile    = __VARDIR__/spool/greylistd/states
-tripletfile  = __VARDIR__/spool/greylistd/triplets
+statefile    = /var/spamtagger/spool/greylistd/states
+tripletfile  = /var/spamtagger/spool/greylistd/triplets
 savetriplets = true

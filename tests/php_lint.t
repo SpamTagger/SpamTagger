@@ -3,7 +3,7 @@
 COUNT=0
 FILES=()
 for ext in php phtml tmpl; do
-  for i in $( find /usr/spamtagger/www -name "*.$ext" | grep -v '/Zend' ); do
+  for i in $( find /opt/spamtagger/www -name "*.$ext" | grep -v '/Zend' ); do
     FILES[$COUNT]=$i
     let COUNT=$((COUNT+1))
   done

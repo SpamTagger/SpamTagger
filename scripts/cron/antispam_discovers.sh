@@ -1,13 +1,5 @@
 #!/bin/bash
 
-SRCDIR=$(grep 'SRCDIR' /etc/spamtagger.conf | cut -d ' ' -f3)
-if [ "SRCDIR" = "" ]; then
-  SRCDIR=/usr/spamtagger
-fi
-VARDIR=$(grep 'VARDIR' /etc/spamtagger.conf | cut -d ' ' -f3)
-if [ "VARDIR" = "" ]; then
-  VARDIR=/var/spamtagger
-fi
 MYSPAMTAGGERPWD=$(grep -e '^MYSPAMTAGGERPWD' /etc/spamtagger.conf | cut -d ' ' -f3)
 HTTPPROXY=$(grep -e '^HTTPPROXY' /etc/spamtagger.conf | cut -d ' ' -f3)
 export http_proxy=$HTTPPROXY
@@ -24,14 +16,14 @@ su spamtagger -c "razor-admin -discover"
 
 su spamtagger -c "pyzor discover" 2>&1 >/dev/null
 
-if [ ! -d $VARDIR/.pyzor ]; then
-  mkdir $VARDIR/.pyzor
+if [ ! -d /var/spamtagger/.pyzor ]; then
+  mkdir /var/spamtagger/.pyzor
 fi
-#echo "82.94.255.100:24441" > $VARDIR/.pyzor/servers
-chown -R spamtagger:spamtagger $VARDIR/.pyzor
+#echo "82.94.255.100:24441" > /var/spamtagger/.pyzor/servers
+chown -R spamtagger:spamtagger /var/spamtagger/.pyzor
 
 if [ ! -d /root/.pyzor ]; then
   mkdir /root/.pyzor
 fi
-cp $VARDIR/.pyzor/servers /root/.pyzor/servers
+cp /var/spamtagger/.pyzor/servers /root/.pyzor/servers
 #echo "82.94.255.100:24441" > /root/.pyzor/servers

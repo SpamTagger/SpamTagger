@@ -117,7 +117,7 @@ class MTAConfig extends PrefHandler {
   public function getAvailableCertificates() {
     global $sysconf_;
 
-    $dir = $sysconf_->SRCDIR_."/etc/exim/certs";
+    $dir = "/opt/spamtagger/etc/exim/certs";
     $certs = array();
 
     if (exists) {

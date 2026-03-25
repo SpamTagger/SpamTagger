@@ -31,7 +31,7 @@ class BaseconfigurationController extends Zend_Controller_Action
 //  var_dump($this->view->serverUrl().$this->view->baseUrl()); die();
 
     $conf = SpamTagger_Config::getInstance();
-    if (file_exists($conf->getOption('VARDIR').'/run/configurator/dis_conf_interface.enable')) {
+    if (file_exists('/var/spamtagger/run/configurator/dis_conf_interface.enable')) {
       $wizard = Zend_Navigation_Page::factory(array(
         'label' => 'Wizard',
         'uri' => $this->view->serverUrl().':4242/',
@@ -86,13 +86,13 @@ class BaseconfigurationController extends Zend_Controller_Action
           $config = new SpamTagger_Config();
           $enable_configurator=$this->getRequest()->getParam('enable_configurator');
           $disable_configurator=$enable_configurator == "true" ? "false" : "true";
-          $tmp_file=$config->getOption('VARDIR')."/run/configurator/dis_conf_interface.enable";
+          $tmp_file="/var/spamtagger/run/configurator/dis_conf_interface.enable";
           if ($enable_configurator == "true" && !file_exists($tmp_file)) { // configurator interface enabled
             touch($tmp_file);
           } else if ($enable_configurator == "false" && file_exists($tmp_file)) {
             unlink($tmp_file);
           }
-          $cmd="sudo ".$config->getOption('SRCDIR')."/bin/dis_config_interface.sh ".$disable_configurator;
+          $cmd="sudo /opt/spamtagger/bin/dis_config_interface.sh ".$disable_configurator;
           $res=`$cmd`;
           $form->setParams($this->getRequest(), $interface);
           $message = $interface->save();

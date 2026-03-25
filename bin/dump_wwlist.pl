@@ -27,18 +27,7 @@ use warnings;
 use utf8;
 use Carp qw( confess );
 
-my ($SRCDIR, $VARDIR);
-BEGIN {
-    if ($0 =~ m/(\S*)\/\S+.pl$/) {
-        my $path = $1."/../lib";
-        unshift (@INC, $path);
-    }
-    require ReadConfig;
-    my $conf = ReadConfig::get_instance();
-    $SRCDIR = $conf->get_option('SRCDIR');
-    $VARDIR = $conf->get_option('VARDIR');
-    unshift(@INC, $SRCDIR."/lib");
-}
+use lib "/opt/spamtagger/lib";
 
 use STUtils qw( open_as );
 use File::Path qw( make_path );
@@ -53,7 +42,7 @@ if (!defined($what)) {
     $what = "";
 }
 my $to = "";
-my $filepath = "${VARDIR}/spool/spamtagger/prefs/";
+my $filepath = "/var/spamtagger/spool/spamtagger/prefs/";
 if ($what =~ /^\@([a-zA-Z0-9\.\_\-]+)$/) {
     $to = $what;
     $filepath .= $1."/_global/";

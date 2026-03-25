@@ -38,13 +38,13 @@ if [[ $LOG_MOD -gt $((timestamp - 86400)) ]]; then
     echo "$ABANDONED"
     if grep -Fq "source" <<<"$ABANDONED"; then
       if grep -Fq "spamtagger" <<<"$ABANDONED"; then
-        my_own_exit "1" # Abandoning update because Git tree at '$SRCDIR' is not on 'source' branch
+        my_own_exit "1" # Abandoning update because Git tree at '/opt/spamtagger' is not on 'source' branch
       else
         my_own_exit "2" # Abandoning update because Git tree at '$rpath' is not on 'source' branch
       fi
     else
       if grep -Fq "spamtagger" <<<"$ABANDONED"; then
-        my_own_exit "3" # Abandoning update because Git tree at '$SRCDIR' is blocking changes
+        my_own_exit "3" # Abandoning update because Git tree at '/opt/spamtagger' is blocking changes
       else
         my_own_exit "4" # Abandoning update because Git tree at '$rpath' is blocking changes
       fi

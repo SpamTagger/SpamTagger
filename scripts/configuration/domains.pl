@@ -20,13 +20,12 @@ use v5.40;
 use warnings;
 use utf8;
 
-use lib '/usr/spamtagger/lib';
+use lib '/opt/spamtagger/lib';
 use DB();
 use Term::ReadKey;
 use ReadConfig;
 
 my $config = ReadConfig::get_instance();
-my $VARDIR = $config->get_option('VARDIR');
 
 our $source_dbh = DB->db_connect('source', 'st_config');
 if (!$source_dbh) {

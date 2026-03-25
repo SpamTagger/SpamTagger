@@ -21,7 +21,7 @@ use strict;
 use warnings;
 use utf8;
 
-use lib '/usr/spamtagger/lib';
+use lib '/opt/spamtagger/lib';
 use ManageServices;
 
 our $service = 'ntpd';

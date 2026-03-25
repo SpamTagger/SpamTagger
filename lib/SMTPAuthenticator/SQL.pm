@@ -26,7 +26,7 @@ use Exporter 'import';
 our @EXPORT_OK = ();
 our $VERSION   = 1.0;
 
-use lib "/usr/spamtagger/lib";
+use lib "/opt/spamtagger/lib";
 use DBI();
 
 sub new ($server, $port, $params = {}) {
@@ -59,7 +59,7 @@ sub new ($server, $port, $params = {}) {
   if ($server eq 'local') {
     require ReadConfig;
     my $conf = ReadConfig::get_instance();
-    my $socket = $conf->get_option('VARDIR')."/run/mariadb_replica/mariadbd.sock";
+    my $socket = "/var/spamtagger/run/mariadb_replica/mariadbd.sock";
 
     $dsn = "DBI:mariadb:database=st_config;host=localhost;mariadb_socket=$socket";
     $dbuser = 'spamtagger';

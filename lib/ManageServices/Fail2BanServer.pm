@@ -43,7 +43,7 @@ sub config ($class) {
     'cmd'    => '/usr/bin/fail2ban-server',
     'pidfile'  => '/var/run/fail2ban/fail2ban.pid',
     'socket'  => '/var/run/fail2ban/fail2ban.sock',
-    'logfile'  => $class->{'conf'}->get_option('VARDIR').'/log/fail2ban/st-fail2ban.log',
+    'logfile'  => '/var/spamtagger/log/fail2ban/st-fail2ban.log',
     'user'    => 'root',
     'group'    => 'root',
     'daemonize'  => 'yes',
@@ -69,7 +69,7 @@ sub setup ($this, $class) {
 
   $this->do_log('Dumping Fail2Ban config...', 'daemon');
   $PYENV_VERSION = '3.7.7';
-  if (system($this->{'VARDIR'}.'/.pyenv/shims/dump_fail2ban_config.py')) {
+  if (system('/var/spamtagger/.pyenv/shims/dump_fail2ban_config.py')) {
     $this->do_log('dump_fail2ban_config.py failed', 'daemon');
   }
 

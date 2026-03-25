@@ -28,7 +28,7 @@ our $VERSION   = 1.0;
 
 use vars qw($VERSION);
 
-use lib "/usr/spamtagger/lib/";
+use lib "/opt/spamtagger/lib/";
 use Email();
 use Domain();
 use SystemPref();

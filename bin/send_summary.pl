@@ -35,7 +35,7 @@ use v5.40;
 use warnings;
 use utf8;
 
-use lib '/usr/spamtagger/lib/';
+use lib '/opt/spamtagger/lib/';
 use ReadConfig();
 use DB();
 use Email();
@@ -115,10 +115,10 @@ foreach my $addr (@addresses) {
   my $type = $email->get_pref('summary_type');
   my $lang = $email->get_pref('language');
   my $temp_id = $domain->get_pref('summary_template');
-  $temp_id = 'default' unless (-d $conf->get_option('SRCDIR')."/templates/summary/".$temp_id);
+  $temp_id = 'default' unless (-d "/opt/spamtagger/templates/summary/$temp_id");
 
   # In case of missing translation for summaries
-  if (!defined($lang) || $lang eq '' || ! -d $conf->get_option('SRCDIR')."/templates/summary/".$temp_id."/$lang") {
+  if (!defined($lang) || $lang eq '' || ! -d "/opt/spamtagger/templates/summary/${temp_id}/${lang}") {
     $lang = 'en';
   }
   my $to = $email->get_pref('summary_to');

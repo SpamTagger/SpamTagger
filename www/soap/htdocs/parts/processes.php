@@ -84,7 +84,7 @@ function stopService($sid, $service) {
   if (! file_exists($sudocmd) ) {
     $sudocmd = "/usr/bin/sudo";
   }
-  $cmd = "$sudocmd ".$sysconf_->SRCDIR_."/scripts/starters/".$services_[$service]['stopper'];
+  $cmd = "$sudocmd /opt/spamtagger/scripts/starters/".$services_[$service]['stopper'];
   $res = `$cmd`;
   $res = trim($res);
   if ($res == "SUCCESSFULL") {
@@ -119,7 +119,7 @@ function startService($sid, $service) {
   if (! file_exists($sudocmd) ) {
     $sudocmd = "/usr/bin/sudo";
   }
-  $cmd = "$sudocmd ".$sysconf_->SRCDIR_."/scripts/starters/".$services_[$service]['starter'];
+  $cmd = "$sudocmd /opt/spamtagger/scripts/starters/".$services_[$service]['starter'];
   $res = `$cmd`;
   $res = trim($res);
   if ($res == "SUCCESSFULL") {
@@ -148,7 +148,7 @@ function restartService($sid, $service) {
   if (! file_exists($sudocmd) ) {
     $sudocmd = "/usr/bin/sudo";
   }
-  $cmd = "$sudocmd ".$sysconf_->SRCDIR_."/scripts/starters/".$services_[$service]['restarter'];
+  $cmd = "$sudocmd /opt/spamtagger/scripts/starters/".$services_[$service]['restarter'];
   $res = `$cmd`;
   $res = trim($res);
   if ($res == "SUCCESSFULL") {
@@ -176,20 +176,20 @@ function dumpConfiguration($config, $params) {
   `echo "conf: $config" > /tmp/out.log`;
   switch ($config) {
     case 'domains':
-      $cmd = $sysconf_->SRCDIR_."/bin/dump_domains.pl";
+      $cmd = "/opt/spamtagger/bin/dump_domains.pl";
       if ($params != "") {
         $cmd .= " ".escapeshellcmd($params);
       }
       break;
 
     case 'wwlist':
-      $cmd = $sysconf_->SRCDIR_."/bin/dump_wwlist.pl";
+      $cmd = "/opt/spamtagger/bin/dump_wwlist.pl";
       if ($params != "") {
         $cmd .= " ".escapeshellcmd($params);
       }
       break;
     case 'exim':
-      $cmd = $sysconf_->SRCDIR_."/bin/dump_exim_config.pl";
+      $cmd = "/opt/spamtagger/bin/dump_exim_config.pl";
       if ($params != "") {
         $cmd .= " ".escapeshellcmd($params);
       }
@@ -239,7 +239,7 @@ function processNeedsRestart($process) {
   global $services_;
   $sysconf_ = SystemConfig::getInstance();
 
-  $restart_file = $sysconf_->VARDIR_."/run/".$services_[$process]['restartfile'];
+  $restart_file = "/var/spamtagger/run/".$services_[$process]['restartfile'];
   if (file_exists($restart_file)) {
     return 1;
   }
@@ -259,7 +259,7 @@ function setRestartStatus($process, $status) {
   if ($status < 1) {
     return true;
   }
-  $restart_file = $sysconf_->VARDIR_."/run/".$services_[$process]['restartfile'];
+  $restart_file = "/var/spamtagger/run/".$services_[$process]['restartfile'];
   if (!file_exists($restart_file)) {
     return touch($restart_file);
   }

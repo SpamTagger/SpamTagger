@@ -26,9 +26,7 @@ use Exporter 'import';
 our @EXPORT_OK = ();
 our $VERSION   = 1.0;
 
-use lib '/usr/spamtagger/lib';
-use ReadConfig();
-
+use lib '/opt/spamtagger/lib';
 use parent qw(SockClient);
 
 sub new ($class) {
@@ -41,8 +39,7 @@ sub new ($class) {
     timeout => 5,
   };
 
-  my $conf = ReadConfig::get_instance();
-  $spec_this->{socketpath} = $conf->get_option('VARDIR')."/run/prefdaemon.sock";
+  $spec_this->{socketpath} = "/var/spamtagger/run/prefdaemon.sock";
 
   my $this = $class->SUPER::new($spec_this);
 

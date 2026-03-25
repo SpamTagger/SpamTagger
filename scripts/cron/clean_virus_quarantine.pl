@@ -20,7 +20,7 @@ use v5.40;
 use warnings;
 use utf8;
 
-use lib '/usr/spamtagger/lib';
+use lib '/opt/spamtagger/lib';
 use DB;
 use ReadConfig;
 
@@ -46,7 +46,7 @@ if (! $days_to_keep) {
   }
 }
 
-my $quarantine_dir = $config->get_option('VARDIR')."/spool/mailscanner/quarantine";
+my $quarantine_dir = "/var/spamtagger/spool/mailscanner/quarantine";
 
 # Standardise the format of the directory name
 die 'Path for quarantine_dir must be absolute' unless $quarantine_dir =~ /^\//;

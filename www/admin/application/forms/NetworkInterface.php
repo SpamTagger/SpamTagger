@@ -61,7 +61,7 @@ class Default_Form_NetworkInterface extends Zend_Form {
     ));
     require_once('SpamTagger/Config.php');
     $config = new SpamTagger_Config();
-    $tmp_file=$config->getOption('VARDIR')."/run/configurator/dis_conf_interface.enable";
+    $tmp_file="/var/spamtagger/run/configurator/dis_conf_interface.enable";
     $enableConfigurator->setValue(file_exists($tmp_file) ? "true" : "false");
     $this->addElement($enableConfigurator);
 

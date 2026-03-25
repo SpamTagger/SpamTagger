@@ -40,10 +40,10 @@ sub config ($class) {
     'name'     => 'clamd',
     'cmndline'  => 'clamav/clamd.conf',
     'cmd'    => '/usr/bin/clamd',
-    'conffile'  => $class->{'conf'}->get_option('SRCDIR').'/etc/clamav/clamd.conf',
-    'pidfile'  => $class->{'conf'}->get_option('VARDIR').'/run/clamav/clamd.pid',
-    'logfile'  => $class->{'conf'}->get_option('VARDIR').'/log/clamav/clamd.log',
-    'localsocket'  => $class->{'conf'}->get_option('VARDIR').'/run/clamav/clamd.sock',
+    'conffile'  => '/opt/spamtagger/etc/clamav/clamd.conf',
+    'pidfile'  => '/var/spamtagger/run/clamav/clamd.pid',
+    'logfile'  => '/var/spamtagger/log/clamav/clamd.log',
+    'localsocket'  => '/var/spamtagger/run/clamav/clamd.sock',
     'children'  => 1,
     'user'    => 'clamav',
     'group'    => 'clamav',
@@ -71,9 +71,9 @@ sub setup ($this, $class) {
     1;
   };
   if ($rc) {
-    $dumped = 1 if IPC::Run::run([$this->{'SRCDIR'}.'/bin/dump_clamav_config.pl'], "2>&1", ">/dev/null");
+    $dumped = 1 if IPC::Run::run(['/opt/spamtagger/bin/dump_clamav_config.pl'], "2>&1", ">/dev/null");
   } else {
-    $dumped = 1 if system($this->{'SRCDIR'}."/bin/dump_clamav_config.pl 2>&1 >/dev/null");
+    $dumped = 1 if system("/opt/spamtagger/bin/dump_clamav_config.pl 2>&1 >/dev/null");
   }
   $this->do_log('dump_clamav_config.pl failed', 'daemon') unless ($dumped);
 

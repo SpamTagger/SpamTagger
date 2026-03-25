@@ -26,7 +26,7 @@ use Exporter 'import';
 our @EXPORT_OK = ();
 our $VERSION   = 1.0;
 
-use lib "/usr/spamtagger/lib/";
+use lib "/opt/spamtagger/lib/";
 use lib "/usr/rrdtools/lib/perl/";
 use NetSNMP::agent();
 use NetSNMP::OID (':all');
@@ -103,7 +103,7 @@ sub get_full_version {
 
 sub get_edition {
   my $edition = 'Unknown';
-  my $file = $conf->get_option('SRCDIR')."/etc/edition.def";
+  my $file = "/opt/spamtagger/etc/edition.def";
 
   my $f;
   if (open($f, '<', $file)) {
@@ -118,7 +118,7 @@ sub get_edition {
 
 sub get_version {
   my $version = 'Unknown';
-  my $file = $conf->get_option('SRCDIR')."/etc/spamtagger/version.def";
+  my $file = "/opt/spamtagger/etc/spamtagger/version.def";
 
   my $f;
   if (open($f, '<', $file)) {
@@ -157,7 +157,7 @@ sub get_spool ($oid) {
 
   my $spool = pop(@oid);
   $spool = 1 unless ($spool =~ /^[124]$/);
-  my $cmd = $EXIMBIN." -C ".$conf->get_option('SRCDIR')."/etc/exim/exim_stage".$spool.".conf -bpc";
+  my $cmd = $EXIMBIN." -C /opt/spamtagger/etc/exim/exim_stage".$spool.".conf -bpc";
   my $res = `$cmd`;
   chomp($res);
   return (ASN_INTEGER, int($res));

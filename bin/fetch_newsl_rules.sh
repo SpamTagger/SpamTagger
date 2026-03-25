@@ -50,17 +50,7 @@ while getopts ":r" OPTION; do
   esac
 done
 
-CONFFILE=/etc/spamtagger.conf
-SRCDIR=$(grep 'SRCDIR' $CONFFILE | cut -d ' ' -f3)
-if [ "$SRCDIR" = "" ]; then
-  SRCDIR="/usr/spamtagger"
-fi
-VARDIR=$(grep 'VARDIR' $CONFFILE | cut -d ' ' -f3)
-if [ "$VARDIR" = "" ]; then
-  VARDIR="/var/spamtagger"
-fi
-
-. $SRCDIR/lib/STUtils.sh
+. /opt/spamtagger/lib/STUtils.sh
 FILE_NAME=$(basename -- "$0")
 FILE_NAME="${FILE_NAME%.*}"
 ret=$(createLockFile "$FILE_NAME")
@@ -68,17 +58,17 @@ if [[ "$ret" -eq "1" ]]; then
   exit 0
 fi
 
-. $SRCDIR/lib/updates/download_files.sh
+. /opt/spamtagger/lib/updates/download_files.sh
 
 ##
 ## Newsleters rules update
 ##
-ret=$(downloadDatas "$SRCDIR/share/newsld/siteconfig/" "newsl_rules" $randomize "null" "" "noexit")
+ret=$(downloadDatas "/opt/spamtagger/share/newsld/siteconfig/" "newsl_rules" $randomize "null" "" "noexit")
 
 if [[ "$ret" -eq "1" ]]; then
-  $SRCDIR/etc/init.d/newsld stop >/dev/null 2>&1
+  /opt/spamtagger/etc/init.d/newsld stop >/dev/null 2>&1
   sleep 3
-  $SRCDIR/etc/init.d/newsld start >/dev/null 2>&1
+  /opt/spamtagger/etc/init.d/newsld start >/dev/null 2>&1
 fi
 
 removeLockFile "$FILE_NAME"

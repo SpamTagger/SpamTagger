@@ -1,24 +1,19 @@
 #!/bin/bash
 
-VARDIR=$(grep 'VARDIR' /etc/spamtagger.conf | cut -d ' ' -f3)
-if [ "VARDIR" = "" ]; then
-  VARDIR=/var/spamtagger
-fi
+rm -rf /var/spamtagger/log/exim_stage1/*
+rm -rf /var/spamtagger/log/exim_stage2/*
+rm -rf /var/spamtagger/log/exim_stage4/*
 
-rm -rf $VARDIR/log/exim_stage1/*
-rm -rf $VARDIR/log/exim_stage2/*
-rm -rf $VARDIR/log/exim_stage4/*
+rm /var/spamtagger/run/exim*
 
-rm $VARDIR/run/exim*
+rm -rf /var/spamtagger/spool/exim_stage1/db/*
+rm -rf /var/spamtagger/spool/exim_stage1/input/*
+rm -rf /var/spamtagger/spool/exim_stage1/msglog/*
 
-rm -rf $VARDIR/spool/exim_stage1/db/*
-rm -rf $VARDIR/spool/exim_stage1/input/*
-rm -rf $VARDIR/spool/exim_stage1/msglog/*
+rm -rf /var/spamtagger/spool/exim_stage2/db/*
+rm -rf /var/spamtagger/spool/exim_stage2/input/*
+rm -rf /var/spamtagger/spool/exim_stage2/msglog/*
 
-rm -rf $VARDIR/spool/exim_stage2/db/*
-rm -rf $VARDIR/spool/exim_stage2/input/*
-rm -rf $VARDIR/spool/exim_stage2/msglog/*
-
-rm -rf $VARDIR/spool/exim_stage4/db/*
-rm -rf $VARDIR/spool/exim_stage4/input/*
-rm -rf $VARDIR/spool/exim_stage4/msglog/*
+rm -rf /var/spamtagger/spool/exim_stage4/db/*
+rm -rf /var/spamtagger/spool/exim_stage4/input/*
+rm -rf /var/spamtagger/spool/exim_stage4/msglog/*

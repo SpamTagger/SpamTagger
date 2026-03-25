@@ -26,7 +26,7 @@
 function check_status() {
   echo "Checking replica status..."
 
-  STATUS=$(echo 'show slave status\G' | /usr/spamtagger/bin/st_mariadb -r)
+  STATUS=$(echo 'show slave status\G' | /opt/spamtagger/bin/st_mariadb -r)
   if grep -vq "Slave_SQL_Running: Yes" <<<$(echo $STATUS); then
     echo "Slave_SQL_Running failed"
     RUN=1
@@ -91,15 +91,6 @@ if [ -e $LOCKFILE ]; then
   fi
 fi
 
-VARDIR=$(grep 'VARDIR' /etc/spamtagger.conf | cut -d ' ' -f3)
-if [ "VARDIR" = "" ]; then
-  VARDIR=/var/spamtagger
-fi
-SRCDIR=$(grep 'SRCDIR' /etc/spamtagger.conf | cut -d ' ' -f3)
-if [ "SRCDIR" = "" ]; then
-  SRCDIR=/var/spamtagger
-fi
-
 systemctl is-active --quiet mariadb@replica
 if [[ $? ]]; then
   echo "starting replica db..."
@@ -120,7 +111,7 @@ fi
 # Resync
 
 MYSPAMTAGGERPWD=$(grep 'MYSPAMTAGGERPWD' /etc/spamtagger.conf | cut -d ' ' -f3)
-echo "select hostname, password from source;" | $SRCDIR/bin/st_mariadb -r st_config | grep -v 'password' | tr -t '[:blank:]' ':' >/var/tmp/source.conf
+echo "select hostname, password from source;" | /opt/spamtagger/bin/st_mariadb -r st_config | grep -v 'password' | tr -t '[:blank:]' ':' >/var/tmp/source.conf
 if [[ "$(cat /var/tmp/source.conf)" == "" ]]; then
   echo "No server defined in 'source' table."
   exit 1
@@ -141,25 +132,25 @@ fi
 systemctl stop mariadb@replica.socket
 sleep 2
 
-rm $VARDIR/spool/mariadb_replica/source.info >/dev/null 2>&1
-rm $VARDIR/spool/mariadb_replica/mariadbd-relay* >/dev/null 2>&1
-rm $VARDIR/spool/mariadb_replica/relay-log.info >/dev/null 2>&1
+rm /var/spamtagger/spool/mariadb_replica/source.info >/dev/null 2>&1
+rm /var/spamtagger/spool/mariadb_replica/mariadbd-relay* >/dev/null 2>&1
+rm /var/spamtagger/spool/mariadb_replica/relay-log.info >/dev/null 2>&1
 systemctl start mariadb@replica-nopass
 sleep 3
-echo "STOP SLAVE;" | $SRCDIR/bin/st_mariadb -r
+echo "STOP SLAVE;" | /opt/spamtagger/bin/st_mariadb -r
 sleep 3
-rm $VARDIR/spool/mariadb_replica/source.info >/dev/null 2>&1
-rm $VARDIR/spool/mariadb_replica/mariadbd-relay* >/dev/null 2>&1
-rm $VARDIR/spool/mariadb_replica/relay-log.info >/dev/null 2>&1
+rm /var/spamtagger/spool/mariadb_replica/source.info >/dev/null 2>&1
+rm /var/spamtagger/spool/mariadb_replica/mariadbd-relay* >/dev/null 2>&1
+rm /var/spamtagger/spool/mariadb_replica/relay-log.info >/dev/null 2>&1
 
-$SRCDIR/bin/st_mariadb -r st_config </var/tmp/source.sql
+/opt/spamtagger/bin/st_mariadb -r st_config </var/tmp/source.sql
 
 sleep 2
-echo "CHANGE MASTER TO master_host='$MHOST', master_user='spamtagger', master_password='$MPASS';" |  $SRCDIR/bin/st_mariadb -r
+echo "CHANGE MASTER TO master_host='$MHOST', master_user='spamtagger', master_password='$MPASS';" |  /opt/spamtagger/bin/st_mariadb -r
 # Return code should be 0 if there are no errors. Log code to RUN to catch errors that might not be presented with 'check_status'
-$SRCDIR/bin/st_mariadb -r st_config </var/tmp/source.sql
+/opt/spamtagger/bin/st_mariadb -r st_config </var/tmp/source.sql
 RUN=$?
-echo "START SLAVE;" | $SRCDIR/bin/st_mariadb -r
+echo "START SLAVE;" | /opt/spamtagger/bin/st_mariadb -r
 sleep 3
 
 systemctl stop mariadb@replica-nopass.socket

@@ -4,15 +4,15 @@ group MyROGroup v2c        local
 group MyROGroup usm        local
 view all    included  .1                               80
 access MyROGroup ""      any       noauth    exact  all    none   none
-exec  getmsgs __SRCDIR__/bin/get_today_stats.pl -m
-exec  getspams __SRCDIR__/bin/get_today_stats.pl -s
-exec  getbytes __SRCDIR__/bin/get_today_stats.pl -b
-exec  getvirus __SRCDIR__/bin/get_today_stats.pl -v
-exec  getstatus __SRCDIR__/bin/get_status.pl -s
-exec  getspools __SRCDIR__/bin/get_status.pl -p
-exec  getload __SRCDIR__/bin/get_status.pl -l
-exec  getdisks __SRCDIR__/bin/get_status.pl -d
-exec  getmem __SRCDIR__/bin/get_status.pl -m
-exec  getstats __SRCDIR__/bin/get_today_stats.pl -B
+exec  getmsgs /opt/spamtagger/bin/get_today_stats.pl -m
+exec  getspams /opt/spamtagger/bin/get_today_stats.pl -s
+exec  getbytes /opt/spamtagger/bin/get_today_stats.pl -b
+exec  getvirus /opt/spamtagger/bin/get_today_stats.pl -v
+exec  getstatus /opt/spamtagger/bin/get_status.pl -s
+exec  getspools /opt/spamtagger/bin/get_status.pl -p
+exec  getload /opt/spamtagger/bin/get_status.pl -l
+exec  getdisks /opt/spamtagger/bin/get_status.pl -d
+exec  getmem /opt/spamtagger/bin/get_status.pl -m
+exec  getstats /opt/spamtagger/bin/get_today_stats.pl -B
 
-perl push (@INC, "__SRCDIR__/lib"); require SNMPAgent; SNMPAgent->init();
+perl push (@INC, "/opt/spamtagger/lib"); require SNMPAgent; SNMPAgent->init();

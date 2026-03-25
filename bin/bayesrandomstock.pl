@@ -26,7 +26,7 @@ use v5.40;
 use warnings;
 use utf8;
 
-use lib '/usr/spamtagger/lib/';
+use lib '/opt/spamtagger/lib/';
 use ReadConfig();
 use SystemPref();
 use PrefDaemon();
@@ -43,8 +43,7 @@ if (!$sysconf->get_pref('do_stockme')) {
   exit 0;
 }
 
-my $VARDIR=$conf->get_option('VARDIR');
-my $CENTERPATH=$VARDIR."/spool/learningcenter";
+my $CENTERPATH="/var/spamtagger/spool/learningcenter";
 my $SPAMDIR=$CENTERPATH."/stockspam/";
 my $HAMDIR=$CENTERPATH."/stockham";
 my $STOCKDIR=$CENTERPATH."/stockrandom";

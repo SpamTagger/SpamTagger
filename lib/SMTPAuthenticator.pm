@@ -26,10 +26,9 @@ use Exporter 'import';
 our @EXPORT_OK = ();
 our $VERSION   = 1.0;
 
-use lib "/usr/spamtagger/lib/";
+use lib "/opt/spamtagger/lib/";
 use SystemPref();
 use Domain();
-use ReadConfig();
 use DBD::SQLite();
 use Net::LDAP();
 use Digest::MD5 qw(md5_hex);
@@ -58,8 +57,7 @@ sub new ($class, $username) {
   my $allowed = $domain->get_pref('allow_smtp_auth');
   $authorized = 0 unless ($allowed);
 
-  my $conf = ReadConfig::get_instance();
-  my $cachepath = $conf->get_option('VARDIR')."/spool/tmp/exim_stage1/auth_cache/";
+  my $cachepath = "/var/spamtagger/spool/tmp/exim_stage1/auth_cache/";
   if (! -d $cachepath) {
     ::Auth_log('creating cache directory '.$cachepath);
     mkdir $cachepath;

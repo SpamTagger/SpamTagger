@@ -43,8 +43,6 @@ class DataManager {
    * @param  array
    */
   private $base_config = array(
-    'VARDIR' => '/var/spamtagger',
-    'SRCDIR' => '/usr/spamtagger'
   );
 
   /**

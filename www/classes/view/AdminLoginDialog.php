@@ -76,8 +76,8 @@ class AdminLoginDialog {
       $admin = new Administrator();
       $admin->load($this->username_);
       $_SESSION['admin'] = serialize($admin);
-      if (is_writable($this->sysconf_->VARDIR_."/log/apache/".AUTHLOGFILE)) {
-        if ($logfile = fopen($this->sysconf_->VARDIR_."/log/apache/".AUTHLOGFILE, "a")) {
+      if (is_writable("/var/spamtagger/log/apache/".AUTHLOGFILE)) {
+        if ($logfile = fopen("/var/spamtagger/log/apache/".AUTHLOGFILE, "a")) {
           fwrite($logfile, "[".date("d/M/Y:H:i:s O")."] login SUCCESSFUL for user: ".$this->username_." - ".$_SERVER['REMOTE_ADDR']."\n");
           fclose($logfile);
         }
@@ -87,8 +87,8 @@ class AdminLoginDialog {
     } else {
       // log authentication failure (with IP)
       if (isset ($_POST['username'])) {
-        if (is_writable($this->sysconf_->VARDIR_."/log/apache/".AUTHLOGFILE)) {
-          if ($logfile = fopen($this->sysconf_->VARDIR_."/log/apache/".AUTHLOGFILE, "a")) {
+        if (is_writable("/var/spamtagger/log/apache/".AUTHLOGFILE)) {
+          if ($logfile = fopen("/var/spamtagger/log/apache/".AUTHLOGFILE, "a")) {
             fwrite($logfile, "[".date("d/M/Y:H:i:s O")."] login FAILED for user: ".$_POST['username']." - ".$_SERVER['REMOTE_ADDR']."\n");
             fclose($logfile);
           }

@@ -15,7 +15,7 @@ class Default_Model_AutoconfigurationManager {
 
   public function load() {
     $this->_config = SpamTagger_Config::getInstance();
-    $this->setAutoconfenabled(file_exists($this->_config->getOption('VARDIR').$this->ST_AUTOCONF_TAG_FILE));
+    $this->setAutoconfenabled(file_exists("/var/spamtagger".$this->ST_AUTOCONF_TAG_FILE));
   }
 
   public function getAutoconfenabled() {

@@ -40,12 +40,12 @@ sub config ($class) {
     'name'     => 'newsld',
     'cmndline'  => 'newsld.pid',
     'cmd'    => '/usr/local/bin/newsld',
-    'conffile'  => $class->{'conf'}->get_option('SRCDIR').'/etc/mailscanner/newsld.conf',
-    'pidfile'  => $class->{'conf'}->get_option('VARDIR').'/run/newsld.pid',
-    'logfile'  => $class->{'conf'}->get_option('VARDIR').'/log/mailscanner/newsld.log',
-    'socket'  => $class->{'conf'}->get_option('VARDIR').'/run/newsld.sock',
+    'conffile'  => '/opt/spamtagger/etc/mailscanner/newsld.conf',
+    'pidfile'  => '/var/spamtagger/run/newsld.pid',
+    'logfile'  => '/var/spamtagger/log/mailscanner/newsld.log',
+    'socket'  => '/var/spamtagger/run/newsld.sock',
     'children'  => 11,
-    'siteconfig'  => $class->{'conf'}->get_option('SRCDIR').'/share/newsld/siteconfig',
+    'siteconfig'  => '/opt/spamtagger/share/newsld/siteconfig',
     'user'    => 'spamtagger',
     'group'    => 'spamtagger',
     'daemonize'  => 'yes',
@@ -72,9 +72,9 @@ sub setup ($this, $class) {
     1;
   };
   if ($rc) {
-    $dumped = 1 if IPC::Run::run([$this->{'SRCDIR'}.'/bin/dump_mailscanner_config.pl'], "2>&1", ">/dev/null");
+    $dumped = 1 if IPC::Run::run(['/opt/spamtagger/bin/dump_mailscanner_config.pl'], "2>&1", ">/dev/null");
   } else {
-    $dumped = 1 if system($this->{'SRCDIR'}."/bin/dump_mailscanner_config.pl 2>&1 >/dev/null");
+    $dumped = 1 if system("/opt/spamtagger/bin/dump_mailscanner_config.pl 2>&1 >/dev/null");
   }
   $this->do_log('dump_mailscanner_config.pl failed', 'daemon') unless ($dumped);
 

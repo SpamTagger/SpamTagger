@@ -30,13 +30,10 @@ use v5.40;
 use warnings;
 use utf8;
 
-use lib '/usr/spamtagger/lib/';
+use lib '/opt/spamtagger/lib/';
 use DB();
 use File::Copy();
 use ReadConfig();
-
-our $config = ReadConfig::get_instance();
-our $VARDIR = $config->get_option('VARDIR');
 
 my $quardir = shift || bad_usage();
 my $forced_postfix = '-F'.int(rand(100));
@@ -46,7 +43,7 @@ unless ($quardir =~ /\d{8}\/([a-z,A-Z,0-9]{6}-[a-z,A-Z,0-9]{6,11}-[a-z,A-Z,0-9]{
 }
 my $id = $1;
 
-my $dir = "$VARDIR/spool/mailscanner/quarantine/$quardir";
+my $dir = "/var/spamtagger/spool/mailscanner/quarantine/$quardir";
 chomp $dir;
 
 my $uid = getpwnam( 'spamtagger' );
@@ -59,7 +56,7 @@ if (! -d $dir ) {
 
 my ($HFILE, $DHFILE);
 die("CANNOTFINDHEADERFILE") unless (open($HFILE, '<', $dir."/".$id."-H"));
-die("CANNOTOPENDESTHEADERFILE") unless (open($DHFILE, '>', "$VARDIR/spool/exim_stage4/input/".$id."-H"));
+die("CANNOTOPENDESTHEADERFILE") unless (open($DHFILE, '>', "/var/spamtagger/spool/exim_stage4/input/".$id."-H"));
 
 my $id_header = '';
 my $hsize;
@@ -101,16 +98,16 @@ while (<$HFILE>) {
 close $DHFILE;
 close $HFILE;
 
-unless (copy($dir."/".$id."-D", "$VARDIR/spool/exim_stage4/input/")) {
+unless (copy($dir."/".$id."-D", "/var/spamtagger/spool/exim_stage4/input/")) {
   die "NOTFORCED: failed to copy file from: ";
 }
 my @exts = ('H', 'D', 'J', 'T');
 foreach my $ext ( @exts ) {
-  my $spoolfile = "$VARDIR/spool/exim_stage4/input/".$id."-".$ext;
+  my $spoolfile = "/var/spamtagger/spool/exim_stage4/input/".$id."-".$ext;
   chown $uid, $gid, $spoolfile if (-f $spoolfile);
 }
 sleep 2;
-my $cmd = "/opt/exim4/bin/exim -C ".$config->get_option('SRCDIR')."/etc/exim/exim_stage4.conf -M ".$id." 2>&1";
+my $cmd = "/opt/exim4/bin/exim -C /opt/spamtagger/etc/exim/exim_stage4.conf -M ".$id." 2>&1";
 my $res = `$cmd`;
 if ($res =~ /^$/) {
   mark_forced($id);

@@ -27,8 +27,8 @@ my_own_exit() {
 #### MAIN
 #### Lorsque le module a trouvé une erreur, il est censé sortir avec my_own_exit "#ERREUR" (avec #ERREUR : chiffre : retour de la commande)
 EXIT=0
-if [[ $(grep authresults /usr/spamtagger/etc/exim/exim_stage1.conf_template | wc -l) = 0 ]]; then
-  echo "/usr/spamtagger/etc/exim/exim_stage1.conf_template is not up to date" >>$OUT_FILE
+if [[ $(grep authresults /opt/spamtagger/etc/exim/exim_stage1.conf_template | wc -l) = 0 ]]; then
+  echo "/opt/spamtagger/etc/exim/exim_stage1.conf_template is not up to date" >>$OUT_FILE
   EXIT=1
 fi
 

@@ -28,7 +28,7 @@ use Exporter 'import';
 our @EXPORT_OK = ();
 our $VERSION   = 1.0;
 
-use lib "/usr/spamtagger/lib/";
+use lib "/opt/spamtagger/lib/";
 use ReadConfig();
 use DB();
 
@@ -43,9 +43,8 @@ sub get_instance {
 sub new ($class = "SystemPref", $name = "SystemPref") {
   my %prefs;
 
-  my $conf = ReadConfig::get_instance();
-  my $preffile = $conf->get_option('VARDIR')."/spool/spamtagger/prefs/_global/prefs.list";
-  my $prefdir = $conf->get_option('VARDIR')."/spool/spamtagger/prefs/_global/";
+  my $preffile = "/var/spamtagger/spool/spamtagger/prefs/_global/prefs.list";
+  my $prefdir = "/var/spamtagger/spool/spamtagger/prefs/_global/";
   my $this = {
     name => $name,
     prefdir => $prefdir,

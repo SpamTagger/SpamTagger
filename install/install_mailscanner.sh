@@ -18,29 +18,23 @@ else
   exit
 
   BACK=$(pwd)
-  if [ "$SRCDIR" = "" ]; then
-    SRCDIR=$(grep 'SRCDIR' /etc/spamtagger.conf | cut -d ' ' -f3)
-    if [ "SRCDIR" = "" ]; then
-      SRCDIR=/usr/spamtagger
-    fi
-  fi
 
-  cd $SRCDIR/install/src
+  cd /opt/spamtagger/install/src
   tar -xvzf tnef.tar.gz
   cd tnef-1.2.3.1
   ./configure
   make
   make install
-  cd $SRCDIR/install/src
+  cd /opt/spamtagger/install/src
   rm -rf tnef-1.2.3.1
 
-  cd $SRCDIR/install/src
+  cd /opt/spamtagger/install/src
   tar -xvzf Mailscanner.tar.gz
   cd MailScanner-install-4.45.4
 
   ./install.sh
 
-  cd $SRCDIR
+  cd /opt/spamtagger
 
   if [ -d mailscanner_old ]; then
     rm -rf mailscanner_old
@@ -51,22 +45,22 @@ else
 
   mv /opt/MailScanner-4.45.4 mailscanner
 
-  SD=$(echo $SRCDIR | perl -pi -e 's/\//\\\//g')
-  perl -pi -e "s/\/opt\/MailScanner/$SD\/mailscanner/g" $SRCDIR/mailscanner/bin/check_mailscanner
-  perl -pi -e "s/config=\S+/config=$SD\/etc\/mailscanner\/MailScanner.conf/g" $SRCDIR/mailscanner/bin/check_mailscanner
-  perl -pi -e "s/\/opt\/MailScanner/$SD\/mailscanner/g" $SRCDIR/mailscanner/bin/MailScanner
-  perl -pi -e "s/SCANNERSCONF=\S+/SCANNERSCONF=$SD\/etc\/mailscanner\/virus.scanners.conf/g" $SRCDIR/mailscanner/bin/update_virus_scanners
+  SD=$(echo /opt/spamtagger | perl -pi -e 's/\//\\\//g')
+  perl -pi -e "s/\/opt\/MailScanner/$SD\/mailscanner/g" /opt/spamtagger/mailscanner/bin/check_mailscanner
+  perl -pi -e "s/config=\S+/config=$SD\/etc\/mailscanner\/MailScanner.conf/g" /opt/spamtagger/mailscanner/bin/check_mailscanner
+  perl -pi -e "s/\/opt\/MailScanner/$SD\/mailscanner/g" /opt/spamtagger/mailscanner/bin/MailScanner
+  perl -pi -e "s/SCANNERSCONF=\S+/SCANNERSCONF=$SD\/etc\/mailscanner\/virus.scanners.conf/g" /opt/spamtagger/mailscanner/bin/update_virus_scanners
 
-  cp $SRCDIR/install/src/MailScanner_Custom/SpamTaggerPrefs.pm $SRCDIR/mailscanner/lib/MailScanner/CustomFunctions/
-  cp $SRCDIR/install/src/MailScanner_Custom/clamav-wrapper $SRCDIR/mailscanner/lib/
-  cp $SRCDIR/install/src/MailScanner_Custom/etrust-wrapper $SRCDIR/mailscanner/lib/
-  cp $SRCDIR/install/src/MailScanner_Custom/etrust-autoupdate $SRCDIR/mailscanner/lib/
-  cp $SRCDIR/install/src/MailScanner_Custom/MailWatch.pm $SRCDIR/mailscanner/lib/MailScanner/
-  cp $SRCDIR/install/src/MailScanner_Custom/MailWatch.patch $SRCDIR/mailscanner/lib/MailScanner/
-  cd $SRCDIR/mailscanner/lib/MailScanner/
+  cp /opt/spamtagger/install/src/MailScanner_Custom/SpamTaggerPrefs.pm /opt/spamtagger/mailscanner/lib/MailScanner/CustomFunctions/
+  cp /opt/spamtagger/install/src/MailScanner_Custom/clamav-wrapper /opt/spamtagger/mailscanner/lib/
+  cp /opt/spamtagger/install/src/MailScanner_Custom/etrust-wrapper /opt/spamtagger/mailscanner/lib/
+  cp /opt/spamtagger/install/src/MailScanner_Custom/etrust-autoupdate /opt/spamtagger/mailscanner/lib/
+  cp /opt/spamtagger/install/src/MailScanner_Custom/MailWatch.pm /opt/spamtagger/mailscanner/lib/MailScanner/
+  cp /opt/spamtagger/install/src/MailScanner_Custom/MailWatch.patch /opt/spamtagger/mailscanner/lib/MailScanner/
+  cd /opt/spamtagger/mailscanner/lib/MailScanner/
   patch -p0 <MailWatch.patch
 
-  $SRCDIR/bin/dump_mailscanner_config.pl
+  /opt/spamtagger/bin/dump_mailscanner_config.pl
 
   cd $BACK
 fi

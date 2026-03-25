@@ -10,7 +10,7 @@
 # Replace authenticationxx and licensid with your license info.
 #
 
-SNIFFER_PATH=__VARDIR__/spool/messagesniffer
+SNIFFER_PATH=/var/spamtagger/spool/messagesniffer
 SNF2CHECK=/opt/messagesniffer/sbin/SNF2Check
 AUTHENTICATION=__AUTHENTICATION__
 LICENSE_ID=__LICENSEID__

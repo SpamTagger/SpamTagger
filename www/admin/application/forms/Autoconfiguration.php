@@ -28,7 +28,7 @@ class Default_Form_Autoconfiguration extends ZendX_JQuery_Form {
 
     require_once('SpamTagger/Config.php');
     $config = new SpamTagger_Config();
-    $autoconf_enabled = file_exists($config->getOption('VARDIR').$this->ST_AUTOCONF_TAG_FILE);
+    $autoconf_enabled = file_exists("/var/spamtagger/".$this->ST_AUTOCONF_TAG_FILE);
 
     $autoconf = new  Zend_Form_Element_Checkbox('autoconfiguration', array(
       'label' => "Enable auto-configuration :",

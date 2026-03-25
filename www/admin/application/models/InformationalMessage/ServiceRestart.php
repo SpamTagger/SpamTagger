@@ -22,7 +22,7 @@ class Default_Model_InformationalMessage_ServiceRestart extends Default_Model_In
     $services_to_test = array('exim_stage1', 'exim_stage2', 'exim_stage4', 'mailscanner', 'clamd', 'firewall', 'greylistd', 'apache', 'snmpd');
 
     foreach ($services_to_test as $service) {
-      $restart_file = $config->getOption('VARDIR')."/run/".$service.".rn";
+      $restart_file = "/var/spamtagger/run/".$service.".rn";
       if (file_exists($restart_file)) {
         array_push($this->_services, $service);
         $this->_toshow = true;

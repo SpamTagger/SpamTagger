@@ -20,18 +20,9 @@
 #   Usage:
 #           apply_update.sh patch_id
 
-VARDIR=$(grep 'VARDIR' /etc/spamtagger.conf | cut -d ' ' -f3)
-if [ "$VARDIR" = "" ]; then
-  VARDIR=/var/spamtagger
-fi
-SRCDIR=$(grep 'SRCDIR' /etc/spamtagger.conf | cut -d ' ' -f3)
-if [ "$SRCDIR" = "" ]; then
-  SRCDIR=/var/spamtagger
-fi
-
 MYSPAMTAGGERPWD=$(grep 'MYSPAMTAGGERPWD' /etc/spamtagger.conf | cut -d ' ' -f3)
 
-LOGFILE=$VARDIR/log/spamtagger/update.log
+LOGFILE=/var/spamtagger/log/spamtagger/update.log
 PATCHID=$1
 
 if [ $PATCHID = "" ]; then
@@ -39,7 +30,7 @@ if [ $PATCHID = "" ]; then
   exit 1
 fi
 
-PATCHFILE=$SRCDIR/updates/$PATCHID
+PATCHFILE=/opt/spamtagger/updates/$PATCHID
 
 if [ ! -x $PATCHFILE ]; then
   echo "ERROR: patch file $PATCHFILE not found or not executable"
@@ -48,7 +39,7 @@ fi
 
 DESC=$(grep "# DESCRIPTION: " $PATCHFILE | cut -d':' -f2)
 
-EXISTS=$(echo "SELECT id FROM update_patch WHERE id='$PATCHID';" | /usr/bin/mariadb -uspamtagger -p$MYSPAMTAGGERPWD -S$VARDIR/run/mariadb_replica/mariadbd.sock st_config)
+EXISTS=$(echo "SELECT id FROM update_patch WHERE id='$PATCHID';" | /usr/bin/mariadb -uspamtagger -p$MYSPAMTAGGERPWD -S/var/spamtagger/run/mariadb_replica/mariadbd.sock st_config)
 if [ ! "$EXISTS" = "" ]; then
   echo "ERROR: patch $PATCHID already applied"
   exit 1
@@ -63,7 +54,7 @@ RES=$($PATCHFILE)
 echo "res is: $RES"
 if [ "$RES" = "OK" ]; then
   echo "["$(date "+%Y-%m-%d %H:%M:%S")"] [$PATCHID] done with update, status: $RES" >>$LOGFILE
-  echo "INSERT INTO update_patch VALUES('$PATCHID', NOW(), NOW(), '$RES', '$DESC');" | /usr/bin/mariadb -uspamtagger -p$MYSPAMTAGGERPWD -S$VARDIR/run/mariadb_replica/mariadbd.sock st_config
+  echo "INSERT INTO update_patch VALUES('$PATCHID', NOW(), NOW(), '$RES', '$DESC');" | /usr/bin/mariadb -uspamtagger -p$MYSPAMTAGGERPWD -S/var/spamtagger/run/mariadb_replica/mariadbd.sock st_config
 else
   echo "["$(date "+%Y-%m-%d %H:%M:%S")"] [$PATCHID] aborted, will retry later, reason is: $RES" >>$LOGFILE
 fi

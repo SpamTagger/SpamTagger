@@ -1,4 +1,4 @@
-#! /usr/bin/env perl -I__SRCDIR__/lib
+#!/usr/bin/env perl
 #
 #   SpamTagger - Open Source Spam Filtering
 #   Copyright (C) 2026 John Mertz <git@john.me.tz>
@@ -20,7 +20,7 @@ use v5.40;
 use warnings;
 use utf8;
 
-use lib '/usr/spamtagger/lib';
+use lib '/opt/spamtagger/lib';
 use Time::HiRes qw(gettimeofday tv_interval);
 use SpamLogger;
 use Email;
@@ -28,7 +28,6 @@ use Net::SMTP;
 use ReadConfig;
 
 my $config = ReadConfig::get_instance();
-our $VARDIR = $config->get_option('VARDIR');
 
 my $stime = [gettimeofday];
 my $PROFILE = 1;
@@ -321,15 +320,15 @@ sub send_anyway ($wantlisted) {
 
 sub put_in_quarantine {
   profile_start('putInQuar');
-  if ( !-d "$VARDIR/spam/$to_domain" ) {
-    mkdir( "$VARDIR/spam/$to_domain" );
+  if ( !-d "/var/spamtagger/spam/$to_domain" ) {
+    mkdir( "/var/spamtagger/spam/$to_domain" );
   }
-  if ( !-d "$VARDIR/spam/$to_domain/$to" ) {
-    mkdir( "$VARDIR/spam/$to_domain/$to" );
+  if ( !-d "/var/spamtagger/spam/$to_domain/$to" ) {
+    mkdir( "/var/spamtagger/spam/$to_domain/$to" );
   }
 
   ## save the spam file
-  my $filename = "$VARDIR/spam/$to_domain/$to/$exim_id";
+  my $filename = "/var/spamtagger/spam/$to_domain/$to/$exim_id";
   my $MSGFILE;
   unless (open($MSGFILE, ">", $filename )) {
     print " cannot open quarantine file $filename for writing";
@@ -368,7 +367,7 @@ sub send_notice {
 ##########################################
 
 sub panic_log_msg {
-  my $filename = $VARDIR."/spool/exim_stage4/paniclog/".$exim_id;
+  my $filename = "/var/spamtagger/spool/exim_stage4/paniclog/".$exim_id;
   print " **WARNING, cannot send message ! saving mail to: $filename\n";
 
   my $PANICLOG;

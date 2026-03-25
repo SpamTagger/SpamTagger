@@ -41,14 +41,6 @@ while getopts ":r" OPTION; do
   esac
 done
 
-SRCDIR=$(grep 'SRCDIR' /etc/spamtagger.conf | cut -d ' ' -f3)
-if [ "SRCDIR" = "" ]; then
-  SRCDIR=/var/spamtagger
-fi
-VARDIR=$(grep 'VARDIR' /etc/spamtagger.conf | cut -d ' ' -f3)
-if [ "VARDIR" = "" ]; then
-  VARDIR=/var/spamtagger
-fi
 ISSOURCE=$(grep 'ISSOURCE' /etc/spamtagger.conf | cut -d ' ' -f3)
 CLIENTID=$(grep 'CLIENTID' /etc/spamtagger.conf | cut -d ' ' -f3)
 HOSTID=$(grep 'HOSTID' /etc/spamtagger.conf | cut -d ' ' -f3)
@@ -56,7 +48,7 @@ HOSTID=$(grep 'HOSTID' /etc/spamtagger.conf | cut -d ' ' -f3)
 MAXSLEEPTIME=300
 MINSLEEPTIME=120
 
-. $SRCDIR/lib/STUtils.sh
+. /opt/spamtagger/lib/STUtils.sh
 FILE_NAME=$(basename -- "$0")
 FILE_NAME="${FILE_NAME%.*}"
 ret=$(createLockFile "$FILE_NAME")
@@ -72,7 +64,7 @@ fi
 if [ "$ISSOURCE" = "Y" ] || [ "$ISSOURCE" = "y" ]; then
   CONFIGFILE=/var/tmp/config.sql
 
-  $($SRCDIR/bin/backup_config.sh $CONFIGFILE) >/dev/null 2>&1
+  $(/opt/spamtagger/bin/backup_config.sh $CONFIGFILE) >/dev/null 2>&1
 
   DATE=$(date +%Y%m%d)
   chmod g+w $CONFIGFILE

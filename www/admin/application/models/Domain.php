@@ -1121,19 +1121,19 @@ class Default_Model_Domain
    */
   public function getWebTemplates() {
     $config = SpamTagger_Config::getInstance();
-    $path = $config->getOption('SRCDIR')."/www/user/templates";
+    $path = "/opt/spamtagger/www/user/templates";
     return $this->getTemplates($path);
   }
 
   public function getSummaryTemplates() {
     $config = SpamTagger_Config::getInstance();
-    $path = $config->getOption('SRCDIR')."/templates/summary/";
+    $path = "/opt/spamtagger/templates/summary/";
     return $this->getTemplates($path);
   }
 
   public function getReportTemplates() {
     $config = SpamTagger_Config::getInstance();
-    $path = $config->getOption('SRCDIR')."/templates/reports/";
+    $path = "/opt/spamtagger/templates/reports/";
     return $this->getTemplates($path);
   }
 

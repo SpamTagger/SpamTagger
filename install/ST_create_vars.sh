@@ -1,10 +1,5 @@
 #!/bin/bash
 
-VARDIR=$(grep 'VARDIR' /etc/spamtagger.conf | cut -d ' ' -f3)
-if [ "$VARDIR" == "" ]; then
-  VARDIR=/var/spamtagger
-fi
-
 ETCDIR=/etc/spamtagger
 DEFAULTUID=spamtagger
 DEFAULTGID=spamtagger
@@ -48,106 +43,106 @@ function check_dir {
 ################
 
 check_dir $ETCDIR
-check_dir $VARDIR
+check_dir /var/spamtagger
 
 ####
 # create top-level dirs
 
-check_dir $VARDIR/log
-check_dir $VARDIR/spool
-check_dir $VARDIR/run
+check_dir /var/spamtagger/log
+check_dir /var/spamtagger/spool
+check_dir /var/spamtagger/run
 check_dir $ETCDIR/apache
 
 ####
 # create exim dirs
 
-check_dir $VARDIR/log/exim_stage1 spamtagger
-check_dir $VARDIR/log/exim_stage2 spamtagger
-check_dir $VARDIR/log/exim_stage4 spamtagger
+check_dir /var/spamtagger/log/exim_stage1 spamtagger
+check_dir /var/spamtagger/log/exim_stage2 spamtagger
+check_dir /var/spamtagger/log/exim_stage4 spamtagger
 
-check_dir $VARDIR/spool/exim_stage1
-check_dir $VARDIR/spool/exim_stage1/input
-check_dir $VARDIR/spool/exim_stage2
-check_dir $VARDIR/spool/exim_stage2/input
-check_dir $VARDIR/spool/exim_stage4
-check_dir $VARDIR/spool/exim_stage4/input
-check_dir $VARDIR/spool/exim_stage4/paniclog
-check_dir $VARDIR/spool/exim_stage4/spamstore
+check_dir /var/spamtagger/spool/exim_stage1
+check_dir /var/spamtagger/spool/exim_stage1/input
+check_dir /var/spamtagger/spool/exim_stage2
+check_dir /var/spamtagger/spool/exim_stage2/input
+check_dir /var/spamtagger/spool/exim_stage4
+check_dir /var/spamtagger/spool/exim_stage4/input
+check_dir /var/spamtagger/spool/exim_stage4/paniclog
+check_dir /var/spamtagger/spool/exim_stage4/spamstore
 
 ####
 # create mariadb dirs
 
-check_dir $VARDIR/log/mariadb_source mysql spamtagger
-check_dir $VARDIR/log/mariadb_replica mysql spamtagger
-chmod -R g+ws $VARDIR/log/mariadb_source
-chmod -R g+ws $VARDIR/log/mariadb_replica
+check_dir /var/spamtagger/log/mariadb_source mysql spamtagger
+check_dir /var/spamtagger/log/mariadb_replica mysql spamtagger
+chmod -R g+ws /var/spamtagger/log/mariadb_source
+chmod -R g+ws /var/spamtagger/log/mariadb_replica
 
-check_dir $VARDIR/spool/mariadb_source mysql spamtagger
-check_dir $VARDIR/spool/mariadb_replica mysql spamtagger
+check_dir /var/spamtagger/spool/mariadb_source mysql spamtagger
+check_dir /var/spamtagger/spool/mariadb_replica mysql spamtagger
 
-check_dir $VARDIR/run/mariadb_source mysql spamtagger
-check_dir $VARDIR/run/mariadb_replica mysql spamtagger
+check_dir /var/spamtagger/run/mariadb_source mysql spamtagger
+check_dir /var/spamtagger/run/mariadb_replica mysql spamtagger
 
 ####
 # create spamtagger dirs
 
-check_dir $VARDIR/spool/tmp
-check_dir $VARDIR/spool/mailscanner/
-check_dir $VARDIR/spool/mailscanner/incoming
-check_dir $VARDIR/spool/mailscanner/quarantine
-check_dir $VARDIR/spool/mailscanner/users
+check_dir /var/spamtagger/spool/tmp
+check_dir /var/spamtagger/spool/mailscanner/
+check_dir /var/spamtagger/spool/mailscanner/incoming
+check_dir /var/spamtagger/spool/mailscanner/quarantine
+check_dir /var/spamtagger/spool/mailscanner/users
 
-check_dir $VARDIR/log/mailscanner spamtagger
+check_dir /var/spamtagger/log/mailscanner spamtagger
 
-check_dir $VARDIR/spam
+check_dir /var/spamtagger/spam
 
-check_dir $VARDIR/spool/spamassassin
+check_dir /var/spamtagger/spool/spamassassin
 
 ####
 # create apache dirs
 
-check_dir $VARDIR/log/apache spamtagger
-check_dir $VARDIR/www
-check_dir $VARDIR/www/mrtg
-check_dir $VARDIR/www/stats
+check_dir /var/spamtagger/log/apache spamtagger
+check_dir /var/spamtagger/www
+check_dir /var/spamtagger/www/mrtg
+check_dir /var/spamtagger/www/stats
 
 ####
 # create spamtagger dirs
 
-check_dir $VARDIR/log/spamtagger
-check_dir $VARDIR/spool/spamtagger
-check_dir $VARDIR/spool/spamtagger/prefs
-check_dir $VARDIR/spool/spamtagger/counts
-check_dir $VARDIR/spool/spamtagger/stats
-check_dir $VARDIR/spool/spamtagger/scripts
-check_dir $VARDIR/spool/spamtagger/addresses
-check_dir $VARDIR/spool/rrdtools
-check_dir $VARDIR/spool/bogofilter
-check_dir $VARDIR/spool/bogofilter/database
-check_dir $VARDIR/spool/bogofilter/updates
-check_dir $VARDIR/spool/learningcenter
-check_dir $VARDIR/spool/learningcenter/stockspam
-check_dir $VARDIR/spool/learningcenter/stockham
-check_dir $VARDIR/spool/learningcenter/stockrandom
-check_dir $VARDIR/spool/learningcenter/stockrandom/spam
-check_dir $VARDIR/spool/learningcenter/stockrandom/spam/cur
-check_dir $VARDIR/spool/learningcenter/stockrandom/ham
-check_dir $VARDIR/spool/learningcenter/stockrandom/ham/cur
-check_dir $VARDIR/spool/watchdog
-check_dir $VARDIR/run/spamtagger
-check_dir $VARDIR/run/spamtagger/log_search
-check_dir $VARDIR/run/spamtagger/stats_search
+check_dir /var/spamtagger/log/spamtagger
+check_dir /var/spamtagger/spool/spamtagger
+check_dir /var/spamtagger/spool/spamtagger/prefs
+check_dir /var/spamtagger/spool/spamtagger/counts
+check_dir /var/spamtagger/spool/spamtagger/stats
+check_dir /var/spamtagger/spool/spamtagger/scripts
+check_dir /var/spamtagger/spool/spamtagger/addresses
+check_dir /var/spamtagger/spool/rrdtools
+check_dir /var/spamtagger/spool/bogofilter
+check_dir /var/spamtagger/spool/bogofilter/database
+check_dir /var/spamtagger/spool/bogofilter/updates
+check_dir /var/spamtagger/spool/learningcenter
+check_dir /var/spamtagger/spool/learningcenter/stockspam
+check_dir /var/spamtagger/spool/learningcenter/stockham
+check_dir /var/spamtagger/spool/learningcenter/stockrandom
+check_dir /var/spamtagger/spool/learningcenter/stockrandom/spam
+check_dir /var/spamtagger/spool/learningcenter/stockrandom/spam/cur
+check_dir /var/spamtagger/spool/learningcenter/stockrandom/ham
+check_dir /var/spamtagger/spool/learningcenter/stockrandom/ham/cur
+check_dir /var/spamtagger/spool/watchdog
+check_dir /var/spamtagger/run/spamtagger
+check_dir /var/spamtagger/run/spamtagger/log_search
+check_dir /var/spamtagger/run/spamtagger/stats_search
 
 ####
 # create clamav dirs
 
-check_dir $VARDIR/log/clamav clamav clamav
-check_dir $VARDIR/spool/clamav clamav clamav
-check_dir $VARDIR/run/clamav clamav clamav
-check_dir $VARDIR/spool/clamspam clamav clamav
+check_dir /var/spamtagger/log/clamav clamav clamav
+check_dir /var/spamtagger/spool/clamav clamav clamav
+check_dir /var/spamtagger/run/clamav clamav clamav
+check_dir /var/spamtagger/spool/clamspam clamav clamav
 
 ####
 # create dcc dirs
 
-check_dir $VARDIR/spool/dcc dcc dcc
-check_dir $VARDIR/run/dcc dcc dcc
+check_dir /var/spamtagger/spool/dcc dcc dcc
+check_dir /var/spamtagger/run/dcc dcc dcc

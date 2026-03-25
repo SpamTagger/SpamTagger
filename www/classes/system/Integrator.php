@@ -33,7 +33,7 @@ class Integrator extends PrefHandler {
     require_once('system/SystemConfig.php');
     $sysconf = SystemConfig::getInstance();
 
-    $values = @file($sysconf->VARDIR_."/spool/spamtagger/integrator.txt");
+    $values = @file("/var/spamtagger/spool/spamtagger/integrator.txt");
     if (!$values || ! is_array($values)) {
       return;
     }

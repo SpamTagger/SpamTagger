@@ -29,18 +29,7 @@ use warnings;
 use utf8;
 use Carp qw( confess );
 
-my ($SRCDIR, $VARDIR);
-BEGIN {
-    if ($0 =~ m/(\S*)\/\S+.pl$/) {
-        my $path = $1."/../lib";
-        unshift (@INC, $path);
-    }
-    require ReadConfig;
-    my $conf = ReadConfig::get_instance();
-    $SRCDIR = $conf->get_option('SRCDIR') || '/usr/spamtagger';
-    $VARDIR = $conf->get_option('VARDIR') || '/var/spamtagger';
-}
-
+use lib "/opt/spamtagger/lib";
 use STUtils qw(open_as);
 use File::Touch;
 use File::Path qw(make_path);
@@ -57,8 +46,8 @@ our $gid = getgrnam( 'greylist' );
 our $confdir = "/etc/greylistd";
 
 foreach my $dir (
-    "${VARDIR}/spool/greylistd",
-    "${VARDIR}/run/greylistd"
+    "/var/spamtagger/spool/greylistd",
+    "/var/spamtagger/run/greylistd"
 ) {
     make_path($dir, {'mode'=>0o755,'user'=>$uid,'group'=>$gid}) unless ( -d $dir );
 }
@@ -68,9 +57,9 @@ if ( -e $confdir && !-l $confdir ) {
     rmdir($confdir);
 }
 
-symlink("${SRCDIR}/${confdir}", $confdir);
+symlink("/opt/spamtagger/${confdir}", $confdir);
 
-symlink($SRCDIR.'/etc/apparmor', '/etc/apparmor.d/spamtagger') unless (-e '/etc/apparmor.d/spamtagger');
+symlink('/opt/spamtagger/etc/apparmor', '/etc/apparmor.d/spamtagger') unless (-e '/etc/apparmor.d/spamtagger');
 
 dump_greylistd_file(\%greylist_conf);
 
@@ -81,16 +70,16 @@ dump_trusted_ips($trusted_ips);
 foreach my $dir (
     "/etc/greylistd",
     glob("/etc/greylistd/*"),
-    "${VARDIR}/spool/greylistd",
+    "/var/spamtagger/spool/greylistd",
 ) {
     make_path($dir, {'mode'=>0o755,'user'=>$uid,'group'=>$gid}) unless ( -d $dir );
 }
 
 foreach my $file (
-    glob("${VARDIR}/spool/greylistd/*"),
-    "${VARDIR}/spool/tmp/spamtagger/domains_to_greylist.list",
-    "${SRCDIR}/${confdir}/config",
-    "${SRCDIR}/${confdir}/whitelist-hosts",
+    glob("/var/spamtagger/spool/greylistd/*"),
+    "/var/spamtagger/spool/tmp/spamtagger/domains_to_greylist.list",
+    "/opt/spamtagger/${confdir}/config",
+    "/opt/spamtagger/${confdir}/whitelist-hosts",
 ) {
     touch($file) unless(-f $file);
     chown($uid, $gid, $file);
@@ -131,7 +120,7 @@ sub dump_domain_to_avoid($domains)
         @domains_to_avoid = split /\s*[\,\:\;]\s*/, $domains;
     }
 
-    my $dir = "${VARDIR}/spool/tmp/spamtagger/";
+    my $dir = "/var/spamtagger/spool/tmp/spamtagger/";
     make_path($dir, {'mode'=>0o755,'user'=>$uid,'group'=>$gid}) unless ( -d $dir );
     my $file = "${dir}/domains_to_avoid_greylist.list";
     my $DOMAINTOAVOID;
@@ -146,7 +135,7 @@ sub dump_domain_to_avoid($domains)
 
 sub dump_trusted_ips($ips)
 {
-    my $file = "${SRCDIR}/${confdir}/whitelist-hosts";
+    my $file = "/opt/spamtagger/${confdir}/whitelist-hosts";
     unlink($file) if (-e $file);
     return 0 unless (defined($ips));
     return 0 if ($ips =~ /^\s*$/);
@@ -159,8 +148,8 @@ sub dump_trusted_ips($ips)
 
 sub dump_greylistd_file($greylistd_conf)
 {
-    my $template_file = "${SRCDIR}/${confdir}/greylistd.conf_template";
-    my $target_file = "${SRCDIR}/${confdir}/config";
+    my $template_file = "/opt/spamtagger/${confdir}/greylistd.conf_template";
+    my $target_file = "/opt/spamtagger/${confdir}/config";
 
     my ($TEMPLATE, $TARGET);
     confess "Cannot open $template_file: $!\n" unless ($TEMPLATE = ${open_as($template_file, '<')} );
@@ -168,9 +157,6 @@ sub dump_greylistd_file($greylistd_conf)
 
     while(<$TEMPLATE>) {
         my $line = $_;
-
-        $line =~ s/__VARDIR__/$VARDIR/g;
-        $line =~ s/__SRCDIR__/$SRCDIR/g;
 
         foreach my $key (keys %{$greylistd_conf}) {
             $line =~ s/$key/$greylistd_conf->{$key}/g;
