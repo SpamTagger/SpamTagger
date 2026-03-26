@@ -9,12 +9,12 @@
 # new patches.
 
 # Detect Bootc installation and bail
-if [ -e /usr/bin/bootc ] && [ -z $CI ]; then
+if [ "$(bootc status --format=json --booted | jq -r '.status | .booted')" != null ] && [ -z $CI ]; then
   echo "This tool is not intended for use with Bootc installations. If you have concerns about potentially unpatched vulnerabilities, please check for Bootc updates with 'bootc upgrade'. This tool is run daily via a GitHub Action and any results will open a GitHub Issue, prompting a new release of the official images as soon as they are discovered."
   exit
 fi
 
-if [ ! "$(dpkg -l | grep debsecan)" -eq "" ]; then
+if [ "$(dpkg -l | grep debsecan)" != "" ]; then
   apt-get update 2>&1 >/dev/null && apt-get install debsecan 2>&1 >/dev/null
 fi
 
