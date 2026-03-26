@@ -28,27 +28,70 @@ use Exporter 'import';
 our @EXPORT_OK = ();
 our $VERSION   = 1.0;
 
+use lib "/opt/spamtagger/lib";
+use STUtils qw( open_as );
+use Carp qw( confess );
+
 ###
 # create the dumper
-# @param  $template    string  base template file
+# @param  $infile        string  file path
+#   Accepts most valid input paths or output paths:
+#   * /etc/spamtagger/* - user defined configuration template
+#   * /opt/spamtagger/* - system configuration template
+#   * /usr/spamtagger/* - legacy system template
+#   * /var/spamtagger/tmp/* - configuration output directory
+#   * [^/]* - (relative path) will search for matching file in /(etc|opt)/spamtagger
+#   Will also accomodate for `_template` if provided or not. Will only use the file with this
+#   suffix present, but you can provide the argument with or without.
 # @param  $targetfile  string  target config file
 # @return              this
 ###
-sub new ($class, $templatefile, $targetfile) {
-  if ($templatefile =~ m/^[^\/]/) {
-    $templatefile = "/opt/spamtagger/".$templatefile;
+sub new ($class, $infile, $chown='spamtagger:spamtagger') {
+  # Add `_template` suffix if missing
+  $infile = "${infile}_template" unless ($infile =~ m/_template$/);
+  my $outfile;
+  # If a relative path is provided, search for a valid template file.
+  if ($infile =~ m/^[^\/]/) {
+    # Outfile with always be relative to `/var/spamtagger/tmp/`
+    $outfile = "/var/spamtagger/tmp/${infile}";
+    # Prefer user-defined template, if it exists
+    if (-e "/etc/spamtagger/${infile}") {
+      $infile = "/etc/spamtagger/${infile}";
+      print("Using user-defined config template $infile\n");
+    # Use system file if it does not
+    } elsif (-e "/opt/spamtagger/${infile}") {
+      $infile = "/opt/spamtagger/${infile}";
+      print("Using default system template $infile\n");
+    # Otherwise die if not found in either location
+    } elsif ($infile =~ m/\.\./) {
+      confess "Upward path traversal prohibited for $infile\n";
+    } else {
+      confess "No files found matching relative path $infile\n";
+    }
+  # If path is absolute, remove approved prefixes and provide required output prefix
+  } else {
+    confess "Unsupported input file: $infile" unless ($infile =~ m#^/(?:var/spamtagger(?:/tmp)?|(?:etc|opt|usr)/spamtagger)#);
+    ($outfile) = $infile =~ m#^/(?:var/spamtagger(?:/tmp)?|(?:etc|opt|usr)/spamtagger)(.*)$#;
+    $outfile = "/var/spamtagger/tmp/${outfile}";
   }
-  if ($targetfile =~ m/^[^\/]/) {
-    $targetfile = "/opt/spamtagger/".$targetfile;
-  }
+  confess "Template file $infile does not exist\n" unless (-e $infile);
+
+  # Remove `_template` suffix from output
+  $outfile =~ s/_template$//;
 
   my $this = {
-    templatefile => $templatefile,
-    targetfile => $targetfile,
+    templatefile => $infile,
+    targetfile => $outfile,
     replacements => {},
     subtemplates => {},
-    conditions => {}
+    conditions => {},
+    chown => $chown
   };
+
+  my ($overrides) = $infile =~ m#^/(?:var/spamtagger(?:/tmp)?|(?:etc|opt|usr)/spamtagger)(.*)_template$#;
+  if (-e "/etc/spamtagger/${overrides}.toml") {
+    $this->parse_overrides("/etc/spamtagger/${overrides}.toml");
+  }
 
   bless $this, $class;
 
@@ -86,6 +129,29 @@ sub pre_parse_template ($this) {
   return 1;
 }
 
+###
+# preparse overrides
+#
+# Optional user-defined file can be defined at `<template_file>.toml`. Options in the `variables`
+# block with override the default `replacements` variables. Options in the `features` block will
+# enable/disable conditional blocks.
+#
+# @param  $file  string  override file path
+# @return        boolean   true on success, false on failure
+###
+sub parse_overrides ($this, $file) {
+  my ($FH, $toml, $overrides);
+  confess "Override file $file doesn't exist\n" unless (-e $file);
+  confess "Failed to open $file override file\n" unless (open($FH, '<', $file));
+  while (<$FH>) {
+    $toml .= $_;
+  }
+  close($FH);
+  confess "Failed to parse TOML from $file\n" unless ($overrides = from_toml($toml));
+  $this->{override_vars} = $overrides->{variables};
+  $this->{override_feat} = $overrides->{features};
+}
+  
 sub get_sub_template ($this, $tmplname) {
   if (defined($this->{subtemplates}{$tmplname})) {
     return $this->{subtemplates}{$tmplname};
@@ -102,9 +168,15 @@ sub set_replacements ($this, $replace) {
   foreach my $tag (keys %{$replace}) {
     $this->{replacements}->{$tag} = $replace->{$tag};
   }
+  foreach my $tag (keys %{$this->{override_vars}}) {
+    $this->{replacements}->{$tag} = $this->{override_vars}->{$tag};
+  }
+  # Must load all override features again in case any exist but were not triggered by set_condition
+  foreach my $tag (keys %{$this->{override_feat}}) {
+    $this->{conditions}->{$tag} = $this->{override_feat}->{$tag};
+  }
   return 1;
 }
-
 
 ###
 # dump to destination file
@@ -112,7 +184,7 @@ sub set_replacements ($this, $replace) {
 sub dump_file ($this) {
   my ($FILE, $TARGET);
   return 0 unless (open($FILE, '<', $this->{templatefile}));
-  return 0 unless (open($TARGET, ">", $this->{targetfile}));
+  return 0 unless ($TARGET = ${open_as($this->{targetfile}, '>', 0o664, $this->{chown})});
 
   my $ret;
   my $in_hidden = 0;
@@ -180,13 +252,15 @@ sub dump_file ($this) {
       my $inc_file = $1;
       my $path_file;
       $inc_file =~ s/_template$//;
-      # Version using .include_if_exists
-      if ( -f "/opt/spamtagger/etc/exim/custom/$inc_file" ) {
-        $path_file = "/opt/spamtagger/etc/exim/custom/$inc_file";
+      # .include_if_exists
+      # Prefer user-defined file if it exists
+      if ( -f "/etc/spamtagger/etc/exim/$inc_file" ) {
+        $path_file = "/etc/spamtagger/etc/exim/$inc_file";
+      # Fallback to system config
       } elsif ( -f "/opt/spamtagger/etc/exim/$inc_file" ) {
         $path_file = "/opt/spamtagger/etc/exim/$inc_file";
       } else {
-	next;
+        next;
       }
 
       my $PATHFILE;
@@ -238,14 +312,17 @@ sub dump_file ($this) {
     print $TARGET $ret;
   }
   close $TARGET;
-  my $uid = getpwnam( 'spamtagger' );
-  my $gid = getgrnam( 'spamtagger' );
-  chown $uid, $gid, $this->{targetfile};
   return 1;
 }
 
 sub set_condition ($this, $condition, $value) {
-  $this->{conditions}->{$condition} = $value;
+  # Must immediately set override value so that it is readable by get_condition
+  if (defined($this->{override_feat}->{$condition})) {
+    print "$condition overridden by TOML feature\n";
+    $this->{conditions}->{$condition} = $this->{override_feat}->{$condition};
+  } else {
+    $this->{conditions}->{$condition} = $value;
+  }
   return 1;
 }
 

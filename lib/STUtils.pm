@@ -26,9 +26,10 @@ use Exporter 'import';
 our @EXPORT_OK = qw( create_lockfile open_as remove_lockfile rmrf );
 our $VERSION   = 1.0;
 
+use Carp qw( confess );
+use File::Basename qw/dirname/;
 use File::Path qw/make_path/;
 use File::Touch qw/touch/;
-use Carp qw( confess );
 
 # Returns 0 if $file cannot be opened
 # (1, $file content) otherwise
@@ -83,44 +84,45 @@ sub create_lockfile ($filename, $path = '/var/spamtagger/spool/tmp/', $timeout =
 }
 
 sub open_as($file, $method=">", $chmod=0o664, $chown='spamtagger:spamtagger') {
-    my ($uid, $gid) = split(/:/,$chown);
-    $uid = getpwnam( $uid );
-    $gid = getgrnam( $gid );
-    my ($path,$filename) = $file =~ m#(.*)/([^/]*)$#;
-    $path = getcwd().'/'.$path unless ($path =~ m#^/#);
+  my ($owner, $group) = split(/:/,$chown);
+  $file = getcwd().'/'.$file unless ($file =~ m#^/#);
 
-    if ( ! -d $path ) {
-        confess ("Failed to create $path\n") unless (make_path($path, {mode => $chmod, user => $uid, group => $gid}));
+  # Ensure distination dir exists
+  if ($method =~ m/[\+>]/) {
+    if (!-d dirname($file)) {
+      make_path(dirname(dirname($file)), { mode => 0o755, owner => $owner, group => $group } ) or confess "Failed to create output directory: $!";
     }
-
-    confess ("$file does not exist\n") if ($method eq "<" && ! -e "$file");
-
-    if ( ! -e "$path/$filename" ) {
-        confess("Failed to create $path/$filename\n") unless touch("$path/$filename");
+    if ( ! -e $file ) {
+      confess("Failed to create $file\n") unless touch($file);
     }
+    confess "Failed to set mode for $file to ".sprintf("%o",$chmod)."\n" unless chmod($chmod, $file);
+    my $uid = getpwnam($owner);
+    my $gid = getgrnam($group);
+    confess "Failed to give ownership of $file to $chown\n" unless chown($uid, $gid, $file);
 
-    confess "Failed to set mode for ${path}/${filename} to ".sprintf("%o",$chmod)."\n" unless chmod($chmod, $path.'/'.$filename);
-    confess "Failed to give ownership of $path/$filename to $uid:$gid\n" unless chown($uid, $gid, $path.'/'.$filename);
+  } else {
+    confess ("$file does not exist\n") unless (-e $file);
+  }
 
-    my $mlong = 'read/write';
-    $mlong = 'read' if ($method eq '<');
-    $mlong = 'write' if ($method eq '>');
-    $mlong = 'append' if ($method eq '>>');
-    if (open (my $fh, $method, "${path}/${filename}")) {
-        return \$fh;
-    } else {
-        confess("Failed to open $path/$filename for $mlong: $!\n");
-    }
+  my $mlong = 'read/write';
+  $mlong = 'read' if ($method eq '<');
+  $mlong = 'write' if ($method eq '>');
+  $mlong = 'append' if ($method eq '>>');
+  if (open (my $fh, $method, $file)) {
+    return \$fh;
+  } else {
+    confess("Failed to open $file for $mlong: $!\n");
+  }
 }
 
 sub rmrf($path) {
-    if (-d $path) {
-        rmrf($_) foreach (glob($path."/*"));
-        rmdir($path);
-    } else {
-        unlink($path);
-    }
-    return;
+  if (-d $path) {
+    rmrf($_) foreach (glob($path."/*"));
+    rmdir($path);
+  } else {
+    unlink($path);
+  }
+  return;
 }
 
 sub remove_lockfile ($filename, $path = '/var/spamtagger/spool/tmp/') {
@@ -133,6 +135,5 @@ sub remove_lockfile ($filename, $path = '/var/spamtagger/spool/tmp/') {
 
   return $rc;
 }
-
 
 1;

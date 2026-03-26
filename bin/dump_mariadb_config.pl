@@ -20,7 +20,7 @@
 #   setting found in the database.
 #
 #   Usage:
-#           dump_mariadb_config.pl
+#       dump_mariadb_config.pl
 
 use v5.40;
 use strict;
@@ -34,11 +34,12 @@ use File::Path qw(make_path);
 use DB;
 
 use ReadConfig;
+use ConfigTemplate;
 my $conf = ReadConfig::get_instance();
 my $HOSTID = $conf->get_option('HOSTID') || die("Cannot find required HOSTID variable from config file.\n");
 
 our $DEBUG = 1;
-our $uid = getpwnam( 'spamtagger' );
+our $uid = getpwnam( 'mysql' );
 our $gid = getgrnam( 'spamtagger' );
 
 ## added 10 for migration ease
@@ -50,112 +51,97 @@ $config{'__REPLICAID__'} = ${HOSTID} * 2 + 10;
 ## Avoid having unsychronized database when starting a new VA
 my $FIRSTUPDATE_FLAG_RAN = "/var/spamtagger/state/first-run-wizard";
 if (-e $FIRSTUPDATE_FLAG_RAN) {
-    $config{'__BINARY_LOG_KEEP__'} = 21;
+  $config{'__BINARY_LOG_KEEP__'} = 21;
 } else {
-    $config{'__BINARY_LOG_KEEP__'} = 0;
+  $config{'__BINARY_LOG_KEEP__'} = 0;
 }
 
 my $lasterror = "";
 
 my @stages = ('source', 'replica');
 if (scalar(@ARGV)) {
-    @stages = ();
-    foreach my $arg (@ARGV) {
-        confess "Invalid database $arg" unless ($arg =~ /^(replica|source)(\-nopass)?$/);
-	push(@stages, $arg);
-    }
+  @stages = ();
+  foreach my $arg (@ARGV) {
+    confess "Invalid database $arg" unless ($arg =~ /^(replica|source)(\/nopass)?$/);
+    push(@stages, $arg);
+  }
 }
 foreach my $stage (@stages) {
-    confess "CANNOTDUMPMYSQLFILE" unless (dump_mariadb_file($stage,%config));
-    ownership($stage);
+  $stage =~ s/\/nopass$//;
+  confess "CANNOTDUMPMYSQLFILE" unless (dump_mariadb_file($stage,%config));
+  ownership($stage);
 }
 
 #############################
 sub dump_mariadb_file($stage,%config)
 {
-    my $template_file = "/opt/spamtagger/etc/mariadb/my_${stage}.cnf_template";
-    my $target_file = "/var/spamtagger/tmp/configs/mariadb/my_${stage}.cnf";
+  my $template = ConfigTemplate->new("etc/mariadb/my_${stage}.cnf", "mysql:spamtagger");
+  #confess "Cannot open $template_file: $!" unless ($TEMPLATE = ${open_as($template_file, '<')});
+  #confess "Cannot open ${target_file}: $!" unless ($TARGET = ${open_as("${target_file}", '>', 0o664, 'spamtagger:spamtagger')});
+  $template->set_replacements(\%config);
 
-    my ($TEMPLATE, $TARGET);
-    confess "Cannot open $template_file: $!" unless ($TEMPLATE = ${open_as($template_file, '<', 0o664, 'spamtagger:spamtagger')});
-    confess "Cannot open ${target_file}: $!" unless ($TARGET = ${open_as("${target_file}", '>', 0o664, 'spamtagger:spamtagger')});
-
-    while(<$TEMPLATE>) {
-        my $line = $_;
-
-        foreach my $key (keys %config) {
-            $line =~ s/$key/$config{$key}/g;
-        }
-
-        print $TARGET $line;
-    }
-
-    close $TEMPLATE;
-    close $TARGET;
-
-    return 1;
+  return $template->dump_file();
 }
 
 sub ownership($stage)
 {
-    use File::Touch qw( touch );
+  use File::Touch qw( touch );
 
-    unless ( -e "/usr/lib/systemd/system/mariadb\@.service.d" ) {
-	symlink("/opt/spamtagger/scripts/systemd/mariadb\@.service.d", "/usr/lib/systemd/system/mariadb\@.service.d");
-	`systemctl daemon-reload`;
-    }
-    unless ( -e "/usr/lib/systemd/system/mariadb\@${stage}.service.d" ) {
-	symlink("/opt/spamtagger/scripts/systemd/mariadb\@${stage}.service.d", "/usr/lib/systemd/system/mariadb\@${stage}.service.d");
-	`systemctl daemon-reload`;
-    }
-    unless ( -e "/usr/lib/systemd/system/mariadb\@${stage}-nopass.service.d" ) {
-	symlink("/opt/spamtagger/scripts/systemd/mariadb\@${stage}-nopass.service.d", "/usr/lib/systemd/system/mariadb\@${stage}-nopass.service.d");
-	`systemctl daemon-reload`;
-    }
-    symlink('/opt/spamtagger/etc/apparmor', '/etc/apparmor.d/spamtagger') unless (-e '/etc/apparmor.d/spamtagger');
+  unless ( -e "/usr/lib/systemd/system/mariadb\@.service.d" ) {
+  symlink("/opt/spamtagger/scripts/systemd/mariadb\@.service.d", "/usr/lib/systemd/system/mariadb\@.service.d");
+  `systemctl daemon-reload`;
+  }
+  unless ( -e "/usr/lib/systemd/system/mariadb\@${stage}.service.d" ) {
+  symlink("/opt/spamtagger/scripts/systemd/mariadb\@${stage}.service.d", "/usr/lib/systemd/system/mariadb\@${stage}.service.d");
+  `systemctl daemon-reload`;
+  }
+  unless ( -e "/usr/lib/systemd/system/mariadb\@${stage}-nopass.service.d" ) {
+  symlink("/opt/spamtagger/scripts/systemd/mariadb\@${stage}-nopass.service.d", "/usr/lib/systemd/system/mariadb\@${stage}-nopass.service.d");
+  `systemctl daemon-reload`;
+  }
+  symlink('/opt/spamtagger/etc/apparmor', '/etc/apparmor.d/spamtagger') unless (-e '/etc/apparmor.d/spamtagger');
 
-    # Reload AppArmor rules
-    `apparmor_parser -r /opt/spamtagger/etc/apparmor.d/mariadb` if ( -d '/sys/kernel/security/apparmor' );
+  # Reload AppArmor rules
+  `apparmor_parser -r /opt/spamtagger/etc/apparmor.d/mariadb` if ( -d '/sys/kernel/security/apparmor' );
 
-    mkdir('/etc/sudoers.d') unless (-d '/etc/sudoers.d/');
-    if (open(my $fh, '>', '/etc/sudoers.d/mariadb')) {
-        print $fh "
+  mkdir('/etc/sudoers.d') unless (-d '/etc/sudoers.d/');
+  if (open(my $fh, '>', '/etc/sudoers.d/mariadb')) {
+    print $fh "
 User_Alias  MYSQL = spamtagger
 Cmnd_Alias  START = /usr/bin/mariadbd-safe
 Cmnd_Alias  INSTALL = /usr/bin/mariadb-install_db
 Cmnd_Alias  UPGRADE = /usr/bin/mariadb-upgrade
 
-M%SQL       * = (ROOT) NOPASSWD: START
-M%SQL       * = (ROOT) NOPASSWD: INSTALL
-M%SQL       * = (ROOT) NOPASSWD: UPGRADE
+M%SQL     * = (ROOT) NOPASSWD: START
+M%SQL     * = (ROOT) NOPASSWD: INSTALL
+M%SQL     * = (ROOT) NOPASSWD: UPGRADE
 ";
+  }
+  my @dirs = (
+    "/var/spamtagger/run/mariadb_${stage}",
+    "/var/spamtagger/log/mariadb_${stage}",
+    "/var/spamtagger/spool/mariadb_${stage}",
+    "/var/spamtagger/spool/mariadb_${stage}",
+  );
+  foreach (@dirs) {
+    if (! -d $_) {
+      make_path( $_, 
+        { mode => 0o755, owner => 'mysql', group => 'spamtagger' }
+      ) or confess "Failed to create one of ".join(', ', @dirs).": $?\n";
     }
-    my @dirs = (
-        "/var/spamtagger/run/mariadb_${stage}",
-        "/var/spamtagger/log/mariadb_${stage}",
-        "/var/spamtagger/spool/mariadb_${stage}",
-        "/var/spamtagger/spool/mariadb_${stage}",
-    );
-    foreach my $dir (@dirs) {
-	my ($path) = $dir =~ m#(.*)/[^/]+$#;
+  }
 
-	print "Creating dir: $dir\n";
-	mkdir ($dir) unless (-d $dir);
-	chown($uid, $gid, $dir);
-        symlink("${dir}","${path}/mysql_${stage}") if ( ! -e "${path}/mysql_${stage}");
-    }
-
-    my @files = (
-	glob("/var/spamtagger/log/mariadb_${stage}/*"),
-	glob("/var/spamtagger/spool/mariadb_${stage}/*"),
-    );
-    foreach (glob("/var/spamtagger/spool/mariadb_${stage}/*")) {
-        push(@files, glob("$_/*"));
-    }
-    foreach my $file (@files) {
-	touch($file) unless (-e $file);
-        chown($uid, $gid, $file);
-        chmod 0o744, $file;
-    }
-    return;
+  my @files = (
+  glob("/var/spamtagger/log/mariadb_${stage}/*"),
+  glob("/var/spamtagger/spool/mariadb_${stage}/*"),
+  );
+  foreach (glob("/var/spamtagger/spool/mariadb_${stage}/*")) {
+    push(@files, glob("$_/*"));
+  }
+  foreach my $file (@files) {
+  touch($file) unless (-e $file);
+    chown($uid, $gid, $file);
+    chmod 0o744, $file;
+  }
+  return;
 }
