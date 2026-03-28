@@ -44,10 +44,11 @@ sub run($this) {
 
   my $relative = '';
   while (1) {
-    my @dlglist = map { basename($_) } glob($this->{mapdir}.$relative."/[A-Z]*");
+    my %dlglist = map { my $clean = basename($_); $clean =~ s/_/ /g; $clean => basename($_) } glob($this->{mapdir}.$relative."/[A-Z]*");
+    my @clean = keys(%dlglist);
 
-    $this->{dlg}->build('Choose your '.($relative?'closest city/country':'continent/region'), \@dlglist, 1, 1);
-    $relative .= $this->{dlg}->display();
+    $this->{dlg}->build('Choose your '.($relative?'closest city/country':'continent/region'), \@clean, 1, 0);
+    $relative .= $dlglist{$this->{dlg}->display()};
     if ( !-e $this->{mapdir} ) {
       die("Invalid Timezone selection: $relative\n");
     } elsif ( -f $this->{mapdir}.$relative ) {
@@ -63,25 +64,6 @@ sub run($this) {
   $cmd = "ln -s $this->{mapdir}$relative  /etc/localtime";
   `$cmd`;
   return;
-}
-
-sub dolist($this, $dir, $parent) {
-  return $dir unless -d $dir;
-
-  my @dlglist;
-  my $DIR;
-  opendir($DIR, $dir) or return $dir;
-  while(my $entry = readdir($DIR)) {
-    next if $entry =~ m/\./;
-    if ( -d "$dir/$entry" || -f "$dir/$entry") {
-      push @dlglist, $entry;
-    }
-  }
-  close($DIR);
-  my $dlg = $this->{dlg};
-  $dlg->build('Make your choice ('.$parent.')', \@dlglist, 1);
-  my $res = $dlg->display();
-  return $this->dolist($dir."/".$res, $res);
 }
 
 1;
