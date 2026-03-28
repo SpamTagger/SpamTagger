@@ -47,7 +47,7 @@ class SpamTagger_Config {
   }
 
   public function getUserGUIAvailableLanguages() {
-    require_once("/opt/spamtagger/www/classes/view/Language.php");
+    require_once("/usr/spamtagger/www/classes/view/Language.php");
     $lang = Language::getInstance('user');
     return $lang->getLanguages();
   }

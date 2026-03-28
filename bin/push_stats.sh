@@ -61,7 +61,7 @@ STATFILE=/var/tmp/stats_to_push
 MAXSLEEPTIME=300
 MINSLEEPTIME=120
 
-. /opt/spamtagger/lib/STUtils.sh
+. /usr/spamtagger/lib/STUtils.sh
 FILE_NAME=$(basename -- "$0")
 FILE_NAME="${FILE_NAME%.*}"
 ret=$(createLockFile "$FILE_NAME")
@@ -75,10 +75,10 @@ if $randomize; then
 fi
 
 END=$(($days - 1))
-echo "_global:"$(/opt/spamtagger/bin/get_stats.pl '*' -$days +$END | grep '_global' | cut -d':' -f2) >$STATFILE
+echo "_global:"$(/usr/spamtagger/bin/get_stats.pl '*' -$days +$END | grep '_global' | cut -d':' -f2) >$STATFILE
 for dom in $(grep -v '*' $DOMAINFILE | cut -d':' -f1); do
   echo -n $dom":" >>$STATFILE
-  echo $(/opt/spamtagger/bin/get_stats.pl $dom -$days +$END) >>$STATFILE
+  echo $(/usr/spamtagger/bin/get_stats.pl $dom -$days +$END) >>$STATFILE
 done
 
 CLIENTID=$(grep 'CLIENTID' /etc/spamtagger.conf | cut -d ' ' -f3)

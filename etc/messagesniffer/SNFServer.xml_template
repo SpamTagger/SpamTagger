@@ -2,7 +2,7 @@
 <!-- http://www.armresearch.com/support/articles/software/snfServer/config/snfEngine.jsp -->
 
 <snf>
-  <node identity='/opt/spamtagger/etc/messagesniffer/identity.xml'>
+  <node identity='/usr/spamtagger/etc/messagesniffer/identity.xml'>
 
     <paths>
       <log path='/var/spamtagger/log/messagesniffer/'/>
@@ -66,7 +66,7 @@
 
     <network>
       <sync secs='30' host='sync.messagesniffer.net' port='25'/>
-      <update-script on-off='on' call='/opt/spamtagger/etc/messagesniffer/getRulebase' guard-time='180'/>
+      <update-script on-off='on' call='/usr/spamtagger/etc/messagesniffer/getRulebase' guard-time='180'/>
      </network>
 
     <xci on-off='on' port='9001'/>

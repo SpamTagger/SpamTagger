@@ -12,7 +12,7 @@ DAEMON='./kavehost.sh'
 KASPERSKYDOPTS=" -c /opt/kaspersky/bin/kavehost.xml"
 
 prepare() {
-  /opt/spamtagger/bin/dump_mailscanner_config.pl >/dev/null 2>&1
+  /usr/spamtagger/bin/dump_mailscanner_config.pl >/dev/null 2>&1
 }
 
 chown -R spamtagger:spamtagger /var/spamtagger/log/kaspersky

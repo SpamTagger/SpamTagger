@@ -84,7 +84,7 @@ class STSoap_Status {
 
     if ($element == 'spools') {
       $data = array();
-      $cmd = "/opt/spamtagger/bin/check_spools.sh";
+      $cmd = "/usr/spamtagger/bin/check_spools.sh";
       $cmdres = `$cmd`;
       foreach (preg_split("/\n/", $cmdres) as $line ) {
         if (preg_match('/^Stage\ (\d):\s+(\d+)/', $line, $matches)) {
@@ -96,7 +96,7 @@ class STSoap_Status {
 
     if ($element == 'processes') {
       $data = array();
-      $cmd = "/opt/spamtagger/bin/get_status.pl -s";
+      $cmd = "/usr/spamtagger/bin/get_status.pl -s";
       $order = array(
         'exim_stage1', 'exim_stage2', 'exim_stage4', 'apache', 'mailscanner', 'mariadb_source', 'mariadb_replica', 'snmpd',
         'greylistd', 'cron', 'preftdaemon', 'spamd', 'clamd', 'clamspamd', 'spamhandler', 'newsld', 'firewall'
@@ -180,7 +180,7 @@ class STSoap_Status {
     require_once('SpamTagger/Config.php');
 
     $config = new SpamTagger_Config();
-    $cmd = "/opt/spamtagger/bin/get_today_stats.pl -A";
+    $cmd = "/usr/spamtagger/bin/get_today_stats.pl -A";
     $cmdres = `$cmd`;
     $res['cmd'] = $cmd;
     if (preg_match('/^(\d+)\|(\d+)\|(\d+)\|([0-9.]+)\|(\d+)\|([0-9.]+)\|(\d+)\|([0-9.]+)\|(\d+)\|(\d+)\|([0-9.]+)/', $cmdres, $matches)) {
@@ -341,7 +341,7 @@ class STSoap_Status {
     $msgvalidator = new Validate_MessageID();
     foreach ($msgs as $msg) {
       if ($msgvalidator->isValid($msg)) {
-        $cmd = "/opt/exim4/bin/exim -C /opt/spamtagger/etc/exim/exim_stage".$spool.".conf -Mrm ".$msg. " &";
+        $cmd = "/opt/exim4/bin/exim -C /usr/spamtagger/etc/exim/exim_stage".$spool.".conf -Mrm ".$msg. " &";
         $cmd_res = `$cmd`;
         $ret['msgsdeleted'][] = $msg;
         $ret['lastcmd'] = $cmd;
@@ -380,7 +380,7 @@ class STSoap_Status {
     $msgvalidator = new Validate_MessageID();
     foreach ($msgs as $msg) {
       if ($msgvalidator->isValid($msg)) {
-        $cmd = "/opt/exim4/bin/exim -C /opt/spamtagger/etc/exim/exim_stage".$spool.".conf -M ".$msg. " &";
+        $cmd = "/opt/exim4/bin/exim -C /usr/spamtagger/etc/exim/exim_stage".$spool.".conf -M ".$msg. " &";
         $cmd_res = `$cmd`;
         $ret['msgstried'][] = $msg;
         $ret['lastcmd'] = $cmd;

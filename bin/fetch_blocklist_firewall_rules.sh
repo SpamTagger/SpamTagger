@@ -52,7 +52,7 @@ done
 
 CONFFILE=/etc/spamtagger.conf
 
-. /opt/spamtagger/lib/STUtils.sh
+. /usr/spamtagger/lib/STUtils.sh
 FILE_NAME=$(basename -- "$0")
 FILE_NAME="${FILE_NAME%.*}"
 ret=$(createLockFile "$FILE_NAME")
@@ -60,17 +60,17 @@ if [[ "$ret" -eq "1" ]]; then
   exit 0
 fi
 
-. /opt/spamtagger/lib/updates/download_files.sh
+. /usr/spamtagger/lib/updates/download_files.sh
 
 ##
 ## Blocklist for the firewall update
 ##
-ret=$(downloadDatas "/opt/spamtagger/etc/firewall/" "firewall" $randomize "null" "" "noexit")
+ret=$(downloadDatas "/usr/spamtagger/etc/firewall/" "firewall" $randomize "null" "" "noexit")
 if [[ "$ret" -eq "1" ]]; then
-  /opt/spamtagger/bin/dump_firewall.pl
+  /usr/spamtagger/bin/dump_firewall.pl
   sleep 3
-  if [ -f "/opt/spamtagger/etc/firewall/blocklist" ]; then
-    /opt/spamtagger/etc/firewall/blocklist
+  if [ -f "/usr/spamtagger/etc/firewall/blocklist" ]; then
+    /usr/spamtagger/etc/firewall/blocklist
   fi
 fi
 

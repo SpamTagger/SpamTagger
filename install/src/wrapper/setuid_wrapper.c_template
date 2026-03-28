@@ -11,14 +11,14 @@ This is a setuid wrapper executable that will start/stop services that need root
 For security reasons, launched scripts will be hardcoded here.
 */
 
-#define EXIM1 "/opt/spamtagger/etc/init.d/exim_stage1"
-#define EXIM2 "/opt/spamtagger/etc/init.d/exim_stage2"
-#define EXIM4 "/opt/spamtagger/etc/init.d/exim_stage4"
-#define MYSQL_SLAVE "/opt/spamtagger/etc/init.d/mariadb_replica"
-#define MYSQL_MASTER "/opt/spamtagger/etc/init.d/mariadb_source"
-#define FIREWALL "/opt/spamtagger/etc/init.d/firewall"
-#define DCC "/opt/spamtagger/etc/init.d/rcDCC"
-#define APACHE "/opt/spamtagger/etc/init.d/apache"
+#define EXIM1 "/usr/spamtagger/etc/init.d/exim_stage1"
+#define EXIM2 "/usr/spamtagger/etc/init.d/exim_stage2"
+#define EXIM4 "/usr/spamtagger/etc/init.d/exim_stage4"
+#define MYSQL_SLAVE "/usr/spamtagger/etc/init.d/mariadb_replica"
+#define MYSQL_MASTER "/usr/spamtagger/etc/init.d/mariadb_source"
+#define FIREWALL "/usr/spamtagger/etc/init.d/firewall"
+#define DCC "/usr/spamtagger/etc/init.d/rcDCC"
+#define APACHE "/usr/spamtagger/etc/init.d/apache"
 #define START "start"
 #define STOP "stop"
 
@@ -46,7 +46,7 @@ services are:
 int main(int argc, char *argv[], char *argp[]) {
   struct stat *exec_stat;
   int service = 0;
-  char exec_path[strlen(/opt/spamtagger)+100];
+  char exec_path[strlen(/usr/spamtagger)+100];
   char exec_arg[20];
 
   if (argc < 2) {

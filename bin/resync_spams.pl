@@ -20,7 +20,7 @@ use v5.40;
 use warnings;
 use utf8;
 
-use lib '/opt/spamtagger/lib/';
+use lib '/usr/spamtagger/lib/';
 use ReadConfig();
 use DB();
 
@@ -76,7 +76,7 @@ foreach my $s_h (@replicasarray) {
       }
 
       output("($sid) - reimporting spam_$l ...");
-      my $exportcmd = "/opt/spamtagger/bin/st_mariadb -m st_spool < $TMPDIR/spam_$l-$sid.sql";
+      my $exportcmd = "/usr/spamtagger/bin/st_mariadb -m st_spool < $TMPDIR/spam_$l-$sid.sql";
       $res = `$exportcmd`;
       if ( ! $res eq '' ) {
          print "Something went wrong while reimporting spams on table: spam_$l from host ".$s_h->{'hostname'}.":\n";

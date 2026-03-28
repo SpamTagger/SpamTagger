@@ -26,7 +26,7 @@ use v5.40;
 use warnings;
 use utf8;
 
-use lib '/opt/spamtagger/lib/';
+use lib '/usr/spamtagger/lib/';
 use ReadConfig();
 use DB();
 
@@ -142,7 +142,7 @@ sub get_ref_tables ($dbname) {
     $prefix='sp';
   }
 
-  my $install_dir = "/opt/spamtagger/install/dbs";
+  my $install_dir = "/usr/spamtagger/install/dbs";
   if ($dbname eq 'st_spool') {
     $install_dir .= "/spam";
   }
@@ -267,7 +267,7 @@ sub my_check_repair_database ($db_ref, $repair) {
 sub add_database ($dbtype, $dbname) {
   $dbtype = 'source' if ($dbtype ne 'replica');
 
-  my $mariadbd = "/opt/spamtagger/etc/init.d/mariadb_".$dbtype;
+  my $mariadbd = "/usr/spamtagger/etc/init.d/mariadb_".$dbtype;
   print "Restarting $dbtype database to change permissions...\n";
   `$mariadbd restart nopass 2>&1`;
   sleep(20);
@@ -280,10 +280,10 @@ sub add_database ($dbtype, $dbname) {
   print "Restarting $dbtype database with new permissions...\n";
   `$mariadbd restart 2>&1`;
   sleep(20);
-  my $descfile = "/opt/spamtagger/install/dbs/".$dbname.".sql";
+  my $descfile = "/usr/spamtagger/install/dbs/".$dbname.".sql";
   if (-f $descfile) {
     print "Creating schema...\n";
-    my $mariadb = "/opt/spamtagger/bin/st_mariadb";
+    my $mariadb = "/usr/spamtagger/bin/st_mariadb";
     if ($dbtype eq 'replica') {
       $mariadb .= " -r $dbname";
     } else {
@@ -322,7 +322,7 @@ sub check_replication_status ($fix) {
       my $query = "ALTER TABLE $3 DROP COLUMN $1;";
       my $dbr = DB->db_connect('replica', $2);
       if ( $dbr->execute($query)) {
-       my $cmd = "/opt/spamtagger/etc/init.d/mariadb_replica restart >/dev/null 2>&1";
+       my $cmd = "/usr/spamtagger/etc/init.d/mariadb_replica restart >/dev/null 2>&1";
        my $resexec = `$cmd`;
        print " should be fixed!\n";
       } else {
@@ -355,7 +355,7 @@ sub compare_update_database ($db_ref, $dbname, $update) {
         if ($dbtype eq 'replica') {
           $type = '-r';
         }
-        my $cmd = "/opt/spamtagger/bin/st_mariadb $type < ".$reftables{$table} ." 2>&1";
+        my $cmd = "/usr/spamtagger/bin/st_mariadb $type < ".$reftables{$table} ." 2>&1";
         my $res = `$cmd`;
         if (! $res eq '' ) {
           print "ERROR, cannot create database: $res\nABORTED\n";

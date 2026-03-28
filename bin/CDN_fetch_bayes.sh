@@ -28,7 +28,7 @@ LOGFILE="/var/spamtagger/log/spamtagger/downloadDatas.log"
 SERVER="spamtaggerdl.alinto.net"
 ROOTDIR="/bayes/"
 
-. /opt/spamtagger/lib/STUtils.sh
+. /usr/spamtagger/lib/STUtils.sh
 
 function log {
   echo "["$(date "+%Y/%m/%d %H:%M:%S")"] $1" >>$LOGFILE

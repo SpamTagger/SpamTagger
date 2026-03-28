@@ -50,7 +50,7 @@ while getopts ":r" OPTION; do
   esac
 done
 
-. /opt/spamtagger/lib/STUtils.sh
+. /usr/spamtagger/lib/STUtils.sh
 FILE_NAME=$(basename -- "$0")
 FILE_NAME="${FILE_NAME%.*}"
 ret=$(createLockFile "$FILE_NAME")
@@ -58,17 +58,17 @@ if [[ "$ret" -eq "1" ]]; then
   exit 0
 fi
 
-. /opt/spamtagger/lib/updates/download_files.sh
+. /usr/spamtagger/lib/updates/download_files.sh
 
 ##
 ## Newsleters rules update
 ##
-ret=$(downloadDatas "/opt/spamtagger/share/newsld/siteconfig/" "newsl_rules" $randomize "null" "" "noexit")
+ret=$(downloadDatas "/usr/spamtagger/share/newsld/siteconfig/" "newsl_rules" $randomize "null" "" "noexit")
 
 if [[ "$ret" -eq "1" ]]; then
-  /opt/spamtagger/etc/init.d/newsld stop >/dev/null 2>&1
+  /usr/spamtagger/etc/init.d/newsld stop >/dev/null 2>&1
   sleep 3
-  /opt/spamtagger/etc/init.d/newsld start >/dev/null 2>&1
+  /usr/spamtagger/etc/init.d/newsld start >/dev/null 2>&1
 fi
 
 removeLockFile "$FILE_NAME"

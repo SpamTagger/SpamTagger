@@ -28,7 +28,7 @@ use warnings;
 use utf8;
 use Carp qw( confess );
 
-use lib '/opt/spamtagger/lib';
+use lib '/usr/spamtagger/lib';
 use STUtils qw( open_as );
 use File::Touch qw( touch );
 
@@ -42,11 +42,11 @@ my $conf = '/etc/clamav';
 if (-e $conf && ! -s $conf) {
   unlink(glob("$conf/*"), $conf);
 }
-symlink("/opt/spamtagger/".$conf, $conf) unless (-l $conf);
+symlink("/usr/spamtagger/".$conf, $conf) unless (-l $conf);
 
 # Create necessary dirs/files if they don't exist
 foreach my $dir (
-  "/opt/spamtagger/etc/clamav/",
+  "/usr/spamtagger/etc/clamav/",
   "/var/spamtagger/log/clamav/",
   "/var/spamtagger/run/clamav/",
   "/var/spamtagger/spool/clamspam/",
@@ -57,7 +57,7 @@ foreach my $dir (
 }
 
 foreach my $file (
-  glob("/opt/spamtagger/etc/clamav/*"),
+  glob("/usr/spamtagger/etc/clamav/*"),
   "/var/spamtagger/log/clamav/freshclam.log",
 ) {
   touch($file) unless (-e $file);
@@ -87,10 +87,10 @@ CLAMAV    * = (ROOT) NOPASSWD: CLAMBIN
 ";
 }
 
-symlink('/opt/spamtagger/etc/apparmor', '/etc/apparmor.d/spamtagger') unless (-e '/etc/apparmor.d/spamtagger');
+symlink('/usr/spamtagger/etc/apparmor', '/etc/apparmor.d/spamtagger') unless (-e '/etc/apparmor.d/spamtagger');
 
 # Reload AppArmor rules
-`apparmor_parser -r /opt/spamtagger/etc/apparmor.d/clamav` if ( -d '/sys/kernel/security/apparmor' );
+`apparmor_parser -r /usr/spamtagger/etc/apparmor.d/clamav` if ( -d '/sys/kernel/security/apparmor' );
 
 # SystemD auth causes timeouts
 `sed -iP '/^session.*pam_systemd.so/d' /etc/pam.d/common-session`;
@@ -134,7 +134,7 @@ sub update_unofficial($unofficial) {
   # First time install
   if (! -d "/var/spamtagger/spool/clamav/unofficial-sigs") {
     mkdir("/var/spamtagger/spool/clamav/unofficial-sigs");
-    `/opt/spamtagger/scripts/cron/clamav-unofficial-sigs.sh`;
+    `/usr/spamtagger/scripts/cron/clamav-unofficial-sigs.sh`;
   }
 
   # Create links if missing
@@ -149,8 +149,8 @@ sub update_unofficial($unofficial) {
 #############################
 sub dump_file($file)
 {
-  my $template_file = "/opt/spamtagger/etc/clamav/".$file."_template";
-  my $target_file = "/opt/spamtagger/etc/clamav/".$file;
+  my $template_file = "/usr/spamtagger/etc/clamav/".$file."_template";
+  my $target_file = "/usr/spamtagger/etc/clamav/".$file;
 
   my ($TEMPLATE, $TARGET);
   confess "Cannot open $template_file" unless ( $TEMPLATE = ${open_as($template_file,'<',0o664,'clamav:clamav')} );

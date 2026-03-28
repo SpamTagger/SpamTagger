@@ -34,7 +34,7 @@ PREFTDAEMON=preftdaemon
 SPAMLOGGER=spamloggerdaemon
 STATSDAEMON=statsdaemon
 
-INITDIR=/opt/spamtagger/etc/init.d
+INITDIR=/usr/spamtagger/etc/init.d
 
 test -x $DAEMON || exit 0
 
@@ -42,8 +42,8 @@ case "$1" in
   start)
     echo "Starting $NAME: "
 
-    EDITION=`cat /opt/spamtagger/etc/edition.def`
-    VERSION=`cat /opt/spamtagger/etc/spamtagger/version.def`
+    EDITION=`cat /usr/spamtagger/etc/edition.def`
+    VERSION=`cat /usr/spamtagger/etc/spamtagger/version.def`
     echo "SpamTagger $EDITION $VERSION (kernel \\\r on \\\m, \\\l)\n" > /etc/issue
 
     ## checking for tmpfs dir
@@ -97,7 +97,7 @@ case "$1" in
           echo "Updating..." >> ${FIRSTUPDATE_LOG}
           mkdir -p ${FIRSTUPDATE_FLAG_DIR}
           /root/Updater4ST/updater4mc.sh || rm -f ${FIRSTUPDATE_FLAG_RUNNING}  # If error during upgrade, it will try again every time
-          /opt/spamtagger/bin/internal_access --generate --propagate --install &>> ${FIRSTUPDATE_LOG}
+          /usr/spamtagger/bin/internal_access --generate --propagate --install &>> ${FIRSTUPDATE_LOG}
           touch ${FIRSTUPDATE_FLAG_RAN}
           echo "Finished update" >> ${FIRSTUPDATE_LOG}
           rm -f ${FIRSTUPDATE_FLAG_RUNNING}

@@ -48,6 +48,6 @@ delay=$((($RANDOM % 10) + 1))
 echo "$(date): Sleeping $delay minutes before cleaning of counts files" >>/var/spamtagger/log/spamtagger/st_counts-cleaner.log
 sleep "$delay"m
 echo "$(date): Cleaning started" >>/var/spamtagger/log/spamtagger/st_counts-cleaner.log
-(time timeout 5m /opt/spamtagger/bin/st_counts-cleaner -d "$dfilt*" -u "$ufilt" -o 365 -x) >>/var/spamtagger/log/spamtagger/st_counts-cleaner.log 2>&1 | wc -l >>/var/spamtagger/log/spamtagger/st_counts-cleaner.log
+(time timeout 5m /usr/spamtagger/bin/st_counts-cleaner -d "$dfilt*" -u "$ufilt" -o 365 -x) >>/var/spamtagger/log/spamtagger/st_counts-cleaner.log 2>&1 | wc -l >>/var/spamtagger/log/spamtagger/st_counts-cleaner.log
 echo "$(date): Cleaning terminated" >>/var/spamtagger/log/spamtagger/st_counts-cleaner.log
 exit 0

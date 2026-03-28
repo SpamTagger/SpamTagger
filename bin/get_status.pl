@@ -25,7 +25,7 @@ use warnings;
 use utf8;
 use Carp qw( confess );
 
-use lib "/opt/spamtagger/lib";
+use lib "/usr/spamtagger/lib";
 use ReadConfig;
 my $conf = ReadConfig::get_instance();
 my $MYSPAMTAGGERPWD = $conf->get_option('MYSPAMTAGGERPWD') || confess "Could not get DB password";
@@ -142,7 +142,7 @@ if ($mode_given =~ /s/) {
 	my $cmd;
 	my $res;
         if ($key eq 'exim_stage2') {
-            my $subcmd = "grep -e '^MTA\\s*=\\s*eximms' /opt/spamtagger/etc/mailscanner/MailScanner.conf";
+            my $subcmd = "grep -e '^MTA\\s*=\\s*eximms' /usr/spamtagger/etc/mailscanner/MailScanner.conf";
             my $type = `$subcmd`;
             if ($type eq '') {
                 $cmd = "runuser -u Debian-exim -- /opt/exim4/bin/exim -C /var/spamtagger/spool/tmp/exim/${key}.conf -bpc 2>/dev/null";

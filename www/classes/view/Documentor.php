@@ -30,7 +30,7 @@ class Documentor {
     $sysconf_ = SystemConfig::getInstance();
     $lang_ = Language::getInstance('admin');
     $help = array();
-    require("/opt/spamtagger/www/admin/lang/".$lang_->getLanguage()."/help.php");
+    require("/usr/spamtagger/www/admin/lang/".$lang_->getLanguage()."/help.php");
     $this->help_ = $help;
   }
 

@@ -21,7 +21,7 @@ use warnings;
 use utf8;
 use Carp qw( confess );
 
-use lib '/opt/spamtagger/lib/';
+use lib '/usr/spamtagger/lib/';
 use ReadConfig();
 
 my $conf = ReadConfig::get_instance();

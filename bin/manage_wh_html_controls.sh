@@ -18,7 +18,7 @@ if [ $1 == "add" ]; then
   echo "INSERT IGNORE INTO wwlists (sender, type) values ('$2', 'htmlcontrols');" | st_mariadb -m st_config
   echo "$2 added"
 
-  /opt/spamtagger/bin/dump_html_controls_wl.pl
+  /usr/spamtagger/bin/dump_html_controls_wl.pl
   exit
 fi
 
@@ -26,7 +26,7 @@ if [ $1 == "del" ]; then
   echo "DELETE FROM wwlists WHERE sender='$2' AND type='htmlcontrols';" | st_mariadb -m st_config
   echo "$2 removed"
 
-  /opt/spamtagger/bin/dump_html_controls_wl.pl
+  /usr/spamtagger/bin/dump_html_controls_wl.pl
   exit
 fi
 

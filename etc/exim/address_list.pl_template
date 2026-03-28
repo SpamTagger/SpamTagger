@@ -7,7 +7,7 @@ use utf8;
 ## pushed format must be
 ## address(,user)
 
-use lib "/opt/spamtagger/lib";
+use lib "/usr/spamtagger/lib";
 use Net::SMTP();
 use ReadConfig();
 use DB();

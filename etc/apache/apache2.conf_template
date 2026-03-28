@@ -1,4 +1,4 @@
-ServerRoot "/opt/spamtagger/etc/apache"
+ServerRoot "/usr/spamtagger/etc/apache"
 DefaultRuntimeDir /var/spamtagger/run/apache2/
 PidFile /var/spamtagger/run/apache2/httpd.pid
 
@@ -88,16 +88,16 @@ LimitGIDRange 0 2000
   AllowOverride None
 </Directory>
 
-<Directory "/opt/spamtagger/www/user">
+<Directory "/usr/spamtagger/www/user">
   Options -Indexes +FollowSymLinks +MultiViews
   AllowOverride None
   Require all granted
 </Directory>
 
-<Directory "/opt/spamtagger/www/admin">
+<Directory "/usr/spamtagger/www/admin">
   AllowOverride All
 </Directory>
-<Directory "/opt/spamtagger/www/api">
+<Directory "/usr/spamtagger/www/api">
   AllowOverride All
 </Directory>
 
@@ -156,7 +156,7 @@ ServerSignature On
 
 AddType application/x-httpd-php .php
 php_flag session.auto_start on
-php_value include_path ".:/var/lib/php:/opt/spamtagger/www/classes:/opt/spamtagger/www/includes:/opt/spamtagger/www/framework/:/opt/spamtagger/www/vendor/Zend/library/"
+php_value include_path ".:/var/lib/php:/usr/spamtagger/www/classes:/usr/spamtagger/www/includes:/usr/spamtagger/www/framework/:/usr/spamtagger/www/vendor/Zend/library/"
 php_admin_flag safe_mode off
 php_value arg_separator.input "&;"
 php_value short_open_tag On
@@ -175,4 +175,4 @@ RewriteRule .* - [F]
 
 #AssignUserId spamtagger spamtagger
 
-Include /opt/spamtagger/etc/apache/sites-enabled/*.conf
+Include /usr/spamtagger/etc/apache/sites-enabled/*.conf

@@ -41,6 +41,6 @@ if [ ! -f $FILE ]; then
   exit 1
 fi
 
-/usr/local/bin/spamassassin $DEBUG -t -p /opt/spamtagger/etc/mailscanner/spam.assassin.prefs.conf --siteconfigpath=/opt/spamtagger/share/spamassassin <$FILE
+/usr/local/bin/spamassassin $DEBUG -t -p /usr/spamtagger/etc/mailscanner/spam.assassin.prefs.conf --siteconfigpath=/usr/spamtagger/share/spamassassin <$FILE
 
 exit 0

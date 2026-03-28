@@ -21,7 +21,7 @@ use strict;
 use warnings;
 use utf8;
 use Carp qw( confess );
-use lib "/opt/spamtagger/lib";
+use lib "/usr/spamtagger/lib";
 
 use ReadConfig;
 our $conf = ReadConfig::get_instance();
@@ -31,7 +31,7 @@ require DB;
 my $db = DB->db_connect('replica', 'st_config');
 our %domains;
 our %senders;
-my $rules_file = '/opt/spamtagger/share/spamassassin/98_st_custom.cf';
+my $rules_file = '/usr/spamtagger/share/spamassassin/98_st_custom.cf';
 my $rcpt_id = 0;
 my $sender_id = 0;
 our $RULEFILE;

@@ -36,7 +36,7 @@ fi
 #########################
 
 # Apache
-/opt/spamtagger/etc/init.d/apache stop
+/usr/spamtagger/etc/init.d/apache stop
 if [ -x /usr/bin/savelog ]; then
   for i in access.log error.log ssl.log st_auth.log access_soap.log error_soap.log; do
     if [ -e /var/spamtagger/log/apache/$i ]; then
@@ -49,7 +49,7 @@ chown spamtagger:spamtagger /var/spamtagger/log/apache/st_auth.log
 
 # Exim Stages 1 and 2
 for stage in 1 2; do
-  /opt/spamtagger/etc/init.d/exim_stage$stage stop
+  /usr/spamtagger/etc/init.d/exim_stage$stage stop
   if [ -x /usr/bin/savelog ]; then
     for i in mainlog rejectlog paniclog; do
       if [ -s /var/spamtagger/log/exim_stage$stage/$i ]; then
@@ -64,7 +64,7 @@ for stage in 1 2; do
 done
 
 # MailScanner
-/opt/spamtagger/etc/init.d/mailscanner stop
+/usr/spamtagger/etc/init.d/mailscanner stop
 if [ -x /usr/bin/savelog ]; then
   for i in mainlog errorlog infolog warnlog spamd.log newsld.log; do
     if [ -s /var/spamtagger/log/mailscanner/$i ]; then
@@ -75,7 +75,7 @@ fi
 chown -R spamtagger:spamtagger /var/spamtagger/log/mailscanner/
 
 # Exim Stage 4
-/opt/spamtagger/etc/init.d/exim_stage4 stop
+/usr/spamtagger/etc/init.d/exim_stage4 stop
 if [ -x /usr/bin/savelog ]; then
   for i in mainlog rejectlog paniclog; do
     if [ -s /var/spamtagger/log/exim_stage4/$i ]; then
@@ -116,13 +116,13 @@ if [ -x /usr/bin/savelog ]; then
 fi
 
 # StatsDaemon
-/opt/spamtagger/etc/init.d/statsdaemon stop
+/usr/spamtagger/etc/init.d/statsdaemon stop
 if [ -x /usr/bin/savelog ]; then
   savelog -p -c $DAYSTOKEEP -C /var/spamtagger/log/spamtagger/StatsDaemon.log >/dev/null
 fi
 
 # PrefTDaemon
-/opt/spamtagger/etc/init.d/preftdaemon stop
+/usr/spamtagger/etc/init.d/preftdaemon stop
 if [ -x /usr/bin/savelog ]; then
   if [ -s /var/spamtagger/log/spamtagger/PrefTDaemon.log ]; then
     savelog -p -c $DAYSTOKEEP -C /var/spamtagger/log/spamtagger/PrefTDaemon.log >/dev/null
@@ -130,7 +130,7 @@ if [ -x /usr/bin/savelog ]; then
 fi
 
 # SpamHandler
-/opt/spamtagger/etc/init.d/spamhandler stop
+/usr/spamtagger/etc/init.d/spamhandler stop
 for i in SpamHandler.log; do
   if [ -s /var/spamtagger/log/spamtagger/$i ]; then
     savelog -p -c $DAYSTOKEEP -C /var/spamtagger/log/spamtagger/$i >/dev/null
@@ -164,7 +164,7 @@ if [ -x /usr/bin/savelog ]; then
 fi
 
 /usr/bin/mariadb-admin -S /var/spamtagger/run/mariadb_replica/mariadbd.sock -uspamtagger -p$MYSPAMTAGGERPWD flush-logs
-/opt/spamtagger/etc/init.d/mariadb_replica restart
+/usr/spamtagger/etc/init.d/mariadb_replica restart
 
 ##################
 ## MySQL Master ##
@@ -176,7 +176,7 @@ if [ -x /usr/bin/savelog ]; then
 fi
 
 /usr/bin/mariadb-admin -S /var/spamtagger/run/mariadb_source/mariadbd.sock -uspamtagger -p$MYSPAMTAGGERPWD flush-logs
-/opt/spamtagger/etc/init.d/mariadb_source restart
+/usr/spamtagger/etc/init.d/mariadb_source restart
 
 ###################
 ## Resync checks ##
@@ -189,15 +189,15 @@ fi
 ## Restart all ##
 #################
 
-/opt/spamtagger/etc/init.d/spamhandler start
-/opt/spamtagger/etc/init.d/preftdaemon start
-/opt/spamtagger/etc/init.d/statsdaemon start
-/opt/spamtagger/etc/init.d/exim_stage4 start
-/opt/spamtagger/etc/init.d/mailscanner start
+/usr/spamtagger/etc/init.d/spamhandler start
+/usr/spamtagger/etc/init.d/preftdaemon start
+/usr/spamtagger/etc/init.d/statsdaemon start
+/usr/spamtagger/etc/init.d/exim_stage4 start
+/usr/spamtagger/etc/init.d/mailscanner start
 sleep 2
-/opt/spamtagger/etc/init.d/exim_stage2 start
-/opt/spamtagger/etc/init.d/exim_stage1 start
-/opt/spamtagger/etc/init.d/apache start
+/usr/spamtagger/etc/init.d/exim_stage2 start
+/usr/spamtagger/etc/init.d/exim_stage1 start
+/usr/spamtagger/etc/init.d/apache start
 
 #############
 ## Cleanup ##

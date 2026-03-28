@@ -1598,8 +1598,8 @@ custom_config="no"
 we_have_a_config="0"
 
 # Attempt to scan for a valid config dir
-if [ -f "/opt/spamtagger/etc/clamav/clamav-unofficial-sigs/source.conf" ]; then
-  config_dir="/opt/spamtagger/etc/clamav/clamav-unofficial-sigs"
+if [ -f "/usr/spamtagger/etc/clamav/clamav-unofficial-sigs/source.conf" ]; then
+  config_dir="/usr/spamtagger/etc/clamav/clamav-unofficial-sigs"
 elif [ -f "/etc/clamav-unofficial-sigs/source.conf" ]; then
   config_dir="/etc/clamav-unofficial-sigs"
 elif [ -f "/usr/local/etc/clamav-unofficial-sigs/source.conf" ]; then

@@ -37,7 +37,7 @@ BEGIN {
   require ReadConfig;
   my $conf = ReadConfig::get_instance();
   $HTTPPROXY = $conf->get_option('HTTPPROXY');
-  unshift(@INC, "/opt/spamtagger/lib");
+  unshift(@INC, "/usr/spamtagger/lib");
 }
 
 use STUtils qw( open_as rmrf );
@@ -83,7 +83,7 @@ dump_file("clamspamd.conf");
 #############################
 sub dump_file($file)
 {
-  my $template_file = "/opt/spamtagger/etc/clamav/${file}";
+  my $template_file = "/usr/spamtagger/etc/clamav/${file}";
   my $target_file = "/var/spamtagger/etc/clamav/${file}";
   my $custom = 0;
   if (-e "/etc/spamtagger/etc/clamav/${file}") {

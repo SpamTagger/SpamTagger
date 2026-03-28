@@ -79,13 +79,13 @@ class Language {
     $this->sysconf_ = SystemConfig::getInstance();
 
     // Initialize "dynamicly" $this->available_languages_ and inversed_languages_
-    $langDir = "/opt/spamtagger/www/".$this->type_."/lang/";
+    $langDir = "/usr/spamtagger/www/".$this->type_."/lang/";
     $dirs = array_filter(glob($langDir.'*'), 'is_dir'); // get all lang in directories
 
     // read langages csv
     $language_codes = array();
     $row = 1;
-    if (($handle = fopen("/opt/spamtagger/www/classes/view/languages.csv", "r")) !== FALSE) {
+    if (($handle = fopen("/usr/spamtagger/www/classes/view/languages.csv", "r")) !== FALSE) {
       while (($data = fgetcsv($handle, 0, ",")) !== FALSE) {
         $language_codes[$data[0]] = $data[1];
         $row++;
@@ -216,12 +216,12 @@ class Language {
 
     // Load the default arrays and overwrite it by selected language.
     // This permits to have default words for missing translations.
-    include("/opt/spamtagger/www/".$this->type_."/htdocs/lang/en/texts.php");
+    include("/usr/spamtagger/www/".$this->type_."/htdocs/lang/en/texts.php");
 
     foreach ($txt as $t => $str) {
       $this->txts_[$t] = $str;
     }
-    include("/opt/spamtagger/www/".$this->type_."/htdocs/lang/".$this->lang_."/texts.php");
+    include("/usr/spamtagger/www/".$this->type_."/htdocs/lang/".$this->lang_."/texts.php");
 
     foreach ($txt as $t => $str) {
       $this->txts_[$t] = $str;

@@ -160,7 +160,7 @@ class STSoap_Content {
 
     require_once('SpamTagger/Config.php');
     $stconfig = SpamTagger_Config::getInstance();
-    $cmd = "/opt/spamtagger/bin/force_quarantined.pl ".$id;
+    $cmd = "/usr/spamtagger/bin/force_quarantined.pl ".$id;
     $res = `$cmd`;
     #$res = 'FORCED';
     $status = 0;

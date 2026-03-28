@@ -10,7 +10,7 @@ if [ ! "$PREVPROC" = "" ]; then
   exit
 fi
 
-/opt/spamtagger/etc/init.d/mariadb_replica start 2>&1 >/dev/null
+/usr/spamtagger/etc/init.d/mariadb_replica start 2>&1 >/dev/null
 sleep $DELAY
 PREVPROC=$(pgrep -f /etc/mariadb/my_replica.cnf)
 if [ "$PREVPROC" = "" ]; then

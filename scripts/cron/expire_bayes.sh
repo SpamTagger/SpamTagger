@@ -12,7 +12,7 @@ if [ -d /dev/shm ]; then
   rm -rf /dev/shm/* >/dev/null 2>&1
 fi
 
-#sa-learn -p /opt/spamtagger/etc/mailscanner/spam.assassin.prefs.conf --force-expire 2>&1
+#sa-learn -p /usr/spamtagger/etc/mailscanner/spam.assassin.prefs.conf --force-expire 2>&1
 chown -R spamtagger:spamtagger /var/spamtagger/spool/spamassassin
 
 # purge stock

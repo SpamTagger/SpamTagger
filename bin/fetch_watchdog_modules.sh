@@ -50,7 +50,7 @@ while getopts ":r" OPTION; do
   esac
 done
 
-. /opt/spamtagger/lib/STUtils.sh
+. /usr/spamtagger/lib/STUtils.sh
 FILE_NAME=$(basename -- "$0")
 FILE_NAME="${FILE_NAME%.*}"
 ret=$(createLockFile "$FILE_NAME")
@@ -58,13 +58,13 @@ if [[ "$ret" -eq "1" ]]; then
   exit 0
 fi
 
-. /opt/spamtagger/lib/updates/download_files.sh
+. /usr/spamtagger/lib/updates/download_files.sh
 
 ##
 ## Watchdog modules updates
 ##
 
-ret=$(downloadDatas "/opt/spamtagger/bin/watchdog/" "watchdog_modules" $randomize "null" "" "noexit")
+ret=$(downloadDatas "/usr/spamtagger/bin/watchdog/" "watchdog_modules" $randomize "null" "" "noexit")
 
 removeLockFile "$FILE_NAME"
 

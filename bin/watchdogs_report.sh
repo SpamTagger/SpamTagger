@@ -8,7 +8,7 @@ DIRBASE='/var/spamtagger/spool/watchdog/'
 PIDDIR='/var/spamtagger/run/watchdog/'
 REPORTSWRK=$DIRBASE'reports.wrk'
 FILE=$DIRBASE"reports/report-$CLIENTID-$HOSTID-$TIME.tar.gz"
-WWW='/opt/spamtagger/www/guis/admin/public/downloads/watchdogs.html'
+WWW='/usr/spamtagger/www/guis/admin/public/downloads/watchdogs.html'
 
 if [ -e '/var/tmp/st_checks_data.ko' ]; then
   exit

@@ -65,7 +65,7 @@ class STSoap_Services {
     foreach ($stages as $stage) {
       if (preg_match('/^[124]$/', $stage)) {
         if (preg_match('/^(start|stop|restart)$/', $command)) {
-          $cmd = "/opt/spamtagger/etc/init.d/exim_stage$stage ".$command.$outcmd;
+          $cmd = "/usr/spamtagger/etc/init.d/exim_stage$stage ".$command.$outcmd;
           $res = `$cmd`;
           $res = preg_replace('/\n/', '', $res);
           if (preg_match('/(started|stopped).$/', $res, $matches)) {
@@ -95,7 +95,7 @@ class STSoap_Services {
     require_once('SpamTagger/Config.php');
     $config = new SpamTagger_Config();
     $service = preg_replace('/\//', '', $service);
-    $filepath = '/opt/spamtagger/www/soap/application/STSoap/commands/'.urlencode($service).".php";
+    $filepath = '/usr/spamtagger/www/soap/application/STSoap/commands/'.urlencode($service).".php";
     if (file_exists($filepath)) {
       include_once($filepath);
     }
@@ -155,7 +155,7 @@ class STSoap_Services {
     require_once('SpamTagger/Config.php');
     $config = new SpamTagger_Config();
     $service = preg_replace('/[^a-zA-Z0-9_]/', '', $service);
-    $starter = "/opt/spamtagger/etc/init.d/".$service;
+    $starter = "/usr/spamtagger/etc/init.d/".$service;
     if (!file_exists($starter)) {
       $ret['error'] = 'no such process starter';
       $ret['message'] = $starter;
@@ -194,12 +194,12 @@ class STSoap_Services {
     $config = new SpamTagger_Config();
     if ($params['what'] == 'domains') {
       if (isset($params['domain']) && $params['domain'] != "") {
-        $cmd = "/opt/spamtagger/bin/dump_domains.pl ".escapeshellcmd($params['domain']);
+        $cmd = "/usr/spamtagger/bin/dump_domains.pl ".escapeshellcmd($params['domain']);
       } else {
-        $cmd = "/opt/spamtagger/bin/dump_domains.pl";
+        $cmd = "/usr/spamtagger/bin/dump_domains.pl";
       }
     } elseif ($params['what'] == 'archiving') {
-      $cmd = "/opt/spamtagger/bin/dump_archiving.pl";
+      $cmd = "/usr/spamtagger/bin/dump_archiving.pl";
     }
 
     if ($cmd != '') {

@@ -30,7 +30,7 @@ class STSoap_Stats
     {
       return array('stats_id' => $stats_id);
     }
-    $cmd = "/opt/spamtagger/bin/get_stats.pl '".$params['what']."' ".$params['datefrom']." ".$params['dateto'];
+    $cmd = "/usr/spamtagger/bin/get_stats.pl '".$params['what']."' ".$params['datefrom']." ".$params['dateto'];
     $cmd .= " -b";
     if (isset($params['fulldays']) && $params['fulldays']) {
       $cmd .= " -f";

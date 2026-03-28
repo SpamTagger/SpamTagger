@@ -4,7 +4,7 @@ DELAY=2
 
 export PATH=$PATH:/sbin:/usr/sbin
 
-/opt/spamtagger/etc/init.d/exim_stage2 stop 2>&1 >/dev/null
+/usr/spamtagger/etc/init.d/exim_stage2 stop 2>&1 >/dev/null
 sleep $DELAY
 PREVPROC=$(pgrep -f /etc/exim/exim_stage2)
 if [ ! "$PREVPROC" = "" ]; then

@@ -4,7 +4,7 @@ MYSPAMTAGGERPWD=$(grep 'MYSPAMTAGGERPWD' /etc/spamtagger.conf | cut -d ' ' -f3)
 HTTPPROXY=$(grep -e '^HTTPPROXY' /etc/spamtagger.conf | cut -d ' ' -f3)
 export http_proxy=$HTTPPROXY
 
-. /opt/spamtagger/lib/lib_utils.sh
+. /usr/spamtagger/lib/lib_utils.sh
 FILE_NAME=$(basename -- "$0")
 FILE_NAME="${FILE_NAME%.*}"
 ret=$(createLockFile "$FILE_NAME")
@@ -22,12 +22,12 @@ if [ -e /var/spamtagger/run/clamd.disabled ] && [ -e /var/spamtagger/run/clamspa
   exit 0
 fi
 
-if [ ! -f /opt/spamtagger/etc/clamav/freshclam.conf ]; then
-  /opt/spamtagger/bin/dump_clamav_config.pl
+if [ ! -f /usr/spamtagger/etc/clamav/freshclam.conf ]; then
+  /usr/spamtagger/bin/dump_clamav_config.pl
 fi
 
 echo "["$(date "+%Y-%m-%d %H:%M:%S")"] Starting ClamAV update..." >>/var/spamtagger/log/clamav/freshclam.log
-/usr/bin/freshclam --user=clamav --config-file=/opt/spamtagger/etc/clamav/freshclam.conf --daemon-notify=/opt/spamtagger/etc/clamav/clamd.conf >>/var/spamtagger/log/clamav/freshclam.log 2>&1
+/usr/bin/freshclam --user=clamav --config-file=/usr/spamtagger/etc/clamav/freshclam.conf --daemon-notify=/usr/spamtagger/etc/clamav/clamd.conf >>/var/spamtagger/log/clamav/freshclam.log 2>&1
 
 RET=$?
 
@@ -46,7 +46,7 @@ else
     echo "done"
     echo -n " Retrying download... "
     echo "["$(date "+%Y-%m-%d %H:%M:%S")"] Retrying download... " >>/var/spamtagger/log/clamav/freshclam.log
-    /usr/bin/freshclam --user=clamav --config-file=/opt/spamtagger/etc/clamav/freshclam.conf --daemon-notify=/opt/spamtagger/etc/clamav/clamd.conf --quiet
+    /usr/bin/freshclam --user=clamav --config-file=/usr/spamtagger/etc/clamav/freshclam.conf --daemon-notify=/usr/spamtagger/etc/clamav/clamd.conf --quiet
 
     RET2=$?
     if [ $RET2 -le 1 ]; then
@@ -65,10 +65,10 @@ if [ -e /etc/spamtagger/clamav-unofficial-sigs ]; then
       echo "Installing Unofficial Signatures..." >>/var/spamtagger/log/clamav/freshclam.log
       mkdir /var/spamtagger/spool/clamav/unofficial-sigs
       /bin/chown clamav:clamav -R /var/spamtagger/spool/clamav/unofficial-sigs
-      /opt/spamtagger/scripts/cron/clamav-unofficial-sigs.sh --force >>/var/spamtagger/log/clamav/freshclam.log
+      /usr/spamtagger/scripts/cron/clamav-unofficial-sigs.sh --force >>/var/spamtagger/log/clamav/freshclam.log
     else
       echo "Updating Unofficial Signatures..." >>/var/spamtagger/log/clamav/freshclam.log
-      /opt/spamtagger/scripts/cron/clamav-unofficial-sigs.sh --update >>/var/spamtagger/log/clamav/freshclam.log
+      /usr/spamtagger/scripts/cron/clamav-unofficial-sigs.sh --update >>/var/spamtagger/log/clamav/freshclam.log
     fi
   else
     echo "/etc/spamtagger/clamav-unofficial-sigs exists but does not contain the correct information. Please enter exactly:"

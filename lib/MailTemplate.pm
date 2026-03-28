@@ -28,7 +28,7 @@ use Exporter 'import';
 our @EXPORT_OK = ();
 our $VERSION   = 1.0;
 
-use lib "/opt/spamtagger/lib/";
+use lib "/usr/spamtagger/lib/";
 use ReadConfig();
 use DB();
 use Email();
@@ -60,8 +60,8 @@ sub new ($class, $directory, $filename, $template, $destination_h, $language,$ty
   # use english by default
   my $conf = ReadConfig::get_instance();
   if (
-    ! -d "/opt/spamtagger/templates/$directory/$template/$lang/${filename}_parts" 
-    && ! -f "/opt/spamtagger/templates/$directory/$template/$lang/${filename}.txt" 
+    ! -d "/usr/spamtagger/templates/$directory/$template/$lang/${filename}_parts" 
+    && ! -f "/usr/spamtagger/templates/$directory/$template/$lang/${filename}.txt" 
   ) {
     $lang = 'en';
   }
@@ -79,9 +79,9 @@ sub new ($class, $directory, $filename, $template, $destination_h, $language,$ty
     my $dm = $domain->get_pref('systemsender');
     $from = $dm if (! $dm eq "" && $dm !~ /NOTFOUND/ && $dm !~ /^_/);
   }
-  $path = "/opt/spamtagger/templates/$directory/$template/$lang/$filename";
+  $path = "/usr/spamtagger/templates/$directory/$template/$lang/$filename";
   if (! -d "${path}_parts" && ! -f "$path.txt") {
-    $path = "/opt/spamtagger/templates/$directory/default/$lang/$filename";
+    $path = "/usr/spamtagger/templates/$directory/default/$lang/$filename";
   }
   my $this = {
     path => $path,

@@ -44,7 +44,7 @@ use POSIX qw(setuid setgid);
 use Sys::Syslog();
 use Proc::ProcessTable();
 use Time::HiRes qw(gettimeofday tv_interval);
-use lib '/opt/spamtagger/lib';
+use lib '/usr/spamtagger/lib';
 use ReadConfig();
 use ConfigTemplate();
 
@@ -65,7 +65,7 @@ sub new ($class, $daemonname, $conffilepath, $spec_this = {}) {
     $conffilepath = 'etc/spamtagger/' . $daemonname . ".cf";
   }
   my $configfile;
-  $configfile = "/opt/spamtagger/" . $conffilepath unless ($conffilepath =~ /^\//);
+  $configfile = "/usr/spamtagger/" . $conffilepath unless ($conffilepath =~ /^\//);
 
   ## default values
   my $pidfile = "/var/spamtagger/run/$daemonname.pid";

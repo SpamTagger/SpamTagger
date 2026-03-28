@@ -1,5 +1,5 @@
 export PYENV_ROOT="/var/spamtagger/.pyenv"
-export PATH="$PYENV_ROOT/bin:/opt/spamtagger/bin:$PATH"
+export PATH="$PYENV_ROOT/bin:/usr/spamtagger/bin:$PATH"
 export PYENV_VERSION="3.14.2"
 if command -v pyenv 1>/dev/null 2>&1; then
   eval "$(pyenv init --path)"
@@ -7,7 +7,7 @@ fi
 
 # Execute the user-facing installer if it has never run
 if [ ! -e /var/spamtagger/state/first-run-wizard ]; then
-  /opt/spamtagger/scripts/installer/installer.pl
+  /usr/spamtagger/scripts/installer/installer.pl
 fi
 
 # Print system stats upon login

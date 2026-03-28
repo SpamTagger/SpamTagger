@@ -28,7 +28,7 @@ use utf8;
 die "Feature not currently supported by SpamTagger";
 
 =pod Ignore for perlcritic
-use lib '/opt/spamtagger/lib/';
+use lib '/usr/spamtagger/lib/';
 use ReadConfig();
 use LWP::UserAgent();
 use XML::Simple();
@@ -69,7 +69,7 @@ if (!$conf->get_option('REGISTERED')) {
   exit 1;
 }
 
-my $updates_config_file = '/opt/spamtagger/etc/spamtagger/updates.cf';
+my $updates_config_file = '/usr/spamtagger/etc/spamtagger/updates.cf';
 if (! -f $updates_config_file ) {
   print STDERR "** ERROR ** No updates configuration found. Aborting.\n";
   exit 1;

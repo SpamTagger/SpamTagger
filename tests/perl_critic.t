@@ -24,7 +24,7 @@ use Perl::Critic qw(critique);
 use Test2::V0;
 use Env qw(TABLE_TERM_SIZE);
 
-my $start = shift || '/opt/spamtagger';
+my $start = shift || '/usr/spamtagger';
 $TABLE_TERM_SIZE = 100;
 
 our %args = ();

@@ -84,7 +84,7 @@ function stopService($sid, $service) {
   if (! file_exists($sudocmd) ) {
     $sudocmd = "/usr/bin/sudo";
   }
-  $cmd = "$sudocmd /opt/spamtagger/scripts/starters/".$services_[$service]['stopper'];
+  $cmd = "$sudocmd /usr/spamtagger/scripts/starters/".$services_[$service]['stopper'];
   $res = `$cmd`;
   $res = trim($res);
   if ($res == "SUCCESSFULL") {
@@ -119,7 +119,7 @@ function startService($sid, $service) {
   if (! file_exists($sudocmd) ) {
     $sudocmd = "/usr/bin/sudo";
   }
-  $cmd = "$sudocmd /opt/spamtagger/scripts/starters/".$services_[$service]['starter'];
+  $cmd = "$sudocmd /usr/spamtagger/scripts/starters/".$services_[$service]['starter'];
   $res = `$cmd`;
   $res = trim($res);
   if ($res == "SUCCESSFULL") {
@@ -148,7 +148,7 @@ function restartService($sid, $service) {
   if (! file_exists($sudocmd) ) {
     $sudocmd = "/usr/bin/sudo";
   }
-  $cmd = "$sudocmd /opt/spamtagger/scripts/starters/".$services_[$service]['restarter'];
+  $cmd = "$sudocmd /usr/spamtagger/scripts/starters/".$services_[$service]['restarter'];
   $res = `$cmd`;
   $res = trim($res);
   if ($res == "SUCCESSFULL") {
@@ -176,20 +176,20 @@ function dumpConfiguration($config, $params) {
   `echo "conf: $config" > /tmp/out.log`;
   switch ($config) {
     case 'domains':
-      $cmd = "/opt/spamtagger/bin/dump_domains.pl";
+      $cmd = "/usr/spamtagger/bin/dump_domains.pl";
       if ($params != "") {
         $cmd .= " ".escapeshellcmd($params);
       }
       break;
 
     case 'wwlist':
-      $cmd = "/opt/spamtagger/bin/dump_wwlist.pl";
+      $cmd = "/usr/spamtagger/bin/dump_wwlist.pl";
       if ($params != "") {
         $cmd .= " ".escapeshellcmd($params);
       }
       break;
     case 'exim':
-      $cmd = "/opt/spamtagger/bin/dump_exim_config.pl";
+      $cmd = "/usr/spamtagger/bin/dump_exim_config.pl";
       if ($params != "") {
         $cmd .= " ".escapeshellcmd($params);
       }

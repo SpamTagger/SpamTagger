@@ -50,7 +50,7 @@ while getopts ":r" OPTION; do
   esac
 done
 
-. /opt/spamtagger/lib/STUtils.sh
+. /usr/spamtagger/lib/STUtils.sh
 FILE_NAME=$(basename -- "$0")
 FILE_NAME="${FILE_NAME%.*}"
 ret=$(createLockFile "$FILE_NAME")
@@ -58,16 +58,16 @@ if [[ "$ret" -eq "1" ]]; then
   exit 0
 fi
 
-. /opt/spamtagger/lib/updates/download_files.sh
+. /usr/spamtagger/lib/updates/download_files.sh
 
 ##
 ## SpamAssassin rules update
 ##
-ret=$(downloadDatas "/opt/spamtagger/share/spamassassin/" "spamc_rules" $randomize "null" "\|mailscanner.cf" "noexit")
+ret=$(downloadDatas "/usr/spamtagger/share/spamassassin/" "spamc_rules" $randomize "null" "\|mailscanner.cf" "noexit")
 if [[ "$ret" -eq "1" ]]; then
-  /opt/spamtagger/etc/init.d/spamd stop >/dev/null 2>&1
+  /usr/spamtagger/etc/init.d/spamd stop >/dev/null 2>&1
   sleep 3
-  /opt/spamtagger/etc/init.d/spamd start >/dev/null 2>&1
+  /usr/spamtagger/etc/init.d/spamd start >/dev/null 2>&1
 fi
 
 removeLockFile "$FILE_NAME"

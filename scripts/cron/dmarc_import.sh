@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "select hostname, password from source;" | /opt/spamtagger/bin/st_mariadb -s st_config | grep -v 'password' | tr -t '[:blank:]' ':' >/var/tmp/source.conf
+echo "select hostname, password from source;" | /usr/spamtagger/bin/st_mariadb -s st_config | grep -v 'password' | tr -t '[:blank:]' ':' >/var/tmp/source.conf
 MHOST=$(cat /var/tmp/source.conf | cut -d':' -f1)
 MPASS=$(cat /var/tmp/source.conf | cut -d':' -f2)
 

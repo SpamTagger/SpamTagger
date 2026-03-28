@@ -14,20 +14,20 @@ __IFSSL__
     SSLHonorCipherOrder on
     SSLCompression off
 
-    SSLCACertificatePath /opt/spamtagger/etc/apache/certs
-    SSLCertificateFile /opt/spamtagger/etc/apache/certs/certificate.pem
-__IFSSLCHAIN__  SSLCertificateChainFile  /opt/spamtagger/etc/apache/certs/certificate-chain.pem
+    SSLCACertificatePath /usr/spamtagger/etc/apache/certs
+    SSLCertificateFile /usr/spamtagger/etc/apache/certs/certificate.pem
+__IFSSLCHAIN__  SSLCertificateChainFile  /usr/spamtagger/etc/apache/certs/certificate-chain.pem
 __ENDIFSSL__
 
     AssignUserId spamtagger spamtagger
 
-    DocumentRoot "/opt/spamtagger/www/soap/htdocs"
+    DocumentRoot "/usr/spamtagger/www/soap/htdocs"
     ErrorLog /var/spamtagger/log/apache/error_soap.log
     CustomLog /var/spamtagger/log/apache/access_soap.log combined
 
     KeepAlive Off
-    Alias /soap /opt/spamtagger/www/soap/public
-    Alias /index.php /opt/spamtagger/www/soap/htdocs/spamtagger.php
+    Alias /soap /usr/spamtagger/www/soap/public
+    Alias /index.php /usr/spamtagger/www/soap/htdocs/spamtagger.php
 
     RewriteEngine On
     RewriteCond %{REQUEST_METHOD} ^(TRACE|TRACK)

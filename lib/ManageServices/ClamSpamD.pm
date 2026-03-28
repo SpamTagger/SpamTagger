@@ -40,7 +40,7 @@ sub config ($class) {
     'name'     => 'clamspamd',
     'cmndline'  => 'clamav/clamspamd.conf',
     'cmd'    => '/usr/bin/clamd',
-    'conffile'  => '/opt/spamtagger/etc/clamav/clamspamd.conf',
+    'conffile'  => '/usr/spamtagger/etc/clamav/clamspamd.conf',
     'pidfile'  => '/var/spamtagger/run/clamav/clamspamd.pid',
     'logfile'  => '/var/spamtagger/log/clamav/clamspamd.log',
     'localsocket'  => '/var/spamtagger/run/clamav/clamspamd.sock',

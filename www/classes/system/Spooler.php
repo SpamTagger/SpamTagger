@@ -44,7 +44,7 @@ class Spooler {
     }
 
     $sysconf = SystemConfig::getInstance();
-    $this->conf_file_ = "/opt/spamtagger/etc/exim/exim_stage".$this->spool_availables_[$spool].".conf";
+    $this->conf_file_ = "/usr/spamtagger/etc/exim/exim_stage".$this->spool_availables_[$spool].".conf";
     if (file_exists($this->conf_file_)) {
       $this->spool_ = $spool;
       return true;

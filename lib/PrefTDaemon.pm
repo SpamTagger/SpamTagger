@@ -26,7 +26,7 @@ use Exporter 'import';
 our @EXPORT_OK = ();
 our $VERSION   = 1.0;
 
-use lib "/opt/spamtagger/lib/";
+use lib "/usr/spamtagger/lib/";
 use Time::HiRes qw(gettimeofday tv_interval);
 use DB();
 use Digest::MD5 qw(md5_hex);
@@ -62,7 +62,7 @@ sub new ($class, $params) {
   my $spec_this = {
     name              => 'PrefTDaemon',
     socketpath        => "/var/spamtagger/run/prefdaemon.sock",
-    configfile        => "/opt/spamtagger/etc/spamtagger/prefdaemon.conf",
+    configfile        => "/usr/spamtagger/etc/spamtagger/prefdaemon.conf",
     pidfile           => "/var/spamtagger/run/prefdaemon.pid",
     profile           => 0,
     prefork           => 5,

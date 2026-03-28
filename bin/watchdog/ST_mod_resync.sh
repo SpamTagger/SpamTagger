@@ -30,11 +30,11 @@ if [ -e $STATUSFILE ]; then
   COUNT="$(cat $STATUSFILE)"
   # If running for longer than an hour or exited without cleaning
   if [[ "$COUNT" -ge 6 ]]; then
-    echo "DBs are out of sync and automatic resync has failed for 1 whole day (6 attempts). No longer attempting automatic correction. Recent configuration changes will not have been be applied. Try manually running /opt/spamtagger/bin/resync_db.sh" >>$OUT_FILE
+    echo "DBs are out of sync and automatic resync has failed for 1 whole day (6 attempts). No longer attempting automatic correction. Recent configuration changes will not have been be applied. Try manually running /usr/spamtagger/bin/resync_db.sh" >>$OUT_FILE
     my_own_exit "2"
   # If it specifically failed an update
   else
-    echo "DBs are out of sync and automatic resync has failed $COUNT time(s). A total of 6 automatic attempts to resync will be made. Recent configuration changes will not have been be applied. Try manually running /opt/spamtagger/bin/resync_db.sh" >>$OUT_FILE
+    echo "DBs are out of sync and automatic resync has failed $COUNT time(s). A total of 6 automatic attempts to resync will be made. Recent configuration changes will not have been be applied. Try manually running /usr/spamtagger/bin/resync_db.sh" >>$OUT_FILE
     my_own_exit "1"
   fi
 fi

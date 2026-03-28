@@ -74,7 +74,7 @@ public function requestForm($alias) {
   $sysconf_ = SystemConfig::getInstance();
 
   // create the command string
-  $command = "/opt/spamtagger/bin/send_aliasrequest.pl ".$user_->getPref('username')." ".$alias." ".$token." ".$lang_->getLanguage();
+  $command = "/usr/spamtagger/bin/send_aliasrequest.pl ".$user_->getPref('username')." ".$alias." ".$token." ".$lang_->getLanguage();
   $command = escapeshellcmd($command);
   // and launch
   $result = `$command`;

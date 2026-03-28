@@ -33,7 +33,7 @@ class STSoap_Logs {
     {
       return array('trace_id' => $trace_id);
     }
-    $cmd = "/opt/spamtagger/bin/search_log.pl ".$params['datefrom']." ".$params['dateto']." ".$params['regexp'];
+    $cmd = "/usr/spamtagger/bin/search_log.pl ".$params['datefrom']." ".$params['dateto']." ".$params['regexp'];
     if (isset($params['filter']) && $params['filter'] != '' && $params['filter'] != "''") {
       $params['filter'] = preg_replace("/^'(.*)'$/", "$1", $params['filter']);
       $params['filter'] = preg_replace("/'/", "\\'", $params['filter']);

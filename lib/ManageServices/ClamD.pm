@@ -40,7 +40,7 @@ sub config ($class) {
     'name'     => 'clamd',
     'cmndline'  => 'clamav/clamd.conf',
     'cmd'    => '/usr/bin/clamd',
-    'conffile'  => '/opt/spamtagger/etc/clamav/clamd.conf',
+    'conffile'  => '/usr/spamtagger/etc/clamav/clamd.conf',
     'pidfile'  => '/var/spamtagger/run/clamav/clamd.pid',
     'logfile'  => '/var/spamtagger/log/clamav/clamd.log',
     'localsocket'  => '/var/spamtagger/run/clamav/clamd.sock',
@@ -71,9 +71,9 @@ sub setup ($this, $class) {
     1;
   };
   if ($rc) {
-    $dumped = 1 if IPC::Run::run(['/opt/spamtagger/bin/dump_clamav_config.pl'], "2>&1", ">/dev/null");
+    $dumped = 1 if IPC::Run::run(['/usr/spamtagger/bin/dump_clamav_config.pl'], "2>&1", ">/dev/null");
   } else {
-    $dumped = 1 if system("/opt/spamtagger/bin/dump_clamav_config.pl 2>&1 >/dev/null");
+    $dumped = 1 if system("/usr/spamtagger/bin/dump_clamav_config.pl 2>&1 >/dev/null");
   }
   $this->do_log('dump_clamav_config.pl failed', 'daemon') unless ($dumped);
 

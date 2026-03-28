@@ -32,7 +32,7 @@ use Time::HiRes qw(gettimeofday tv_interval);
 use Digest::MD5 qw(md5_hex);
 use Date::Calc qw(Add_Delta_Days Today);
 use Devel::Size qw(size total_size);
-use lib '/opt/spamtagger/lib';
+use lib '/usr/spamtagger/lib';
 use DB();
 use StatsClient();
 
@@ -73,7 +73,7 @@ sub new ($class, $myspec_this) {
     backend                => undef,
     socketpath             => "/var/spamtagger/run/statsdaemon.sock",
     pidfile                => "/var/spamtagger/run/statsdaemon.pid",
-    configfile             => "/opt/spamtagger/etc/spamtagger/statsdaemon.conf",
+    configfile             => "/usr/spamtagger/etc/spamtagger/statsdaemon.conf",
     clean_thread_exit      => 0,
     backend_type           => 'none',
     'history_avoid_keys'   => '',

@@ -40,14 +40,14 @@ sub config ($class) {
     'name'     => 'spamd',
     'cmndline'  => 'spamd.pid',
     'cmd'    => '/usr/local/bin/spamd',
-    'conffile'  => '/opt/spamtagger/etc/mailscanner/spamd.conf',
+    'conffile'  => '/usr/spamtagger/etc/mailscanner/spamd.conf',
     'pidfile'  => '/var/spamtagger/run/spamassassin.pid',
     'logfile'  => '/var/spamtagger/log/mailscanner/spamd.log',
     'socket'  => '/var/spamtagger/run/spamassassin.sock',
     'children'  => 21,
     'user'    => 'spamtagger',
     'group'    => 'spamtagger',
-    'siteconfig'  => '/opt/spamtagger/share/spamassassin',
+    'siteconfig'  => '/usr/spamtagger/share/spamassassin',
     'daemonize'  => 'yes',
     'forks'    => 0,
     'nouserconfig'  => 'yes',
@@ -72,23 +72,23 @@ sub setup ($this, $class) {
     1;
   };
   if ($rc) {
-    $dumped = 1 if IPC::Run::run(['/opt/spamtagger/bin/dump_custom_spamc_rules.pl'], "2>&1", ">/dev/null");
+    $dumped = 1 if IPC::Run::run(['/usr/spamtagger/bin/dump_custom_spamc_rules.pl'], "2>&1", ">/dev/null");
   } else {
-    $dumped = 1 if system("/opt/spamtagger/bin/dump_custom_spamc_rules.pl 2>&1 >/dev/null");
+    $dumped = 1 if system("/usr/spamtagger/bin/dump_custom_spamc_rules.pl 2>&1 >/dev/null");
   }
   $this->do_log('dump_custom_spamc_rules.pl failed', 'daemon') unless ($dumped);
   $dumped = 0;
   if ($rc) {
-    $dumped = 1 if IPC::Run::run(['/opt/spamtagger/bin/dump_spamc_double_items.pl'], "2>&1", ">/dev/null");
+    $dumped = 1 if IPC::Run::run(['/usr/spamtagger/bin/dump_spamc_double_items.pl'], "2>&1", ">/dev/null");
   } else {
-    $dumped = 1 if system("/opt/spamtagger/bin/dump_spamc_double_items.pl 2>&1 >/dev/null");
+    $dumped = 1 if system("/usr/spamtagger/bin/dump_spamc_double_items.pl 2>&1 >/dev/null");
   }
   $this->do_log('dump_spamc_double_items.pl failed', 'daemon') unless ($dumped);
   $dumped = 0;
   if ($rc) {
-    $dumped = 1 if IPC::Run::run(['/opt/spamtagger/bin/dump_mailscanner_config.pl'], "2>&1", ">/dev/null");
+    $dumped = 1 if IPC::Run::run(['/usr/spamtagger/bin/dump_mailscanner_config.pl'], "2>&1", ">/dev/null");
   } else {
-    $dumped = 1 if system("/opt/spamtagger/bin/dump_mailscanner_config.pl 2>&1 >/dev/null");
+    $dumped = 1 if system("/usr/spamtagger/bin/dump_mailscanner_config.pl 2>&1 >/dev/null");
   }
   $this->do_log('dump_mailscanner_config.pl failed', 'daemon') unless ($dumped);
   $dumped = 0;

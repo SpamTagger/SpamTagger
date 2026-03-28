@@ -1,7 +1,7 @@
-%report-dir% = /opt/spamtagger/templates/reports/default/en
-%etc-dir% = /opt/spamtagger/etc/mailscanner
-%rules-dir% = /opt/spamtagger/etc/mailscanner/rules
-%mcp-dir% = /opt/spamtagger/etc/mailscanner/mcp
+%report-dir% = /usr/spamtagger/templates/reports/default/en
+%etc-dir% = /usr/spamtagger/etc/mailscanner
+%rules-dir% = /usr/spamtagger/etc/mailscanner/rules
+%mcp-dir% = /usr/spamtagger/etc/mailscanner/mcp
 
 %org-name% = __ORGNAME__
 %org-long-name% = __ORGNAME__
@@ -15,7 +15,7 @@ Max Children = __NBPROCESSES__
 Run As User = spamtagger
 Run As Group = spamtagger
 
-Additional Library Paths = /opt/spamtagger/lib
+Additional Library Paths = /usr/spamtagger/lib
 
 Queue Scan Interval = 5
 Restart Every = 14400
@@ -391,7 +391,7 @@ SpamAssassin Temporary Dir = /var/spamtagger/spool/tmp/mailscanner/spamassassin
 SpamAssassin User State Dir =  /var/spamtagger/mailscanner/users
 SpamAssassin Install Prefix =
 SpamAssassin Site Rules Dir = /etc/mail/spamassassin
-SpamAssassin Local Rules Dir = /opt/spamtagger/share/spamassassin
+SpamAssassin Local Rules Dir = /usr/spamtagger/share/spamassassin
 SpamAssassin Local State Dir =
 SpamAssassin Default Rules Dir =  /usr/local/share/spamassassin
 

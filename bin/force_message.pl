@@ -29,7 +29,7 @@ use utf8;
 
 use Net::SMTP;
 
-use lib '/opt/spamtagger/lib/';
+use lib '/usr/spamtagger/lib/';
 use ReadConfig;
 use DB();
 

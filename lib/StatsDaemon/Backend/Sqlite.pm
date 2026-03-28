@@ -26,7 +26,7 @@ use Exporter 'import';
 our @EXPORT_OK = ();
 our $VERSION   = 1.0;
 
-use lib "/opt/spamtagger/lib/";
+use lib "/usr/spamtagger/lib/";
 use threads();
 use threads::shared();
 use File::Copy();
@@ -53,7 +53,7 @@ sub new ($class, $daemon) {
     'dbfilename' => 'stats.sqlite',
     'history_avoid_keys' => '',
     'history_avoid_keys_a' => [],
-    'template_database' => '/opt/spamtagger/lib/StatsDaemon/Backend/data/stat_template.sqlite'
+    'template_database' => '/usr/spamtagger/lib/StatsDaemon/Backend/data/stat_template.sqlite'
   };
 
   bless $this, $class;

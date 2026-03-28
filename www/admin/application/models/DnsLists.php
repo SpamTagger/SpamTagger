@@ -15,7 +15,7 @@ class Default_Model_DnsLists {
 
   public function __construct() {
     $conf = SpamTagger_Config::getInstance();
-    $this->_config_path = "/opt/spamtagger/etc/rbls";
+    $this->_config_path = "/usr/spamtagger/etc/rbls";
   }
 
   public function load() {

@@ -48,7 +48,7 @@ HOSTID=$(grep 'HOSTID' /etc/spamtagger.conf | cut -d ' ' -f3)
 MAXSLEEPTIME=300
 MINSLEEPTIME=120
 
-. /opt/spamtagger/lib/STUtils.sh
+. /usr/spamtagger/lib/STUtils.sh
 FILE_NAME=$(basename -- "$0")
 FILE_NAME="${FILE_NAME%.*}"
 ret=$(createLockFile "$FILE_NAME")
@@ -64,7 +64,7 @@ fi
 if [ "$ISSOURCE" = "Y" ] || [ "$ISSOURCE" = "y" ]; then
   CONFIGFILE=/var/tmp/config.sql
 
-  $(/opt/spamtagger/bin/backup_config.sh $CONFIGFILE) >/dev/null 2>&1
+  $(/usr/spamtagger/bin/backup_config.sh $CONFIGFILE) >/dev/null 2>&1
 
   DATE=$(date +%Y%m%d)
   chmod g+w $CONFIGFILE

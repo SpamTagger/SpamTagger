@@ -10,7 +10,7 @@ if [ ! "$PREVPROC" = "" ]; then
   exit
 fi
 
-/opt/spamtagger/etc/init.d/mailscanner start 2>&1 >/dev/null
+/usr/spamtagger/etc/init.d/mailscanner start 2>&1 >/dev/null
 sleep $DELAY
 PREVPROC=$(pgrep -f MailScanner)
 if [ "$PREVPROC" = "" ]; then

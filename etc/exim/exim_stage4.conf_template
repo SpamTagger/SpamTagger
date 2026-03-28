@@ -74,7 +74,7 @@ hostlist   trusted_hosts = <; __TRUSTED_HOSTS__
 addresslist full_wantlisted_senders = lsearch;/var/spamtagger/spool/spamtagger/full_wantlisted_senders.list
 
 perl_at_start = true
-perl_startup = do '/opt/spamtagger/etc/exim/out_scripts.pl'
+perl_startup = do '/usr/spamtagger/etc/exim/out_scripts.pl'
 
 ######################################################################
 #                       ACL CONFIGURATION                            #
@@ -318,7 +318,7 @@ spam_pipe:
   user = spamtagger
   group = spamtagger
   log_output = true
-  environment = "PERLLIB=/opt/spamtagger/lib"
+  environment = "PERLLIB=/usr/spamtagger/lib"
   command = "__OUTSCRIPT__ $message_id $local_part $domain $sender_address"
 
 spam_store:

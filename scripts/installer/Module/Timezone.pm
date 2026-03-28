@@ -27,7 +27,7 @@ our @EXPORT_OK = ();
 our $VERSION   = 1.0;
 
 use File::Basename qw( basename );
-use lib "/opt/spamtagger/scripts/installer/";
+use lib "/usr/spamtagger/scripts/installer/";
 use DialogFactory();
 
 sub new($class) {

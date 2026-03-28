@@ -381,7 +381,7 @@ class SystemConfig extends PrefHandler {
     if (file_exists("/usr/sudo/bin/sudo")) {
       $sudocmd = "/usr/sudo/bin/sudo";
     }
-    $cmd = "$sudocmd "."/opt/spamtagger/bin/setpassword root ".escapeshellarg($p);
+    $cmd = "$sudocmd "."/usr/spamtagger/bin/setpassword root ".escapeshellarg($p);
     $res = array ();
     $res_a = array ();
     exec($cmd, $res_a, $res);
@@ -402,32 +402,32 @@ class SystemConfig extends PrefHandler {
     $this->report_templates_ = array ();
     $this->warnhit_templates_ = array ();
 
-    $web_template_files = scandir("/opt/spamtagger/www/user/templates");
-    $summary_template_files = scandir("/opt/spamtagger/templates/summary");
-    $report_template_files = scandir("/opt/spamtagger/templates/reports");
-    $warnhit_template_files = scandir("/opt/spamtagger/templates/warnhit");
+    $web_template_files = scandir("/usr/spamtagger/www/user/templates");
+    $summary_template_files = scandir("/usr/spamtagger/templates/summary");
+    $report_template_files = scandir("/usr/spamtagger/templates/reports");
+    $warnhit_template_files = scandir("/usr/spamtagger/templates/warnhit");
 
     foreach ($web_template_files as $template) {
       $tmp = array ();
-      if (is_dir("/opt/spamtagger/www/user/templates/".$template) && $template != "CVS" && !preg_match('/^\./', $template, $tmp)) {
+      if (is_dir("/usr/spamtagger/www/user/templates/".$template) && $template != "CVS" && !preg_match('/^\./', $template, $tmp)) {
         $this->web_templates_[$template] = $template;
       }
     }
 
     foreach ($summary_template_files as $template) {
-      if (is_dir("/opt/spamtagger/templates/summary/".$template) && $template != "CVS" && !preg_match('/^\./', $template, $tmp)) {
+      if (is_dir("/usr/spamtagger/templates/summary/".$template) && $template != "CVS" && !preg_match('/^\./', $template, $tmp)) {
         $this->summary_templates_[$template] = $template;
       }
     }
 
     foreach ($report_template_files as $template) {
-      if (is_dir("/opt/spamtagger/templates/reports/".$template) && $template != "CVS" && !preg_match('/^\./', $template, $tmp)) {
+      if (is_dir("/usr/spamtagger/templates/reports/".$template) && $template != "CVS" && !preg_match('/^\./', $template, $tmp)) {
         $this->report_templates_[$template] = $template;
       }
     }
 
     foreach ($warnhit_template_files as $template) {
-      if (is_dir("/opt/spamtagger/templates/warnhit/".$template) && $template != "CVS" && !preg_match('/^\./', $template, $tmp)) {
+      if (is_dir("/usr/spamtagger/templates/warnhit/".$template) && $template != "CVS" && !preg_match('/^\./', $template, $tmp)) {
         $this->warnhit_templates_[$template] = $template;
       }
     }

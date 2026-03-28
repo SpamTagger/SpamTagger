@@ -26,7 +26,7 @@ NAME=fail2ban
 # loads its with configuration
 DAEMON=/usr/bin/$NAME-client
 SCRIPTNAME=/etc/init.d/$NAME
-CONFPATH="/opt/spamtagger/etc/fail2ban/"
+CONFPATH="/usr/spamtagger/etc/fail2ban/"
 
 # Ad-hoc way to parse out socket file name
 SOCKFILE=$(grep -h '^[^#]*socket *=' /etc/$NAME/$NAME.conf /etc/$NAME/$NAME.local 2>/dev/null |

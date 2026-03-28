@@ -26,7 +26,7 @@ use Exporter 'import';
 our @EXPORT_OK = ();
 our $VERSION   = 1.0;
 
-use lib "/opt/spamtagger/lib/";
+use lib "/usr/spamtagger/lib/";
 
 use parent qw(SockClient);
 

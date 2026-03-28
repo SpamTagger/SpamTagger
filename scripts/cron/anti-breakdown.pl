@@ -26,7 +26,7 @@ use utf8;
 die "Feature not currently supported by SpamTagger";
 
 =pod Ignore for perlcritic
-use lib '/opt/spamtagger/lib';
+use lib '/usr/spamtagger/lib';
 use Net::DNS();
 use Net::Ping();
 use File::Touch();
@@ -152,7 +152,7 @@ sub remove_and_save_ST_RBLs {
   $source_dbh->db_disconnect();
 
   if ($reboot_service) {
-    system('/opt/spamtagger/etc/init.d/mailscanner', 'restart');
+    system('/usr/spamtagger/etc/init.d/mailscanner', 'restart');
   }
 }
 
@@ -182,7 +182,7 @@ sub handle_dns_ok {
     $source_dbh->db_disconnect();
 
     # Restarting associated services
-    system('/opt/spamtagger/etc/init.d/mailscanner', 'restart');
+    system('/usr/spamtagger/etc/init.d/mailscanner', 'restart');
 
     # Removing temp files
     unlink $rbl_sql_file or warn "could not remove $rbl_sql_file\n";

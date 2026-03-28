@@ -28,7 +28,7 @@ use warnings;
 use utf8;
 use Carp qw( confess );
 
-use lib "/opt/spamtagger/lib";
+use lib "/usr/spamtagger/lib";
 use STUtils qw(open_as);
 use File::Path qw(mkpath);
 require DB;
@@ -42,7 +42,7 @@ my $system_mibs_file = '/usr/share/snmp/mibs/SPAMTAGGER-MIB.txt';
 if ( ! -d '/usr/share/snmp/mibs') {
   mkpath('/usr/share/snmp/mibs');
 }
-my $st_mib_file = "/opt/spamtagger/www/guis/admin/public/downloads/SPAMTAGGER-MIB.txt";
+my $st_mib_file = "/usr/spamtagger/www/guis/admin/public/downloads/SPAMTAGGER-MIB.txt";
 
 my $lasterror = "";
 
@@ -69,7 +69,7 @@ if (-f $system_mibs_file) {
 symlink($st_mib_file,$system_mibs_file);
 chown($uid, $gid, $system_mibs_file);
 
-symlink('/opt/spamtagger/etc/apparmor', '/etc/apparmor.d/spamtagger') unless (-e '/etc/apparmor.d/spamtagger');
+symlink('/usr/spamtagger/etc/apparmor', '/etc/apparmor.d/spamtagger') unless (-e '/etc/apparmor.d/spamtagger');
 
 sub setup_snmpd_dir() {
   my $include = 0;
@@ -106,7 +106,7 @@ sub dump_snmpd_file()
 {
   setup_snmpd_dir() || confess("Failed to create/verify '/etc/snmp/snmpd.conf.d'\n");
 
-  my $template_file = "/opt/spamtagger/etc/snmp/snmpd.conf_template";
+  my $template_file = "/usr/spamtagger/etc/snmp/snmpd.conf_template";
   my $target_file = "/etc/snmp/snmpd.conf.d/spamtagger.conf";
   unlink($target_file);
 

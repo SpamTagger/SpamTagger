@@ -27,7 +27,7 @@ use File::Spec;
 use Cwd qw( abs_path );
 use Symbol 'gensym';
 
-my $start = shift || '/opt/spamtagger';
+my $start = shift || '/usr/spamtagger';
 $TABLE_TERM_SIZE = 100;
 
 die "Path '$start' does not exist\n" unless (-d $start);

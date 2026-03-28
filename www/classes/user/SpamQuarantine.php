@@ -419,7 +419,7 @@ class SpamQuarantine extends Quarantine {
     $sysconf_ = SystemConfig::getInstance();
 
     // create the command string
-    $command = "/opt/spamtagger/bin/send_summary.pl ".addslashes($this->getSearchAddress())." 0 ".$this->getFilter('days');
+    $command = "/usr/spamtagger/bin/send_summary.pl ".addslashes($this->getSearchAddress())." 0 ".$this->getFilter('days');
     $command = escapeshellcmd($command);
 
     // and launch

@@ -41,7 +41,7 @@ sub config ($class) {
     'name'     => 'fail2ban',
     'cmndline'  => 'fail2ban-server',
     'cmd'    => '/usr/bin/fail2ban-client',
-    'confpath'  => '/opt/spamtagger/etc/fail2ban/',
+    'confpath'  => '/usr/spamtagger/etc/fail2ban/',
     'logfile'  => '/var/spamtagger/log/fail2ban/st-fail2ban.log',
     'user'    => 'root',
     'group'    => 'root',

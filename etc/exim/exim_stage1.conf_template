@@ -175,7 +175,7 @@ __INCLUDE__ /var/spamtagger/spool/tmp/exim/stage1/ldap_callout
 STATSADD = ${readsocket{/var/spamtagger/run/statsdaemon.sock}{ADD $acl_c8 1}{2s}{\n}{ \
                ${run,preexpand{/bin/sh -c 'echo "ADD $acl_c8 1" >> /tmp/missed_stats.${tod_logfile}'}{}{command failed}} \
            }}
-perl_startup = do '/opt/spamtagger/etc/exim/stage1_scripts.pl'
+perl_startup = do '/usr/spamtagger/etc/exim/stage1_scripts.pl'
 
 ######################################################################
 #                       ACL CONFIGURATION                            #
@@ -643,8 +643,8 @@ __FI__
           condition     = ${if !def:acl_c1}
           condition     = ${if eq {$received_port}{587} {0}{1}}
           !hosts        = <; +trusted_hosts ; \
-                            ${if exists {/opt/spamtagger/etc/greylistd/wantlist-hosts}\
-                               {/opt/spamtagger/etc/greylistd/wantlist-hosts}{}} ; \
+                            ${if exists {/usr/spamtagger/etc/greylistd/wantlist-hosts}\
+                               {/usr/spamtagger/etc/greylistd/wantlist-hosts}{}} ; \
                             ${if exists {/var/spamtagger/spool/greylistd/wantlist-hosts}\
                                {/var/spamtagger/spool/greylistd/wantlist-hosts}{}}
           !sender_domains = +domains_to_avoid_greylist
@@ -1249,7 +1249,7 @@ bypass_full_wantlist:
 __IF__ ALLOW_LONG
   message_linelength_limit = __LENGTH_LIMIT__
 __IF__ FOLDING
-  transport_filter = '${if >{$max_received_linelength}{$acl_m_linelength_limit}{/opt/spamtagger/etc/exim/stage1/folding.pl}{}}'
+  transport_filter = '${if >{$max_received_linelength}{$acl_m_linelength_limit}{/usr/spamtagger/etc/exim/stage1/folding.pl}{}}'
 __FI__
 __FI__
   dkim_domain = ${extract {1}{;} {${lookup {${lc:${domain:$h_from:}}} lsearch {DKIMFILE}}}}
@@ -1270,7 +1270,7 @@ bypass_smtp:
 __IF__ ALLOW_LONG
   message_linelength_limit = __LENGTH_LIMIT__
 __IF__ FOLDING
-  transport_filter = '${if >{$max_received_linelength}{$acl_m_linelength_limit}{/opt/spamtagger/etc/exim/stage1/folding.pl}{}}'
+  transport_filter = '${if >{$max_received_linelength}{$acl_m_linelength_limit}{/usr/spamtagger/etc/exim/stage1/folding.pl}{}}'
 __FI__
 __FI__
   return_path = ${if and { \
@@ -1299,7 +1299,7 @@ local_smtp:
 __IF__ ALLOW_LONG
   message_linelength_limit = __LENGTH_LIMIT__
 __IF__ FOLDING
-  transport_filter = '${if >{$max_received_linelength}{$acl_m_linelength_limit}{/opt/spamtagger/etc/exim/stage1/folding.pl}{}}'
+  transport_filter = '${if >{$max_received_linelength}{$acl_m_linelength_limit}{/usr/spamtagger/etc/exim/stage1/folding.pl}{}}'
 __FI__
 __FI__
   helo_data = __HELO_NAME__
@@ -1346,7 +1346,7 @@ __FI__
 __IF__ ALLOW_LONG
   message_linelength_limit = __LENGTH_LIMIT__
 __IF__ FOLDING
-  transport_filter = '${if >{$max_received_linelength}{$acl_m_linelength_limit}{/opt/spamtagger/etc/exim/stage1/folding.pl}{}}'
+  transport_filter = '${if >{$max_received_linelength}{$acl_m_linelength_limit}{/usr/spamtagger/etc/exim/stage1/folding.pl}{}}'
 __FI__
 __FI__
 __IF__ USETLS
@@ -1379,7 +1379,7 @@ callout_transport:
 __IF__ ALLOW_LONG
   message_linelength_limit = __LENGTH_LIMIT__
 __IF__ FOLDING
-  transport_filter = '${if >{$max_received_linelength}{$acl_m_linelength_limit}{/opt/spamtagger/etc/exim/stage1/folding.pl}{}}'
+  transport_filter = '${if >{$max_received_linelength}{$acl_m_linelength_limit}{/usr/spamtagger/etc/exim/stage1/folding.pl}{}}'
 __FI__
 __FI__
 
@@ -1396,13 +1396,13 @@ __FI__
 __IF__ ALLOW_LONG
   message_linelength_limit = __LENGTH_LIMIT__
 __IF__ FOLDING
-  transport_filter = '${if >{$max_received_linelength}{$acl_m_linelength_limit}{/opt/spamtagger/etc/exim/stage1/folding.pl}{}}'
+  transport_filter = '${if >{$max_received_linelength}{$acl_m_linelength_limit}{/usr/spamtagger/etc/exim/stage1/folding.pl}{}}'
 __FI__
 __FI__
 
 address_list_transport:
   driver = pipe
-  command = /opt/spamtagger/etc/exim/address_list.pl ${domain} ${sender_address} ${local_part}@${domain}
+  command = /usr/spamtagger/etc/exim/address_list.pl ${domain} ${sender_address} ${local_part}@${domain}
   user = spamtagger
   group = spamtagger
   timeout = 10m

@@ -38,5 +38,5 @@ for ((i = 0; i < ${#results[@]}; i = i + 3)); do
   id="${results[i]}"
   to="${results[$((i + 1))]}@${results[$((i + 2))]}"
   echo -n "$id $to -> "
-  /opt/spamtagger/bin/force_message.pl $id $to
+  /usr/spamtagger/bin/force_message.pl $id $to
 done

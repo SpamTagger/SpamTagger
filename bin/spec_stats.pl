@@ -31,7 +31,7 @@ use v5.40;
 use warnings;
 use utf8;
 
-use lib '/opt/spamtagger/lib';
+use lib '/usr/spamtagger/lib';
 use DB;
 
 my $last_days = shift;

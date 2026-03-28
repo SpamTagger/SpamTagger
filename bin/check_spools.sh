@@ -28,15 +28,15 @@
 EXIMBIN=/opt/exim4/bin/exim
 
 echo -n "Stage 1:       "
-$EXIMBIN -C /opt/spamtagger/etc/exim/exim_stage1.conf -bpc
+$EXIMBIN -C /usr/spamtagger/etc/exim/exim_stage1.conf -bpc
 
 echo -n "Stage 2:       "
-TYPE=$(grep -e '^MTA\s*=\s*eximms' /opt/spamtagger/etc/mailscanner/MailScanner.conf)
+TYPE=$(grep -e '^MTA\s*=\s*eximms' /usr/spamtagger/etc/mailscanner/MailScanner.conf)
 if [ "$TYPE" = "" ]; then
-  $EXIMBIN -C /opt/spamtagger/etc/exim/exim_stage2.conf -bpc
+  $EXIMBIN -C /usr/spamtagger/etc/exim/exim_stage2.conf -bpc
 else
   ls /var/spamtagger/spool/exim_stage2/input/*.env 2>&1 | grep -v 'No such' | wc -l
 fi
 
 echo -n "Stage 4:       "
-$EXIMBIN -C /opt/spamtagger/etc/exim/exim_stage4.conf -bpc
+$EXIMBIN -C /usr/spamtagger/etc/exim/exim_stage4.conf -bpc

@@ -1,6 +1,6 @@
 #!/bin/bash
 
-for i in $(find /opt/spamtagger/scripts/systemd/* -maxdepth 0); do
+for i in $(find /usr/spamtagger/scripts/systemd/* -maxdepth 0); do
   if [[ -e "/usr/lib/systemd/system/$(basename $i)" ]]; then
     echo $i already exists at /usr/lib/systemd/system/$(basename $i)
     rm -rf /usr/lib/systemd/system/$(basename $i)

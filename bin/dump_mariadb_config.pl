@@ -28,7 +28,7 @@ use warnings;
 use utf8;
 use Carp qw( confess );
 
-use lib "/opt/spamtagger/lib";
+use lib "/usr/spamtagger/lib";
 use STUtils qw(open_as);
 use File::Path qw(make_path);
 use DB;
@@ -88,21 +88,21 @@ sub ownership($stage)
   use File::Touch qw( touch );
 
   unless ( -e "/usr/lib/systemd/system/mariadb\@.service.d" ) {
-  symlink("/opt/spamtagger/scripts/systemd/mariadb\@.service.d", "/usr/lib/systemd/system/mariadb\@.service.d");
+  symlink("/usr/spamtagger/scripts/systemd/mariadb\@.service.d", "/usr/lib/systemd/system/mariadb\@.service.d");
   `systemctl daemon-reload`;
   }
   unless ( -e "/usr/lib/systemd/system/mariadb\@${stage}.service.d" ) {
-  symlink("/opt/spamtagger/scripts/systemd/mariadb\@${stage}.service.d", "/usr/lib/systemd/system/mariadb\@${stage}.service.d");
+  symlink("/usr/spamtagger/scripts/systemd/mariadb\@${stage}.service.d", "/usr/lib/systemd/system/mariadb\@${stage}.service.d");
   `systemctl daemon-reload`;
   }
   unless ( -e "/usr/lib/systemd/system/mariadb\@${stage}-nopass.service.d" ) {
-  symlink("/opt/spamtagger/scripts/systemd/mariadb\@${stage}-nopass.service.d", "/usr/lib/systemd/system/mariadb\@${stage}-nopass.service.d");
+  symlink("/usr/spamtagger/scripts/systemd/mariadb\@${stage}-nopass.service.d", "/usr/lib/systemd/system/mariadb\@${stage}-nopass.service.d");
   `systemctl daemon-reload`;
   }
-  symlink('/opt/spamtagger/etc/apparmor', '/etc/apparmor.d/spamtagger') unless (-e '/etc/apparmor.d/spamtagger');
+  symlink('/usr/spamtagger/etc/apparmor', '/etc/apparmor.d/spamtagger') unless (-e '/etc/apparmor.d/spamtagger');
 
   # Reload AppArmor rules
-  `apparmor_parser -r /opt/spamtagger/etc/apparmor.d/mariadb` if ( -d '/sys/kernel/security/apparmor' );
+  `apparmor_parser -r /usr/spamtagger/etc/apparmor.d/mariadb` if ( -d '/sys/kernel/security/apparmor' );
 
   mkdir('/etc/sudoers.d') unless (-d '/etc/sudoers.d/');
   if (open(my $fh, '>', '/etc/sudoers.d/mariadb')) {

@@ -15,8 +15,8 @@
   @{PROC}/filesystems r,
   owner @{PROC}/[0-9]*/status r,
 
-  /opt/spamtagger/etc/clamav/clamd.conf r,
-  /opt/spamtagger/etc/clamav/freshclam.conf r,
+  /usr/spamtagger/etc/clamav/clamd.conf r,
+  /usr/spamtagger/etc/clamav/freshclam.conf r,
 
   /etc/clamav/clamd.conf r,
   /etc/clamav/freshclam.conf r,
@@ -73,9 +73,9 @@
   @{PROC}/filesystems r,
   @{PROC}/[0-9]*/status r,
 
-  /opt/spamtagger/etc/clamav/clamd.conf r,
-  /opt/spamtagger/etc/clamav/clamav.conf r,
-  /opt/spamtagger/etc/clamav/clamspamd.conf r,
+  /usr/spamtagger/etc/clamav/clamd.conf r,
+  /usr/spamtagger/etc/clamav/clamav.conf r,
+  /usr/spamtagger/etc/clamav/clamspamd.conf r,
 
   /etc/clamav/clamd.conf r,
   /etc/clamav/onerrorexecute.d/* mr,

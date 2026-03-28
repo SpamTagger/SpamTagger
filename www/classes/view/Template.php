@@ -127,7 +127,7 @@ class Template {
     }
 
     // fetch the template language file to override language texts
-    $template_lang = "/opt/spamtagger/www/".$mode."/lang/".$lang_->getLanguage()."/texts.php";
+    $template_lang = "/usr/spamtagger/www/".$mode."/lang/".$lang_->getLanguage()."/texts.php";
     if (file_exists($template_lang)) {
       $txt = array ();
       include ($template_lang);

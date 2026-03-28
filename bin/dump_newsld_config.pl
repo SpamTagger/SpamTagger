@@ -28,7 +28,7 @@ use warnings;
 use utf8;
 use Carp qw( confess );
 
-use lib "/opt/spamtagger/lib";
+use lib "/usr/spamtagger/lib";
 use STUtils qw(open_as);
 
 require ConfigTemplate;
@@ -57,7 +57,7 @@ chown($uid, $gid,
     '/var/spamtagger/run/spamd',
     '/var/spamtagger/spool/newsld',
     glob('/var/spamtagger/spool/newsld/*'),
-    glob('/opt/spamtagger/share/newsld/*'),
+    glob('/usr/spamtagger/share/newsld/*'),
     glob('/var/spamtagger/log/mailscanner/newsld*'),
 );
 
@@ -75,7 +75,7 @@ SPAMD       * = (ROOT) NOPASSWD: BIN
 # SystemD auth causes timeouts
 `sed -iP '/^session.*pam_systemd.so/d' /etc/pam.d/common-session`;
 
-symlink('/opt/spamtagger/etc/apparmor', '/etc/apparmor.d/spamtagger') unless (-e '/etc/apparmor.d/spamtagger');
+symlink('/usr/spamtagger/etc/apparmor', '/etc/apparmor.d/spamtagger') unless (-e '/etc/apparmor.d/spamtagger');
 
 #############################
 sub get_sa_config()

@@ -26,8 +26,8 @@ use Exporter 'import';
 our @EXPORT_OK = ();
 our $VERSION   = 1.0;
 
-use lib "/opt/spamtagger/lib/";
-use lib "/opt/spamtagger/scripts/installer/";
+use lib "/usr/spamtagger/lib/";
+use lib "/usr/spamtagger/scripts/installer/";
 use ReadConfig();
 use Exporter();
 use DialogFactory();
@@ -47,7 +47,7 @@ sub run($this) {
     my $null = <STDIN>;
     return 0;
   }
-  `/opt/spamtagger/scripts/configuration/replicas.pl --setsource`;
+  `/usr/spamtagger/scripts/configuration/replicas.pl --setsource`;
   return;
 }
 

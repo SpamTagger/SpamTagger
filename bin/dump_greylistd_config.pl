@@ -29,7 +29,7 @@ use warnings;
 use utf8;
 use Carp qw( confess );
 
-use lib "/opt/spamtagger/lib";
+use lib "/usr/spamtagger/lib";
 use STUtils qw(open_as);
 use File::Touch;
 use File::Path qw(make_path);
@@ -57,9 +57,9 @@ if ( -e $confdir && !-l $confdir ) {
     rmdir($confdir);
 }
 
-symlink("/opt/spamtagger/${confdir}", $confdir);
+symlink("/usr/spamtagger/${confdir}", $confdir);
 
-symlink('/opt/spamtagger/etc/apparmor', '/etc/apparmor.d/spamtagger') unless (-e '/etc/apparmor.d/spamtagger');
+symlink('/usr/spamtagger/etc/apparmor', '/etc/apparmor.d/spamtagger') unless (-e '/etc/apparmor.d/spamtagger');
 
 dump_greylistd_file(\%greylist_conf);
 
@@ -78,8 +78,8 @@ foreach my $dir (
 foreach my $file (
     glob("/var/spamtagger/spool/greylistd/*"),
     "/var/spamtagger/spool/tmp/spamtagger/domains_to_greylist.list",
-    "/opt/spamtagger/${confdir}/config",
-    "/opt/spamtagger/${confdir}/whitelist-hosts",
+    "/usr/spamtagger/${confdir}/config",
+    "/usr/spamtagger/${confdir}/whitelist-hosts",
 ) {
     touch($file) unless(-f $file);
     chown($uid, $gid, $file);
@@ -135,7 +135,7 @@ sub dump_domain_to_avoid($domains)
 
 sub dump_trusted_ips($ips)
 {
-    my $file = "/opt/spamtagger/${confdir}/whitelist-hosts";
+    my $file = "/usr/spamtagger/${confdir}/whitelist-hosts";
     unlink($file) if (-e $file);
     return 0 unless (defined($ips));
     return 0 if ($ips =~ /^\s*$/);
@@ -148,8 +148,8 @@ sub dump_trusted_ips($ips)
 
 sub dump_greylistd_file($greylistd_conf)
 {
-    my $template_file = "/opt/spamtagger/${confdir}/greylistd.conf_template";
-    my $target_file = "/opt/spamtagger/${confdir}/config";
+    my $template_file = "/usr/spamtagger/${confdir}/greylistd.conf_template";
+    my $target_file = "/usr/spamtagger/${confdir}/config";
 
     my ($TEMPLATE, $TARGET);
     confess "Cannot open $template_file: $!\n" unless ($TEMPLATE = ${open_as($template_file, '<')} );

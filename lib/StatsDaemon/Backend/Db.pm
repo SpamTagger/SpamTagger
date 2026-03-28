@@ -28,7 +28,7 @@ our $VERSION   = 1.0;
 
 use threads();
 use threads::shared();
-use lib '/opt/spamtagger/lib';
+use lib '/usr/spamtagger/lib';
 use DB();
 
 my $_current_table : shared = '';

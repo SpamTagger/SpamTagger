@@ -30,7 +30,7 @@ use v5.40;
 use warnings;
 use utf8;
 
-use lib '/opt/spamtagger/lib/';
+use lib '/usr/spamtagger/lib/';
 use DB();
 use File::Copy();
 use ReadConfig();
@@ -107,7 +107,7 @@ foreach my $ext ( @exts ) {
   chown $uid, $gid, $spoolfile if (-f $spoolfile);
 }
 sleep 2;
-my $cmd = "/opt/exim4/bin/exim -C /opt/spamtagger/etc/exim/exim_stage4.conf -M ".$id." 2>&1";
+my $cmd = "/opt/exim4/bin/exim -C /usr/spamtagger/etc/exim/exim_stage4.conf -M ".$id." 2>&1";
 my $res = `$cmd`;
 if ($res =~ /^$/) {
   mark_forced($id);

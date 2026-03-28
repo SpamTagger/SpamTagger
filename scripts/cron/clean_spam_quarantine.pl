@@ -20,7 +20,7 @@ use v5.40;
 use warnings;
 use utf8;
 
-use lib '/opt/spamtagger/lib';
+use lib '/usr/spamtagger/lib';
 use Date::Calc qw ( Today Delta_Days Localtime Time_to_Date );
 use String::ShellQuote qw( shell_quote );
 use File::stat();

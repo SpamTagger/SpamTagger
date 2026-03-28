@@ -28,7 +28,7 @@ use Exporter 'import';
 our @EXPORT_OK = ();
 our $VERSION   = 1.0;
 
-use lib "/opt/spamtagger/lib";
+use lib "/usr/spamtagger/lib";
 use STUtils qw( open_as );
 use Carp qw( confess );
 
@@ -37,7 +37,7 @@ use Carp qw( confess );
 # @param  $infile        string  file path
 #   Accepts most valid input paths or output paths:
 #   * /etc/spamtagger/* - user defined configuration template
-#   * /opt/spamtagger/* - system configuration template
+#   * /usr/spamtagger/* - system configuration template
 #   * /usr/spamtagger/* - legacy system template
 #   * /var/spamtagger/tmp/* - configuration output directory
 #   * [^/]* - (relative path) will search for matching file in /(etc|opt)/spamtagger
@@ -59,8 +59,8 @@ sub new ($class, $infile, $chown='spamtagger:spamtagger') {
       $infile = "/etc/spamtagger/${infile}";
       print("Using user-defined config template $infile\n");
     # Use system file if it does not
-    } elsif (-e "/opt/spamtagger/${infile}") {
-      $infile = "/opt/spamtagger/${infile}";
+    } elsif (-e "/usr/spamtagger/${infile}") {
+      $infile = "/usr/spamtagger/${infile}";
       print("Using default system template $infile\n");
     # Otherwise die if not found in either location
     } elsif ($infile =~ m/\.\./) {
@@ -257,8 +257,8 @@ sub dump_file ($this) {
       if ( -f "/etc/spamtagger/etc/exim/$inc_file" ) {
         $path_file = "/etc/spamtagger/etc/exim/$inc_file";
       # Fallback to system config
-      } elsif ( -f "/opt/spamtagger/etc/exim/$inc_file" ) {
-        $path_file = "/opt/spamtagger/etc/exim/$inc_file";
+      } elsif ( -f "/usr/spamtagger/etc/exim/$inc_file" ) {
+        $path_file = "/usr/spamtagger/etc/exim/$inc_file";
       } else {
         next;
       }

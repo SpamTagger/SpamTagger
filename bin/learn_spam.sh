@@ -27,7 +27,7 @@ if [ "$1" = "" ]; then
 fi
 
 if [ -f $1 ] || [ -d $1 ]; then
-  sa-learn --spam -p /opt/spamtagger/etc/mailscanner/spam.assassin.prefs.conf $1
+  sa-learn --spam -p /usr/spamtagger/etc/mailscanner/spam.assassin.prefs.conf $1
 else
   echo "file/directory $1 is not useable"
   exit 1

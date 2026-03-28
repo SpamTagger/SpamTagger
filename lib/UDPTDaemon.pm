@@ -32,7 +32,7 @@ use IO::Socket qw( AF_INET );
 use IO::Select();
 use Mail::SpamAssassin::Timeout();
 
-use lib "/opt/spamtagger/lib";
+use lib "/usr/spamtagger/lib";
 use parent qw(PreForkTDaemon);
 
 my %global_shared : shared;

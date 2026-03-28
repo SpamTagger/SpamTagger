@@ -44,7 +44,7 @@ sub my_own_exit ($exit_code = 0) {
   exit($exit_code);
 }
 
-my $replica_status = `echo 'show replica status\\G' |/opt/spamtagger/bin/st_mariadb -s`;
+my $replica_status = `echo 'show replica status\\G' |/usr/spamtagger/bin/st_mariadb -s`;
 
 if ($replica_status eq '') {
   # Réparer resync_db.sh

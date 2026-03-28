@@ -28,7 +28,7 @@ use Exporter 'import';
 our @EXPORT_OK = ();
 our $VERSION   = 1.0;
 
-use lib "/opt/spamtagger/lib/";
+use lib "/usr/spamtagger/lib/";
 use ReadConfig();
 use DB();
 use POSIX qw( SIGINT SIG_BLOCK SIG_UNBLOCK );
@@ -42,7 +42,7 @@ our $LOGGERLOG;
 
 sub new ($class) {
   my $conf = ReadConfig::get_instance();
-  my $configfile = "/opt/spamtagger/etc/exim/prefDaemon.conf";
+  my $configfile = "/usr/spamtagger/etc/exim/prefDaemon.conf";
 
   ## default values
   my $pidfile = "/var/spamtagger/run/prefdaemon.pid";

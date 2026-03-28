@@ -29,7 +29,7 @@ use warnings;
 use utf8;
 use Carp qw( confess );
 
-use lib "/opt/spamtagger/lib";
+use lib "/usr/spamtagger/lib";
 use ReadConfig;
 my $conf = ReadConfig::get_instance();
 my $HTTPPROXY = $conf->get_option('HTTPPROXY') || '';
@@ -57,7 +57,7 @@ our ($uid, $gid);
 confess "Unable to detect 'snfuser' user" unless $uid = getpwnam( 'snfuser' );
 confess "Unable to detect 'snfuser' group" unless $gid = getgrnam( 'snfuser' );
 
-our $dir = "/opt/spamtagger/etc/messagesniffer";
+our $dir = "/usr/spamtagger/etc/messagesniffer";
 unless ( -d $dir ) {
   confess "Cannot create dir $dir: $!\n" unless make_path($dir, { 'mode' => 0o755, 'user' => $uid, 'group' => $gid });
 }

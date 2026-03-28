@@ -29,7 +29,7 @@ use utf8;
 use Carp qw( confess );
 use File::Path qw(make_path);
 
-use lib "/opt/spamtagger/lib";
+use lib "/usr/spamtagger/lib";
 use STUtils qw(open_as);
 
 require ConfigTemplate;
@@ -90,19 +90,19 @@ foreach (
 
 # Set file permissions
 foreach (
-  '/opt/spamtagger/etc/mailscanner',
-  glob('/opt/spamtagger/etc/mailscanner/*'),
-  '/opt/spamtaggeretc/mailscanner/mcp',
-  glob('/opt/spamtaggeretc/mailscanner/mcp/*'),
-  '/opt/spamtaggeretc/mailscanner/prefilters',
-  glob('/opt/spamtaggeretc/mailscanner/prefilters/*'),
-  '/opt/spamtaggeretc/mailscanner/prefilters/UriRBLs',
-  glob('/opt/spamtaggeretc/mailscanner/prefilters/UriRBLs/*'),
-  '/opt/spamtaggeretc/mailscanner/reports_templates',
-  glob('/opt/spamtaggeretc/mailscanner/reports_templates/*'),
-  glob('/opt/spamtaggeretc/mailscanner/reports_templates/*/*'),
-  '/opt/spamtaggeretc/mailscanner/rules',
-  glob('/opt/spamtaggeretc/mailscanner/rules'),
+  '/usr/spamtagger/etc/mailscanner',
+  glob('/usr/spamtagger/etc/mailscanner/*'),
+  '/usr/spamtaggeretc/mailscanner/mcp',
+  glob('/usr/spamtaggeretc/mailscanner/mcp/*'),
+  '/usr/spamtaggeretc/mailscanner/prefilters',
+  glob('/usr/spamtaggeretc/mailscanner/prefilters/*'),
+  '/usr/spamtaggeretc/mailscanner/prefilters/UriRBLs',
+  glob('/usr/spamtaggeretc/mailscanner/prefilters/UriRBLs/*'),
+  '/usr/spamtaggeretc/mailscanner/reports_templates',
+  glob('/usr/spamtaggeretc/mailscanner/reports_templates/*'),
+  glob('/usr/spamtaggeretc/mailscanner/reports_templates/*/*'),
+  '/usr/spamtaggeretc/mailscanner/rules',
+  glob('/usr/spamtaggeretc/mailscanner/rules'),
   '/var/spamtagger/log/spamtagger/SpamLogger.log',
   '/var/spamtagger/spool/tmp/mailscanner/incoming/Locks',
 ) {
@@ -110,7 +110,7 @@ foreach (
   make_path($_, {'mode'=>0o755,'user'=>$uid,'group'=>$gid}) unless ( -e $_ );
 }
 
-symlink('/opt/spamtagger/etc/apparmor', '/etc/apparmor.d/spamtagger') unless (-e '/etc/apparmor.d/spamtagger');
+symlink('/usr/spamtagger/etc/apparmor', '/etc/apparmor.d/spamtagger') unless (-e '/etc/apparmor.d/spamtagger');
 
 # SystemD auth causes timeouts
 `sed -iP '/^session.*pam_systemd.so/d' /etc/pam.d/common-session`;
@@ -298,7 +298,7 @@ sub dump_ms_file()
 #############################
 sub dump_prefilter_files()
 {
-  my $basedir="/opt/spamtagger/etc/mailscanner/prefilters";
+  my $basedir="/usr/spamtagger/etc/mailscanner/prefilters";
 
   return 1 if ( ! -d $basedir) ;
   my $qdir;
@@ -338,7 +338,7 @@ sub dump_prefilter_files()
 
       my $specmodule = "dumpers::$pfname";
       my $specmodfile = "dumpers/$pfname.pm";
-      if ( -f "/opt/spamtagger/lib/$specmodfile") {
+      if ( -f "/usr/spamtagger/lib/$specmodfile") {
         require $specmodfile;
         my %specreplaces = $specmodule->get_specific_config();
         if (defined($specreplaces{'__AVOIDHOSTS__'})) {
@@ -356,7 +356,7 @@ sub dump_prefilter_files()
 sub get_prefilter_spec_config($prefilter,$replace)
 {
   return 0 if ! $prefilter;
-  if (! -f "/opt/spamtagger/install/dbs/t_cf_$prefilter.sql") {
+  if (! -f "/usr/spamtagger/install/dbs/t_cf_$prefilter.sql") {
     return 0;
   }
   my %row = $db->get_hash_row("SELECT * FROM $prefilter");
@@ -451,7 +451,7 @@ sub dump_dnsblacklists_conf()
   my $subtmpl = $template->get_sub_template('DNSLIST');
   my $res = "";
   my $dnslists = STDnsLists->new(\&log_dns, 1);
-  $dnslists->load_rbls( "/opt/spamtagger/etc/rbls", '', 'IPRBL', '', '', '', 'dump_dnslists');
+  $dnslists->load_rbls( "/usr/spamtagger/etc/rbls", '', 'IPRBL', '', '', '', 'dump_dnslists');
   my $rbls = $dnslists->get_all_rbls();
   foreach my $r (keys %{$rbls}) {
     my $sub = $subtmpl;
@@ -474,7 +474,7 @@ sub dump_reports_files($lang=0) {
   if ($lang) {
     @langs = ( $lang );
   } else {
-    @langs = glob('/opt/spamtagger/etc/mailscanner/reports_templates/*');
+    @langs = glob('/usr/spamtagger/etc/mailscanner/reports_templates/*');
   }
   foreach my $lang (@langs) {
     my $dst = $lang;

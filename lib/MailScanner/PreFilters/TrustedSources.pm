@@ -29,7 +29,7 @@ our @EXPORT_OK = ();
 our $VERSION   = 1.0;
 
 use Net::IP();
-use lib '/opt/spamtagger/lib';
+use lib '/usr/spamtagger/lib';
 use STDnsLists();
 
 my $MODULE = "TrustedSources";

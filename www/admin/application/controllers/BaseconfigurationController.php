@@ -92,7 +92,7 @@ class BaseconfigurationController extends Zend_Controller_Action
           } else if ($enable_configurator == "false" && file_exists($tmp_file)) {
             unlink($tmp_file);
           }
-          $cmd="sudo /opt/spamtagger/bin/dis_config_interface.sh ".$disable_configurator;
+          $cmd="sudo /usr/spamtagger/bin/dis_config_interface.sh ".$disable_configurator;
           $res=`$cmd`;
           $form->setParams($this->getRequest(), $interface);
           $message = $interface->save();

@@ -17,7 +17,7 @@ elif [ $1 = 'restart' ]; then
   $0 stop
   $0 start
 elif [ $1 = 'status' ]; then
-  /opt/spamtagger/bin/get_status.pl -s -v
+  /usr/spamtagger/bin/get_status.pl -s -v
 else
   usage
 fi

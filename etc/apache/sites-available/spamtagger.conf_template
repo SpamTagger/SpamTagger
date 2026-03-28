@@ -1,10 +1,10 @@
 Listen __HTTPPORT__
 
-DocumentRoot "/opt/spamtagger/www/user"
-Alias /admin /opt/spamtagger/www/admin/public
+DocumentRoot "/usr/spamtagger/www/user"
+Alias /admin /usr/spamtagger/www/admin/public
 Alias /mrtg  /var/spamtagger/www/mrtg
 Alias /stats  /var/spamtagger/www/stats
-Alias /api /opt/spamtagger/www/api/public
+Alias /api /usr/spamtagger/www/api/public
 
 __IFSSL__
 Listen __HTTPSPORT__
@@ -34,9 +34,9 @@ SSLCompression off
     SSLCompression off
     SSLSessionTickets off
 
-    SSLCACertificatePath /opt/spamtagger/etc/apache/certs
-    SSLCertificateFile /opt/spamtagger/etc/apache/certs/certificate.pem
-__IFSSLCHAIN__  SSLCertificateChainFile  /opt/spamtagger/etc/apache/certs/certificate-chain.pem
+    SSLCACertificatePath /usr/spamtagger/etc/apache/certs
+    SSLCertificateFile /usr/spamtagger/etc/apache/certs/certificate.pem
+__IFSSLCHAIN__  SSLCertificateChainFile  /usr/spamtagger/etc/apache/certs/certificate-chain.pem
     SetEnvIf User-Agent ".*MSIE.*" nokeepalive ssl-unclean-shutdown downgrade-1.0 force-response-1.0
 
 

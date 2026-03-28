@@ -33,7 +33,7 @@ use NetSNMP::OID (':all');
 use NetSNMP::agent (':all');
 use NetSNMP::ASN (':all');
 use Sys::Syslog qw(openlog syslog);
-use lib '/opt/spamtagger/lib';
+use lib '/usr/spamtagger/lib';
 use DB();
 use Module::Pluggable search_path => ['SNMPAgent'], require => 1;
 

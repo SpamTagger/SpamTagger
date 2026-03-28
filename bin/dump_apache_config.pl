@@ -29,7 +29,7 @@ use warnings;
 use utf8;
 use Carp qw( confess );
 
-use lib "/opt/spamtagger/lib";
+use lib "/usr/spamtagger/lib";
 use ReadConfig;
 my $conf = ReadConfig::get_instance();
 my $HOSTID = $conf->get_option('HOSTID');
@@ -74,15 +74,15 @@ chown($uid, $gid,
   '/etc/apache2',
   glob('/etc/apache2/*'),
   glob('/var/spamtagger/log/apache/*'),
-  glob('/opt/spamtagger/etc/apache/sites-available/*'),
-  glob('/opt/spamtagger/www/guis/admin/public/tmp/*'),
+  glob('/usr/spamtagger/etc/apache/sites-available/*'),
+  glob('/usr/spamtagger/www/guis/admin/public/tmp/*'),
 );
 
 # Fix symlinks if broken
 my %links = (
-  '/etc/apparmor.d/spamtagger' => '/opt/spamtagger/etc/apparmor',
-  '/etc/apache2' => '/opt/spamtagger/etc/apache',
-  '/opt/spamtagger/etc/apache2/modules' => '/usr/lib/apache2/modules',
+  '/etc/apparmor.d/spamtagger' => '/usr/spamtagger/etc/apparmor',
+  '/etc/apache2' => '/usr/spamtagger/etc/apache',
+  '/usr/spamtagger/etc/apache2/modules' => '/usr/lib/apache2/modules',
 );
 foreach my $link (keys(%links)) {
   if (-e $link) {
@@ -97,7 +97,7 @@ foreach my $link (keys(%links)) {
 }
 
 # Reload AppArmor rules
-`apparmor_parser -r /opt/spamtagger/etc/apparmor.d/apache` if ( -d '/sys/kernel/security/apparmor' );
+`apparmor_parser -r /usr/spamtagger/etc/apparmor.d/apache` if ( -d '/sys/kernel/security/apparmor' );
 
 # Configure sudoer permissions if they are not already
 mkdir '/etc/sudoers.d' unless (-d '/etc/sudoers.d');
@@ -105,8 +105,8 @@ if (open(my $fh, '>', '/etc/sudoers.d/apache')) {
   print $fh "
 User_Alias  APACHE = spamtagger
 Runas_Alias EXIM = spamtagger
-Cmnd_Alias  CHECKSPOOLS = /opt/spamtagger/bin/check_spools.sh
-Cmnd_Alias  GETSTATUS = /opt/spamtagger/bin/get_status.pl -s
+Cmnd_Alias  CHECKSPOOLS = /usr/spamtagger/bin/check_spools.sh
+Cmnd_Alias  GETSTATUS = /usr/spamtagger/bin/get_status.pl -s
 
 APACHE    * = (ROOT) NOPASSWD: SETPINDB
 APACHE    * = (EXIM) NOPASSWD: CHECKSPOOLS
@@ -126,10 +126,10 @@ my %sys_conf = get_system_config() or fatal_error("NOSYSTEMCONFIGURATIONFOUND", 
 my %apache_conf;
 %apache_conf = get_apache_config() or fatal_error("NOAPACHECONFIGURATIONFOUND", "no apache configuration found");
 
-dump_apache_file("/opt/spamtagger/etc/apache/apache2.conf_template", "/opt/spamtagger/etc/apache/apache2.conf") or fatal_error("CANNOTDUMPAPACHEFILE", $lasterror);
+dump_apache_file("/usr/spamtagger/etc/apache/apache2.conf_template", "/usr/spamtagger/etc/apache/apache2.conf") or fatal_error("CANNOTDUMPAPACHEFILE", $lasterror);
 
-dump_apache_file("/opt/spamtagger/etc/apache/sites-available/spamtagger.conf_template", "/opt/spamtagger/etc/apache/sites-enabled/spamtagger.conf") or fatal_error("CANNOTDUMPAPACHEFILE", $lasterror);
-dump_apache_file("/opt/spamtagger/etc/apache/sites-available/soap.conf_template", "/opt/spamtagger/etc/apache/sites-enabled/soap.conf") or fatal_error("CANNOTDUMPAPACHEFILE", $lasterror);
+dump_apache_file("/usr/spamtagger/etc/apache/sites-available/spamtagger.conf_template", "/usr/spamtagger/etc/apache/sites-enabled/spamtagger.conf") or fatal_error("CANNOTDUMPAPACHEFILE", $lasterror);
+dump_apache_file("/usr/spamtagger/etc/apache/sites-available/soap.conf_template", "/usr/spamtagger/etc/apache/sites-enabled/soap.conf") or fatal_error("CANNOTDUMPAPACHEFILE", $lasterror);
 
 # TODO: This needs to be dumped to a writable directory instead. This may be tricky since the document root is in the non-writable area. We may need to change the SOAP document root or symlink.
 dump_soap_wsdl($sys_conf{'HOST'}, $apache_conf{'__USESSL__'}) or fatal_error("CANNOTDUMPWSDLFILE", $lasterror);
@@ -193,8 +193,8 @@ sub dump_apache_file($template_file, $target_file)
 sub dump_soap_wsdl($host, $use_ssl)
 {
 
-  my $template_file = "/opt/spamtagger/www/soap/htdocs/spamtagger.wsdl_template";
-  my $target_file = "/opt/spamtagger/www/soap/htdocs/spamtagger.wsdl";
+  my $template_file = "/usr/spamtagger/www/soap/htdocs/spamtagger.wsdl_template";
+  my $target_file = "/usr/spamtagger/www/soap/htdocs/spamtagger.wsdl";
 
   my $protocol = 'http';
   $protocol .= 's' if ($use_ssl);
@@ -293,9 +293,9 @@ sub print_usage
 
 sub dump_certificate($cert,$key,$chain)
 {
-  my $path = "/opt/spamtagger/etc/apache/certs/certificate.pem";
-  my $backup = "/opt/spamtagger/etc/apache/certs/default.pem";
-  my $chainpath = "/opt/spamtagger/etc/apache/certs/certificate-chain.pem";
+  my $path = "/usr/spamtagger/etc/apache/certs/certificate.pem";
+  my $backup = "/usr/spamtagger/etc/apache/certs/default.pem";
+  my $chainpath = "/usr/spamtagger/etc/apache/certs/certificate-chain.pem";
 
   if (!$cert || !$key || $cert =~ /^\s+$/ || $key =~ /^\s+$/) {
     my $cmd = "cp $backup $path";

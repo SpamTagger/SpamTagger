@@ -22,7 +22,7 @@ use v5.40;
 use warnings;
 use utf8;
 
-use lib '/opt/spamtagger/lib/';
+use lib '/usr/spamtagger/lib/';
 use ReadConfig();
 use DB();
 use Email();
@@ -45,7 +45,7 @@ if (-e "/var/spamtagger/spool/spamtagger/disable-watchdog-emails") {
 my $sysconf = SystemPref::get_instance();
 my $lang = $sysconf->get_pref('default_language') || 'en';
 
-## report templates (ie. /opt/spamtagger/templates/reports/*) are not yet exposed
+## report templates (ie. /usr/spamtagger/templates/reports/*) are not yet exposed
 my $temp_id = 'default';
 
 my $recipient;

@@ -121,26 +121,26 @@ service ntp start
 
 echo "Setting crontab"
 crontab - <<EOF
-0,15,30,45 * * * *  /opt/spamtagger/scripts/cron/spamtagger_cron.pl &> /dev/null
-0-59/5 * * * * /opt/spamtagger/bin/collect_rrd_stats.pl &> /dev/null
-30 0 * * * /opt/spamtagger/bin/st_wrapper_auto-counts-cleaner
-0-59/10 * * * * /opt/spamtagger/bin/watchdogs.pl dix
-0 6,13,20 * * * /opt/spamtagger/bin/watchdogs.pl oneday
-0-59/15 * * * * /opt/spamtagger/bin/watchdogs_report.sh
+0,15,30,45 * * * *  /usr/spamtagger/scripts/cron/spamtagger_cron.pl &> /dev/null
+0-59/5 * * * * /usr/spamtagger/bin/collect_rrd_stats.pl &> /dev/null
+30 0 * * * /usr/spamtagger/bin/st_wrapper_auto-counts-cleaner
+0-59/10 * * * * /usr/spamtagger/bin/watchdogs.pl dix
+0 6,13,20 * * * /usr/spamtagger/bin/watchdogs.pl oneday
+0-59/15 * * * * /usr/spamtagger/bin/watchdogs_report.sh
 30 2 * * * /root/Updater4ST/updater4mc.sh &> /dev/null
 EOF
 
 echo "Registrating SpamTagger"
 echo "Using values: $resellerID $resellerPwd $clientID"
-/opt/spamtagger/bin/register_spamtagger.sh "$resellerID" "$resellerPwd" "$clientID" -b
+/usr/spamtagger/bin/register_spamtagger.sh "$resellerID" "$resellerPwd" "$clientID" -b
 
 echo Stop SpamTagger
-/opt/spamtagger/etc/init.d/spamtagger stop
+/usr/spamtagger/etc/init.d/spamtagger stop
 
 echo Dump of ClamAV config and update of ClamAV antivirus files
-/opt/spamtagger/bin/dump_clamav_config.pl
+/usr/spamtagger/bin/dump_clamav_config.pl
 cdel -f /var/spamtagger/spool/clamav/{{main,daily,bytecode}.c{v,l}d,mirrors.dat}
-/usr/bin/freshclam --user=clamav --config-file=/opt/spamtagger/etc/clamav/freshclam.conf
+/usr/bin/freshclam --user=clamav --config-file=/usr/spamtagger/etc/clamav/freshclam.conf
 
 STARTERSPATH="/root/starters"
 
@@ -150,7 +150,7 @@ rm -f ~/.ssh/known_hosts
 cdel -rf $STARTERSPATH
 [ ! -d "$STARTERSPATH" ] && mkdir $STARTERSPATH
 
-. /opt/spamtagger/lib/updates/download_files.sh
+. /usr/spamtagger/lib/updates/download_files.sh
 
 randomize=false
 
@@ -198,11 +198,11 @@ echo Update db.root file for bind
 wget --user=ftp --password=ftp ftp://ftp.rs.internic.net/domain/db.cache -O /etc/bind/db.root
 
 echo Delete or replace DevMode Tag in specified files
-[ "$devMode" == "false" ] && sed -i "s/#\[DEVMODEDEL\]//g" "/opt/spamtagger/bin/unregister_spamtagger.sh"
+[ "$devMode" == "false" ] && sed -i "s/#\[DEVMODEDEL\]//g" "/usr/spamtagger/bin/unregister_spamtagger.sh"
 
 echo Unregistering SpamTagger
-/opt/spamtagger/etc/init.d/spamtagger start
-/opt/spamtagger/bin/unregister_spamtagger.sh --no-rsp -b
+/usr/spamtagger/etc/init.d/spamtagger start
+/usr/spamtagger/bin/unregister_spamtagger.sh --no-rsp -b
 
 echo Delete Configurator step files
 cdel -f "/var/spamtagger/run/configurator/"{adminpass,baseurl,dbpass,hostid,identify,rootpass,updater4st-ran}
@@ -211,13 +211,13 @@ chown spamtagger:spamtagger "/var/spamtagger/run/configurator"
 touch "/var/spamtagger/run/configurator/welcome"
 
 echo Enable Configurator redirections
-cdel -f "/opt/spamtagger/etc/apache/sites/configurator.conf.disabled"
+cdel -f "/usr/spamtagger/etc/apache/sites/configurator.conf.disabled"
 
 echo Delete all useless dirs and files of /root
 find /root -mindepth 1 -maxdepth 1 \( -path /root/.ssh -o -path /root/.profile -o -path /root/.pyzor -o -path /root/starters -o -path /root/Updater4ST \) -prune -o -print | while read dirdata; do cdel -rf "$dirdata"; done
 
 echo Enable installer.pl redirection
-echo "if ! [ -f \"/var/spamtagger/spool/spamtagger/firstcmdlogin\" ]; then /opt/spamtagger/scripts/installer/installer.pl; touch \"/var/spamtagger/spool/spamtagger/firstcmdlogin\"; fi" >~/.bashrc
+echo "if ! [ -f \"/var/spamtagger/spool/spamtagger/firstcmdlogin\" ]; then /usr/spamtagger/scripts/installer/installer.pl; touch \"/var/spamtagger/spool/spamtagger/firstcmdlogin\"; fi" >~/.bashrc
 rm -f /var/spamtagger/spool/spamtagger/firstcmdlogin
 
 # Others data installation goes here ->
@@ -233,11 +233,11 @@ echo Create file for backup IF 192.168.1.42
 echo -e 'auto eth0:0\nallow-hotplug eth0:0\niface eth0:0 inet static\n\taddress 192.168.1.42\n\tnetmask 255.255.255.0\n' >/etc/network/interfaces.d/configif.conf
 
 echo Set port access for the configurator
-echo "DELETE FROM external_access where service='configurator'" | /opt/spamtagger/bin/st_mariadb -m st_config
-echo "INSERT INTO external_access values(NULL, 'configurator', '4242', 'TCP', '0.0.0.0/0', 'NULL')" | /opt/spamtagger/bin/st_mariadb -m st_config
+echo "DELETE FROM external_access where service='configurator'" | /usr/spamtagger/bin/st_mariadb -m st_config
+echo "INSERT INTO external_access values(NULL, 'configurator', '4242', 'TCP', '0.0.0.0/0', 'NULL')" | /usr/spamtagger/bin/st_mariadb -m st_config
 
 echo Set default value in DB
-echo "update domain_pref set allow_newsletters=0,prevent_spoof=1 where id=(select prefs from domain where name='__global__')\G" | /opt/spamtagger/bin/st_mariadb -m st_config
+echo "update domain_pref set allow_newsletters=0,prevent_spoof=1 where id=(select prefs from domain where name='__global__')\G" | /usr/spamtagger/bin/st_mariadb -m st_config
 
 echo "Reset MySQL Binary logs"
 echo 'STOP REPLICA' | /usr/bin/mariadb --socket /var/spamtagger/run/mariadb_replica/mariadbd.sock -uroot -p"$dbPassword"
@@ -245,13 +245,13 @@ echo 'RESET REPLICA' | /usr/bin/mariadb --socket /var/spamtagger/run/mariadb_rep
 echo 'RESET SOURCE' | /usr/bin/mariadb --socket /var/spamtagger/run/mariadb_source/mariadbd.sock -uroot -p"$dbPassword"
 echo 'START REPLICA' | /usr/bin/mariadb --socket /var/spamtagger/run/mariadb_replica/mariadbd.sock -uroot -p"$dbPassword"
 
-/opt/spamtagger/etc/init.d/spamtagger stop
+/usr/spamtagger/etc/init.d/spamtagger stop
 
 sleep 1s
 echo "Delete messages in queues"
-/opt/exim4/bin/exiqgrep -C /opt/spamtagger/etc/exim/exim_stage1.conf -i | xargs /opt/exim4/bin/exim -Mrm
-/opt/exim4/bin/exiqgrep -C /opt/spamtagger/etc/exim/exim_stage2.conf -i | xargs /opt/exim4/bin/exim -Mrm
-/opt/exim4/bin/exiqgrep -C /opt/spamtagger/etc/exim/exim_stage4.conf -i | xargs /opt/exim4/bin/exim -Mrm
+/opt/exim4/bin/exiqgrep -C /usr/spamtagger/etc/exim/exim_stage1.conf -i | xargs /opt/exim4/bin/exim -Mrm
+/opt/exim4/bin/exiqgrep -C /usr/spamtagger/etc/exim/exim_stage2.conf -i | xargs /opt/exim4/bin/exim -Mrm
+/opt/exim4/bin/exiqgrep -C /usr/spamtagger/etc/exim/exim_stage4.conf -i | xargs /opt/exim4/bin/exim -Mrm
 
 echo "Delete Watchdog files"
 cdel -f /var/spamtagger/spool/watchdog/watchdogs*

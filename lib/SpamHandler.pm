@@ -28,7 +28,7 @@ use Exporter 'import';
 our @EXPORT_OK = ();
 our $VERSION   = 1.0;
 
-use lib "/opt/spamtagger/lib/";
+use lib "/usr/spamtagger/lib/";
 use SpamHandler::Batch();
 use DB();
 use threads();
@@ -51,13 +51,13 @@ sub new ($class = "SpamHandler", $myspec_this = {}) {
     maxbatchsize         => 100,
     reportspamtodnslists => 0,
     reportrbls           => '',
-    rblsDefsPath         => "/opt/spamtagger/etc/rbls/",
-    wantlistDomainsFile => "/opt/spamtagger/etc/rbls/wantlisted_domains.txt",
+    rblsDefsPath         => "/usr/spamtagger/etc/rbls/",
+    wantlistDomainsFile => "/usr/spamtagger/etc/rbls/wantlisted_domains.txt",
     TLDsFiles => '/var/spamtagger/spool/spamtagger/rbls/two-level-tlds.txt '
       . "/var/spamtagger/spool/spamtagger/rbls/tlds.txt",
     localDomainsFile => "/var/spamtagger/spool/tmp/spamtagger/domains.list",
     maxurisreports => 10,
-    configfile     => "/opt/spamtagger/etc/spamtagger/spamhandler.conf",
+    configfile     => "/usr/spamtagger/etc/spamtagger/spamhandler.conf",
     pidfile    => "/var/spamtagger/run/spamhandler.pid",
 
     %dbs       => (),

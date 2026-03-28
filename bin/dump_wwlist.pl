@@ -27,7 +27,7 @@ use warnings;
 use utf8;
 use Carp qw( confess );
 
-use lib "/opt/spamtagger/lib";
+use lib "/usr/spamtagger/lib";
 
 use STUtils qw( open_as );
 use File::Path qw( make_path );

@@ -25,7 +25,7 @@ use v5.40;
 use warnings;
 use utf8;
 
-use lib '/opt/spamtagger/lib/';
+use lib '/usr/spamtagger/lib/';
 use ReadConfig();
 use DB();
 use Domain();
@@ -44,7 +44,7 @@ my $uid = getpwnam( 'spamtagger' );
 my $gid = getgrnam( 'spamtagger' );
 
 my $conf = ReadConfig::get_instance();
-my $op = "/opt/spamtagger";
+my $op = "/usr/spamtagger";
 
 my $replica_db = DB->db_connect('replica', 'st_config');
 
@@ -120,7 +120,7 @@ print_time('dumping_domains_pref');
 $previous_time = time();
 
 ## dump archiving and copy to rules
-my $dumpcmd = "/opt/spamtagger/bin/dump_archiving.pl";
+my $dumpcmd = "/usr/spamtagger/bin/dump_archiving.pl";
 my $dumpret = `$dumpcmd`;
 
 $time_in{'dumping_archiving'} = time() - $previous_time;

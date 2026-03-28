@@ -30,7 +30,7 @@ our $VERSION   = 1.0;
 
 use Net::IP();
 use Net::CIDR::Lite();
-use lib '/opt/spamtagger/lib';
+use lib '/usr/spamtagger/lib';
 use STDnsLists();
 
 my $MODULE = "PreRBLs";
@@ -50,7 +50,7 @@ sub initialise ($class = $MODULE) {
     rbls => '',
     maxrbltimeouts => 3,
     listedtobespam => 1,
-    rblsDefsPath => "/opt/spamtagger/etc/rbs/",
+    rblsDefsPath => "/usr/spamtagger/etc/rbs/",
     wantlistDomainsFile => "/var/spamtagger/spool/spamtagger/rbls/wantlisted_domains.txt",
     TLDsFiles => "/var/spamtagger/spool/spamtagger/rbls/two-level-tlds.txt /var/spamtagger/spool/spamtagger/rbls/tlds.txt",
     localDomainsFile => "/var/spamtagger/spool/tmp/spamtagger/domains.list",

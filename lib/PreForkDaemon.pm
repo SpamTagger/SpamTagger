@@ -26,7 +26,7 @@ use Exporter 'import';
 our @EXPORT_OK = ();
 our $VERSION   = 1.0;
 
-use lib "/opt/spamtagger/lib/";
+use lib "/usr/spamtagger/lib/";
 use POSIX qw( SIGINT SIG_BLOCK SIG_UNBLOCK );
 use Sys::Hostname();
 use Socket();
@@ -41,7 +41,7 @@ my $PROFILE = 1;
 my (%prof_start, %prof_res) = ();
 
 sub new ($class, $daemonname, $conffilepath, $spec_this) {
-  my $configfile = "/opt/spamtagger/".$conffilepath;
+  my $configfile = "/usr/spamtagger/".$conffilepath;
 
   ## default values
   my $pidfile = "/var/spamtagger/run/$daemonname.pid";

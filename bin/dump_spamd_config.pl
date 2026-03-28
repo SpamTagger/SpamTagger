@@ -28,7 +28,7 @@ use warnings;
 use utf8;
 use Carp qw( confess );
 
-use lib "/opt/spamtagger/lib";
+use lib "/usr/spamtagger/lib";
 use STUtils qw(open_as);
 
 require ConfigTemplate;
@@ -48,8 +48,8 @@ my @dnslists = get_dnslists() or fatal_error("NODNSLISTINFORMATIONS", "no dnslis
 dump_sa_file() or fatal_error("CANNOTDUMPSPAMASSASSINFILE", $!);
 dump_saplugins_conf();
 
-unlink("/opt/spamtagger/share/spamd/mailscanner.cf");
-symlink("/opt/spamtagger/etc/mailscanner/spam.assassin.prefs.conf", "/opt/spamtagger/share/spamd/mailscanner.cf");
+unlink("/usr/spamtagger/share/spamd/mailscanner.cf");
+symlink("/usr/spamtagger/etc/mailscanner/spam.assassin.prefs.conf", "/usr/spamtagger/share/spamd/mailscanner.cf");
 
 # Set proper permissions
 mkdir $_ foreach (
@@ -59,19 +59,19 @@ mkdir $_ foreach (
   '/var/spamtagger/run/dcc/',
 );
 chown($uid, $gid,
-  '/opt/spamtagger/etc/mailscanner/spam.assassin.prefs.conf',
-  '/opt/spamtagger/share/spamassassin',
-  glob('/opt/spamtagger/share/spamassassin/*'),
-  '/opt/spamtagger/share/spamd/mailscanner.cf',
+  '/usr/spamtagger/etc/mailscanner/spam.assassin.prefs.conf',
+  '/usr/spamtagger/share/spamassassin',
+  glob('/usr/spamtagger/share/spamassassin/*'),
+  '/usr/spamtagger/share/spamd/mailscanner.cf',
   '/var/spamtagger/run/spamd',
   '/var/spamtagger/spool/spamd',
   glob('/var/spamtagger/spool/spamd/*'),
-  '/opt/spamtagger/share/spamd',
-  glob('/opt/spamtagger/share/spamd/*'),
-  '/opt/spamtagger/share/spamd/plugins',
-  glob('/opt/spamtagger/share/spamd/plugins/*'),
-  '/opt/spamtagger/share/spamd/plugins/iXhash',
-  glob('/opt/spamtagger/share/spamd/plugins/iXhash/*'),
+  '/usr/spamtagger/share/spamd',
+  glob('/usr/spamtagger/share/spamd/*'),
+  '/usr/spamtagger/share/spamd/plugins',
+  glob('/usr/spamtagger/share/spamd/plugins/*'),
+  '/usr/spamtagger/share/spamd/plugins/iXhash',
+  glob('/usr/spamtagger/share/spamd/plugins/iXhash/*'),
   glob('/var/spamtagger/log/mailscanner/newsld*'),
 );
 
@@ -99,7 +99,7 @@ SPAMD     * = (ROOT) NOPASSWD: SPAMDBIN
 ";
 }
 
-symlink('/opt/spamtagger/etc/apparmor', '/etc/apparmor.d/spamtagger') unless (-e '/etc/apparmor.d/spamtagger');
+symlink('/usr/spamtagger/etc/apparmor', '/etc/apparmor.d/spamtagger') unless (-e '/etc/apparmor.d/spamtagger');
 
 # SystemD auth causes timeouts
 `sed -iP '/^session.*pam_systemd.so/d' /etc/pam.d/common-session`;

@@ -30,7 +30,7 @@ if [ $PATCHID = "" ]; then
   exit 1
 fi
 
-PATCHFILE=/opt/spamtagger/updates/$PATCHID
+PATCHFILE=/usr/spamtagger/updates/$PATCHID
 
 if [ ! -x $PATCHFILE ]; then
   echo "ERROR: patch file $PATCHFILE not found or not executable"

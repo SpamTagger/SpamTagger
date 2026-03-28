@@ -36,16 +36,16 @@ if (isset($_GET['t']) && $_GET['t'] && in_array($_GET['t'], preg_split('/,/', $t
 
 // fetch help topic
 $htxt = array();
-$helpfile = "/opt/spamtagger/www/user/lang/".$lang_->getLanguage()."/help_texts.php";
+$helpfile = "/usr/spamtagger/www/user/lang/".$lang_->getLanguage()."/help_texts.php";
 if (file_exists($helpfile)) {
   include($helpfile);
 } else {
-  $helpfile = "/opt/spamtagger/www/user/lang/en/help_texts.php";
+  $helpfile = "/usr/spamtagger/www/user/lang/en/help_texts.php";
   if (file_exists($helpfile)) {
     include($helpfile);
   }
 }
-$templatehelpfile = "/opt/spamtagger/www/user/templates/".$template_->getModel()."/lang/".$lang_->getLanguage()."/help_texts.php";
+$templatehelpfile = "/usr/spamtagger/www/user/templates/".$template_->getModel()."/lang/".$lang_->getLanguage()."/help_texts.php";
 if (file_exists($templatehelpfile)) {
    include($templatehelpfile);
 }
@@ -135,7 +135,7 @@ function getHelpContent($carray) {
     $ret = preg_replace("/__($str)__/", $htxt[$str], $ret);
     $helpt = $matches[2];
     $link = '/docs/'.$lang_->getLanguage()."/".$htxt[$str];
-    $file = "/opt/spamtagger/www/user/$link";
+    $file = "/usr/spamtagger/www/user/$link";
     $size = 0;
     if (file_exists($file)) {
       $size = filesize($file);

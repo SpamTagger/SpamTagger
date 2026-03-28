@@ -39,7 +39,7 @@ if [ ! -d /var/spamtagger/run/messagesniffer ]; then
 fi
 
 prepare() {
-  /opt/spamtagger/bin/dump_messagesniffer_config.pl >/dev/null 2>&1
+  /usr/spamtagger/bin/dump_messagesniffer_config.pl >/dev/null 2>&1
 
   if [ ! -f /var/spamtagger/spool/messagesniffer/GBUdbIgnoreList.txt ]; then
     cp /opt/messagesniffer/share/snf-server/GBUdbIgnoreList.txt.sample /var/spamtagger/spool/messagesniffer/GBUdbIgnoreList.txt

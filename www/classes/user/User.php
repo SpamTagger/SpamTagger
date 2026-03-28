@@ -412,7 +412,7 @@ class User extends PrefHandler {
 
     $sysconf_ = SystemConfig::getInstance();
 
-    require_once("/opt/spamtagger/www/guis/admin/application/library/Pear/Text/Password.php");
+    require_once("/usr/spamtagger/www/guis/admin/application/library/Pear/Text/Password.php");
     $password = Text_Password::create(12, 'pronounceable', 'numeric');
 
     $this->getLocalUserDatas();
@@ -420,7 +420,7 @@ class User extends PrefHandler {
     $this->saveLocalUserDatas();
 
     $address = $this->getMainAddress();
-    $command = "/opt/spamtagger/bin/send_userpassword.pl '$address' '".$this->getPref('username')."' '".$password."' 1";
+    $command = "/usr/spamtagger/bin/send_userpassword.pl '$address' '".$this->getPref('username')."' '".$password."' 1";
     $command = escapeshellcmd($command);
     $result = `$command`;
     $result = trim($result);

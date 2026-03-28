@@ -218,8 +218,8 @@ ReadMode('normal');
 
 foreach (@messages) {
   my $UPDATE="UPDATE spam SET forced = '1' WHERE exim_id = '$_->{exim_id}';";
-  print "\n/opt/spamtagger/bin/force_message.pl $_->{exim_id} $_->{to_user}";
-  `/opt/spamtagger/bin/force_message.pl $_->{exim_id} $_->{to_user}`;
+  print "\n/usr/spamtagger/bin/force_message.pl $_->{exim_id} $_->{to_user}";
+  `/usr/spamtagger/bin/force_message.pl $_->{exim_id} $_->{to_user}`;
   `echo \"$UPDATE\" | $COMMAND -S $SOCKET -uspamtagger -p$MYSPAMTAGGERPWD -N st_spool`;
 }
 printf "\nFinished\n";

@@ -28,7 +28,7 @@ use warnings;
 use utf8;
 use Carp qw( confess );
 
-use lib "/opt/spamtagger/lib";
+use lib "/usr/spamtagger/lib";
 use ReadConfig;
 my $conf = ReadConfig::get_instance();
 
@@ -64,11 +64,11 @@ my %ufw = (
 foreach my $key (keys(%ufw)) {
   if (-e "/etc/ufw/applications.d/$key") {
     if (-l "/etc/ufw/applications.d/$key") {
-      next if (readlink("/etc/ufw/applications.d/$key") eq "/opt/spamtagger/etc/ufw/$key");
+      next if (readlink("/etc/ufw/applications.d/$key") eq "/usr/spamtagger/etc/ufw/$key");
     }
     rmrf("/etc/ufw/applications.d/$key");
   }
-  symlink("/opt/spamtagger/etc/ufw/$key", "/etc/ufw/applications.d/$key")
+  symlink("/usr/spamtagger/etc/ufw/$key", "/etc/ufw/applications.d/$key")
 }
 our %fail2ban_sets = ('mc-exim' => 'mail', 'mc-ssh' => 'ssh', 'mc-webauth' => 'web');
 our $iptables = "/usr/sbin/iptables";
@@ -94,7 +94,7 @@ if (open(my $interfaces, '<', '/etc/network/interfaces')) {
   close($interfaces);
 }
 
-symlink('/opt/spamtagger/etc/apparmor', '/etc/apparmor.d/spamtagger') unless (-e '/etc/apparmor.d/spamtagger');
+symlink('/usr/spamtagger/etc/apparmor', '/etc/apparmor.d/spamtagger') unless (-e '/etc/apparmor.d/spamtagger');
 
 my %rules;
 get_default_rules(\%rules);
@@ -198,7 +198,7 @@ sub get_external_rules($rules)
 
 sub do_start_script($rules)
 {
-  my $start_script = "/opt/spamtagger/etc/firewall/start";
+  my $start_script = "/usr/spamtagger/etc/firewall/start";
   unlink($start_script);
 
   my $START;
@@ -310,8 +310,8 @@ sub do_start_script($rules)
     $existing->{$set}->{$_} = 1;
   }
 
-  my @blacklist_files = ('/opt/spamtagger/etc/firewall/blacklist.txt', '/opt/spamtagger/etc/firewall/blacklist_custom.txt');
-  my $blacklist_script = '/opt/spamtagger/etc/firewall/blacklist';
+  my @blacklist_files = ('/usr/spamtagger/etc/firewall/blacklist.txt', '/usr/spamtagger/etc/firewall/blacklist_custom.txt');
+  my $blacklist_script = '/usr/spamtagger/etc/firewall/blacklist';
   unlink $blacklist_script;
   my $BLACKLIST;
   confess ("Failed to open $blacklist_script: $!\n") unless ($BLACKLIST = ${open_as($blacklist_script, ">>", 0o755)});
@@ -382,7 +382,7 @@ sub do_start_script($rules)
 
 sub do_stop_script($rules)
 {
-  my $stop_script = "/opt/spamtagger/etc/firewall/stop";
+  my $stop_script = "/usr/spamtagger/etc/firewall/stop";
   unlink($stop_script);
 
   my $STOP;

@@ -34,7 +34,7 @@ function forceContent($sid, $path) {
   }
   $sysconf_ = SystemConfig::getInstance();
   $path = escapeshellarg($path);
-  $cmd = "/opt/spamtagger/bin/force_quarantined.pl ".$path;
+  $cmd = "/usr/spamtagger/bin/force_quarantined.pl ".$path;
   $res_a = array();
   exec($cmd, $res_a);
 
@@ -60,7 +60,7 @@ function forceSpam($id, $dest) {
   $sysconf_ = SystemConfig::getInstance();
   $id = escapeshellarg($id);
   $dest = escapeshellarg($dest);
-  $cmd = "/opt/spamtagger/bin/force_message.pl $id $dest";
+  $cmd = "/usr/spamtagger/bin/force_message.pl $id $dest";
   $res_a = array();
   exec($cmd, $res_a);
 
@@ -83,7 +83,7 @@ function addToNewslist($dest, $sender) {
   $sysconf_ = SystemConfig::getInstance();
   $dest = escapeshellarg($dest);
   $sender = escapeshellarg($sender);
-  $cmd = "/opt/spamtagger/bin/add_to_newslist.pl $dest $sender";
+  $cmd = "/usr/spamtagger/bin/add_to_newslist.pl $dest $sender";
   $res_a = array();
   exec($cmd, $res_a);
 
@@ -106,7 +106,7 @@ function addToWantlist($dest, $sender) {
   $sysconf_ = SystemConfig::getInstance();
   $dest = escapeshellarg($dest);
   $sender = escapeshellarg($sender);
-  $cmd = "/opt/spamtagger/bin/add_to_wantlist.pl $dest $sender";
+  $cmd = "/usr/spamtagger/bin/add_to_wantlist.pl $dest $sender";
   $res_a = array();
   exec($cmd, $res_a);
 
@@ -129,7 +129,7 @@ function addToBlocklist($dest, $sender) {
   $sysconf_ = SystemConfig::getInstance();
   $dest = escapeshellarg($dest);
   $sender = escapeshellarg($sender);
-  $cmd = "/opt/spamtagger/bin/add_to_blocklist.pl $dest $sender";
+  $cmd = "/usr/spamtagger/bin/add_to_blocklist.pl $dest $sender";
   $res_a = array();
   exec($cmd, $res_a);
 
@@ -300,7 +300,7 @@ function getReasons($id, $dest, $lang) {
   $dest = escapeshellarg($dest);
   $lang = escapeshellarg($lang);
 
-  $cmd = "/opt/spamtagger/bin/get_reasons.pl $id $dest $lang";
+  $cmd = "/usr/spamtagger/bin/get_reasons.pl $id $dest $lang";
   $res = "";
   exec($cmd, $res);
   $ret = array();
@@ -332,7 +332,7 @@ function sendToAnalyse($id, $dest) {
   $id = escapeshellarg($id);
   $dest = escapeshellarg($dest);
 
-  $cmd = "/opt/spamtagger/bin/send_to_analyse.pl $id $dest";
+  $cmd = "/usr/spamtagger/bin/send_to_analyse.pl $id $dest";
   $res_a = array();
   exec($cmd, $res_a);
   return $res_a[0];

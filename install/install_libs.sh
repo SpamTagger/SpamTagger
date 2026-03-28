@@ -13,7 +13,7 @@ echo "build imap ? "
 read REP
 if [ "$REP" = "y" ]; then
 
-  cd /opt/spamtagger/install/src
+  cd /usr/spamtagger/install/src
 
   echo -n "    building imap ..."
 
@@ -34,7 +34,7 @@ read REP
 if [ "$REP" = "y" ]; then
 
   rm -rf /usr/libxml2
-  cd /opt/spamtagger/install/src
+  cd /usr/spamtagger/install/src
 
   echo -n "    building libxml ..."
 
@@ -45,7 +45,7 @@ if [ "$REP" = "y" ]; then
   make 2>&1
   make install 2>&1
   cd $BACK
-  rm -rf /opt/spamtagger/install/src/libxml2-2.6.23 2>&1
+  rm -rf /usr/spamtagger/install/src/libxml2-2.6.23 2>&1
   #echo "/usr/libxml2/lib" >> /etc/ld.so.conf
   ldconfig 2>&1
   echo "done!"
@@ -58,7 +58,7 @@ read REP
 if [ "$REP" = "y" ]; then
 
   rm -rf /usr/db
-  cd /opt/spamtagger/install/src
+  cd /usr/spamtagger/install/src
 
   echo -n "    building DB ..."
 
@@ -69,7 +69,7 @@ if [ "$REP" = "y" ]; then
   make 2>&1
   make install 2>&1
   cd $BACK
-  rm -rf /opt/spamtagger/install/src/db-4.4.20/ 2>&1
+  rm -rf /usr/spamtagger/install/src/db-4.4.20/ 2>&1
 
   #echo "/usr/db/lib" >> /etc/ld.so.conf
   ldconfig 2>&1
@@ -82,7 +82,7 @@ echo "build sasl ? "
 read REP
 if [ "$REP" = "y" ]; then
   rm -rf /usr/sasl
-  cd /opt/spamtagger/install/src
+  cd /usr/spamtagger/install/src
 
   echo -n "    building sasl ..."
 
@@ -95,7 +95,7 @@ if [ "$REP" = "y" ]; then
   make 2>&1
   make install 2>&1
   cd $BACK
-  rm -rf /opt/spamtagger/install/src/cyrus-sasl-2.1.21/ 2>&1
+  rm -rf /usr/spamtagger/install/src/cyrus-sasl-2.1.21/ 2>&1
   #echo "/usr/sasl/lib" >> /etc/ld.so.conf
   ldconfig 2>&1
 fi
@@ -107,7 +107,7 @@ read REP
 if [ "$REP" = "y" ]; then
 
   rm -rf /usr/mhash
-  cd /opt/spamtagger/install/src
+  cd /usr/spamtagger/install/src
 
   echo -n "    building mhash ..."
 
@@ -119,14 +119,14 @@ if [ "$REP" = "y" ]; then
   cd include
   ../install-sh -c -m 644 'mutils/mincludes.h' '/usr/mhash/include/mutils/mincludes.h'
   cd $BACK
-  rm -rf /opt/spamtagger/install/src/mhash-0.9.4
+  rm -rf /usr/spamtagger/install/src/mhash-0.9.4
 fi
 
 echo "build mcrypt ? "
 read REP
 if [ "$REP" = "y" ]; then
 
-  cd /opt/spamtagger/install/src
+  cd /usr/spamtagger/install/src
   echo -n "    building mcrypt ..."
 
   rm -rf /usr/mcrypt
@@ -139,5 +139,5 @@ if [ "$REP" = "y" ]; then
   make 2>&1
   make install 2>&1
   cd $BACK
-  rm -rf /opt/spamtagger/install/src/libmcrypt-2.5.7
+  rm -rf /usr/spamtagger/install/src/libmcrypt-2.5.7
 fi

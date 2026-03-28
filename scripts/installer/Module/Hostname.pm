@@ -26,8 +26,8 @@ use Exporter 'import';
 our @EXPORT_OK = ();
 our $VERSION   = 1.0;
 
-use lib "/opt/spamtagger/lib";
-use lib "/opt/spamtagger/scripts/installer/";
+use lib "/usr/spamtagger/lib";
+use lib "/usr/spamtagger/scripts/installer/";
 use DialogFactory();
 use InputValidator qw( validate );
 
@@ -65,7 +65,7 @@ sub run($this) {
     `sed -i '/HOSTNAME/d' /etc/spamtagger.conf`;
     `echo "HOSTNAME = $fqdn" >> /etc/spamtagger.conf`;
     if (-d "/var/spamtagger/spool/mariadb_source") {
-      `echo "UPDATE httpd_config SET servername = '$fqdn';" | /opt/spamtagger/bin/st_mariadb -s st_config`;
+      `echo "UPDATE httpd_config SET servername = '$fqdn';" | /usr/spamtagger/bin/st_mariadb -s st_config`;
       `systemctl restart apache2`;
     }
   } else {

@@ -22,7 +22,7 @@ use warnings;
 use utf8;
 use Carp qw( confess );
 
-use lib "/opt/spamtagger/lib";
+use lib "/usr/spamtagger/lib";
 use ReadConfig;
 my $conf = ReadConfig::get_instance();
 
@@ -31,7 +31,7 @@ use STUtils qw(open_as);
 my $i = 0;
 my $j = 0;
 
-my $path = "/opt/spamtagger/share/spamassassin";
+my $path = "/usr/spamtagger/share/spamassassin";
 exit if ( ! -f "$path/double_item_uri.txt" );
 
 my ($FH_TXT, $RULES);

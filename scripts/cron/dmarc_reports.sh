@@ -1,15 +1,15 @@
 #!/bin/bash
 
-DOIT=$(echo "SELECT dmarc_enable_reports FROM mta_config WHERE stage=1;" | /opt/spamtagger/bin/st_mariadb -s st_config | grep -v 'dmarc_enable_reports')
+DOIT=$(echo "SELECT dmarc_enable_reports FROM mta_config WHERE stage=1;" | /usr/spamtagger/bin/st_mariadb -s st_config | grep -v 'dmarc_enable_reports')
 if [ "$DOIT" != "1" ]; then
   exit 0
 fi
-echo "select hostname, password from source;" | /opt/spamtagger/bin/st_mariadb -s st_config | grep -v 'password' | tr -t '[:blank:]' ':' >/var/tmp/source.conf
+echo "select hostname, password from source;" | /usr/spamtagger/bin/st_mariadb -s st_config | grep -v 'password' | tr -t '[:blank:]' ':' >/var/tmp/source.conf
 MHOST=$(cat /var/tmp/source.conf | cut -d':' -f1)
 MPASS=$(cat /var/tmp/source.conf | cut -d':' -f2)
 ISSOURCE=$(grep 'ISSOURCE' /etc/spamtagger.conf | cut -d ' ' -f3)
 
-SYSADMIN=$(echo "SELECT summary_from FROM system_conf;" | /opt/spamtagger/bin/st_mariadb -s st_config | grep '\@')
+SYSADMIN=$(echo "SELECT summary_from FROM system_conf;" | /usr/spamtagger/bin/st_mariadb -s st_config | grep '\@')
 if [ "$SYSADMIN" != "" ]; then
   SYSADMIN=" --report-email $SYSADMIN"
 fi
