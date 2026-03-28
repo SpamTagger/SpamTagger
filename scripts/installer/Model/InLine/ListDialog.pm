@@ -77,15 +77,19 @@ sub display($this) {
     @slist = splice(@slist,0,44);
     push(@slist, 'more...');
   }
+  my $longest = 0;
+  foreach (@slist) {
+    $longest = length($_) if (length($_) > $longest);
+  }
   foreach my $el (@slist ) {
     last if $i >= $nbln;
     my $str;
     if (defined($slist[$i+2*$nbln])) {
-      $str = sprintf "  (%2d) %-20s (%2d) %-20s (%2d) %-20s\n", $i+1, $el, $i+$nbln+1, $slist[$i+$nbln], $i+2*$nbln+1, $slist[$i+2*$nbln];
+      $str = sprintf "  (%2d) %-${longest}s (%2d) %-${longest}s (%2d) %-${longest}s\n", $i+1, $el, $i+$nbln+1, $slist[$i+$nbln], $i+2*$nbln+1, $slist[$i+2*$nbln];
     } elsif (defined($slist[$i+$nbln])) {
-      $str = sprintf "  (%2d) %-20s (%2d) %-20s\n", $i+1, $el, $i+$nbln+1, $slist[$i+$nbln];
+      $str = sprintf "  (%2d) %-${longest}s (%2d) %-${longest}s\n", $i+1, $el, $i+$nbln+1, $slist[$i+$nbln];
     } else {
-      $str = sprintf "  (%2d) %-20s\n", $i+1, $el;
+      $str = sprintf "  (%2d) %-${longest}s\n", $i+1, $el;
     }
     print $str;
     $i++;
