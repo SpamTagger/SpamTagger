@@ -102,6 +102,9 @@ sub display($this) {
     return -1;
   }
   if ($slist[$result-1] eq 'more...') {
+    if (scalar(@overflow) <= 44 && scalar(@llist) > 44) {
+      push(@overflow, 'back to start...');
+    }
     $this->{list} = \@overflow;
     return $this->display();
   }
