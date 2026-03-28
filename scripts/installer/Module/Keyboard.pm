@@ -29,64 +29,59 @@ our $VERSION   = 1.0;
 use lib "/usr/spamtagger/scripts/installer/";
 use DialogFactory();
 
-my @levels = ( 'layout', 'language', 'variant', 'keymap' );
+no strict 'refs';
+require '/usr/share/console-setup/KeyboardNames.pl';
 
 sub new($class) {
-  my $this = {
-    dlg => '',
-    mapfile => "/usr/share/console/lists/keymaps/console-data.keymaps",
-    mapdir => '/usr/share/keymaps/i386'
-  };
-
-  return bless $this, $class;
+  return bless {}, $class;
 }
 
 sub run($this) {
-  require $this->{mapfile};
   my $dfact = DialogFactory->new('InLine');
-  $this->{dlg} = $dfact->list();
+  my $dlg = $dfact->list();
 
-  my %list = %{$::keymaps->{pc}};
-
-  my $layout = '';
-  my $file = $this->dolist(\%list, 'pc', \$layout);
-
-  # Load temporary keymap
-  `loadkeys $file 2>&1 > /dev/null`;
-  # Load persistent keymap
-  mkdir('/etc/console') unless ( -d '/etc/console');
-  unlink('/etc/console/boottime.kmap.gz') if ( -e '/etc/console/boottime.kmap.gz');
-  `ln -s $this->{mapdir}/$layout/$file.kmap.gz /etc/console/boottime.kmap.gz 2>&1 > /dev/null`;
-  return;
-}
-
-sub dolist($this, $listh, $parent, $layout, $depth=-1) {
-  $depth++;
-  return $listh unless ref($listh) eq 'HASH';
-  my %list = %{$listh};
-
-  my @dlglist;
-  my $default = $list{'default'} || '';
-  my $standard = 0;
-  $standard = 1 if (defined($list{'Standard'}));
-  foreach my $key (sort(keys %list)) {
-    if ($key eq 'default' || $key eq 'Standard') {
-      next;
-    } elsif ($default ne '' && $key eq $default) {
-      next;
+  my $layouts = \%{"KeyboardNames::layouts"};
+  my $variants = \%{"KeyboardNames::variants"};
+  my $staged = {};
+  foreach my $i (keys(%$layouts)) {
+    next if ($layouts->{$i} eq 'custom');
+    my ($lang, $country) = $i =~ m/(\w+)(?: \((.*)\))?/;
+    if (defined($country)) {
+      if (defined($staged->{$lang})) {
+        $staged->{$lang}->{$country} = $layouts->{$i};
+      } else {
+        $staged->{$lang} = { $country => $layouts->{$i} };
+      }
     } else {
-      push @dlglist, $key;
+      $staged->{$lang} = $layouts->{$i};
     }
   }
-  unshift(@dlglist, 'Standard') if ($standard);
-  unshift(@dlglist, $default) if ($default ne '');
-
-  return $this->dolist($list{$dlglist[0]}, $dlglist[0], \'skip', $depth) if (scalar(@dlglist) == 1);
-  my $dlg = $this->{dlg};
-  $dlg->build('Select '.$levels[$depth].':', \@dlglist, 1, 1);
+  my @langs = keys(%{$staged});
+  $dlg->build('Select Language:', \@langs, 1, 0);
   my $res = $dlg->display();
-  $$layout = $res if ($$layout eq '');
-  return $this->dolist($list{$res}, $res, \'skip', $depth);
+
+  my $primary;
+  if (ref($staged->{$res}) eq 'HASH') {
+    my @regions = keys(%{$staged->{$res}});
+    $dlg->build('Select Region:', \@regions, 1, 0);
+    my $res2 = $dlg->display();
+    $primary = $staged->{$res}->{$res2};
+  } else {
+    $primary = $staged->{$res}->[0];
+  }
+
+  my $variant = '';
+  if (defined($variants->{$primary})) {
+    my @vars = ( 'Standard', sort(keys(%{$variants->{$primary}})) );
+    $dlg->build('Select Variant:', \@vars, 1, 1);
+    my $res3 = $dlg->display();
+    if ($res3 ne 'Standard') {
+      $variant = $variants->{$primary}->{$res3};
+    }
+  }
+  `sed -i 's/XKBLAYOUT=*/XKBLAYOUT="$primary"/' /etc/default/keyboard`;
+  `sed -i 's/XKBVARIANT=*/XKBVARIANT="$variant"/' /etc/default/keyboard`;
+  `setupcon --force`;
 }
 
 1;
