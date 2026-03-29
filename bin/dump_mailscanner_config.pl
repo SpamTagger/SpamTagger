@@ -256,7 +256,7 @@ sub get_ms_config()
     $pfoption .= $pf{'name'}.":".$pf{'pos_decisive'}.":".$pf{'neg_decisive'}." ";
   }
   $config{'__PREFILTERS__'} = $pfoption;
-  $config{'__EXIM_COMMAND__'} = 'Exim Command = /opt/exim4/bin/exim';
+  $config{'__EXIM_COMMAND__'} = 'Exim Command = /usr/bin/exim';
 
   return %config;
 }

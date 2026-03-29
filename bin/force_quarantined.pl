@@ -107,7 +107,7 @@ foreach my $ext ( @exts ) {
   chown $uid, $gid, $spoolfile if (-f $spoolfile);
 }
 sleep 2;
-my $cmd = "/opt/exim4/bin/exim -C /usr/spamtagger/etc/exim/exim_stage4.conf -M ".$id." 2>&1";
+my $cmd = "/usr/bin/exim -C /usr/spamtagger/etc/exim/exim_stage4.conf -M ".$id." 2>&1";
 my $res = `$cmd`;
 if ($res =~ /^$/) {
   mark_forced($id);

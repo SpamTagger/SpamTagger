@@ -7,7 +7,7 @@ MPASS=$(cat /var/tmp/source.conf | cut -d':' -f2)
 if [ -s /var/spamtagger/spool/tmp/exim/dmarc.history ]; then
 
   echo -n "Importing to source database at $MHOST..."
-  /opt/exim4/sbin/opendmarc-import --dbhost=$MHOST --dbport=3306 --dbname=dmarc_reporting --dbuser=spamtagger --dbpasswd=$MPASS </var/spamtagger/spool/tmp/exim/dmarc.history
+  /usr/sbin/opendmarc-import --dbhost=$MHOST --dbport=3306 --dbname=dmarc_reporting --dbuser=spamtagger --dbpasswd=$MPASS </var/spamtagger/spool/tmp/exim/dmarc.history
   /bin/rm /var/spamtagger/spool/tmp/exim/dmarc.history
   /bin/touch /var/spamtagger/spool/tmp/exim/dmarc.history
   /bin/chown spamtagger:spamtagger /var/spamtagger/spool/tmp/exim/dmarc.history

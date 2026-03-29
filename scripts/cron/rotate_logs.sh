@@ -57,9 +57,9 @@ for stage in 1 2; do
       fi
     done
   fi
-  if [ -x /opt/exim4/bin/exim_tidydb ]; then
-    /opt/exim4/bin/exim_tidydb /var/spamtagger/spool/exim_stage$stage retry >/dev/null
-    /opt/exim4/bin/exim_tidydb /var/spamtagger/spool/exim_stage$stage wait-local_smtp >/dev/null
+  if [ -x /usr/bin/exim_tidydb ]; then
+    /usr/bin/exim_tidydb /var/spamtagger/spool/exim_stage$stage retry >/dev/null
+    /usr/bin/exim_tidydb /var/spamtagger/spool/exim_stage$stage wait-local_smtp >/dev/null
   fi
 done
 
@@ -83,9 +83,9 @@ if [ -x /usr/bin/savelog ]; then
     fi
   done
 fi
-if [ -x /opt/exim4/bin/exim_tidydb ]; then
-  /opt/exim4/bin/exim_tidydb /var/spamtagger/spool/exim_stage4 retry >/dev/null
-  /opt/exim4/bin/exim_tidydb /var/spamtagger/spool/exim_stage4 wait-local_smtp >/dev/null
+if [ -x /usr/bin/exim_tidydb ]; then
+  /usr/bin/exim_tidydb /var/spamtagger/spool/exim_stage4 retry >/dev/null
+  /usr/bin/exim_tidydb /var/spamtagger/spool/exim_stage4 wait-local_smtp >/dev/null
 fi
 
 # clamav rotating

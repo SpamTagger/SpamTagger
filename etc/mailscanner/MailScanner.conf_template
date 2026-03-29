@@ -35,8 +35,8 @@ Quarantine Permissions = 0664
 PID file = /var/spamtagger/run/mailscanner.pid
 
 MTA = exim
-Sendmail = /opt/exim4/bin/exim -C /var/spamtagger/spool/tmp/exim/exim_stage4.conf
-Sendmail2 = /opt/exim4/bin/exim -C /var/spamtagger/spool/tmp/exim/exim_stage4.conf
+Sendmail = /usr/bin/exim -C /var/spamtagger/spool/tmp/exim/exim_stage4.conf
+Sendmail2 = /usr/bin/exim -C /var/spamtagger/spool/tmp/exim/exim_stage4.conf
 
 ####################################
 ## system optimisation

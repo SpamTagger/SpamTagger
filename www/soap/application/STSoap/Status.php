@@ -210,7 +210,7 @@ class STSoap_Status {
     if (isset($params['spool']) && in_array($params['spool'], $available_spools)) {
       $spool = $params['spool'];
     }
-    $cmd = "/opt/exim4/bin/exipick --spool /var/spamtagger/spool/exim_stage$spool -flatq --show-vars deliver_freeze,dont_deliver,first_delivery,warning_count,shown_message_size,message_age";
+    $cmd = "/usr/bin/exipick --spool /var/spamtagger/spool/exim_stage$spool -flatq --show-vars deliver_freeze,dont_deliver,first_delivery,warning_count,shown_message_size,message_age";
     $cmd_res = `$cmd`;
 
     $limit = 200;
@@ -341,7 +341,7 @@ class STSoap_Status {
     $msgvalidator = new Validate_MessageID();
     foreach ($msgs as $msg) {
       if ($msgvalidator->isValid($msg)) {
-        $cmd = "/opt/exim4/bin/exim -C /usr/spamtagger/etc/exim/exim_stage".$spool.".conf -Mrm ".$msg. " &";
+        $cmd = "/usr/bin/exim -C /usr/spamtagger/etc/exim/exim_stage".$spool.".conf -Mrm ".$msg. " &";
         $cmd_res = `$cmd`;
         $ret['msgsdeleted'][] = $msg;
         $ret['lastcmd'] = $cmd;
@@ -380,7 +380,7 @@ class STSoap_Status {
     $msgvalidator = new Validate_MessageID();
     foreach ($msgs as $msg) {
       if ($msgvalidator->isValid($msg)) {
-        $cmd = "/opt/exim4/bin/exim -C /usr/spamtagger/etc/exim/exim_stage".$spool.".conf -M ".$msg. " &";
+        $cmd = "/usr/bin/exim -C /usr/spamtagger/etc/exim/exim_stage".$spool.".conf -M ".$msg. " &";
         $cmd_res = `$cmd`;
         $ret['msgstried'][] = $msg;
         $ret['lastcmd'] = $cmd;

@@ -249,9 +249,9 @@ echo 'START REPLICA' | /usr/bin/mariadb --socket /var/spamtagger/run/mariadb_rep
 
 sleep 1s
 echo "Delete messages in queues"
-/opt/exim4/bin/exiqgrep -C /usr/spamtagger/etc/exim/exim_stage1.conf -i | xargs /opt/exim4/bin/exim -Mrm
-/opt/exim4/bin/exiqgrep -C /usr/spamtagger/etc/exim/exim_stage2.conf -i | xargs /opt/exim4/bin/exim -Mrm
-/opt/exim4/bin/exiqgrep -C /usr/spamtagger/etc/exim/exim_stage4.conf -i | xargs /opt/exim4/bin/exim -Mrm
+/usr/bin/exiqgrep -C /usr/spamtagger/etc/exim/exim_stage1.conf -i | xargs /usr/bin/exim -Mrm
+/usr/bin/exiqgrep -C /usr/spamtagger/etc/exim/exim_stage2.conf -i | xargs /usr/bin/exim -Mrm
+/usr/bin/exiqgrep -C /usr/spamtagger/etc/exim/exim_stage4.conf -i | xargs /usr/bin/exim -Mrm
 
 echo "Delete Watchdog files"
 cdel -f /var/spamtagger/spool/watchdog/watchdogs*

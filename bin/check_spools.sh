@@ -25,7 +25,7 @@
 #   Usage:
 #           check_spools.sh
 
-EXIMBIN=/opt/exim4/bin/exim
+EXIMBIN=/usr/bin/exim
 
 echo -n "Stage 1:       "
 $EXIMBIN -C /usr/spamtagger/etc/exim/exim_stage1.conf -bpc

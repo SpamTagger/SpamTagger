@@ -261,7 +261,7 @@ sub loop_through_logs ($filename, $type, $what, $store) {
 
 sub populate_ids ($file, $what, $store) {
 
-  my $cmd = "/opt/exim4/bin/exigrep '$what' /var/spamtagger/log/$file";
+  my $cmd = "/usr/bin/exigrep '$what' /var/spamtagger/log/$file";
   print " -> searching $file... \n" if !$batch;
   my $result = '';
   if  ( -f "/var/spamtagger/log/$file") {

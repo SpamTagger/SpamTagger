@@ -323,7 +323,7 @@ sub apply_configuration($this) {
 }
 
 sub is_bootstrapped($this) {
-  return 1 if (-e '/opt/exim4/bin/exim');
+  return 1 if (-e '/usr/bin/exim');
   return 0;
 }
 

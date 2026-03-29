@@ -22,10 +22,10 @@ if [ "$ISSOURCE" == "Y" ] || [ "$ISSOURCE" == "y" ]; then
   CURDIR=$(pwd)
   cd /tmp/dmarc_reports
   echo "*****************************" >>/var/spamtagger/log/spamtagger/dmarc_reporting.log
-  /opt/exim4/sbin/opendmarc-reports --dbhost=$MHOST --dbport=3306 --dbname=dmarc_reporting --dbuser=spamtagger --dbpasswd=$MPASS --smtp-port 587 --verbose --verbose --interval=86400 $SYSADMIN 2>>/var/spamtagger/log/spamtagger/dmarc_reporting.log
+  /usr/sbin/opendmarc-reports --dbhost=$MHOST --dbport=3306 --dbname=dmarc_reporting --dbuser=spamtagger --dbpasswd=$MPASS --smtp-port 587 --verbose --verbose --interval=86400 $SYSADMIN 2>>/var/spamtagger/log/spamtagger/dmarc_reporting.log
   echo "**********" >>/var/spamtagger/log/spamtagger/dmarc_reporting.log
   echo "Expiring database..." >>/var/spamtagger/log/spamtagger/dmarc_reporting.log
-  /opt/exim4/sbin/opendmarc-expire --dbhost=$MHOST --dbport=3306 --dbname=dmarc_reporting --dbuser=spamtagger --dbpasswd=$MPASS --expire=180 --verbose 2 &>>/var/spamtagger/log/spamtagger/dmarc_reporting.log
+  /usr/sbin/opendmarc-expire --dbhost=$MHOST --dbport=3306 --dbname=dmarc_reporting --dbuser=spamtagger --dbpasswd=$MPASS --expire=180 --verbose 2 &>>/var/spamtagger/log/spamtagger/dmarc_reporting.log
   echo "Done expiring." >>/var/spamtagger/log/spamtagger/dmarc_reporting.log
   echo "*****************************" >>/var/spamtagger/log/spamtagger/dmarc_reporting.log
   cd $CURDIR

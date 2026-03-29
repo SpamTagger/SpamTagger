@@ -145,12 +145,12 @@ if ($mode_given =~ /s/) {
             my $subcmd = "grep -e '^MTA\\s*=\\s*eximms' /usr/spamtagger/etc/mailscanner/MailScanner.conf";
             my $type = `$subcmd`;
             if ($type eq '') {
-                $cmd = "runuser -u Debian-exim -- /opt/exim4/bin/exim -C /var/spamtagger/spool/tmp/exim/${key}.conf -bpc 2>/dev/null";
+                $cmd = "runuser -u Debian-exim -- /usr/bin/exim -C /var/spamtagger/spool/tmp/exim/${key}.conf -bpc 2>/dev/null";
             } else {
                 $cmd = "ls /var/spamtagger/spool/exim_stage2/input/*.env 2>&1 | grep -v 'No such' | wc -l";
             }
         } else {
-            $cmd = "runuser -u Debian-exim -- /opt/exim4/bin/exim -C /var/spamtagger/spool/tmp/exim/${key}.conf -bpc 2>/dev/null";
+            $cmd = "runuser -u Debian-exim -- /usr/bin/exim -C /var/spamtagger/spool/tmp/exim/${key}.conf -bpc 2>/dev/null";
         }
         $res = `$cmd`;
         chomp($res);
@@ -203,7 +203,7 @@ if ($mode_given =~ /s/) {
     }
     print "\n" unless ($verbose);
 } elsif ($mode_given =~ /t/) {
-    my $cmd = "/opt/exim4/bin/exim -C /var/spamtagger/spool/tmp/exim/exim/exim_stage2.conf -bp | head -1 | cut -d' ' -f2";
+    my $cmd = "/usr/bin/exim -C /var/spamtagger/spool/tmp/exim/exim/exim_stage2.conf -bp | head -1 | cut -d' ' -f2";
     my $res = `$cmd`;
     chomp($res);
     if ($verbose) {

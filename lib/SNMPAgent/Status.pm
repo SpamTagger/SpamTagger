@@ -50,7 +50,7 @@ my %mib_processes = (1 => \%mib_processes_index, 2 => \%mib_processes_name, 3 =>
 my %mib_status = ( 1 => \%mib_version, 2 => \%mib_spools, 3 => \%mib_processes);
 
 my $conf;
-my $EXIMBIN = "/opt/exim4/bin/exim";
+my $EXIMBIN = "/usr/bin/exim";
 
 my %processes_tmpl = (
   '1' => {'name'=>'Incoming MTA', 'pstring'=>'exim/exim_stage1.conf'},
