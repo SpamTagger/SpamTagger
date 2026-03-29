@@ -212,7 +212,7 @@ if ($mode_given =~ /s/) {
         print($res."\n");
     }
 } elsif ($mode_given =~ /u/) {
-    my $cmd = "echo \"use st_config; select id, date from update_patch order by id desc limit 1;\" | /opt/mysql5/bin/mysql --skip-column-names -S /var/spamtagger/run/mysql_slave/mysqld.sock -uspamtagger -p${MYSPAMTAGGERPWD}";
+    my $cmd = "echo \"use st_config; select id, date from update_patch order by id desc limit 1;\" | /usr/bin/mysql --skip-column-names -S /var/spamtagger/run/mysql_slave/mysqld.sock -uspamtagger -p${MYSPAMTAGGERPWD}";
     my $res = `$cmd`;
     my $patch = "";
     if ($res =~ /^(\d+)\s+(\S+)$/) {

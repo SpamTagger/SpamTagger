@@ -54,13 +54,6 @@ case "$1" in
       echo "done"
     fi
 
-    ## checking for opt binaries
-    for i in MailScanner exim4; do
-      if [ ! -d /opt/$i ]; then
-        ln -s /usr/$i /opt/$i >/dev/null 2>&1
-      fi
-    done
-
     $INITDIR/$MYSOURCE start
     $INITDIR/$MYREPLICA start
     # Restart FW in background so that Fail2Ban does not hold up other processes
