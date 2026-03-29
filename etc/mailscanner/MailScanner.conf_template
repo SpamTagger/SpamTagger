@@ -407,7 +407,7 @@ SQL Debug = no
 
 Use Default Rules With Multiple Recipients = no
 Read IP Address From Received Header = no
-MailScanner Version Number = 4.84.6
+MailScanner Version Number = 5.5.3-2
 SpamAssassin Cache Timings = 1800,300,10800,172800,600
 Spam Score Number Format = %d
 Debug = no
@@ -420,7 +420,7 @@ Deliver In Background = yes
 Delivery Method = batch
 Split Exim Spool = no
 Lockfile Dir = /var/spamtagger/spool/tmp/mailscanner/incoming/Locks
-Custom Functions Dir = /opt/MailScanner/lib/MailScanner/CustomFunctions
+Custom Functions Dir = /usr/share/MailScanner/perl/custom
 Lock Type =
 Minimum Code Status = supported
 Automatic Syntax Check = yes
