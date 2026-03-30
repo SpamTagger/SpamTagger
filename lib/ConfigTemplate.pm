@@ -58,17 +58,17 @@ sub new ($class, $infile, $chown='spamtagger:spamtagger') {
     if (-e "/etc/spamtagger/${infile}") {
       $infile = "/etc/spamtagger/${infile}";
       print("Using user-defined config template $infile\n");
-    # Use system file if it does not
+      # Use system file if it does not
     } elsif (-e "/usr/spamtagger/${infile}") {
       $infile = "/usr/spamtagger/${infile}";
       print("Using default system template $infile\n");
-    # Otherwise die if not found in either location
+      # Otherwise die if not found in either location
     } elsif ($infile =~ m/\.\./) {
       confess "Upward path traversal prohibited for $infile\n";
     } else {
       confess "No files found matching relative path $infile\n";
     }
-  # If path is absolute, remove approved prefixes and provide required output prefix
+    # If path is absolute, remove approved prefixes and provide required output prefix
   } else {
     confess "Unsupported input file: $infile" unless ($infile =~ m#^/(?:var/spamtagger(?:/tmp)?|(?:etc|opt|usr)/spamtagger)#);
     ($outfile) = $infile =~ m#^/(?:var/spamtagger(?:/tmp)?|(?:etc|opt|usr)/spamtagger)(.*)$#;
@@ -148,10 +148,16 @@ sub parse_overrides ($this, $file) {
   }
   close($FH);
   confess "Failed to parse TOML from $file\n" unless ($overrides = from_toml($toml));
-  $this->{override_vars} = $overrides->{variables};
-  $this->{override_feat} = $overrides->{features};
+  $this->{override_vars} = map { uc($_) => $overrides->{variables}->{$_} } keys(%{$overrides->{variables}});
+  $this->{override_feat} = map { uc($_) => $overrides->{features}->{$_} } keys(%{$overrides->{features}});
+  foreach my $block (keys(%{$overrides})) {
+    next if ($_ =~ /(variables|features)/);
+    foreach my $key (keys(%{$overrides->{$block}})) {
+      $this->{override_vars}->{uc("${block}_${key}")} = $overrides->{$block}->{$key};
+    }
+  }
 }
-  
+
 sub get_sub_template ($this, $tmplname) {
   if (defined($this->{subtemplates}{$tmplname})) {
     return $this->{subtemplates}{$tmplname};
@@ -319,9 +325,9 @@ sub set_condition ($this, $condition, $value) {
   # Must immediately set override value so that it is readable by get_condition
   if (defined($this->{override_feat}->{$condition})) {
     print "$condition overridden by TOML feature\n";
-    $this->{conditions}->{$condition} = $this->{override_feat}->{$condition};
+    $this->{conditions}->{uc($condition)} = $this->{override_feat}->{$condition};
   } else {
-    $this->{conditions}->{$condition} = $value;
+    $this->{conditions}->{uc($condition)} = $value;
   }
   return 1;
 }

@@ -99,9 +99,10 @@ setterm --foreground blue
 echo -n "# Initializing fangfrisch..."
 setterm --foreground default
 
-cp /usr/spamtagger/etc/clamav/fangfrisch.conf_template /var/spamtagger/etc/fangfrisch.conf
-chown clamav:clamav /var/spamtagger/etc/fangfrisch.conf
-fangfrisch -c /var/spamtagger/etc/fangfrisch.conf initdb
+mkdir -p /var/spamtagger/tmp/etc/clamav
+cp /usr/spamtagger/etc/clamav/fangfrisch.conf /var/spamtagger/tmp/etc/clamav/fangfrisch.conf
+chown clamav:clamav /var/spamtagger/tmp/etc/clamav/fangfrisch.conf
+fangfrisch -c /var/spamtagger/tmp/etc/clamav/fangfrisch.conf initdb
 
 if [ -z $CI ]; then
   setterm --foreground blue

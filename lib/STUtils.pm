@@ -90,7 +90,7 @@ sub open_as($file, $method=">", $chmod=0o664, $chown='spamtagger:spamtagger') {
   # Ensure distination dir exists
   if ($method =~ m/[\+>]/) {
     if (!-d dirname($file)) {
-      make_path(dirname(dirname($file)), { mode => 0o755, owner => $owner, group => $group } ) or confess "Failed to create output directory: $!";
+      make_path(dirname($file), { mode => 0o755, owner => $owner, group => $group } ) or confess "Failed to create output directory ".dirname($file).": $!";
     }
     if ( ! -e $file ) {
       confess("Failed to create $file\n") unless touch($file);

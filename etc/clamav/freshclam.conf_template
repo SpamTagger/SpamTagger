@@ -4,3 +4,7 @@ UpdateLogFile /var/spamtagger/log/clamav/freshclam.log
 DatabaseMirror database.clamav.net
 MaxAttempts 3
 Checks 12
+
+__IF__ HTTPPROXY
+HTTPProxyServer __HTTPPROXY__:__HTTPPROXYPORT__
+__FI__ HTTPPROXY

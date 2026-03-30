@@ -1,0 +1,32 @@
+[DEFAULT]
+db_url = sqlite:////var/spamtagger/spool/fangfrisch/db.sqlite
+
+local_directory = /var/spamtagger/spool/clamav
+max_size = 25MB
+on_update_exec = clamdscan --reload
+on_update_timeout = 42
+
+[interserver]
+enabled = yes
+
+[urlhaus]
+enabled = yes
+max_size = 2MB
+
+__IF__ MALWAREPATROL
+[malwarepatrol]
+enabled = yes
+receipt = __MALWAREPATROL_RECEIPT__
+__FI__ MALWAREPATROL
+
+__IF__ SANESECURITY 
+[sanesecurity]
+enabled = yes
+prefix = __SANESECURITY_PREFIX__
+__FI__ SANESECURITY
+
+__IF__ SECURITEINFO 
+[securiteinfo]
+enabled = yes
+receipt = __SECURITEINFO_CUSTID__
+__FI__ SECURITEINFO
