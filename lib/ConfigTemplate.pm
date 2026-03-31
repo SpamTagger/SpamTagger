@@ -156,6 +156,7 @@ sub parse_overrides ($this, $file) {
       $this->{override_vars}->{uc("${block}_${key}")} = $overrides->{$block}->{$key};
     }
   }
+  return 1;
 }
 
 sub get_sub_template ($this, $tmplname) {

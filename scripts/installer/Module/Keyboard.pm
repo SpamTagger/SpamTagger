@@ -29,7 +29,6 @@ our $VERSION   = 1.0;
 use lib "/usr/spamtagger/scripts/installer/";
 use DialogFactory();
 
-no strict 'refs';
 require '/usr/share/console-setup/KeyboardNames.pl';
 
 sub new($class) {
@@ -40,20 +39,24 @@ sub run($this) {
   my $dfact = DialogFactory->new('InLine');
   my $dlg = $dfact->list();
 
-  my $layouts = \%{"KeyboardNames::layouts"};
-  my $variants = \%{"KeyboardNames::variants"};
+  my %layouts = %KeyboardNames::layouts;
+  my %variants = %KeyboardNames::variants;
   my $staged = {};
-  foreach my $i (keys(%$layouts)) {
-    next if ($layouts->{$i} eq 'custom');
+  foreach my $i (keys(%layouts)) {
+    next if ($layouts{$i} eq 'custom');
     my ($lang, $country) = $i =~ m/(\w+)(?: \((.*)\))?/;
     if (defined($country)) {
-      if (defined($staged->{$lang})) {
-        $staged->{$lang}->{$country} = $layouts->{$i};
+      if (defined($staged->{$lang}) && $staged->{$lang} ne '') {
+        $staged->{$lang}->{$country} = $layouts{$i};
       } else {
-        $staged->{$lang} = { $country => $layouts->{$i} };
+        $staged->{$lang} = { $country => $layouts{$i} };
       }
     } else {
-      $staged->{$lang} = $layouts->{$i};
+      if (defined($staged->{$lang})) {
+        $staged->{$lang}->{Standard} = $layouts{$i};
+      } else {
+        $staged->{$lang} = { 'Standard' => $layouts{$i} };
+      }
     }
   }
   my @langs = keys(%{$staged});
@@ -61,27 +64,58 @@ sub run($this) {
   my $res = $dlg->display();
 
   my $primary;
-  if (ref($staged->{$res}) eq 'HASH') {
-    my @regions = keys(%{$staged->{$res}});
-    $dlg->build('Select Region:', \@regions, 1, 0);
+  if (scalar(keys(%{$staged->{$res}})) > 1) {
+    my @regions;
+    if (defined($staged->{$res}->{Standard})) {
+      push(@regions, 'Standard');
+      foreach (sort(keys(%{$staged->{$res}})) ) {
+        push(@regions, $_) unless ($_ eq 'Standard');
+      }
+    } else {
+      @regions = sort(keys(%{$staged->{$res}}));
+    }
+    $dlg->build('Select Region:', \@regions, 1, 1);
     my $res2 = $dlg->display();
     $primary = $staged->{$res}->{$res2};
   } else {
-    $primary = $staged->{$res}->[0];
+    $primary = $staged->{$res}->{Standard};
   }
 
   my $variant = '';
-  if (defined($variants->{$primary})) {
-    my @vars = ( 'Standard', sort(keys(%{$variants->{$primary}})) );
+  if (defined($variants{$primary})) {
+    my @vars = ( 'Standard', sort(keys(%{$variants{$primary}})) );
     $dlg->build('Select Variant:', \@vars, 1, 1);
     my $res3 = $dlg->display();
     if ($res3 ne 'Standard') {
-      $variant = $variants->{$primary}->{$res3};
+      $variant = $variants{$primary}->{$res3};
     }
   }
-  `sed -i 's/XKBLAYOUT=*/XKBLAYOUT="$primary"/' /etc/default/keyboard`;
-  `sed -i 's/XKBVARIANT=*/XKBVARIANT="$variant"/' /etc/default/keyboard`;
-  `setupcon --force`;
+  write_keyboard_file($primary, $variant);
+  `setupcon --force 2>/dev/null`;
+  return 1;
 }
 
+sub write_keyboard_file ($primary, $variant) {
+  my ($output, $FILE) = ('');
+  unless (open($FILE, '<', '/etc/default/keyboard')) {
+    die "Failed to open '/etc/default/keyboard' for reading\n";
+  }
+  while (my $line = <$FILE>) {
+    if ($line =~ m/XKBLAYOUT/) {
+      $line =~ s/XKBLAYOUT=.*/XKBLAYOUT="$primary"/;
+    } elsif ($line =~ m/XKBVARIANT/) {
+      $line =~ s/XKBVARIANT=.*/XKBVARIANT="$variant"/;
+    }
+    $output .= $line;
+  }
+  close($FILE);
+  unless (open($FILE, '>', '/etc/default/keyboard')) {
+    die "Failed to open '/etc/default/keyboard' for writing\n";
+  }
+  print $FILE $output;
+  close($FILE);
+  return 1;
+}
+
+      
 1;
