@@ -42,6 +42,7 @@ for service in apache-htcacheclean dccifd exim mariadb rsyslog; do
     systemctl disable --now $service >/dev/null
   fi
 done
+systemctl mask mariadb@.socket
 echo -e "\b\b\b * "
 
 setterm --foreground blue
