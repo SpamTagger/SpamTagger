@@ -74,7 +74,7 @@ sub run($this) {
     } else {
       @regions = sort(keys(%{$staged->{$res}}));
     }
-    $dlg->build('Select Region:', \@regions, 1, 1);
+    $dlg->build('Select Keyboard Region:', \@regions, 1, 1);
     my $res2 = $dlg->display();
     $primary = $staged->{$res}->{$res2};
   } else {
