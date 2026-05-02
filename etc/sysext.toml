@@ -1,0 +1,3 @@
+[open-vm-tools]
+url = "https://github.com/SpamTagger/sysext-open-vm-tools"
+virt_env = [ "vmware" ]
