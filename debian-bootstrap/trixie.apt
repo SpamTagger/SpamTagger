@@ -50,7 +50,7 @@ libdbi-perl
 libdevel-size-perl
 libdigest-hmac-perl
 libencode-detect-perl
-libevent-2.1-7
+libevent-2.1-7t64
 libffi-dev
 libfile-touch-perl
 libfilesys-df-perl
@@ -58,8 +58,8 @@ libgcrypt20-dev
 libgdbm-dev
 libgeo-ip-perl
 libgeoip2-perl
-libgnutls-dane0
-libgnutls-openssl27
+libgnutls-dane0t64
+libgnutls-openssl27t64
 libgnutls28-dev
 libgsasl-dev
 libhiredis1.1.0
@@ -108,7 +108,7 @@ libnet-snmp-perl
 libnetaddr-ip-perl
 libole-storage-lite-perl
 libopendmarc-dev
-libopendmarc2
+libopendmarc2t64
 libpam0g-dev
 libparse-recdescent-perl
 libpcre2-32-0
@@ -123,10 +123,10 @@ librrdtool-oo-perl
 libsendmail-pmilter-perl
 libsnmp-dev
 libsnmp-perl
-libspf2-2
+libspf2-2t64
 libspf2-dev
 libsqlite3-dev
-libssl3
+libssl3t64
 libstring-approx-perl
 libsys-hostname-long-perl
 libsys-sigaction-perl
