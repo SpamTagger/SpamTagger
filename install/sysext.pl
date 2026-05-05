@@ -403,6 +403,10 @@ if ($action eq "-s" || $action eq "status" ) {
       if ($exts->{$ext}->{status} !~ /(in)?active/) {
         push(@install, $ext);
       }
+    } elsif ($exts->{$ext}->{status} =~ /(in)?active/) {
+      if ($exts->{$ext}->{version} ne $exts->{$ext}->{available}  ) {
+        push(@install, $ext);
+      }
     }
   }
   install(@install);
