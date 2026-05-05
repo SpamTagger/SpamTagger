@@ -1,0 +1,12 @@
+[Unit]
+Description=Systemd extension updater SpamTagger
+After=network.service network-online.target
+
+[Timer]
+OnBootSec=1m
+OnCalendar=Saturday 10:00 UTC
+AccuracySec=10min
+Persistent=true
+
+[Install]
+WantedBy=spamtagger.target

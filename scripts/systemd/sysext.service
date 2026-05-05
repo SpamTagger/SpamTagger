@@ -1,0 +1,10 @@
+[Unit]
+Description=Systemd extension updater SpamTagger
+After=network.service network-online.target
+
+[Service]
+Type=oneshot
+ExecStart=/usr/spamtagger/install/sysext.pl auto
+
+[Install]
+WantedBy=spamtagger.target
