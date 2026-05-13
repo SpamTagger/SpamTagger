@@ -132,7 +132,9 @@ libsys-hostname-long-perl
 libsys-sigaction-perl
 libterm-readkey-perl
 libtext-trim-perl
+libtoml-perl
 liburi-perl
+libwww-perl
 links
 lsb-release
 lzma
