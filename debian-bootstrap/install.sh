@@ -135,7 +135,7 @@ for i in $(cat /tmp/${VERSION_CODENAME}.apt); do
     echo -e "  Checking $i *  "
   else
     echo -ne "\r  Installing $i..."
-    DEBIAN_FRONTEND=noninteractive apt-get --assume-yes install $i 2>/dev/null >/dev/null
+    DEBIAN_FRONTEND=noninteractive apt-get --assume-yes install $i --no-install-recommends --no-install-suggests 2>/dev/null >/dev/null
 
     DPKG=$(dpkg -l)
     if grep -qP "^ii  $i" <<<$DPKG; then
