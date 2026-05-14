@@ -224,6 +224,26 @@ else
 fi
 
 setterm --foreground blue
+echo -n "# Creating Debian-exim group and user..."
+setterm --foreground default
+
+if [ "$(grep 'Debian-exim' /etc/passwd)" == "" ]; then
+  if [ "$(grep 'Debian-exim' /etc/group)" == "" ]; then
+    groupadd Debian-exim &>/dev/null
+  fi
+  if [[ $? -ne 0 ]]; then
+    echo -e "\b\b\b x "
+    exit 1
+  fi
+  useradd -d /var/spamtagger/spool/exim_stage1 -s /bin/bash -g Debian-exim Debian-exim &>/dev/null
+  if [[ $? -ne 0 ]]; then
+    echo -e "\b\b\b x "
+    exit 1
+  fi
+fi
+echo -e "\b\b\b * "
+
+setterm --foreground blue
 echo -n "# Creating spamtagger group and user..."
 setterm --foreground default
 
