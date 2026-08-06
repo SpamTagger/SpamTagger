@@ -1,6 +1,6 @@
 # <img src="https://raw.githubusercontent.com/SpamTagger/SpamTagger/refs/heads/main/www/user/templates/default/images/st_logo.svg" alt="SpamTagger Logo" style="height:2em; vertical-align:middle;"> SpamTagger
 
-SpamTagger is a continuation of the MailCleaner® anti spam gateway.
+SpamTagger is an open source spam filtering and email security appliance.
 
 ## 🚧 Under Construction 🚧
 
@@ -20,3 +20,19 @@ In the effort to get out a new release development is ongoing across a few diffe
 - [ ] The [st-mailscanner](https://github.com/SpamTagger/v5) repository builds a custom version of the [mailscanner](https://www.mailscanner.info) email filter, since SpamTagger introduces custom functionality which is not currently pluggable. Changes from the version in MailCleaner need to be ported to the lasted version and then the package needs to borrow the same build process from `st-exim`.
 - [x] The [debs](https://github.com/SpamTagger/debs) repository fetches the various custom Debian packages used by SpamTagger and assembled them into a compatible APT package repository, including signing the repository, hosting it via GitHub Pages and creating an HTML index.
 - [ ] The [python-mailcleaner-library](https://github.com/SpamTagger/python-mailcleaner-library) provides some internal API features, mostly for [Fail2Ban](https://github.com/fail2ban/fail2ban) integration. This should not require any significant modification for a minimal release. However it is eventually desired to remove this and replace it with a built-in Perl-based API since this is the only Python code across all SpamTagger projects.
+
+## Features
+
+* Web-based admin configuration and management interface
+* Web-based and email-based user quarantine management
+* Numerous configurable filters (SpamAssassin, Bayesian, RBLs, etc.)
+* Multiple spam handling techniques (quarantine, tag, reject)
+* Fully open source
+
+## Legacy
+
+SpamTagger is a continuation of the MailCleaner® anti spam gateway. It has been revived and modernized by the primary developer in order to honour its open source roots and extend it to apply to all components and tools in the chain.
+
+## Get Started
+
+See the [Wiki](https://github.com/SpamTagger/SpamTagger/wiki) for information on [installing SpamTagger](https://github.com/SpamTagger/SpamTagger/wiki/Installation-Guide), [configuring the system](https://github.com/SpamTagger/SpamTagger/wiki/System-Configuration), [setting up a domain](https://github.com/SpamTagger/SpamTagger/wiki/Domain-Configuration), [contributing to development](https://github.com/SpamTagger/SpamTagger/wiki/Contributing-Guide) and other great info!
