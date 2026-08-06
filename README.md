@@ -1,7 +1,5 @@
 # <img src="https://raw.githubusercontent.com/SpamTagger/SpamTagger/refs/heads/main/www/user/templates/default/images/st_logo.svg" alt="SpamTagger Logo" style="height:2em; vertical-align:middle;"> SpamTagger
 
-SpamTagger is an open source spam filtering and email security appliance.
-
 ## 🚧 Under Construction 🚧
 
 Development of a first release of SpamTagger is ongoing and the SpamTagger repository is no longer compatible with existing MailCleaner® systems which are based on Debian Jessie.
@@ -9,6 +7,11 @@ Development of a first release of SpamTagger is ongoing and the SpamTagger repos
 There are currently no pre-built VMs to download for SpamTagger. [Containers](https://github.com/SpamTagger/SpamTagger-Bootc/pkgs/container/spamtagger-bootc) and VM images can be built using the [SpamTagger-Bootc repository](https://github.com/SpamTagger/SpamTagger-Bootc). However, these images do not currently produce a working mail gateway.
 
 Please stay tuned for more information and feel free to discuss development in the relevant GitHub Issues or Discussions tabs.
+
+## 📭 Open Source Spam Filtering 🗑️
+
+SpamTagger is an open source spam filtering and email security appliance.
+
 
 ## 👨‍💻 Development 👩‍💻
 
