@@ -33,11 +33,11 @@ export DEBIAN_FRONTEND=noninteractive
 if [[ "$(find /etc/apt -name '*.list')" != "" ]]; then
   apt modernize-sources -y &>/dev/null
   if [[ $? -ne 0 ]]; then
-    echo -e "\b\b\b x "
+    echo -e "\b\b\b ✘\b  "
     exit 1
   fi
 fi
-echo -e "\b\b\b * "
+echo -e "\b\b\b ✔️\b  "
 
 setterm --foreground blue
 echo -n "# Enabling Non-Free Repository..."
@@ -62,10 +62,10 @@ elif [[ "$(find /etc/apt/sources.list.d/ -name '*.sources')" != "" ]]; then
   fi
   sed -i 's/Components: main.*/Components: main non-free non-free-firmware/' /etc/apt/sources.list.d/debian.sources
 else
-  echo -e "\bx \nNo known APT sources files were found"
+  echo -e "\b\b\b ✘\b \nNo known APT sources files were found"
   exit 1
 fi
-echo -e "\b\b\b * "
+echo -e "\b\b\b ✔️\b  "
 
 setterm --foreground blue
 echo -n "# Enabling Additional Repositories..."
@@ -104,7 +104,7 @@ Signed-By: /etc/apt/keyrings/obs-home-voegelas.gpg
 EOF
 fi
 
-echo -e "\b\b\b * "
+echo -e "\b\b\b ✔️\b  "
 
 setterm --foreground blue
 echo -n "# Refreshing APT repos..."
@@ -113,9 +113,9 @@ setterm --foreground default
 rm -rf /var/lib/apt/lists/*
 apt-get update &>/dev/null
 if [[ $? -ne 0 ]]; then
-  echo -e "\b\b\b x "
+  echo -e "\b\b\b ✘\b  "
 else
-  echo -e "\b\b\b * "
+  echo -e "\b\b\b ✔️\b  "
 fi
 
 setterm --foreground blue
@@ -132,16 +132,16 @@ fi
 FAILED=""
 for i in $(cat /tmp/${VERSION_CODENAME}.apt); do
   if grep -qP "^ii  $i" <<<$DPKG; then
-    echo -e "  Checking $i *  "
+    echo -e "  Already installed $i ✔️"
   else
     echo -ne "\r  Installing $i..."
     DEBIAN_FRONTEND=noninteractive apt-get --assume-yes install $i --no-install-recommends --no-install-suggests 2>/dev/null >/dev/null
 
     DPKG=$(dpkg -l)
     if grep -qP "^ii  $i" <<<$DPKG; then
-      echo -e "\b\b\b * "
+      echo -e "\b\b\b ✔️\b   "
     else
-      echo -e "\b\b\b x "
+      echo -e "\b\b\b ✘\b  "
       FAILED="$FAILED
     $i"
     fi
@@ -163,11 +163,11 @@ setterm --foreground default
 if [[ -d /usr/spamtagger ]]; then
   if [[ -z $CI ]]; then
     if [[ ! -e /usr/spamtagger/.git/config ]]; then
-      echo -e "\b\b\b x \nFound '/usr/spamtagger' which is not a git repo. Please (re)move it and run the script again"
+      echo -e "\b\b\b ✘\b  \nFound '/usr/spamtagger' which is not a git repo. Please (re)move it and run the script again"
       exit 1
     fi
     if ! grep -q "${GITREPO}" <<<$(cat /usr/spamtagger/.git/config); then
-      echo -e "\b\b\b x \nFound '/usr/spamtagger' which is not a ${GITREPO} repository. Please change target and run the script again"
+      echo -e "\b\b\b ✘\b  \nFound '/usr/spamtagger' which is not a ${GITREPO} repository. Please change target and run the script again"
       exit 1
     fi
   fi
@@ -175,7 +175,7 @@ if [[ -d /usr/spamtagger ]]; then
 else
   git clone --depth 1 ${GITHOST}/${GITUSER}/${GITREPO}.git /usr/spamtagger 2>&1 >/dev/null
   if [ ! -d /usr/spamtagger ]; then
-    echo -e "\b\b\b x \nFailed to clone '/usr/spamtagger' or to clone from ${GITHOST}/${GITUSER}/${GITREPO}.git"
+    echo -e "\b\b\b ✘\b  \nFailed to clone '/usr/spamtagger' or to clone from ${GITHOST}/${GITUSER}/${GITREPO}.git"
     exit 1
   fi
 fi
@@ -189,10 +189,10 @@ cd /usr/spamtagger
 if [[ -z $CI ]]; then
   git pull --rebase origin main 2>/dev/null >/dev/null
   if [[ $? -ne 0 ]]; then
-    echo -e "\b\b\b x Error pulling latest commits"
+    echo -e "\b\b\b ✘\b  Error pulling latest commits"
     exit 1
   else
-    echo -e "\b\b\b * "
+    echo -e "\b\b\b ✔️\b  "
     if [[ ! -z $CURRENT ]] && [[ $CURRENT != $(md5sum $0) ]]; then
       echo "$0 has changed. Please run the command again to ensure that you have the latest installation procedures"
       exit 1
@@ -206,9 +206,9 @@ setterm --foreground default
 
 apt-get autoremove --assume-yes &>/dev/null
 if [[ $? -ne 0 ]]; then
-  echo -e "\b\b\b x Failed \`apt-get autoremove\`"
+  echo -e "\b\b\b ✘\b  Failed \`apt-get autoremove\`"
 else
-  echo -e "\b\b\b * "
+  echo -e "\b\b\b ✔️\b  "
 fi
 
 setterm --foreground blue
@@ -217,10 +217,10 @@ setterm --foreground default
 
 apt-get clean --assume-yes 2>/dev/null >/dev/null
 if [[ $? -ne 0 ]]; then
-  echo -e "\b\b\b x Failed \`apt-get clean\`"
+  echo -e "\b\b\b ✘\b  Failed \`apt-get clean\`"
   exit 1
 else
-  echo -e "\b\b\b * "
+  echo -e "\b\b\b ✔️\b  "
 fi
 
 setterm --foreground blue
@@ -232,16 +232,16 @@ if [ "$(grep 'Debian-exim' /etc/passwd)" == "" ]; then
     groupadd Debian-exim &>/dev/null
   fi
   if [[ $? -ne 0 ]]; then
-    echo -e "\b\b\b x "
+    echo -e "\b\b\b ✘\b  "
     exit 1
   fi
   useradd -d /var/spamtagger/spool/exim_stage1 -s /bin/bash -g Debian-exim Debian-exim &>/dev/null
   if [[ $? -ne 0 ]]; then
-    echo -e "\b\b\b x "
+    echo -e "\b\b\b ✘\b  "
     exit 1
   fi
 fi
-echo -e "\b\b\b * "
+echo -e "\b\b\b ✔️\b  "
 
 setterm --foreground blue
 echo -n "# Creating spamtagger group and user..."
@@ -252,16 +252,16 @@ if [ "$(grep 'spamtagger' /etc/passwd)" == "" ]; then
     groupadd spamtagger &>/dev/null
   fi
   if [[ $? -ne 0 ]]; then
-    echo -e "\b\b\b x "
+    echo -e "\b\b\b ✘\b  "
     exit 1
   fi
   useradd -d /var/spamtagger -s /bin/bash -g spamtagger spamtagger &>/dev/null
   if [[ $? -ne 0 ]]; then
-    echo -e "\b\b\b x "
+    echo -e "\b\b\b ✘\b  "
     exit 1
   fi
 fi
-echo -e "\b\b\b * "
+echo -e "\b\b\b ✔️\b  "
 
 setterm --foreground blue
 echo -n "# Add other users to spamtagger group..."
@@ -269,26 +269,26 @@ setterm --foreground default
 
 usermod -aG spamtagger clamav &>/dev/null
 if [[ $? -ne 0 ]]; then
-  echo -e "\b\b\b Failed to add clamav to spamtagger groupx "
+  echo -e "\b\b\b ✘\b  Failed to add clamav to spamtagger group"
   exit 1
 fi
 usermod -aG spamtagger Debian-exim &>/dev/null
 if [[ $? -ne 0 ]]; then
-  echo -e "\b\b\b x Failed to add Debian-exim to spamtagger group"
+  echo -e "\b\b\b ✘\b  Failed to add Debian-exim to spamtagger group"
   exit 1
 fi
 usermod -aG spamtagger Debian-snmp &>/dev/null
 if [[ $? -ne 0 ]]; then
-  echo -e "\b\b\b x Failed to add Debian-snmp to spamtagger group"
+  echo -e "\b\b\b ✘\b  Failed to add Debian-snmp to spamtagger group"
   exit 1
 fi
 # TODO: Enable the following line when mailscanner is ready
 #usermod -aG spamtagger mailscanner &>/dev/null
 #if [[ $? -ne 0 ]]; then
-  #echo -e "\b\b\b x Failed to add mailscanner to spamtagger group"
+  #echo -e "\b\b\b ✘\b  Failed to add mailscanner to spamtagger group"
   #exit 1
 #fi
-echo -e "\b\b\b * "
+echo -e "\b\b\b ✔️\b  "
 
 setterm --foreground blue
 echo -n "# Configuring SpamTagger..."
@@ -296,6 +296,6 @@ setterm --foreground default
 
 /usr/spamtagger/install/install.sh
 if [ $! ]; then
-  echo -e "\b\b\b x Failed running /usr/spamtagger/install/install.sh"
+  echo -e "\b\b\b ✘\b Failed running /usr/spamtagger/install/install.sh"
   exit 1
 fi

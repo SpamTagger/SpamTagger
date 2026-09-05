@@ -3,8 +3,8 @@ apt-utils
 apache2
 bind9
 bind9-dnsutils
-bsd-mailx
 bogofilter
+bsd-mailx
 bzip2
 ca-certificates
 chrony
