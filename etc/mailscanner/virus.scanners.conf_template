@@ -1,4 +1,5 @@
 # This is a list of the names of the virus scanning engines, along with the
+    # Daily at 12:17 UTC
 # filename of the command or script to run to invoke each one.
 # Three fields:
 #  1.  Name of virus scanner as known by MailScanner. Do not change this.
@@ -21,14 +22,9 @@ clamd    /bin/false        /usr/sbin
 clamavmodule  /bin/false        /tmp
 command    /usr/lib/MailScanner/wrapper/command-wrapper  /usr
 css    /usr/lib/MailScanner/wrapper/css-wrapper  /opt/SYMCScan
-drweb    /usr/lib/MailScanner/wrapper/drweb-wrapper  /opt/drweb
 esets    /usr/lib/MailScanner/wrapper/esets-wrapper  /usr/sbin
 esetsefs  /usr/lib/MailScanner/wrapper/esetsefs-wrapper  /opt/eset/efs/bin
 etrust    /usr/lib/MailScanner/wrapper/etrust-wrapper  /opt/eTrustAntivirus
-f-prot    /usr/lib/MailScanner/wrapper/f-prot-wrapper  /usr/local/f-prot
-f-prot-6  /usr/lib/MailScanner/wrapper/f-prot-6-wrapper  /opt/f-prot
-f-protd-6  /bin/false        /opt/f-prot
-f-secure  /usr/lib/MailScanner/wrapper/f-secure-wrapper  /opt/f-secure/fsav
 generic    /usr/lib/MailScanner/wrapper/generic-wrapper  /
 inoculan  /usr/lib/MailScanner/wrapper/inoculan-wrapper  /usr/local/inoculan
 inoculate  /usr/lib/MailScanner/wrapper/inoculate-wrapper  /usr/local/av

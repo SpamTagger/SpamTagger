@@ -216,14 +216,10 @@ Virus Scanning = yes
 # sophossavi (also from www.sophos.com, using the SAVI perl module), or
 # mcafee    from www.mcafee.com, or
 # command   from www.command.co.uk, or
-# kaspersky from www.kaspersky.com, or
-# kavdaemonclient from www.kaspersky.com, or
 # etrust    from http://www3.ca.com/Solutions/Product.asp?ID=156, or
 # inoculate from www.cai.com/products/inoculateit.htm, or
 # inoculan  from ftp.ca.com/pub/getbbs/linux.eng/inoctar.LINUX.Z, or
 # nod32     from www.nod32.com, or
-# f-secure  from www.f-secure.com, or
-# f-prot    from www.f-prot.com, or
 # panda     from www.pandasoftware.com, or
 # rav       from www.ravantivirus.com, or
 # antivir   from www.antivir.de, or
@@ -238,7 +234,7 @@ Virus Scanning = yes
 #
 # Note: If you want to use multiple virus scanners, then this should be a
 # space-separated list of virus scanners. For example:
-# Virus Scanners = sophos f-prot mcafee
+# Virus Scanners = sophos mcafee
 #
 # Note: Make sure that you check that the base installation directory in the
 #       3rd column of virus.scanners.conf matches the location you have
