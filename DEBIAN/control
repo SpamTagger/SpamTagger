@@ -1,0 +1,37 @@
+Package: spamtagger
+Description: SpamTagger appliance metapackage.
+Homepage: https://github.com/SpamTagger/SpamTagger
+Version: __INSTVER__
+Maintainer: SpamTagger Team <support@spamtagger.org>
+Section: mail
+Architecture: all
+Priority: optional
+Protected: yes
+Installed-Size: __INSTSIZE__
+Depends: adduser, apache2, bogofilter, bsd-mailx, chrony, composer,  cron, dcc, fail2ban,
+ fangfrisch, file, greylistd, ipset, libapache2-mod-php, libapache2-mpm-itk, libevent-2.1-7t64,
+ libhiredis1.1.0, libldap-common, libperl5.40, perl-modules-5.40, libauthen-radius-perl,
+ libbsd-resource-perl, libbusiness-isbn-perl, libconfig-yaml-perl, libconvert-binhex-perl,
+ libdata-dump-perl, libdata-validate-domain-perl, libdata-validate-ip-perl, libdate-calc-perl,
+ libdatetime-perl, libdbd-mariadb-perl, libdbi-perl, libdevel-size-perl, libdigest-hmac-perl,
+ libencode-detect-perl, libfile-touch-perl, libgeo-ip-perl, libgeoip2-perl, libhtml-parser-perl,
+ libhtml-tagset-perl, libinline-c-perl, libio-compress-perl, libio-interactive-perl,
+ libio-socket-inet6-perl, libio-socket-ssl-perl, libio-string-perl, libipc-run-perl,
+ libipc-run3-perl, libipc-shareable-perl, libjson-xs-perl, liblinux-systemd-perl, libmail-dkim-perl,
+ libmail-imapclient-perl, libmail-pop3client-perl, libmail-spf-perl, libmail-srs-perl,
+ libmailtools-perl, libmath-int128-perl, libmldbm-perl, libmldbm-sync-perl, libmodule-build-perl,
+ libmodule-pluggable-perl, libnet-cidr-lite-perl, libnet-cidr-perl, libnet-dns-perl,
+ libnet-dns-resolver-programmable-perl, libnet-http-perl, libnet-imap-simple-perl,
+ libnet-imap-simple-ssl-perl, libnet-ip-perl, libnet-ldap-perl, libnet-patricia-perl,
+ libnet-smtpauth-perl, libnet-snmp-perl, libnetaddr-ip-perl, libparse-recdescent-perl,
+ libperl-version-perl, libproc-processtable-perl, libredis-perl, librrdtool-oo-perl,
+ libsendmail-pmilter-perl, libsnmp-perl, libstring-approx-perl, libterm-readkey-perl,
+ libtext-trim-perl, libtoml-perl, liburi-perl, libwww-perl,
+ lsb-release, mariadb-server, openssh-client, openssh-server, perl (>=5.40), php, php-bcmath,
+ php-bz2, php-common, php-curl, php-gd, php-gmp, php-imagick, php-intl, php-mbstring, php-mcrypt,
+ php-memcache, php-mysql, php-pear, php-snmp, php-soap, php-xml, php-xmlrpc, php-zip, php8.4-dba,
+ pwgen, python-is-python3, pyzor, razor, rrdtool, rsync, rsyslog, sudo, snmp, snmp-mibs-downloader,
+ snmpd, spamc, spamd, spf-tools-perl, ssl-cert, st-exim, st-mailscanner, tesseract-ocr, ufw, wget
+Recommends: bind9, bind9-utils, clamav, clamav-daemon, clamdscan, curl, ldap-utils, mariadb-client,
+ openssl, sqlite3, telnet
+Suggests: fastfetch 

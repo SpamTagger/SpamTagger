@@ -1,0 +1,7 @@
+spamtagger (0.1.0-1) unstable; urgency=medium
+
+  * Initial commit of the SpamTagger appliance metapackage.
+  * Declare the required and recommended packages for the appliance.
+  * Establish the initial package metadata and dependency set.
+
+ -- SpamTagger Team <support@spamtagger.org>  Thu, 29 Oct 2026 12:00:00 -0600
