@@ -1,4 +1,4 @@
-ServerRoot "/usr/spamtagger/etc/apache"
+ServerRoot "/var/spamtagger/tmp/etc/apache"
 DefaultRuntimeDir /var/spamtagger/run/apache2/
 PidFile /var/spamtagger/run/apache2/httpd.pid
 
@@ -175,4 +175,4 @@ RewriteRule .* - [F]
 
 #AssignUserId spamtagger spamtagger
 
-Include /usr/spamtagger/etc/apache/sites-enabled/*.conf
+Include /var/spamtagger/tmp/etc/apache/sites-enabled/*.conf

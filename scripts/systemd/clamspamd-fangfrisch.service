@@ -7,7 +7,8 @@ PartOf=spamtagger.target
 User=clamav
 Group=spamtagger
 ExecStart=
-ExecStart=/usr/bin/fangfrisch -c /usr/spamtagger/etc/clamav/fangfrisch.conf refresh
+ExecStart=/usr/bin/fangfrisch -c /usr/spamtagger/tmp/etc/clamav/fangfrisch.conf refresh
+ExecStartPre=/usr/spamtagger/bin/dump_fangfrisch.pl
 
 [Install]
 WantedBy=spamtagger.target
