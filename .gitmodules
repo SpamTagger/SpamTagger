@@ -1,3 +1,6 @@
 [submodule "www/vendor/Zend"]
 	path = www/vendor/Zend
 	url = https://github.com/Shardj/zf1-future
+[submodule "docs"]
+	path = docs
+	url = git@github.com:/SpamTagger/SpamTagger.wiki
